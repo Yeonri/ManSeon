@@ -1,0 +1,40 @@
+package com.mansun.entity.point.children;
+
+import com.mansun.entity.point.FishingPoint;
+import jakarta.persistence.*;
+import lombok.Getter;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Entity
+@Getter
+public class Weather {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long weatherId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private FishingPoint points;
+
+//    Column
+    private LocalDate weatherDate;
+    private LocalDateTime weatherTime;
+    private int pop;
+    private int pty;
+    private int pcp;
+    private int sno;
+    private int sky;
+    private int tmp;
+    private int tmn;
+    private int tmx;
+    private int uuu;
+    private int vvv;
+
+    private int vec;
+    private int wsd;
+    private int reh;
+
+
+}
