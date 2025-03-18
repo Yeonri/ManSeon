@@ -11,6 +11,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.69.0",
+    "axios": "^1.8.3",
     "nativewind": "^4.1.23",
     "react": "19.0.0",
     "react-native": "0.78.0",
