@@ -1,13 +1,12 @@
 import React from "react";
-import { Text, View } from "react-native";
 import "./global.css";
-import Home from "./src/assets/images/icon_home.svg";
+import { NavigationContainer } from "@react-navigation/native";
+import { BottomTabNavigator } from "./src/navigation/bottomTabNavigator";
 
 export default function App(): React.JSX.Element {
   return (
-    <View>
-      <Text className="bg-blue-500">만선</Text>
-      <Home />
-    </View>
+    <NavigationContainer>
+      <BottomTabNavigator />
+    </NavigationContainer>
   );
 }
