@@ -52,7 +52,7 @@ public class UserController {
     public ResponseEntity<String> updateUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody updateUserReqDto req){
-        Users user=userService.updateUser(customUserDetails.getUserId(),customUserDetails.getUsername());
+        Users user=userService.updateUser(customUserDetails,req);
         return ResponseEntity.ok("회원 정보가 성공적으로 변경되었습니다.");
     }
 

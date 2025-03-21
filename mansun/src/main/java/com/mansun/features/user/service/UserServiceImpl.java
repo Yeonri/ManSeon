@@ -31,15 +31,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         //비밀번호 인코딩을 위한 BCrypt Encoder ->  추가 변동 가능성 있음 Argon을 적용해볼까 하는 고민이 있음
         String encodedPassword = bCryptPasswordEncoder.encode(userParam.getPassword());
-
-        Users saveuser = userRepository.save(
-                Users.builder()
-                .email(userParam.getEmail())
-                .password(encodedPassword)
-                .nickname(userParam.getNickname())
-                .userName(userParam.getName())
-                .phoneNum(userParam.getPhoneNum())
-                .build());
     }
 
     //해당 부분이 로그인이다 Spring Security에서 override해서 불러온다
@@ -49,9 +40,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("로그인할 사용자가 없습니다. 회원가입을 먼저 진행해주세요.")));
     }
 
-    public Users updateUser(Long userId,String email) {
-        Users findUser = userRepository.findByUserIdAndEmail(userId, email)
+    public Users updateUser(CustomUserDetails customUserDetails,updateUserReqDto req) {
+        //변경할 사용자를 찾는다
+        Users findUser = userRepository.findByUserIdAndEmail(customUserDetails.getUserId(), customUserDetails.getUsername())
                 .orElseThrow(()-> new NoSuchElementException("변경할 사용자가 없습니다."));
+        
+        //사용자의 정보를 변경한다 
+        //미구현
 
         //여기엔 PATCH이므로 어떤 User정보가 바뀔지 모른다.
         return null;
