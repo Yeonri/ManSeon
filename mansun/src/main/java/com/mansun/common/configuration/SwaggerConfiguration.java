@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfiguration {
     @Bean
     public OpenAPI openAPI() {
-        Info info = new Info().title("SSAFY 특화 프로젝트 API 명세서").description("").version("V3").contact(new io.swagger
-                .v3.oas.models.info.Contact().name("Jinny"));
+        Info info = new Info().title("SSAFY 특화 프로젝트 API 명세서").description("").version("V3")
+                .contact(new io.swagger.v3.oas.models.info.Contact().name("Jinny"));
         return new OpenAPI().components(new Components()).info(info);
     }
 
