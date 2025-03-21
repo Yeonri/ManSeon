@@ -4,8 +4,10 @@ import com.mansun.entity.Users;
 import com.mansun.requestDto.user.createUserReqDto;
 import com.mansun.requestDto.user.updateUserReqDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public interface UserService {
     //회원가입 로직
     public void createUser(createUserReqDto userParam);

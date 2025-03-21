@@ -6,9 +6,13 @@ import com.mansun.requestDto.board.deleteMyBoardReqDto;
 import com.mansun.requestDto.board.updateMyBoardReqDto;
 import com.mansun.responseDto.board.findMyBoardListResDto;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public interface BoardService {
     //내 게시판 글 작성
     public void createBoard(
