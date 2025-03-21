@@ -1,0 +1,82 @@
+[
+  {
+    "boardId": 1,
+    "title": "제목 1",
+    "createdAt": "2025-03-20T07:30:00.000Z",
+    "nickname": "냥냥펀치",
+    "profileImg": "https://i.pinimg.com/736x/88/75/dc/8875dcbcd3ffe823e095f06cc03f679d.jpg",
+    "postImg": "https://i.pinimg.com/736x/1b/1a/8f/1b1a8fa1cd7ed4210f0a64a7357bd961.jpg"
+  },
+  {
+    "boardId": 2,
+    "title": "제목 2",
+    "createdAt": "2025-03-20T08:30:00.000Z",
+    "nickname": "바다의사냥꾼",
+    "profileImg": "https://i.pinimg.com/736x/3c/56/d5/3c56d5a4bf4add9537b23825d805925e.jpg",
+    "postImg": "https://i.pinimg.com/736x/a2/88/98/a2889887e7e6dd1323b98d5d15d3f781.jpg"
+  },
+  {
+    "boardId": 3,
+    "title": "제목 3",
+    "createdAt": "2025-03-20T08:30:02.000Z",
+    "nickname": "은빛바늘",
+    "profileImg": "https://i.pinimg.com/736x/b1/7a/db/b17adb2c3f07c9d76080615820f602f4.jpg",
+    "postImg": "https://i.pinimg.com/736x/28/7c/89/287c89d9987053f01b22503dd1f6aefc.jpg"
+  },
+  {
+    "boardId": 4,
+    "title": "제목 4",
+    "createdAt": "2025-03-20T10:29:00.000Z",
+    "nickname": "밤하늘별빛",
+    "profileImg": "https://i.pinimg.com/736x/4c/09/6d/4c096da472de68b62704ba6ebc20b03b.jpg",
+    "postImg": "https://i.pinimg.com/736x/81/ec/02/81ec02c841e7aa13d0f099b5df02b25c.jpg"
+  },
+  {
+    "boardId": 5,
+    "title": "제목 5",
+    "createdAt": "2025-03-20T11:30:20.000Z",
+    "nickname": "해적왕",
+    "profileImg": "https://i.pinimg.com/736x/66/cb/79/66cb79474ec18cd636905bd7b8b9a06f.jpg",
+    "postImg": "https://i.pinimg.com/736x/75/28/dd/7528dd0d8e200a71e19070ec37e8dc67.jpg"
+  },
+  {
+    "boardId": 6,
+    "title": "제목 6",
+    "createdAt": "2025-03-20T11:50:30.000Z",
+    "nickname": "감자칩중독",
+    "profileImg": "https://i.pinimg.com/736x/f2/de/25/f2de25f8dd7d382f5b8432c7d126b328.jpg",
+    "postImg": "https://i.pinimg.com/736x/f1/55/ea/f155eab16986d9e9c05716de55aa70bc.jpg"
+  },
+  {
+    "boardId": 7,
+    "title": "제목 7",
+    "createdAt": "2025-03-20T14:37:23.000Z",
+    "nickname": "파도낚시꾼",
+    "profileImg": "https://i.pinimg.com/736x/43/2f/dd/432fdd5d571e85e08ab0341d4a4c6f9c.jpg",
+    "postImg": ""
+  },
+  {
+    "boardId": 8,
+    "title": "제목 8",
+    "createdAt": "2025-03-20T15:40:05.000Z",
+    "nickname": "손맛장인",
+    "profileImg": "https://i.pinimg.com/736x/4f/96/56/4f96562c23eaf21a262c65a6a604d867.jpg",
+    "postImg": "https://i.pinimg.com/736x/53/19/87/531987c992d8058ee7f9837f40dae12c.jpg"
+  },
+  {
+    "boardId": 9,
+    "title": "제목 9",
+    "createdAt": "2025-03-20T16:35:00.000Z",
+    "nickname": "태평양낚시꾼",
+    "profileImg": "https://i.pinimg.com/736x/88/92/44/889244965cd9ff8f9fd5b04ddb7b18c6.jpg",
+    "postImg": "https://i.pinimg.com/736x/54/8a/fd/548afd19360c2fde8aa1dd5a4a3ec06e.jpg"
+  },
+  {
+    "boardId": 10,
+    "title": "제목 10",
+    "createdAt": "2025-03-20T20:30:00.000Z",
+    "nickname": "갯바위헌터",
+    "profileImg": "https://i.pinimg.com/736x/a0/4c/2b/a04c2be710b723813e4d79fdb11f12ed.jpg",
+    "postImg": "https://i.pinimg.com/736x/92/35/6d/92356d9e2483217b127fc9f21bdbc5c9.jpg"
+  }
+]
