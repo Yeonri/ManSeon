@@ -5,6 +5,7 @@ import { PostList } from "../../components/community/postList";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CommunityStackParams } from "../../api/types/communityStackParams";
+import { HeaderTitle } from "../../components/common/headerTitle";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -14,6 +15,7 @@ export function CommunityScreen() {
 
   return (
     <SafeAreaView className="mx-5">
+      <HeaderTitle />
       <View>
         <Text>내가 팔로잉한 친구 게시글</Text>
         <FollowingPost />
