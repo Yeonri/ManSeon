@@ -1,5 +1,6 @@
 package com.mansun.features.user.service;
 
+import com.mansun.common.exception.NicknameAlreadyExistsException;
 import com.mansun.entity.Users;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.features.user.repository.userRepository;
@@ -13,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -56,5 +56,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void deleteUser(Long userId) {
 //        IllegalStateException이 뜨면 없는 ID이므로 처리 근데 거의 없을 거임
         userRepository.deleteById(userId);
+    }
+
+    public void findByNickname(String nickname){
+       userRepository.findByNickname(nickname)
+               .ifPresent(user->{throw new NicknameAlreadyExistsException("닉네임이 이미 존재합니다");
+               });
     }
 }

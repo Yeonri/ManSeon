@@ -1,17 +1,18 @@
 package com.mansun.entity.board;
 
+import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
+import com.mansun.requestDto.comment.CreateCommentReqDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +21,13 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
+
+    public Comment(CustomUserDetails customUserDetails, CreateCommentReqDto reqDto){
+        this.setUser(new Users(customUserDetails));
+        this.setCreatedAt(LocalDateTime.now());
+        this.setCommentContent(reqDto.getContent());
+
+    }
 //    연관 관계
     @ManyToOne
     @JoinColumn
