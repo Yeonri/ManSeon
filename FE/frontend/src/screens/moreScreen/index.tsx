@@ -1,9 +1,20 @@
-import { Text, View } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Button, View } from "react-native";
 
-export function MoreScreen() {
+type MoreStackList = {
+  More: undefined;
+  Tutorial: undefined;
+};
+
+type Props = NativeStackScreenProps<MoreStackList, "More">;
+
+export function MoreScreen({ navigation }: Props) {
   return (
     <View>
-      <Text>더 보기</Text>
+      <Button
+        title="튜토리얼"
+        onPress={() => navigation.navigate("Tutorial")}
+      />
     </View>
   );
 }
