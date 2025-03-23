@@ -1,6 +1,9 @@
 package com.mansun.entity.board;
 
+import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
+import com.mansun.requestDto.board.createBoardReqDto;
+import com.mansun.requestDto.user.createUserReqDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,12 +16,21 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(title = "전체 게시판",description = "전체 게시판의 정보를 담은 Entity")
+@Schema(title = "전체 게시판", description = "전체 게시판의 정보를 담은 Entity")
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "게시물 아이디", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long postId;
+
+    //게시글 생성을 위한 생성자
+    public Board(CustomUserDetails customUserDetails, createBoardReqDto req) {
+        this.user.setUserId(customUserDetails.getUserId());
+        this.setTitle(req.getTitle());
+        this.setContent(req.getContent());
+        this.setCreatedAt(LocalDateTime.now());
+
+    }
 
     //연관 관계
     @ManyToOne(fetch = FetchType.LAZY)
