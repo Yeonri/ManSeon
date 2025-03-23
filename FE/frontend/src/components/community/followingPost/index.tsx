@@ -11,13 +11,13 @@ export function FollowingPost() {
             source={{
               uri: item.postImg,
             }}
-            className="w-36 h-48 rounded-xl"
+            className="w-24 h-36 rounded-xl"
           />
           <Image
             source={{
               uri: item.profileImg,
             }}
-            className="absolute w-20 h-20 rounded-full bottom-2 left-1/2 -translate-x-1/2 "
+            className="absolute w-12 h-12 rounded-full bottom-2 left-1/2 -translate-x-1/2 "
           />
         </View>
       )}

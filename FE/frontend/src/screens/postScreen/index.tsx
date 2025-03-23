@@ -12,26 +12,33 @@ interface PostScreenProps
 export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   return (
-    <SafeAreaView>
-      <Text>커뮤니티 {postId}번 게시글</Text>
-      <Text>{postsMocks[0].title}</Text>
-      <View className="flex-row items-center">
+    <SafeAreaView className="mx-5">
+      <Text className="font-bold mb-2 text-lg">
+        {postsMocks[postId - 1].title}
+      </Text>
+      <View className="flex-row items-center justify-between">
+        <View className="flex-row items-center gap-2">
+          <Image
+            source={{ uri: postsMocks[postId - 1].profileImg }}
+            className="w-10 h-10 rounded-full"
+          />
+          <Text>{postsMocks[postId - 1].nickname}</Text>
+        </View>
+        <Text>1분전</Text>
+      </View>
+      <View className="my-3 gap-3 items-center">
         <Image
-          source={{ uri: postsMocks[0].profileImg }}
-          className="w-10 h-10 rounded-full"
+          source={{ uri: postsMocks[postId - 1].postImg }}
+          className="w-full h-48 rounded-lg"
         />
-        <Text>{postsMocks[0].nickname}</Text>
+        <Text className="self-center">{postsMocks[postId - 1].content}</Text>
       </View>
-      <View>
-        <Image source={{ uri: postsMocks[0].postImg }} className="w-96 h-96" />
-        <Text>{postsMocks[0].content}</Text>
-      </View>
-      <View className="mx-5 my-2 border-b border-gray-500" />
+      <View className="mt-2 mb-5 border-b border-gray-500" />
       <View className="flex-row items-center">
         <IconComment />
-        <Text className="mr-3">{postsMocks[0].commentNum}</Text>
+        <Text className="mr-3">{postsMocks[postId - 1].commentNum}</Text>
         <IconLike />
-        <Text className="ml-1">{postsMocks[0].like}</Text>
+        <Text className="ml-1">{postsMocks[postId - 1].like}</Text>
       </View>
     </SafeAreaView>
   );
