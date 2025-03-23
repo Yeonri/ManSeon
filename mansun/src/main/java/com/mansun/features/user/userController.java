@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -57,9 +58,16 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-        System.out.println(customUserDetails.getUserId());
+    public ResponseEntity<String> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+//        System.out.println(customUserDetails.getUserId());
         userService.deleteUser(customUserDetails.getUserId());
         return ResponseEntity.ok("회원 정보가 삭제되었습니다.");
+    }
+
+    //닉네임 중복 체크
+    @GetMapping("/nickname/duplicate")
+    public ResponseEntity<String> checkDuplicateNickname(@RequestParam("nickname")String nickname){
+        userService.findByNickname(nickname);
+        return ResponseEntity.ok("사용가능한 닉네임입니다.");
     }
 }
