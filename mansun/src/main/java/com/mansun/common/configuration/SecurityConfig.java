@@ -28,6 +28,8 @@ public class SecurityConfig {
         return configuration.getAuthenticationManager();
     }
 
+//    BCryptPasswordEncoder를 사용했으나 현재 가장 우수한 인코더는 Argon이다.
+//    향후 바꿀 가능성이 있다.
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
@@ -55,6 +57,9 @@ public class SecurityConfig {
 
         http.addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
 //        /api/users/login이란 경로로 ID를 email이란 input name으로 받는다고 설정
+//        때문에 해당 경로는 /api/users에 있지 않다. 
+//        로그인만을 위한 문이 있다고 이해하는 게 가장 빠르다
+//        또한 email이란 input name으로 읽어오게 설정했다.
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil){{
             setFilterProcessesUrl("/api/users/login");
             setUsernameParameter("email");
