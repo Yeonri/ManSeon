@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Schema(name = "회원가입할 유저의 필요 정보")
-public class createUserReqDto {
+public class CreateUserReqDto {
     @Schema(defaultValue = "1234@naver.com")
     private String email;
     @Schema(defaultValue = "1234")

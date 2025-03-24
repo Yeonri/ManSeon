@@ -2,10 +2,10 @@ package com.mansun.responseDto.board;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+
 @Builder
 @Getter
-public class findMyBoardListResDto {
+public class FindBoardResDto {
     String title;
     String content;
 }

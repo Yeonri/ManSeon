@@ -2,8 +2,7 @@ package com.mansun.entity.board;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
-import com.mansun.requestDto.board.createBoardReqDto;
-import com.mansun.requestDto.user.createUserReqDto;
+import com.mansun.requestDto.board.CreateBoardReqDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,7 +23,7 @@ public class Board {
     private Long postId;
 
     //게시글 생성을 위한 생성자
-    public Board(CustomUserDetails customUserDetails, createBoardReqDto req) {
+    public Board(CustomUserDetails customUserDetails, CreateBoardReqDto req) {
         this.user.setUserId(customUserDetails.getUserId());
         this.setTitle(req.getTitle());
         this.setContent(req.getContent());

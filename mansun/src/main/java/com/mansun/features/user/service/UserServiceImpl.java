@@ -4,23 +4,25 @@ import com.mansun.common.exception.NicknameAlreadyExistsException;
 import com.mansun.entity.Users;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.features.user.repository.userRepository;
-import com.mansun.requestDto.user.createUserReqDto;
-import com.mansun.requestDto.user.updateUserReqDto;
+import com.mansun.requestDto.user.CreateUserReqDto;
+import com.mansun.requestDto.user.UpdateUserReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final userRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    public void createUser(createUserReqDto userParam) {
+    public void createUser(CreateUserReqDto userParam) {
         //중복 Email이 있을 경우 회원가입 불허
         boolean existUser=userRepository.existsByUserIdAndEmail(Long.valueOf(0),userParam.getEmail());
         if(existUser){
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("로그인할 사용자가 없습니다. 회원가입을 먼저 진행해주세요.")));
     }
 
-    public Users updateUser(CustomUserDetails customUserDetails,updateUserReqDto req) {
+    public Users updateUser(CustomUserDetails customUserDetails, UpdateUserReqDto req) {
         //변경할 사용자를 찾는다
         Users findUser = userRepository.findByUserIdAndEmail(customUserDetails.getUserId(), customUserDetails.getUsername())
                 .orElseThrow(()-> new NoSuchElementException("변경할 사용자가 없습니다."));

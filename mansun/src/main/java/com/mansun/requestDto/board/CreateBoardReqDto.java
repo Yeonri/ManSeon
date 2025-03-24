@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Schema(description = "게시판 글 추가")
-public class createBoardReqDto {
+public class CreateBoardReqDto {
     @Schema(defaultValue = "와 월척이에요")
     String title;
     @Schema(defaultValue = "ㅈㄱㄴ")
