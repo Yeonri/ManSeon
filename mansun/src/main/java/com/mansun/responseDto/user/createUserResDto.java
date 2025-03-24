@@ -5,5 +5,5 @@ import lombok.Getter;
 
 @Schema
 @Getter
-public class createUserResDto {
+public class CreateUserResDto {
 }

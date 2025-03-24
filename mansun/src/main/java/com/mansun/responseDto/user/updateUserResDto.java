@@ -3,6 +3,6 @@ package com.mansun.responseDto.user;
 import lombok.Getter;
 
 @Getter
-public class updateUserResDto {
+public class UpdateUserResDto {
     private String username;
 }

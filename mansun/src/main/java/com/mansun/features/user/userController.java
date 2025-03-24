@@ -3,14 +3,13 @@ package com.mansun.features.user;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
 import com.mansun.features.user.service.UserServiceImpl;
-import com.mansun.requestDto.user.createUserReqDto;
-import com.mansun.requestDto.user.updateUserReqDto;
+import com.mansun.requestDto.user.CreateUserReqDto;
+import com.mansun.requestDto.user.UpdateUserReqDto;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,7 +36,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping
-    public ResponseEntity<String> createUser(@RequestBody createUserReqDto req) {
+    public ResponseEntity<String> createUser(@RequestBody CreateUserReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
         //만약 오류가 난다면 service 안에서 예외처리 반환 예정
         userService.createUser(req);
@@ -49,14 +48,28 @@ public class UserController {
     // Service에서는 우선 입력받은 email과 password를 이용해서 DB에서 사람을 찾는다.
     // 해당 사람을 찾을 경우는 CustomUserDetails란 이름으로 객체를 생성해서 그 안에 해당 유저를 넣으면 Security Logic 작동
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(
+                            mediaType = "text/plain",
+                            schema = @Schema(type = "string",example = "회원 정보가 성공적으로 변경되었습니다.")
+                    )),
+    })
     @PatchMapping
     public ResponseEntity<String> updateUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody updateUserReqDto req){
+            @RequestBody UpdateUserReqDto req){
         Users user=userService.updateUser(customUserDetails,req);
         return ResponseEntity.ok("회원 정보가 성공적으로 변경되었습니다.");
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(
+                            mediaType = "text/plain",
+                            schema = @Schema(type = "string",example = "회원 정보가 삭제되었습니다.")
+                    )),
+    })
     @DeleteMapping
     public ResponseEntity<String> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
 //        System.out.println(customUserDetails.getUserId());
@@ -64,6 +77,13 @@ public class UserController {
         return ResponseEntity.ok("회원 정보가 삭제되었습니다.");
     }
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK",
+                    content = @Content(
+                            mediaType = "text/plain",
+                            schema = @Schema(type = "string",example = "사용가능한 닉네임입니다.")
+                    )),
+    })
     //닉네임 중복 체크
     @GetMapping("/nickname/duplicate")
     public ResponseEntity<String> checkDuplicateNickname(@RequestParam("nickname")String nickname){
