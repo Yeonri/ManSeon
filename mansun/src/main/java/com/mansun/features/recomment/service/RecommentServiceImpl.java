@@ -14,4 +14,12 @@ public class RecommentServiceImpl implements RecommentService{
     public void createRecomment() {
 
     }
+
+    public void updateRecomment(){
+
+
+    }
+    public void deleteRecomment(){
+
+    }
 }
