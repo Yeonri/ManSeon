@@ -153,7 +153,7 @@ export function ProhibitedScreen() {
       {monthProhibitedList.map((item) => (
         <View
           key={item.id}
-          className="flex-row items-center bg-white p-4 shadow-sm shadow-blue-300 mb-4"
+          className="flex-row items-center p-4 shadow-sm shadow-blue-300 mb-4"
         >
           <Image
             source={item.img}
