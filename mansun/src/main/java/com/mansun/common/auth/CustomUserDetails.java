@@ -18,7 +18,7 @@ public class CustomUserDetails implements UserDetails {
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return null;
+                return null;//원래 여기서 getRole이 들어가야 한다.
             }
         });
         return collection;
