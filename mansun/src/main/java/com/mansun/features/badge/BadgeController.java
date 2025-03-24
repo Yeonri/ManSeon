@@ -33,7 +33,7 @@ public class BadgeController {
 
     //전체 뱃지 조회
     @GetMapping("/all")
-    public ResponseEntity<List<allBadgeListResDto>> getAllBadgeList(){
+    public ResponseEntity<List<allBadgeListResDto>> findAllBadgeList(){
         return ResponseEntity.ok(badgeService.allBadgeList()) ;
     }
 
@@ -65,10 +65,8 @@ public class BadgeController {
 
     //각 사용자의 뱃지 리스트
     @GetMapping
-    public ResponseEntity<List<allBadgesByUserResDto>> getAllBadgesByUser(
+    public ResponseEntity<List<allBadgesByUserResDto>> findAllBadgesByUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails){
         return ResponseEntity.ok(userBadgeService.getAllBadgesByUser(customUserDetails));
     }
-
-
 }
