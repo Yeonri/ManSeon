@@ -5,6 +5,7 @@ type MoreStackList = {
   More: undefined;
   Tutorial: undefined;
   Prohibited: undefined;
+  Rule: undefined;
 };
 
 type Props = NativeStackScreenProps<MoreStackList, "More">;
@@ -20,6 +21,7 @@ export function MoreScreen({ navigation }: Props) {
         title="금어기"
         onPress={() => navigation.navigate("Prohibited")}
       />
+      <Button title="방생기준" onPress={() => navigation.navigate("Rule")} />
     </View>
   );
 }

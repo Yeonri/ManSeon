@@ -2,10 +2,7 @@ import { Image, ScrollView, View } from "react-native";
 
 export function TutorialScreen() {
   return (
-    <ScrollView
-      contentInsetAdjustmentBehavior="never"
-      contentContainerStyle={{ paddingTop: 0, paddingBottom: 0 }}
-    >
+    <ScrollView>
       <View className="flex-1">
         <Image
           source={require("../../assets/images/tutorial/tutorial_intro.png")}

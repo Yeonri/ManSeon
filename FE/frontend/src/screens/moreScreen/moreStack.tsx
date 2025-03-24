@@ -2,11 +2,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MoreScreen } from "../../screens/moreScreen";
 import { TutorialScreen } from "../../screens/tutorialScreen";
 import { ProhibitedScreen } from "../prohibitedScreen";
+import { RuleScreen } from "../ruleScreen";
 
 type MoreStackList = {
   More: undefined;
   Tutorial: undefined;
   Prohibited: undefined;
+  Rule: undefined;
 };
 
 const Stack = createNativeStackNavigator<MoreStackList>();
@@ -28,6 +30,11 @@ export function MoreStackNavigator() {
         name="Prohibited"
         component={ProhibitedScreen}
         options={{ title: "금어기" }}
+      />
+      <Stack.Screen
+        name="Rule"
+        component={RuleScreen}
+        options={{ title: "방생기준" }}
       />
     </Stack.Navigator>
   );
