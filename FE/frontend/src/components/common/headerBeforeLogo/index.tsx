@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, TouchableOpacity, View } from "react-native";
 import IconBack from "../../../assets/images/icon_back.svg";
 
-export function HeaderBeforeTitle() {
+export function HeaderBeforeLogo() {
   const navigation = useNavigation();
 
   function handleBackPress() {

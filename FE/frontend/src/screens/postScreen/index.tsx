@@ -1,11 +1,11 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Image, Text, View } from "react-native";
-import { CommunityStackParams } from "../../api/types/communityStackParams";
 import { SafeAreaView } from "react-native-safe-area-context";
-import postsMocks from "../../mocks/postsMocks.json";
-import IconLike from "../../assets/images/icon_like.svg";
+import { CommunityStackParams } from "../../api/types/communityStackParams";
 import IconComment from "../../assets/images/icon_comment.svg";
-import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
+import IconLike from "../../assets/images/icon_like.svg";
+import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
+import postsMocks from "../../mocks/postsMocks.json";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -14,7 +14,7 @@ export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   return (
     <SafeAreaView className="mx-5">
-      <HeaderBeforeTitle />
+      <HeaderBeforeLogo />
       <Text className="font-bold mb-2 text-lg">
         {postsMocks[postId - 1].title}
       </Text>
