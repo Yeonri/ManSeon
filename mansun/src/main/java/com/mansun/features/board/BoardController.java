@@ -6,6 +6,7 @@ import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
 import com.mansun.responseDto.board.*;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +25,7 @@ public class BoardController {
     private final BoardServiceImpl boardservice;
 
     //내 게시글 작성
+    @Operation(summary = "게시글 추가")
     @ApiResponses(
             @ApiResponse(responseCode = "200")
     )
@@ -43,6 +45,7 @@ public class BoardController {
 //    }
 
     //전체 게시글 상세 열람 이 기능으로 내 게시물 상세 열람까지 구현
+    @Operation(summary = "전체 게시글 상세 열람")
     @GetMapping("/detail")
     public ResponseEntity<FindBoardResDto> findBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -51,6 +54,7 @@ public class BoardController {
     }
 
     //내 게시글 리스트 열람
+    @Operation(summary = "내 게시글 리스트 열람")
     @GetMapping("/myList")
     public ResponseEntity<List<FindMyBoardListResDto>> findMyBoardList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -59,6 +63,7 @@ public class BoardController {
     }
 
     //내 게시글 수정
+    @Operation(summary = "내 게시글 수정")
     @PatchMapping
     public ResponseEntity<String> updateMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -68,6 +73,7 @@ public class BoardController {
     }
 
     //내 게시글 삭제
+    @Operation(summary = "내 게시글 삭제")
     @DeleteMapping
     public ResponseEntity<String> deleteMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -77,6 +83,7 @@ public class BoardController {
     }
 
     //내 친구 게시글 리스트 열람
+    @Operation(summary = "내 친구의 게시글 리스트 열람")
     @GetMapping
     public ResponseEntity<String> myFriendBoardList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails

@@ -5,6 +5,7 @@ import com.mansun.entity.Users;
 import com.mansun.features.user.service.UserServiceImpl;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -25,6 +25,7 @@ public class UserController {
 
     private final UserServiceImpl userService;
 
+    @Operation(summary = "회원가입")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "OK",
                     content = @Content(
@@ -48,6 +49,7 @@ public class UserController {
     // Service에서는 우선 입력받은 email과 password를 이용해서 DB에서 사람을 찾는다.
     // 해당 사람을 찾을 경우는 CustomUserDetails란 이름으로 객체를 생성해서 그 안에 해당 유저를 넣으면 Security Logic 작동
 
+    @Operation(summary = "회원 정보 변경")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(
@@ -63,6 +65,8 @@ public class UserController {
         return ResponseEntity.ok("회원 정보가 성공적으로 변경되었습니다.");
     }
 
+    
+    @Operation(summary = "회원정보 삭제")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(
@@ -76,7 +80,8 @@ public class UserController {
         userService.deleteUser(customUserDetails.getUserId());
         return ResponseEntity.ok("회원 정보가 삭제되었습니다.");
     }
-
+    
+    @Operation(summary = "닉네임 중복 확인")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK",
                     content = @Content(
