@@ -30,10 +30,7 @@ public class SwaggerConfiguration {
                 .addSecurityItem(securityRequirement)
                 .schemaRequirement("BearerAuth",securityScheme);
     }
-    @Bean
-    public GroupedOpenApi publicApi(){
-        return GroupedOpenApi.builder().group("ssafy").packagesToScan("com.mansun").build();
-    }
+
 
     @Bean
     public GroupedOpenApi UsersApi(){
@@ -43,5 +40,11 @@ public class SwaggerConfiguration {
     @Bean
     public GroupedOpenApi BoardApi(){
         return GroupedOpenApi.builder().group("Board API").packagesToScan("com.mansun.features.board").build();
+    }
+
+
+    @Bean
+    public GroupedOpenApi publicApi(){
+        return GroupedOpenApi.builder().group("All API").packagesToScan("com.mansun").build();
     }
 }
