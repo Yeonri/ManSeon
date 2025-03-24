@@ -21,13 +21,13 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        //클라이언트 요청에서 username, password 추출
+        //클라이언트 요청에서 Email(Spring Security에서는 ID를 username이라고 명명), password 추출
         String email = obtainUsername(request);
         String password = obtainPassword(request);
 
         System.out.println("email과 password의 추출 내용" +email+" "+password);
 
-        //스프링 시큐리티에서 email과 password를 검증하기 위해서는 token에 담아야 함
+        //스프링 시큐리티에서 email과 password를 검증하기 위해서는 UsernamePasswordAuthenticationToken에 담아야 함
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(email, password, null);
 
         //token에 담은 검증을 위한 AuthenticationManager로 전달
@@ -39,7 +39,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
+        //customUserDetails에서 email을 읽어낸다.(customUserDetails에서 왜 username으로 email 읽는지 설명)
         String email=customUserDetails.getUsername();
+        //customUserDetails에서 userId를 읽어내 문자열로 변환한다.
         String userId=String.valueOf(customUserDetails.getUserId());
 
 //        Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
@@ -49,6 +51,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String token=jwtUtil.createJwt(email,userId,60*60*60*10L);
 
+        //Authorization이란 이름으로 response Header에 JWT Token을 추가한다.
         response.addHeader("Authorization","Bearer "+token);
     }
 
