@@ -31,15 +31,43 @@ public class SwaggerConfiguration {
                 .schemaRequirement("BearerAuth",securityScheme);
     }
 
+    @Bean
+    public GroupedOpenApi RecommentApi(){
+        return GroupedOpenApi.builder().group("Recomment API")
+                .packagesToScan(
+                        "com.mansun.features.recomment",
+                        "com.mansun.requestDto.recomment",
+                        "com.mansun.responseDto.comment")
+                .build();
+    }
+    @Bean
+    public GroupedOpenApi CommentApi(){
+        return GroupedOpenApi.builder().group("Comment API")
+                .packagesToScan(
+                        "com.mansun.features.comment",
+                        "com.mansun.requestDto.comment",
+                        "com.mansun.responseDto.comment")
+                .build();
+    }
 
     @Bean
     public GroupedOpenApi UsersApi(){
-        return GroupedOpenApi.builder().group("User API").packagesToScan("com.mansun.features.user").build();
+        return GroupedOpenApi.builder().group("User API")
+                .packagesToScan(
+                        "com.mansun.features.user",
+                        "com.mansun.requestDto.user",
+                        "com.mansun.responseDto.user"
+                ).build();
     }
 
     @Bean
     public GroupedOpenApi BoardApi(){
-        return GroupedOpenApi.builder().group("Board API").packagesToScan("com.mansun.features.board").build();
+        return GroupedOpenApi.builder().group("Board API")
+                .packagesToScan(
+                        "com.mansun.features.board",
+                        "com.mansun.requestDto.board",
+                        "com.mansun.responseDto.board"
+                ).build();
     }
 
 
