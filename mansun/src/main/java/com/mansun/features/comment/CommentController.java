@@ -23,9 +23,6 @@ public class CommentController {
     private final CommentServiceImpl commentService;
 
     @Operation(summary = "댓글 추가")
-    @ApiResponses({
-
-    })
     @PostMapping
     public ResponseEntity<String> createComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -35,9 +32,6 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 수정")
-    @ApiResponses({
-
-    })
     @PatchMapping
     public ResponseEntity<String> updateComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -48,9 +42,6 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 삭제")
-    @ApiResponses({
-
-    })
     @DeleteMapping
     public ResponseEntity<String> deleteComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,

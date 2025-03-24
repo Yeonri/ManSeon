@@ -6,6 +6,7 @@ import com.mansun.features.user.service.UserServiceImpl;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,16 +27,6 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @Operation(summary = "회원가입")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "OK",
-                    content = @Content(
-                            mediaType = "text/plain",
-                            schema = @Schema(type = "string",example = "회원가입 성공")
-                    )),
-            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
-            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
-    })
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody CreateUserReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
@@ -50,13 +41,6 @@ public class UserController {
     // 해당 사람을 찾을 경우는 CustomUserDetails란 이름으로 객체를 생성해서 그 안에 해당 유저를 넣으면 Security Logic 작동
 
     @Operation(summary = "회원 정보 변경")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK",
-                    content = @Content(
-                            mediaType = "text/plain",
-                            schema = @Schema(type = "string",example = "회원 정보가 성공적으로 변경되었습니다.")
-                    )),
-    })
     @PatchMapping
     public ResponseEntity<String> updateUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -67,29 +51,14 @@ public class UserController {
 
     
     @Operation(summary = "회원정보 삭제")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK",
-                    content = @Content(
-                            mediaType = "text/plain",
-                            schema = @Schema(type = "string",example = "회원 정보가 삭제되었습니다.")
-                    )),
-    })
     @DeleteMapping
     public ResponseEntity<String> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
-//        System.out.println(customUserDetails.getUserId());
         userService.deleteUser(customUserDetails.getUserId());
         return ResponseEntity.ok("회원 정보가 삭제되었습니다.");
     }
     
-    @Operation(summary = "닉네임 중복 확인")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK",
-                    content = @Content(
-                            mediaType = "text/plain",
-                            schema = @Schema(type = "string",example = "사용가능한 닉네임입니다.")
-                    )),
-    })
-    //닉네임 중복 체크
+
+    //닉네임 중복 체크    @Operation(summary = "닉네임 중복 확인")
     @GetMapping("/nickname/duplicate")
     public ResponseEntity<String> checkDuplicateNickname(@RequestParam("nickname")String nickname){
         userService.findByNickname(nickname);
