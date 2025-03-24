@@ -49,7 +49,6 @@ public class UserController {
         return ResponseEntity.ok("회원 정보가 성공적으로 변경되었습니다.");
     }
 
-    
     @Operation(summary = "회원정보 삭제")
     @DeleteMapping
     public ResponseEntity<String> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
@@ -58,7 +57,8 @@ public class UserController {
     }
     
 
-    //닉네임 중복 체크    @Operation(summary = "닉네임 중복 확인")
+    //닉네임 중복 체크
+    @Operation(summary = "닉네임 중복 확인")
     @GetMapping("/nickname/duplicate")
     public ResponseEntity<String> checkDuplicateNickname(@RequestParam("nickname")String nickname){
         userService.findByNickname(nickname);
