@@ -53,7 +53,6 @@ export function PostList() {
           </View>
         </TouchableOpacity>
       )}
-      className="mb-60"
     />
   );
 }

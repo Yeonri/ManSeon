@@ -1,4 +1,5 @@
 import {
+  Image,
   ScrollView,
   Text,
   TextInput,
@@ -7,9 +8,20 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { CommunityStackParams } from "../../api/types/communityStackParams";
+import { useState } from "react";
 import { UploadImage } from "../../components/community/uploadImage";
 
-export function PostAddScreen() {
+interface PostEditScreenProps
+  extends NativeStackScreenProps<CommunityStackParams, "EditPost"> {}
+
+export function PostEditScreen({ route }: PostEditScreenProps) {
+  const { postId, title, content, postImg } = route.params;
+  const [editTitle, setEditTitle] = useState(title);
+  const [editContent, setEditContent] = useState(content);
+  const [editPostImg, setEditPostImg] = useState(postImg);
+
   return (
     <SafeAreaView>
       <View className="mx-5">
@@ -21,6 +33,8 @@ export function PostAddScreen() {
             <Text className="text-lg font-bold color-stone-600">제목</Text>
             <View className="border-b border-stone-200">
               <TextInput
+                value={editTitle}
+                onChangeText={setEditTitle}
                 placeholder="제목을 입력해주세요"
                 textAlignVertical="center"
                 className="ml-3 my-2"
@@ -31,14 +45,25 @@ export function PostAddScreen() {
             <Text className="text-lg font-bold color-stone-600">
               사진 업로드
             </Text>
-            <TouchableOpacity onPress={() => {}}>
-              <UploadImage />
-            </TouchableOpacity>
+            {editPostImg ? (
+              <TouchableOpacity onPress={() => {}}>
+                <Image
+                  source={{ uri: editPostImg }}
+                  className="w-full h-48 rounded-lg"
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => {}}>
+                <UploadImage />
+              </TouchableOpacity>
+            )}
           </View>
           <View className="gap-5">
             <Text className="text-lg font-bold color-stone-600">내용</Text>
             <View className="border border-stone-200 rounded-lg min-h-48">
               <TextInput
+                value={editContent}
+                onChangeText={setEditContent}
                 placeholder="내용을 입력해주세요"
                 textAlignVertical="center"
                 multiline={true}

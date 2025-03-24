@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Button, Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CommunityStackParams } from "../../api/types/communityStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
@@ -20,12 +20,15 @@ export function CommunityScreen() {
         <Text>내가 팔로잉한 친구 게시글</Text>
         <FollowingPost />
       </View>
-      <Button
+      <TouchableOpacity
         onPress={() => navigation.navigate("AddPost")}
-        title="게시글 작성하기"
-        color="#3A84EF"
-      />
-      <PostList />
+        className="bg-blue-500 rounded-xl mb-2 py-3 items-center"
+      >
+        <Text className="text-white font-bold">게시글 작성하기</Text>
+      </TouchableOpacity>
+      <View className="flex-1">
+        <PostList />
+      </View>
     </SafeAreaView>
   );
 }

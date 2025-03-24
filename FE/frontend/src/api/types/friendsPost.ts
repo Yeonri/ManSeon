@@ -1,8 +1,7 @@
 export type FriendsPost = {
-  boardId: Number;
-  title: string;
+  postId: number;
+  userId: number;
   createdAt: string;
-  nickname: string;
   profileImg: string;
   postImg: string;
 };
