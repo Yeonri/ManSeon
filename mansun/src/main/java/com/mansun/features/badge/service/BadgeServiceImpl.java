@@ -1,10 +1,13 @@
 package com.mansun.features.badge.service;
 
+import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.badge.Badges;
 import com.mansun.features.badge.repository.BadgeRepository;
+import com.mansun.features.badge.repository.UserBadgeRepository;
 import com.mansun.requestDto.badge.CreateBadgeReqDto;
 import com.mansun.requestDto.badge.updateBadgeReqDto;
 import com.mansun.responseDto.badges.allBadgeListResDto;
+import com.mansun.responseDto.badges.allBadgesByUserResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,10 +46,7 @@ public class BadgeServiceImpl implements BadgeService {
 
     @Override
     public void updateBadge(updateBadgeReqDto badgeParam) {
-        Long badgeId=badgeParam.getBadgeId();
-        Badges findBadge = badgeRepository.findById(badgeId).orElseThrow();
-        findBadge.setBadgeName(badgeParam.getBadgeName());
-        findBadge.setbadgena
+
     }
 
     @Override
