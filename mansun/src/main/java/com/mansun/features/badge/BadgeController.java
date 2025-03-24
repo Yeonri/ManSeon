@@ -61,6 +61,8 @@ public class BadgeController {
         return ResponseEntity.ok("업적 달성으로 뱃지가 추가되었습니다.");
     }
 
+    //사용자의 뱃지 리스트 추가 기능 구현을 위해서는 Fish 기능이 완료되어야 한다.
+
     //각 사용자의 뱃지 리스트
     @GetMapping
     public ResponseEntity<List<allBadgesByUserResDto>> getAllBadgesByUser(
