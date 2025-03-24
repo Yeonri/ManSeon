@@ -14,9 +14,9 @@ export function CommunityScreen() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
 
   return (
-    <SafeAreaView className="p-5">
+    <SafeAreaView className="mx-5 my-2">
       <HeaderLogo />
-      <View>
+      <View className="mt-2">
         <Text>내가 팔로잉한 친구 게시글</Text>
         <FollowingPost />
       </View>

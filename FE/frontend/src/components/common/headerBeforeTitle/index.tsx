@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Text, TouchableOpacity, View } from "react-native";
 import IconBack from "../../../assets/images/icon_back.svg";
 
-export function HeaderBeforeTitle() {
+export function HeaderBeforeTitle({ name }: { name: string }) {
   const navigation = useNavigation();
 
   function handleBackPress() {
@@ -10,12 +10,12 @@ export function HeaderBeforeTitle() {
   }
 
   return (
-    <View className="flex-row items-center relative my-5">
+    <View className="h-10 flex-row items-center relative my-2">
       <TouchableOpacity onPress={handleBackPress}>
         <IconBack />
       </TouchableOpacity>
-      <Text className="absolute left-0 right-0 text-center font-custom text-5xl color-blue-800">
-        만선
+      <Text className="absolute left-0 right-0 text-center font-bold text-xl color-blue-600">
+        {name}
       </Text>
     </View>
   );

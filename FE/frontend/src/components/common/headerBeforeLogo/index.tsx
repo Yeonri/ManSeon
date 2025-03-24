@@ -10,11 +10,11 @@ export function HeaderBeforeLogo() {
   }
 
   return (
-    <View className="flex-row items-center relative my-5">
+    <View className="h-10 flex-row items-center relative my-2">
       <TouchableOpacity onPress={handleBackPress}>
         <IconBack />
       </TouchableOpacity>
-      <Text className="absolute left-0 right-0 text-center font-custom text-5xl color-blue-800">
+      <Text className="absolute left-0 right-0 text-center font-custom text-4xl color-blue-800">
         만선
       </Text>
     </View>

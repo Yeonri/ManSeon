@@ -1,12 +1,12 @@
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import postsMocks from "../../../mocks/postsMocks.json";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { CommunityStackParams } from "../../../api/types/communityStackParams";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { CommunityStackParams } from "../../../api/types/communityStackParams";
 import IconComment from "../../../assets/images/icon_comment.svg";
 import IconLike from "../../../assets/images/icon_like.svg";
+import postsMocks from "../../../mocks/postsMocks.json";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -53,7 +53,7 @@ export function PostList() {
           </View>
         </TouchableOpacity>
       )}
-      className="mb-70"
+      className="mb-60"
     />
   );
 }
