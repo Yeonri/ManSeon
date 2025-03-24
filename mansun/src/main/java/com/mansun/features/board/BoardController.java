@@ -5,6 +5,7 @@ import com.mansun.features.board.service.BoardServiceImpl;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
+import com.mansun.responseDto.OnlyMessageResDto;
 import com.mansun.responseDto.board.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -28,12 +29,12 @@ public class BoardController {
             @ApiResponse(responseCode = "200")
     )
     @PostMapping
-    public ResponseEntity<String> createBoard(
+    public ResponseEntity<OnlyMessageResDto> createBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateBoardReqDto req) {
         boardservice.createBoard(customUserDetails,req);
 
-        return ResponseEntity.ok("성공적으로 게시물이 생성되었습니다.");
+        return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시물이 생성되었습니다."));
     }
     //전체 게시글 리스트 아직 프론트가 무한 스크롤인지 페이징인지 얘기 안해줌 -> 페이징 필요함 차후에 구현
 //    @GetMapping("/all/{page}")
@@ -60,25 +61,25 @@ public class BoardController {
 
     //내 게시글 수정
     @PatchMapping
-    public ResponseEntity<String> updateMyBoard(
+    public ResponseEntity<OnlyMessageResDto> updateMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody UpdateMyBoardReqDto req) {
         boardservice.updateMyBoard(customUserDetails,req);
-        return ResponseEntity.ok("성공적으로 게시글이 수정되었습니다");
+        return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시글이 수정되었습니다"));
     }
 
     //내 게시글 삭제
     @DeleteMapping
-    public ResponseEntity<String> deleteMyBoard(
+    public ResponseEntity<OnlyMessageResDto> deleteMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody DeleteMyBoardReqDto req){
         boardservice.deleteMyBoard(customUserDetails,req);
-        return ResponseEntity.ok("성공적으로 게시글이 삭제되었습니다.");
+        return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시글이 삭제되었습니다."));
     }
 
     //내 친구 게시글 리스트 열람
     @GetMapping
-    public ResponseEntity<String> myFriendBoardList(
+    public ResponseEntity<OnlyMessageResDto> myFriendBoardList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
         return null;
