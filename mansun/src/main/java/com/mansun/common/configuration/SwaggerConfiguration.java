@@ -11,40 +11,33 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfiguration {
-    @Bean
-    public OpenAPI openAPI() {
-        SecurityScheme securityScheme = new SecurityScheme()
-                .type(SecurityScheme.Type.HTTP)
-                .scheme("bearer")
-                .bearerFormat("JWT")
-                .in(SecurityScheme.In.HEADER)
-                .name("Authorization");
+	@Bean
+	public OpenAPI openAPI() {
+		SecurityScheme securityScheme = new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer")
+				.bearerFormat("JWT").in(SecurityScheme.In.HEADER).name("Authorization");
 
-        // Security Requirement 정의
-        SecurityRequirement securityRequirement = new SecurityRequirement().addList("BearerAuth");
+		// Security Requirement 정의
+		SecurityRequirement securityRequirement = new SecurityRequirement().addList("BearerAuth");
 
-        Info info = new Info().title("SSAFY 특화 프로젝트 API 명세서").description("").version("V3")
-                .contact(new io.swagger.v3.oas.models.info.Contact().name("Jinny"));
+		Info info = new Info().title("SSAFY 특화 프로젝트 API 명세서").description("").version("V3")
+				.contact(new io.swagger.v3.oas.models.info.Contact().name("Jinny"));
 
-        return new OpenAPI().components(new Components()).info(info)
-                .addSecurityItem(securityRequirement)
-                .schemaRequirement("BearerAuth",securityScheme);
-    }
+		return new OpenAPI().components(new Components()).info(info).addSecurityItem(securityRequirement)
+				.schemaRequirement("BearerAuth", securityScheme);
+	}
 
+	@Bean
+	public GroupedOpenApi UsersApi() {
+		return GroupedOpenApi.builder().group("User API").packagesToScan("com.mansun.features.user").build();
+	}
 
-    @Bean
-    public GroupedOpenApi UsersApi(){
-        return GroupedOpenApi.builder().group("User API").packagesToScan("com.mansun.features.user").build();
-    }
+	@Bean
+	public GroupedOpenApi BoardApi() {
+		return GroupedOpenApi.builder().group("Board API").packagesToScan("com.mansun.features.board").build();
+	}
 
-    @Bean
-    public GroupedOpenApi BoardApi(){
-        return GroupedOpenApi.builder().group("Board API").packagesToScan("com.mansun.features.board").build();
-    }
-
-
-    @Bean
-    public GroupedOpenApi publicApi(){
-        return GroupedOpenApi.builder().group("All API").packagesToScan("com.mansun").build();
-    }
+	@Bean
+	public GroupedOpenApi publicApi() {
+		return GroupedOpenApi.builder().group("All API").packagesToScan("com.mansun").build();
+	}
 }

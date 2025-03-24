@@ -46,7 +46,7 @@ public class UserController {
     }
 
     // 로그인 과정의 대략적인 설명 : 해당 요청 mapping은 이곳에 있지 않다.
-    // service의 loadbyusername 참고
+    // service의 loadbyusername과 common/auth/SecurityConfig 참고
     // Service에서는 우선 입력받은 email과 password를 이용해서 DB에서 사람을 찾는다.
     // 해당 사람을 찾을 경우는 CustomUserDetails란 이름으로 객체를 생성해서 그 안에 해당 유저를 넣으면 Security Logic 작동
 
