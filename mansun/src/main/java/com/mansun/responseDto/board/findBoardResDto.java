@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class findBoardResDto {
+public class FindBoardResDto {
     String title;
     String content;
 }

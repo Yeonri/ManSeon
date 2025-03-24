@@ -2,9 +2,9 @@ package com.mansun.features.board;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.features.board.service.BoardServiceImpl;
-import com.mansun.requestDto.board.createBoardReqDto;
-import com.mansun.requestDto.board.deleteMyBoardReqDto;
-import com.mansun.requestDto.board.updateMyBoardReqDto;
+import com.mansun.requestDto.board.CreateBoardReqDto;
+import com.mansun.requestDto.board.DeleteMyBoardReqDto;
+import com.mansun.requestDto.board.UpdateMyBoardReqDto;
 import com.mansun.responseDto.board.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -30,7 +30,7 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<String> createBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody createBoardReqDto req) {
+            @RequestBody CreateBoardReqDto req) {
         boardservice.createBoard(customUserDetails,req);
 
         return ResponseEntity.ok("성공적으로 게시물이 생성되었습니다.");
@@ -44,7 +44,7 @@ public class BoardController {
 
     //전체 게시글 상세 열람 이 기능으로 내 게시물 상세 열람까지 구현
     @GetMapping("/detail")
-    public ResponseEntity<findBoardResDto> findBoard(
+    public ResponseEntity<FindBoardResDto> findBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam(value = "board_id",required = true) long boardId) {
         return ResponseEntity.ok(boardservice.findBoard(boardId));
@@ -52,9 +52,9 @@ public class BoardController {
 
     //내 게시글 리스트 열람
     @GetMapping("/myList")
-    public ResponseEntity<List<findMyBoardListResDto>> findMyBoardList(
+    public ResponseEntity<List<FindMyBoardListResDto>> findMyBoardList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        List<findMyBoardListResDto> myBoardList =boardservice.findMyBoardList(customUserDetails);
+        List<FindMyBoardListResDto> myBoardList =boardservice.findMyBoardList(customUserDetails);
         return ResponseEntity.ok(myBoardList);
     }
 
@@ -62,7 +62,7 @@ public class BoardController {
     @PatchMapping
     public ResponseEntity<String> updateMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody updateMyBoardReqDto req) {
+            @RequestBody UpdateMyBoardReqDto req) {
         boardservice.updateMyBoard(customUserDetails,req);
         return ResponseEntity.ok("성공적으로 게시글이 수정되었습니다");
     }
@@ -71,7 +71,7 @@ public class BoardController {
     @DeleteMapping
     public ResponseEntity<String> deleteMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody deleteMyBoardReqDto req){
+            @RequestBody DeleteMyBoardReqDto req){
         boardservice.deleteMyBoard(customUserDetails,req);
         return ResponseEntity.ok("성공적으로 게시글이 삭제되었습니다.");
     }

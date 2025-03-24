@@ -3,6 +3,6 @@ package com.mansun.requestDto.board;
 import lombok.Getter;
 
 @Getter
-public class deleteMyBoardReqDto {
+public class DeleteMyBoardReqDto {
    private Long boardId;
 }
