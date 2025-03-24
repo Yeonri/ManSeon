@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
-@Schema(name = "회원가입할 유저의 필요 정보")
+@Schema(description = "회원가입할 유저의 필요 정보")
 public class CreateUserReqDto {
     @Schema(defaultValue = "1234@naver.com")
     private String email;
