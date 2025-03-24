@@ -2,10 +2,12 @@ package com.mansun.entity.follow;
 
 import com.mansun.entity.Users;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 public class Follower {
     @Id
     @GeneratedValue

@@ -5,6 +5,8 @@ import com.mansun.entity.badge.Badges;
 import com.mansun.entity.badge.UserBadge;
 import com.mansun.entity.board.Board;
 import com.mansun.entity.fish.Fish;
+import com.mansun.entity.follow.Follower;
+import com.mansun.entity.follow.Following;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +42,12 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private List<Fish> fishes;
+
+    @OneToMany(mappedBy = "user")
+    private List<Follower> follower;
+
+    @OneToMany(mappedBy = "user")
+    private List<Following> following;
 
     //    Column
     @Schema(description = "유저의 이메일")
