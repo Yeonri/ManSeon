@@ -26,7 +26,7 @@ public class UserController {
     private final UserServiceImpl userService;
 
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK",
+            @ApiResponse(responseCode = "201", description = "OK",
                     content = @Content(
                             mediaType = "text/plain",
                             schema = @Schema(type = "string",example = "회원가입 성공")
