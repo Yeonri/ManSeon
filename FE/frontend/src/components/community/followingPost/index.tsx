@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList, Image, TouchableOpacity, View } from "react-native";
-import { CommunityStackParams } from "../../../api/types/communityStackParams";
+import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import friendsPostMocks from "../../../mocks/friendsPostMocks.json";
 
 interface CommunityScreenNavigationProps

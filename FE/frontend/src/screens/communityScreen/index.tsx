@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CommunityStackParams } from "../../api/types/communityStackParams";
+import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { FollowingPost } from "../../components/community/followingPost";
 import { PostList } from "../../components/community/postList";
@@ -26,9 +26,7 @@ export function CommunityScreen() {
       >
         <Text className="text-white font-bold">게시글 작성하기</Text>
       </TouchableOpacity>
-      <View className="flex-1">
-        <PostList />
-      </View>
+      <PostList />
     </SafeAreaView>
   );
 }

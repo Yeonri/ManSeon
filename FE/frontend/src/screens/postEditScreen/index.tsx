@@ -1,3 +1,5 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useState } from "react";
 import {
   Image,
   ScrollView,
@@ -7,10 +9,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { CommunityStackParams } from "../../api/types/communityStackParams";
-import { useState } from "react";
 import { UploadImage } from "../../components/community/uploadImage";
 
 interface PostEditScreenProps

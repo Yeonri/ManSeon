@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { CommunityStackParams } from "../../../api/types/communityStackParams";
+import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import IconComment from "../../../assets/images/icon_comment.svg";
 import IconLike from "../../../assets/images/icon_like.svg";
 import postsMocks from "../../../mocks/postsMocks.json";

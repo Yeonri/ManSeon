@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
@@ -6,15 +7,17 @@ import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CommunityStackParams } from "../../api/types/communityStackParams";
+import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import IconComment from "../../assets/images/icon_comment.svg";
 import IconDelete from "../../assets/images/icon_delete.svg";
 import IconEdit from "../../assets/images/icon_edit.svg";
 import IconLike from "../../assets/images/icon_like.svg";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
+import { AddComment } from "../../components/community/addComment";
+import { CommentList } from "../../components/community/commentList";
+import commentsMocks from "../../mocks/commentsMocks.json";
 import postsMocks from "../../mocks/postsMocks.json";
-import { useNavigation } from "@react-navigation/native";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -50,7 +53,9 @@ export function PostScreen({ route }: PostScreenProps) {
               source={{ uri: postsMocks[postId - 1].profileImg }}
               className="w-10 h-10 rounded-full"
             />
-            <Text>{postsMocks[postId - 1].nickname}</Text>
+            <Text className="font-semibold">
+              {postsMocks[postId - 1].nickname}
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}} className="h-4">
             <TagFollow />
@@ -73,7 +78,9 @@ export function PostScreen({ route }: PostScreenProps) {
           <TouchableOpacity onPress={() => createDeleteAlert()} className="h-6">
             <IconDelete />
           </TouchableOpacity>
-          <Text>{formatTime(postsMocks[postId - 1].createAt)}</Text>
+          <Text className="text-neutral-400 text-sm">
+            {formatTime(postsMocks[postId - 1].createAt)}
+          </Text>
         </View>
       </View>
       <View className="my-3 gap-3">
@@ -90,6 +97,8 @@ export function PostScreen({ route }: PostScreenProps) {
         <IconLike />
         <Text className="ml-1">{postsMocks[postId - 1].like}</Text>
       </View>
+      <AddComment />
+      <CommentList comments={commentsMocks} />
     </SafeAreaView>
   );
 }

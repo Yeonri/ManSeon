@@ -1,0 +1,100 @@
+[
+  {
+    "commentId": 1,
+    "postId": 1,
+    "userId": 102,
+    "nickname": "김동휘",
+    "profileImg": "https://i.pinimg.com/736x/22/8b/6d/228b6d0349a757640dfda98c3b1bb2b3.jpg",
+    "commentContent": "이 포인트 진짜 좋네요! 저도 가봤어요.",
+    "createAt": "2025-03-23T19:05:00Z",
+    "RecommentNum": 2,
+    "RecommentList": [
+      {
+        "recommentId": 1,
+        "userId": 107,
+        "nickname": "NightFisher",
+        "profileImg": "https://i.pinimg.com/474x/fa/be/d2/fabed24c0c83f8e81a96d5da2b94581c.jpg",
+        "recommentContent": "이 포인트에서 감성돔도 나오나요? 감성돔을 잡아 보고싶어요.",
+        "createAt": "2025-03-23T20:00:00Z"
+      },
+      {
+        "recommentId": 5,
+        "userId": 108,
+        "nickname": "TackleExpert",
+        "profileImg": "https://i.pinimg.com/474x/33/74/ac/3374acc4e3429de39727e3bd504a47c5.jpg",
+        "recommentContent": "저도 궁금합니다.",
+        "createAt": "2025-03-24T10:00:00Z"
+      }
+    ]
+  },
+  {
+    "commentId": 2,
+    "postId": 1,
+    "userId": 103,
+    "nickname": "이민상",
+    "profileImg": "https://i.pinimg.com/736x/27/d0/ce/27d0ce39cbe42aa70c60c8bb31accf85.jpg",
+    "commentContent": "미끼는 뭘 사용하셨나요?",
+    "createAt": "2025-03-24T10:05:00Z",
+    "RecommentNum": 1,
+    "RecommentList": [
+      {
+        "recommentId": 3,
+        "userId": 109,
+        "nickname": "ShoreAngler",
+        "profileImg": "https://i.pinimg.com/474x/39/bd/40/39bd40fa120dc120c76492f3227686b0.jpg",
+        "recommentContent": "사진 보니까 지렁이 같아요.",
+        "createAt": "2025-03-24T23:00:00Z"
+      }
+    ]
+  },
+  {
+    "commentId": 3,
+    "postId": 1,
+    "userId": 104,
+    "nickname": "이세중",
+    "profileImg": "https://i.pinimg.com/474x/fd/9b/e4/fd9be4e0178312136a1dca4f45c9c271.jpg",
+    "commentContent": "여긴 처음 듣는 포인트인데, 정보 감사합니다!",
+    "createAt": "2025-03-24T15:05:00Z",
+    "RecommentNum": 0,
+    "RecommentList": []
+  },
+  {
+    "commentId": 4,
+    "postId": 1,
+    "userId": 105,
+    "nickname": "김혜민",
+    "commentContent": "물색이 어떤가요? 깨끗한가요?",
+    "profileImg": "https://i.pinimg.com/474x/45/37/93/4537932e76ebcc6186f86b75d9eeac87.jpg",
+    "createAt": "2025-03-24T22:05:00Z",
+    "RecommentNum": 2,
+    "RecommentList": [
+      {
+        "recommentId": 2,
+        "userId": 111,
+        "nickname": "SaltwaterGuru",
+        "profileImg": "https://i.pinimg.com/474x/94/51/63/9451639e0e69b96b5b6e5a347585416e.jpg",
+        "recommentContent": "여기 물색 좋아요!",
+        "createAt": "2025-03-24T22:13:00Z"
+      },
+      {
+        "recommentId": 4,
+        "userId": 110,
+        "nickname": "BassMaster",
+        "profileImg": "https://i.pinimg.com/474x/00/4a/bc/004abc4bc30ebe198cafbd415d5c330f.jpg",
+        "recommentContent": "깨끗합니다.",
+        "createAt": "2025-03-25T08:00:00Z"
+      }
+    ]
+  },
+  {
+    "commentId": 5,
+    "postId": 1,
+    "userId": 106,
+    "nickname": "이진형",
+    "profileImg": "https://i.pinimg.com/474x/18/8c/2b/188c2b99ae7285c3f2d8b5fb137abc55.jpg",
+    "commentContent": "최신 장비 정말 좋아요! 다양한 기능이 너무 유용하네요.",
+    "createAt": "2025-03-25T12:05:00Z",
+    "RecommentNum": 0,
+    "RecommentList": []
+  }
+]

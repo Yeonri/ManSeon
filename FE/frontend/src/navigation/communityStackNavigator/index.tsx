@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CommunityStackParams } from "../../api/types/communityStackParams";
+import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import { CommunityScreen } from "../../screens/communityScreen";
 import { PostAddScreen } from "../../screens/postAddScreen";
 import { PostEditScreen } from "../../screens/postEditScreen";
