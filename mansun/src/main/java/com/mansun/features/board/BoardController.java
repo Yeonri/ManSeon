@@ -1,6 +1,7 @@
 package com.mansun.features.board;
 
 import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.entity.board.Board;
 import com.mansun.features.board.service.BoardServiceImpl;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
@@ -33,15 +34,24 @@ public class BoardController {
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateBoardReqDto req) {
         boardservice.createBoard(customUserDetails,req);
-
         return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시물이 생성되었습니다."));
     }
+
+    @Operation(summary = "전체 게시글 리스트")
+    @GetMapping("/all")
+    public ResponseEntity<List<allBoardListResDto>> allBoardList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam("postId") Long postId
+    ){
+        return null;
+    }
+
 
     // 전체 게시글 상세 열람 (내 게시물 상세 열람 포함)
     @Operation(summary = "전체 게시글 상세 열람",parameters = {
             @Parameter(name = "id",description = "게시판 아이디",required = true)
     })
-    @GetMapping("/detail")
+    @GetMapping("/all/detail")
     public ResponseEntity<FindBoardResDto> findBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam(value = "board_id", required = true) long boardId) {
@@ -63,7 +73,7 @@ public class BoardController {
     public ResponseEntity<OnlyMessageResDto> updateMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody UpdateMyBoardReqDto req) {
-        boardservice.updateMyBoard(customUserDetails,req);
+        Board board= boardservice.updateMyBoard(customUserDetails,req);
         return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시글이 수정되었습니다"));
     }
 

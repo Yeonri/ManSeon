@@ -1,6 +1,7 @@
 package com.mansun.features.board.service;
 
 import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.entity.board.Board;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
@@ -22,7 +23,7 @@ public interface BoardService {
     public List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails);
     
     //내 게시판 글 수정
-    public void updateMyBoard(
+    public Board updateMyBoard(
             CustomUserDetails customUserDetails,
             UpdateMyBoardReqDto boardParam);
     

@@ -1,6 +1,7 @@
 package com.mansun.features.board.service;
 
 import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.common.utils.NullAwareBeanUtils;
 import com.mansun.entity.board.Board;
 import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.requestDto.board.CreateBoardReqDto;
@@ -9,10 +10,12 @@ import com.mansun.requestDto.board.UpdateMyBoardReqDto;
 import com.mansun.responseDto.board.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional
@@ -40,9 +43,11 @@ public class BoardServiceImpl implements BoardService {
                 .toList();
     }
 
-    //boardId을 이용해서 게시글을 찾는 함수
-    public FindBoardResDto findBoard(Long boardId) {
-        Board findboard = boardrepository.findById(boardId).orElseThrow();
+    //postId을 이용해서 게시글을 찾는 함수
+    public FindBoardResDto findBoard(Long postId) {
+        Board findboard = boardrepository.findById(postId).orElseThrow(
+                ()-> new NoSuchElementException("게시글이 없습니다")
+        );
         return FindBoardResDto
                 .builder()
                 .title(findboard.getTitle())
@@ -61,8 +66,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public void updateMyBoard(CustomUserDetails customUserDetails, UpdateMyBoardReqDto boardParam) {
-        Board board = boardrepository.findById(boardParam.getPostId()).orElseThrow();
+    public Board updateMyBoard(
+            CustomUserDetails customUserDetails,
+            UpdateMyBoardReqDto req) {
+        Board findboard = boardrepository.findById(req.getPostId()).orElseThrow();
+        BeanUtils.copyProperties(req,findboard,NullAwareBeanUtils.getNullPropertyNames(req));
+        return findboard;
     }
 
     //내 게시물을 지운다

@@ -24,11 +24,11 @@ public class Board {
 
     //게시글 생성을 위한 생성자
     public Board(CustomUserDetails customUserDetails, CreateBoardReqDto req) {
-        this.user.setUserId(customUserDetails.getUserId());
+        Users user=new Users(customUserDetails);
+        this.setUser(user);
         this.setTitle(req.getTitle());
         this.setContent(req.getContent());
         this.setCreatedAt(LocalDateTime.now());
-
     }
 
     //연관 관계
