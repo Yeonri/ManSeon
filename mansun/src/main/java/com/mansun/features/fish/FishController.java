@@ -1,9 +1,9 @@
 package com.mansun.features.fish;
 
 import com.mansun.common.auth.CustomUserDetails;
+
 import com.mansun.features.fish.service.FishTypeServiceImpl;
 
-import com.mansun.requestDto.fish.CreateFishReqDto;
 import com.mansun.requestDto.fish.CreateFishTypeReqDto;
 import com.mansun.responseDto.OnlyMessageResDto;
 

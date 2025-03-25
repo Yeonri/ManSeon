@@ -16,7 +16,7 @@ import java.util.List;
 public class FishType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int fishType;
+    private Long fishType;
 
     //    연관 관계
     @OneToMany(mappedBy = "fishType")
