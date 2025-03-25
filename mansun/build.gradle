@@ -44,7 +44,14 @@ dependencies {
 	//스프링 시큐리티 추가 Oauth의 설정 용이함과 비밀번호 Encoding을 위해서 추가 별도의 필터 설정은 하지 않을 생각
 	implementation "org.springframework.boot:spring-boot-starter-security"
 
-	compileOnly 'org.projectlombok:lombok'
+	//Querydsl 추가
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'

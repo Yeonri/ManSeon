@@ -7,17 +7,17 @@ import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
 import com.mansun.responseDto.OnlyMessageResDto;
 
+import com.mansun.responseDto.getMyFollowerResDto;
+import com.mansun.responseDto.getMyFollowingResDto;
+import com.mansun.responseDto.user.getMyInfoResDto;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -66,5 +66,29 @@ public class UserController {
     public ResponseEntity<OnlyMessageResDto> checkDuplicateNickname(@RequestParam("nickname")String nickname){
         userService.findByNickname(nickname);
         return ResponseEntity.ok(new OnlyMessageResDto("사용가능한 닉네임입니다."));
+    }
+
+    @Operation(summary = "내 정보 가져오기")
+    @GetMapping
+    public ResponseEntity<getMyInfoResDto> getMyInformation(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ){
+        return ResponseEntity.ok(userService.findById(customUserDetails));
+    }
+
+    @Operation(summary = "팔로잉 리스트 가져오기")
+    @GetMapping("/followings")
+    public ResponseEntity<List<getMyFollowingResDto>> getMyFollowingList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ){
+        return ResponseEntity.ok(userService.getMyFollowingFindById(customUserDetails));
+    }
+
+    @Operation(summary="팔로워 리스트 가져오기")
+    @GetMapping("/followers")
+    public ResponseEntity<List<getMyFollowerResDto>> getMyFollowerList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ){
+        return ResponseEntity.ok(userService.getMyFollowerFindById(customUserDetails));
     }
 }
