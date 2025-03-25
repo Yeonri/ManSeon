@@ -7,6 +7,7 @@ import com.mansun.requestDto.recomment.DeleteRecommentReqDto;
 import com.mansun.requestDto.recomment.UpdateRecommentReqDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +24,7 @@ public class RecommentController {
     @PostMapping
     public ResponseEntity<String> createRecomment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            CreateRecommentReqDto req){
+            @Valid CreateRecommentReqDto req){
 
         service.createRecomment();
         return null;
@@ -40,7 +41,7 @@ public class RecommentController {
 
     @Operation(summary = "대댓글 삭제")
     @DeleteMapping
-    public ResponseEntity<String> updateRecomment(
+    public ResponseEntity<String> deleteRecomment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             DeleteRecommentReqDto req){
         service.deleteRecomment();
