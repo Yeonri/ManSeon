@@ -50,7 +50,7 @@ export function PostScreen({ route }: PostScreenProps) {
   return (
     <SafeAreaView>
       <HeaderBeforeLogo />
-      <ScrollView className="px-5">
+      <ScrollView className="px-5 mt-2">
         <Text className="font-bold mb-2 text-lg">
           {postsMocks[postId - 1].title}
         </Text>

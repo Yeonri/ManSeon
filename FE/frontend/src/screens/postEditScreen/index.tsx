@@ -24,9 +24,7 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
 
   return (
     <SafeAreaView>
-      <View className="mx-5">
-        <HeaderBeforeTitle name="게시글 작성" />
-      </View>
+      <HeaderBeforeTitle name="게시글 수정" />
       <ScrollView className="mb-10">
         <View className="mx-10 my-5 mb-14 gap-10">
           <View>

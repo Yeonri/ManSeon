@@ -10,10 +10,11 @@ export function HeaderBeforeTitle({ name }: { name: string }) {
   }
 
   return (
-    <View className="h-10 flex-row items-center relative my-5">
-      <TouchableOpacity onPress={handleBackPress}>
+    <View className="px-5 h-10 flex-row items-center relative">
+      <TouchableOpacity onPress={handleBackPress} className="z-10">
         <IconBack />
       </TouchableOpacity>
+
       <Text className="absolute left-0 right-0 text-center font-bold text-xl color-blue-600">
         {name}
       </Text>
