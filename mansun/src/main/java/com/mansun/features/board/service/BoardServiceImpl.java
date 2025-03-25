@@ -30,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
     //userId를 이용해서 게시글을 찾는 함수
     @Override
     public List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails) {
-        return boardrepository.findBoardsByUser_UserId(customUserDetails.getUserId())
+        return boardrepository.findByUser_UserId(customUserDetails.getUserId())
                 .stream()
                 .map(board -> FindMyBoardListResDto
                         .builder()

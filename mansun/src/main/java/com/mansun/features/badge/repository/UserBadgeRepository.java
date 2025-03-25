@@ -9,5 +9,7 @@ import java.util.List;
 
 @Repository
 public interface UserBadgeRepository extends JpaRepository<UserBadge,Long> {
-    public List<Badges> findByUser_UserId(Long userId);
+    public List<UserBadge> findByUser_UserId(Long userId);
+
+
 }
