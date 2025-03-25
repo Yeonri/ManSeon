@@ -17,7 +17,7 @@ export function FollowingPost() {
     <FlatList
       data={friendsPostMocks}
       renderItem={({ item }) => (
-        <View className="relative mx-1 my-3">
+        <View className="relative mx-1 my-1">
           <TouchableOpacity onPress={() => handlePostClick(item.postId)}>
             <Image
               source={{

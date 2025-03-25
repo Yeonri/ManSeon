@@ -7,7 +7,6 @@ import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import IconComment from "../../../assets/images/icon_comment.svg";
 import IconLike from "../../../assets/images/icon_like.svg";
 import postsMocks from "../../../mocks/postsMocks.json";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -24,14 +23,14 @@ export function PostList() {
   }
 
   return (
-    <SafeAreaView>
+    <View className="mt-3 mb-5">
       <FlatList
         data={postsMocks}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => handlePostClick(item.postId)}>
             <View className="bg-blue-50 my-1 p-3 rounded-xl flex-row justify-between items-center">
               <View>
-                <Text className="font-bold mb-2 text-lg">{item.title}</Text>
+                <Text className="font-bold mb-1 text-lg">{item.title}</Text>
                 <View className="flex-row items-center mb-2">
                   <Image
                     source={{ uri: item.profileImg }}
@@ -57,6 +56,6 @@ export function PostList() {
         )}
         scrollEnabled={false}
       />
-    </SafeAreaView>
+    </View>
   );
 }

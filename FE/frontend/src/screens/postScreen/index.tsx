@@ -108,7 +108,9 @@ export function PostScreen({ route }: PostScreenProps) {
           <IconLike />
           <Text className="ml-1">{postsMocks[postId - 1].like}</Text>
         </View>
-        <AddComment />
+        <View className="my-4">
+          <AddComment />
+        </View>
         <CommentList comments={commentsMocks} />
       </ScrollView>
     </SafeAreaView>

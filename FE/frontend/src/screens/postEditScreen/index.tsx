@@ -26,7 +26,7 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
     <SafeAreaView>
       <HeaderBeforeTitle name="게시글 수정" />
       <ScrollView className="mb-10">
-        <View className="mx-10 my-5 mb-14 gap-10">
+        <View className="mx-5 my-5 mb-14 gap-10">
           <View>
             <Text className="text-lg font-bold color-stone-600">제목</Text>
             <View className="border-b border-stone-200">
