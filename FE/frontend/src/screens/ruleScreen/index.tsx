@@ -9,7 +9,7 @@ export function RuleScreen() {
   const selectList = selected === "바다" ? ruleSeaList : ruleFreashwaterList;
 
   return (
-    <ScrollView className="bg-white">
+    <ScrollView>
       <View className="bg-white flex-1 px-4 pt-4">
         <ToggleButton
           option1="바다"
