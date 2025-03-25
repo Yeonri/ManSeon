@@ -79,7 +79,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Users findUser=userRepository.findById(customUserDetails.getUserId())
                 .orElseThrow(()-> new NoSuchElementException("회원이 없습니다"));
 
-        return getMyInfoResDto.builder()
+        return getMyInfoResDto
+                .builder()
                 .email(findUser.getEmail())
                 .name(findUser.getUserName())
                 .nickname(findUser.getNickname())
@@ -91,6 +92,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return followingList.stream().map(
                 u->getMyFollowingResDto
                         .builder()
+                        .friendId(u.getUserId())
                         .email(u.getEmail())
                         .name(u.getUserName())
                         .nickname(u.getNickname())
@@ -103,6 +105,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return followerList.stream().map(
                 u->getMyFollowerResDto
                         .builder()
+                        .friendId(u.getUserId())
                         .email(u.getEmail())
                         .name(u.getUserName())
                         .nickname(u.getNickname())

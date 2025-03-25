@@ -69,6 +69,7 @@ public class UserController {
     }
 
     @Operation(summary = "내 정보 가져오기")
+    @GetMapping
     public ResponseEntity<getMyInfoResDto> getMyInformation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
@@ -76,6 +77,7 @@ public class UserController {
     }
 
     @Operation(summary = "팔로잉 리스트 가져오기")
+    @GetMapping("/followings")
     public ResponseEntity<List<getMyFollowingResDto>> getMyFollowingList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
@@ -83,6 +85,7 @@ public class UserController {
     }
 
     @Operation(summary="팔로워 리스트 가져오기")
+    @GetMapping("/followers")
     public ResponseEntity<List<getMyFollowerResDto>> getMyFollowerList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){

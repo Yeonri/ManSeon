@@ -6,6 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class getMyFollowerResDto {
+    Long friendId;
     String email;
     String nickname;
     String name;
