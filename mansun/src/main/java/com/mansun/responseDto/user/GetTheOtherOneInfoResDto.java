@@ -12,7 +12,7 @@ import java.util.List;
 public class GetTheOtherOneInfoResDto {
     String email;
     String nickname;
-    String name;
+    String username;
     List<UserBadge> badgeList;
     List<Board> boardList;
 }

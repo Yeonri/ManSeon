@@ -19,7 +19,7 @@ public class JwtUtil {
 
     //Token을 변환해서 username이라고 쓰여있는 부분을 읽어낸다.
     public String getUsername(String token){
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("username",String.class);
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("email",String.class);
     }
 
     //Token을 변환해서 userId라고 쓰여있는 부분을 읽어낸다.

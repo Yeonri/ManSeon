@@ -61,7 +61,7 @@ public class Users {
     private String nickname;
 
     @Schema(description = "유저의 실명")
-    private String userName;
+    private String username;
 
     @Schema(description = "유저의 전화번호")
     private String phoneNum;

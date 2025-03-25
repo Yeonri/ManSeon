@@ -42,8 +42,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
         Users user = new Users();
         user.setEmail(email);
-        user.setPassword("");
         user.setUserId(Long.parseLong(userId));
+
+        System.out.println(user.getEmail()+" "+user.getUserId());
 
         CustomUserDetails customUserDetails = new CustomUserDetails(user);
 

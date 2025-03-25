@@ -71,15 +71,15 @@ public class UserController {
     public ResponseEntity<GetMyInfoResDto> getMyInformation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
-        return ResponseEntity.ok(userService.findById(customUserDetails));
+        GetMyInfoResDto myInfoResDto=userService.findById(customUserDetails);
+        return ResponseEntity.ok(myInfoResDto);
     }
 
     @Operation(summary = "타인의 정보 가져오기")
     @GetMapping("/other")
     public ResponseEntity<GetTheOtherOneInfoResDto> getTheOtherOneInformation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestParam GetTheOtherOneInfoReqDto req
-
+            @RequestParam("userId") Long req
     ){
         return ResponseEntity.ok(userService.findTheOtherOneInfo(customUserDetails,req));
     }

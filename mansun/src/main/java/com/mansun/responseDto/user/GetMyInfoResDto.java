@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class GetMyInfoResDto {
     String email;
-    String name;
+    String username;
     String nickname;
     List<UserBadge> myBadgeList;
     List<Board> myBoardList;

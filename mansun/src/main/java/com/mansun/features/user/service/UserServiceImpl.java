@@ -41,22 +41,31 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public void createUser(CreateUserReqDto userParam) {
         //중복 Email이 있을 경우 회원가입 불허
-        boolean existUser=userRepository.existsByUserIdAndEmail(Long.valueOf(0),userParam.getEmail());
+        boolean existUser=userRepository.existsByEmail(userParam.getEmail());
         if(existUser){
-
             return;
         }
         //이 시점부터는 중복 회원이 없다고 판명
-
         //비밀번호 인코딩을 위한 BCrypt Encoder ->  추가 변동 가능성 있음 Argon을 적용해볼까 하는 고민이 있음
-        String encodedPassword = bCryptPasswordEncoder.encode(userParam.getPassword());
+
+        userRepository.save(Users.builder()
+                        .email(userParam.getEmail())
+                        .password(bCryptPasswordEncoder.encode(userParam.getPassword()))
+                        .nickname(userParam.getNickname())
+                        .username(userParam.getName())
+                        .phoneNum(userParam.getPhoneNum())
+                        .build());
+
     }
 
     //해당 부분이 로그인이다 Spring Security에서 override해서 불러온다
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return new CustomUserDetails(userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("로그인할 사용자가 없습니다. 회원가입을 먼저 진행해주세요.")));
+        Users user=userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("로그인할 사용자가 없습니다. 회원가입을 먼저 진행해주세요."));
+//        System.out.println("loadUserByUsername Check"+" "+user.getUserName()+" "+user.getEmail());
+
+        return new CustomUserDetails(user);
     }
 
     @Override
@@ -87,14 +96,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public GetMyInfoResDto findById(CustomUserDetails customUserDetails) {
         Users findUser = userRepository.findById(customUserDetails.getUserId())
                 .orElseThrow(() -> new NoSuchElementException("회원이 없습니다"));
-
         List<UserBadge> myBadgeList = userBadgeRepository.findByUser_UserId(customUserDetails.getUserId());
         List<Board> myBoardList = boardRepository.findByUser_UserId(customUserDetails.getUserId());
 
+        System.out.println("Last");
         return GetMyInfoResDto
                 .builder()
                 .email(findUser.getEmail())
-                .name(findUser.getUserName())
+                .username(findUser.getUsername())
                 .nickname(findUser.getNickname())
                 .myBadgeList(myBadgeList)
                 .myBoardList(myBoardList)
@@ -103,16 +112,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public GetTheOtherOneInfoResDto findTheOtherOneInfo(
             CustomUserDetails customUserDetails,
-            GetTheOtherOneInfoReqDto req
+            Long userId
     ){
-        Users user=   userRepository.findById(req.getUserId()).orElseThrow(
+        Users user=   userRepository.findById(userId).orElseThrow(
                 ()-> new NoSuchElementException("찾는 사람이 없습니다")
         );
-        List<UserBadge> BadgeList = userBadgeRepository.findByUser_UserId(req.getUserId());
-        List<Board> BoardList = boardRepository.findByUser_UserId(req.getUserId());
+        List<UserBadge> BadgeList = userBadgeRepository.findByUser_UserId(userId);
+        List<Board> BoardList = boardRepository.findByUser_UserId(userId);
 
         return GetTheOtherOneInfoResDto
                 .builder()
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .nickname(user.getNickname())
                 .badgeList(BadgeList)
                 .boardList(BoardList)
         .build();
