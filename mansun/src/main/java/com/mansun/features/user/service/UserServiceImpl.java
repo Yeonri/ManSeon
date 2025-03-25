@@ -3,9 +3,14 @@ package com.mansun.features.user.service;
 import com.mansun.common.exception.NicknameAlreadyExistsException;
 import com.mansun.entity.Users;
 import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.features.user.repository.customRepositoryImpl;
 import com.mansun.features.user.repository.userRepository;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
+import com.mansun.responseDto.getMyFollowerResDto;
+import com.mansun.responseDto.getMyFollowingResDto;
+import com.mansun.responseDto.user.getMyInfoResDto;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,13 +19,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final userRepository userRepository;
+    private final customRepositoryImpl customRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public void createUser(CreateUserReqDto userParam) {
         //중복 Email이 있을 경우 회원가입 불허
@@ -64,5 +73,40 @@ public class UserServiceImpl implements UserService, UserDetailsService {
        userRepository.findByNickname(nickname)
                .ifPresent(user->{throw new NicknameAlreadyExistsException("닉네임이 이미 존재합니다");
                });
+    }
+    
+    public getMyInfoResDto findById(CustomUserDetails customUserDetails){
+        Users findUser=userRepository.findById(customUserDetails.getUserId())
+                .orElseThrow(()-> new NoSuchElementException("회원이 없습니다"));
+
+        return getMyInfoResDto.builder()
+                .email(findUser.getEmail())
+                .name(findUser.getUserName())
+                .nickname(findUser.getNickname())
+                .build();
+    }
+
+    public List<getMyFollowingResDto> getMyFollowingFindById(CustomUserDetails customUserDetails){
+        List<Users> followingList=customRepository.findMyFollowingList(customUserDetails.getUserId());
+        return followingList.stream().map(
+                u->getMyFollowingResDto
+                        .builder()
+                        .email(u.getEmail())
+                        .name(u.getUserName())
+                        .nickname(u.getNickname())
+                        .build()
+        ).collect(Collectors.toList());
+    }
+
+    public List<getMyFollowerResDto> getMyFollowerFindById(CustomUserDetails customUserDetails){
+        List<Users> followerList=customRepository.findMyFollowerList(customUserDetails.getUserId());
+        return followerList.stream().map(
+                u->getMyFollowerResDto
+                        .builder()
+                        .email(u.getEmail())
+                        .name(u.getUserName())
+                        .nickname(u.getNickname())
+                        .build()
+        ).collect(Collectors.toList());
     }
 }
