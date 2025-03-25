@@ -1,0 +1,18 @@
+package com.mansun.responseDto.user;
+
+import com.mansun.entity.badge.UserBadge;
+import com.mansun.entity.board.Board;
+import lombok.Builder;
+import lombok.Getter;
+
+import java.util.List;
+
+@Builder
+@Getter
+public class GetTheOtherOneInfoResDto {
+    String email;
+    String nickname;
+    String name;
+    List<UserBadge> badgeList;
+    List<Board> boardList;
+}

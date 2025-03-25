@@ -4,14 +4,18 @@ import com.mansun.common.exception.NicknameAlreadyExistsException;
 import com.mansun.common.utils.NullAwareBeanUtils;
 import com.mansun.entity.Users;
 import com.mansun.common.auth.CustomUserDetails;
-import com.mansun.features.user.repository.customRepositoryImpl;
-import com.mansun.features.user.repository.userRepository;
+import com.mansun.entity.badge.UserBadge;
+import com.mansun.entity.board.Board;
+import com.mansun.features.badge.repository.UserBadgeRepository;
+import com.mansun.features.board.repository.BoardRepository;
+import com.mansun.features.follow.repository.FollowerRepositoy;
+import com.mansun.features.follow.repository.FollowingRepository;
+import com.mansun.features.user.repository.*;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
-import com.mansun.responseDto.getMyFollowerResDto;
-import com.mansun.responseDto.getMyFollowingResDto;
-import com.mansun.responseDto.user.getMyInfoResDto;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.mansun.requestDto.user.GetTheOtherOneInfoReqDto;
+import com.mansun.responseDto.user.GetMyInfoResDto;
+import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,15 +27,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService, UserDetailsService {
-    private final userRepository userRepository;
-    private final customRepositoryImpl customRepository;
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final UserBadgeRepository userBadgeRepository;
+    private final FollowerRepositoy followerRepositoy;
+    private final FollowingRepository followingRepository;
+
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public void createUser(CreateUserReqDto userParam) {
         //중복 Email이 있을 경우 회원가입 불허
@@ -53,6 +59,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("로그인할 사용자가 없습니다. 회원가입을 먼저 진행해주세요.")));
     }
 
+    @Override
     public Users updateUser(CustomUserDetails customUserDetails, UpdateUserReqDto req) {
         //변경할 사용자를 찾는다
         Users findUser = userRepository.findByUserIdAndEmail(customUserDetails.getUserId(), customUserDetails.getUsername())
@@ -77,41 +84,64 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                });
     }
     
-    public getMyInfoResDto findById(CustomUserDetails customUserDetails){
-        Users findUser=userRepository.findById(customUserDetails.getUserId())
-                .orElseThrow(()-> new NoSuchElementException("회원이 없습니다"));
+    public GetMyInfoResDto findById(CustomUserDetails customUserDetails) {
+        Users findUser = userRepository.findById(customUserDetails.getUserId())
+                .orElseThrow(() -> new NoSuchElementException("회원이 없습니다"));
 
-        return getMyInfoResDto
+        List<UserBadge> myBadgeList = userBadgeRepository.findByUser_UserId(customUserDetails.getUserId());
+        List<Board> myBoardList = boardRepository.findByUser_UserId(customUserDetails.getUserId());
+
+        return GetMyInfoResDto
                 .builder()
                 .email(findUser.getEmail())
                 .name(findUser.getUserName())
                 .nickname(findUser.getNickname())
+                .myBadgeList(myBadgeList)
+                .myBoardList(myBoardList)
                 .build();
     }
 
-    public List<getMyFollowingResDto> getMyFollowingFindById(CustomUserDetails customUserDetails){
-        List<Users> followingList=customRepository.findMyFollowingList(customUserDetails.getUserId());
-        return followingList.stream().map(
-                u->getMyFollowingResDto
-                        .builder()
-                        .friendId(u.getUserId())
-                        .email(u.getEmail())
-                        .name(u.getUserName())
-                        .nickname(u.getNickname())
-                        .build()
-        ).collect(Collectors.toList());
+    public GetTheOtherOneInfoResDto findTheOtherOneInfo(
+            CustomUserDetails customUserDetails,
+            GetTheOtherOneInfoReqDto req
+    ){
+        Users user=   userRepository.findById(req.getUserId()).orElseThrow(
+                ()-> new NoSuchElementException("찾는 사람이 없습니다")
+        );
+        List<UserBadge> BadgeList = userBadgeRepository.findByUser_UserId(req.getUserId());
+        List<Board> BoardList = boardRepository.findByUser_UserId(req.getUserId());
+
+        return GetTheOtherOneInfoResDto
+                .builder()
+                .badgeList(BadgeList)
+                .boardList(BoardList)
+        .build();
     }
 
-    public List<getMyFollowerResDto> getMyFollowerFindById(CustomUserDetails customUserDetails){
-        List<Users> followerList=customRepository.findMyFollowerList(customUserDetails.getUserId());
-        return followerList.stream().map(
-                u->getMyFollowerResDto
-                        .builder()
-                        .friendId(u.getUserId())
-                        .email(u.getEmail())
-                        .name(u.getUserName())
-                        .nickname(u.getNickname())
-                        .build()
-        ).collect(Collectors.toList());
-    }
+
+//    public List<getMyFollowingResDto> getMyFollowingFindById(CustomUserDetails customUserDetails){
+//        List<Following> followingList=followingRepository.findByUser_UserId(customUserDetails.getUserId());
+//        return followingList.stream().map(
+//                u->getMyFollowingResDto
+//                        .builder()
+//                        .friendId(u.getUserId())
+//                        .email(u.getEmail())
+//                        .name(u.getUserName())
+//                        .nickname(u.getNickname())
+//                        .build()
+//        ).collect(Collectors.toList());
+//    }
+
+//    public List<getMyFollowerResDto> getMyFollowerFindById(CustomUserDetails customUserDetails){
+//        List<Users> followerList=customRepository.findMyFollowerList(customUserDetails.getUserId());
+//        return followerList.stream().map(
+//                u->getMyFollowerResDto
+//                        .builder()
+//                        .friendId(u.getUserId())
+//                        .email(u.getEmail())
+//                        .name(u.getUserName())
+//                        .nickname(u.getNickname())
+//                        .build()
+//        ).collect(Collectors.toList());
+//    }
 }
