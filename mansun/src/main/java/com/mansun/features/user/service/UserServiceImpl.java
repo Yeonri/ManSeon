@@ -1,6 +1,7 @@
 package com.mansun.features.user.service;
 
 import com.mansun.common.exception.NicknameAlreadyExistsException;
+import com.mansun.common.utils.NullAwareBeanUtils;
 import com.mansun.entity.Users;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.features.user.repository.customRepositoryImpl;
@@ -12,6 +13,7 @@ import com.mansun.responseDto.getMyFollowingResDto;
 import com.mansun.responseDto.user.getMyInfoResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -55,12 +57,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         //변경할 사용자를 찾는다
         Users findUser = userRepository.findByUserIdAndEmail(customUserDetails.getUserId(), customUserDetails.getUsername())
                 .orElseThrow(()-> new NoSuchElementException("변경할 사용자가 없습니다."));
-        
-        //사용자의 정보를 변경한다 
-        //미구현
+
+        //사용자의 정보를 변경한다
+        BeanUtils.copyProperties(req,findUser,NullAwareBeanUtils.getNullPropertyNames(req));
 
         //여기엔 PATCH이므로 어떤 User정보가 바뀔지 모른다.
-        return null;
+        return findUser;
     }
 
     @Override
