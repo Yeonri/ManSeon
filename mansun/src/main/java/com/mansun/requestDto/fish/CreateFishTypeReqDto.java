@@ -5,5 +5,5 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class CreateFishReqDto {
+public class CreateFishTypeReqDto {
 }
