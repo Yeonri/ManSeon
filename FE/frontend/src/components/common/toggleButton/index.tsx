@@ -1,18 +1,18 @@
 import { Pressable, Text, View } from "react-native";
 
-type toggleButtonProps = {
+interface ToggleButtonProps {
   option1: string;
   option2: string;
   selected: string;
   onSelect: (value: string) => void;
-};
+}
 
 export function ToggleButton({
   option1,
   option2,
   selected,
   onSelect,
-}: toggleButtonProps) {
+}: ToggleButtonProps) {
   return (
     <View className="flex-row bg-blue-50 rounded-full p-1">
       <Pressable
