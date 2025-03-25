@@ -5,19 +5,17 @@ import com.mansun.entity.Users;
 import com.mansun.features.user.service.UserServiceImpl;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
+import com.mansun.requestDto.user.GetTheOtherOneInfoReqDto;
 import com.mansun.responseDto.OnlyMessageResDto;
 
-import com.mansun.responseDto.getMyFollowerResDto;
-import com.mansun.responseDto.getMyFollowingResDto;
-import com.mansun.responseDto.user.getMyInfoResDto;
+import com.mansun.responseDto.user.GetMyInfoResDto;
+import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -69,26 +67,36 @@ public class UserController {
     }
 
     @Operation(summary = "내 정보 가져오기")
-    @GetMapping
-    public ResponseEntity<getMyInfoResDto> getMyInformation(
+    @GetMapping("/me")
+    public ResponseEntity<GetMyInfoResDto> getMyInformation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
         return ResponseEntity.ok(userService.findById(customUserDetails));
     }
 
-    @Operation(summary = "팔로잉 리스트 가져오기")
-    @GetMapping("/followings")
-    public ResponseEntity<List<getMyFollowingResDto>> getMyFollowingList(
-            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    @Operation(summary = "타인의 정보 가져오기")
+    @GetMapping("/other")
+    public ResponseEntity<GetTheOtherOneInfoResDto> getTheOtherOneInformation(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam GetTheOtherOneInfoReqDto req
+
     ){
-        return ResponseEntity.ok(userService.getMyFollowingFindById(customUserDetails));
+        return ResponseEntity.ok(userService.findTheOtherOneInfo(customUserDetails,req));
     }
 
-    @Operation(summary="팔로워 리스트 가져오기")
-    @GetMapping("/followers")
-    public ResponseEntity<List<getMyFollowerResDto>> getMyFollowerList(
-            @AuthenticationPrincipal CustomUserDetails customUserDetails
-    ){
-        return ResponseEntity.ok(userService.getMyFollowerFindById(customUserDetails));
-    }
+//    @Operation(summary = "팔로잉 리스트 가져오기")
+//    @GetMapping("/followings")
+//    public ResponseEntity<List<getMyFollowingResDto>> getMyFollowingList(
+//            @AuthenticationPrincipal CustomUserDetails customUserDetails
+//    ){
+//        return ResponseEntity.ok(userService.getMyFollowingFindById(customUserDetails));
+//    }
+//
+//    @Operation(summary="팔로워 리스트 가져오기")
+//    @GetMapping("/followers")
+//    public ResponseEntity<List<getMyFollowerResDto>> getMyFollowerList(
+//            @AuthenticationPrincipal CustomUserDetails customUserDetails
+//    ){
+//        return ResponseEntity.ok(userService.getMyFollowerFindById(customUserDetails));
+//    }
 }
