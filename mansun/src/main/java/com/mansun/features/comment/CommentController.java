@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,7 +27,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<String> createComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            CreateCommentReqDto req){
+            @Valid CreateCommentReqDto req){
         commentService.createComment(customUserDetails,req);
         return ResponseEntity.ok("댓글이 게시되었습니다");
     }
