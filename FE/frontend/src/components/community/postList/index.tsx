@@ -7,6 +7,7 @@ import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import IconComment from "../../../assets/images/icon_comment.svg";
 import IconLike from "../../../assets/images/icon_like.svg";
 import postsMocks from "../../../mocks/postsMocks.json";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -23,36 +24,39 @@ export function PostList() {
   }
 
   return (
-    <FlatList
-      data={postsMocks}
-      renderItem={({ item }) => (
-        <TouchableOpacity onPress={() => handlePostClick(item.postId)}>
-          <View className="bg-blue-50 my-1 p-3 rounded-xl flex-row justify-between items-center">
-            <View>
-              <Text className="font-bold mb-2 text-lg">{item.title}</Text>
-              <View className="flex-row items-center mb-2">
-                <Image
-                  source={{ uri: item.profileImg }}
-                  className="w-8 h-8 mr-2 rounded-full"
-                />
-                <Text className="mr-3 font-semibold">{item.nickname}</Text>
-                <Text>{formatTime(item.createAt)}</Text>
-              </View>
-              <View className="flex-row gap-3">
-                <View className="flex-row gap-1">
-                  <IconComment />
-                  <Text>{item.commentNum}</Text>
+    <SafeAreaView>
+      <FlatList
+        data={postsMocks}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => handlePostClick(item.postId)}>
+            <View className="bg-blue-50 my-1 p-3 rounded-xl flex-row justify-between items-center">
+              <View>
+                <Text className="font-bold mb-2 text-lg">{item.title}</Text>
+                <View className="flex-row items-center mb-2">
+                  <Image
+                    source={{ uri: item.profileImg }}
+                    className="w-8 h-8 mr-2 rounded-full"
+                  />
+                  <Text className="mr-3 font-semibold">{item.nickname}</Text>
+                  <Text>{formatTime(item.createAt)}</Text>
                 </View>
-                <View className="flex-row gap-1">
-                  <IconLike />
-                  <Text>{item.like}</Text>
+                <View className="flex-row gap-3">
+                  <View className="flex-row gap-1">
+                    <IconComment />
+                    <Text>{item.commentNum}</Text>
+                  </View>
+                  <View className="flex-row gap-1">
+                    <IconLike />
+                    <Text>{item.like}</Text>
+                  </View>
                 </View>
               </View>
+              <Image source={{ uri: item.postImg }} className="w-24 h-24" />
             </View>
-            <Image source={{ uri: item.postImg }} className="w-24 h-24" />
-          </View>
-        </TouchableOpacity>
-      )}
-    />
+          </TouchableOpacity>
+        )}
+        scrollEnabled={false}
+      />
+    </SafeAreaView>
   );
 }

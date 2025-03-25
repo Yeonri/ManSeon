@@ -10,7 +10,7 @@ export function HeaderBeforeLogo() {
   }
 
   return (
-    <View className="h-10 flex-row items-center relative my-2">
+    <View className="mx-5 h-10 flex-row items-center relative my-2">
       <TouchableOpacity onPress={() => handleBackPress}>
         <IconBack />
       </TouchableOpacity>
