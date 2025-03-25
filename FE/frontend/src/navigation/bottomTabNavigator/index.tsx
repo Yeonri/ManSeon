@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { CommunityListScreen } from "../../screens/communityListScreen";
 import { MainScreen } from "../../screens/mainScreen";
 import { MapScreen } from "../../screens/mapScreen";
-import { MoreStackNavigator } from "../../screens/moreScreen/moreStack";
 import { RecordScreen } from "../../screens/recordScreen";
+import { MoreStackNavigator } from "../moreStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
