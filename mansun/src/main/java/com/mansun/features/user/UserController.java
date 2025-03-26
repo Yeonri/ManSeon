@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 @Tag(name = "UserController",description = "사용자 정보의 CRUD를 담당하는 컨트롤러")
 public class UserController {
-
     private final UserServiceImpl userService;
-
     @Operation(summary = "회원가입")
     @PostMapping
     public ResponseEntity<OnlyMessageResDto> createUser(@RequestBody CreateUserReqDto req) {

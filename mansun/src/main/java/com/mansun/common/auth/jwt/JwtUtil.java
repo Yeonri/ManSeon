@@ -18,13 +18,18 @@ public class JwtUtil {
     }
 
     //Token을 변환해서 username이라고 쓰여있는 부분을 읽어낸다.
-    public String getUsername(String token){
+    public String getEmail(String token){
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("email",String.class);
     }
 
     //Token을 변환해서 userId라고 쓰여있는 부분을 읽어낸다.
     public String getuserId(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("userId", String.class);
+    }
+
+
+    public String getCategory(String token){
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("category", String.class);
     }
   
     //Token을 변환해서 유효기간이 지났는지 확인한다.
@@ -33,8 +38,9 @@ public class JwtUtil {
     }
 
     //JWT Token을 생성한다.
-    public String createJwt(String email, String userId, Long expiredMs) {
+    public String createJwt(String category,String email, String userId, Long expiredMs) {
         return Jwts.builder()
+                .claim("category",category)
                 .claim("email", email)
                 .claim("userId", userId)
                 .issuedAt(new Date(System.currentTimeMillis()))
