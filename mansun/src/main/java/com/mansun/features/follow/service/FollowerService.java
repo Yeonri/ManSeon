@@ -1,4 +1,4 @@
 package com.mansun.features.follow.service;
 
-public interface FollowService {
+public interface FollowerService {
 }

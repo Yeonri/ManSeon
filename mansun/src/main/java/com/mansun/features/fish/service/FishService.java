@@ -2,7 +2,6 @@ package com.mansun.features.fish.service;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.requestDto.fish.CreateFishReqDto;
-import com.mansun.requestDto.fish.FindFishReqDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
 
@@ -15,7 +14,7 @@ public interface FishService {
 
     List<FindFishListResDto> findOthersFishList(CustomUserDetails customUserDetails, Long userId);
 
-    FindFishResDto findMyFish(CustomUserDetails customUserDetails,Long fishId);
+    FindFishResDto findMyFish(CustomUserDetails customUserDetails, Long fishId);
 
-    FindFishResDto findOtherFish(CustomUserDetails customUserDetails,Long userId,Long fishId);
+    FindFishResDto findOtherFish(CustomUserDetails customUserDetails, Long userId, Long fishId);
 }

@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface FollowingRepository extends JpaRepository<Following,Long> {
-    public List<Following> findByUser_UserId(Long userId);
-    public int countAllByUser_UserId(Long userId);
+    List<Following> findByUser_UserId(Long userId);
+    int countAllByUser_UserId(Long userId);
 }

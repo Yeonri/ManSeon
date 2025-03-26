@@ -8,11 +8,11 @@ import com.mansun.responseDto.badges.allBadgeListResDto;
 import java.util.List;
 
 public interface BadgeService {
-    public void createBadge(CreateBadgeReqDto badgeParam);
+  void createBadge(CreateBadgeReqDto badgeParam);
 
-    public List<allBadgeListResDto>  allBadgeList();
+  List<allBadgeListResDto>  allBadgeList();
 
-    public void updateBadge(updateBadgeReqDto badgeParam);
+  void updateBadge(updateBadgeReqDto badgeParam);
 
-    public void deleteBadge();
+void deleteBadge();
 }

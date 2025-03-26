@@ -1,4 +1,7 @@
 package com.mansun.features.recomment.service;
 
-public interface RecommentService {
+import com.mansun.entity.board.Recomment;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface RecommentService  {
 }

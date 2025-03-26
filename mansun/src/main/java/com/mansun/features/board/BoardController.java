@@ -1,17 +1,16 @@
 package com.mansun.features.board;
 
 import com.mansun.common.auth.CustomUserDetails;
-import com.mansun.entity.board.Board;
 import com.mansun.features.board.service.BoardServiceImpl;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
 import com.mansun.responseDto.OnlyMessageResDto;
-import com.mansun.responseDto.board.*;
+import com.mansun.responseDto.board.FindBoardResDto;
+import com.mansun.responseDto.board.FindMyBoardListResDto;
+import com.mansun.responseDto.board.allBoardListResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,31 +32,25 @@ public class BoardController {
     public ResponseEntity<OnlyMessageResDto> createBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateBoardReqDto req) {
-        boardservice.createBoard(customUserDetails,req);
+        boardservice.createBoard(customUserDetails, req);
         return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시물이 생성되었습니다."));
     }
 
     @Operation(summary = "전체 게시글 리스트")
     @GetMapping("/all")
     public ResponseEntity<List<allBoardListResDto>> allBoardList(
-            @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestParam("postId") Long postId
-    ){
-        return null;
+    ) {
+        return ResponseEntity.ok(boardservice.findAllBoardList());
     }
-
-
     // 전체 게시글 상세 열람 (내 게시물 상세 열람 포함)
-    @Operation(summary = "전체 게시글 상세 열람",parameters = {
-            @Parameter(name = "id",description = "게시판 아이디",required = true)
+    @Operation(summary = "전체 게시글 상세 열람", parameters = {
+            @Parameter(name = "id", description = "게시판 아이디", required = true)
     })
     @GetMapping("/all/detail")
     public ResponseEntity<FindBoardResDto> findBoard(
-            @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestParam(value = "board_id", required = true) long boardId) {
+            @RequestParam(value = "board_id") long boardId) {
         return ResponseEntity.ok(boardservice.findBoard(boardId));
     }
-
     // 내 게시글 리스트 열람
     @Operation(summary = "내 게시글 리스트 열람")
     @GetMapping("/myList")
@@ -73,7 +66,7 @@ public class BoardController {
     public ResponseEntity<OnlyMessageResDto> updateMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody UpdateMyBoardReqDto req) {
-        Board board= boardservice.updateMyBoard(customUserDetails,req);
+        boardservice.updateMyBoard(customUserDetails, req);
         return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시글이 수정되었습니다"));
     }
 
@@ -82,8 +75,8 @@ public class BoardController {
     @DeleteMapping
     public ResponseEntity<OnlyMessageResDto> deleteMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody DeleteMyBoardReqDto req){
-        boardservice.deleteMyBoard(customUserDetails,req);
+            @RequestBody DeleteMyBoardReqDto req) {
+        boardservice.deleteMyBoard(customUserDetails, req);
         return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 게시글이 삭제되었습니다."));
     }
 
@@ -92,7 +85,7 @@ public class BoardController {
     @GetMapping
     public ResponseEntity<OnlyMessageResDto> myFriendBoardList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
-    ){
+    ) {
         return null;
     }
 }

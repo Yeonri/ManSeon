@@ -25,8 +25,7 @@ public class RecommentController {
     public ResponseEntity<String> createRecomment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Valid CreateRecommentReqDto req){
-
-        service.createRecomment();
+        service.createRecomment(req);
         return null;
     }
 

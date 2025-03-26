@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
     @Override
     public void createComment(CustomUserDetails customUserDetails, CreateCommentReqDto commentParam) {
         commentRepository.save(new Comment(customUserDetails,commentParam));
