@@ -20,7 +20,7 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "게시물 아이디", requiredMode = Schema.RequiredMode.REQUIRED)
-    private Long postId;
+    private Long boardId;
 
     //게시글 생성을 위한 생성자
     public Board(CustomUserDetails customUserDetails, CreateBoardReqDto req) {
