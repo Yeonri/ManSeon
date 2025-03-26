@@ -1,23 +1,37 @@
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
+import { useState } from "react";
 import {
   Alert,
   FlatList,
   Image,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { Comment } from "../../../api/types/Comment";
+import IconDelete from "../../../assets/images/icon_delete.svg";
+import IconEdit from "../../../assets/images/icon_edit.svg";
 import TagFollow from "../../../assets/images/tag_follow.svg";
 import { AddRecomment } from "../addRecomment";
 import { RecommentList } from "../recommentList";
-import IconEdit from "../../../assets/images/icon_edit.svg";
-import IconDelete from "../../../assets/images/icon_delete.svg";
 
 export function CommentList({ comments }: { comments: Comment[] }) {
+  const [editCommentId, setEditCommentId] = useState<number | null>(null);
+  const [commentContent, setCommentContent] = useState("");
+
   function formatTime(time: string) {
     return formatDistanceToNow(new Date(time), { addSuffix: true, locale: ko });
+  }
+
+  function handleComment(id: number, content: string) {
+    setEditCommentId(id);
+    setCommentContent(content);
+  }
+
+  function handleEditCancel() {
+    setEditCommentId(null);
   }
 
   function createDeleteAlert() {
@@ -50,7 +64,12 @@ export function CommentList({ comments }: { comments: Comment[] }) {
               </TouchableOpacity>
             </View>
             <View className="flex-row items-center gap-1">
-              <TouchableOpacity onPress={() => {}} className="h-6">
+              <TouchableOpacity
+                onPress={() =>
+                  handleComment(item.commentId, item.commentContent)
+                }
+                className="h-6"
+              >
                 <IconEdit />
               </TouchableOpacity>
               <TouchableOpacity
@@ -64,8 +83,37 @@ export function CommentList({ comments }: { comments: Comment[] }) {
               </Text>
             </View>
           </View>
-
-          <Text className="ml-10">{item.commentContent}</Text>
+          {editCommentId === item.commentId ? (
+            <View className="border border-stone-200 rounded-lg">
+              <View className="flex-row items-center mx-3 mt-1">
+                <TextInput
+                  value={commentContent}
+                  onChangeText={setCommentContent}
+                  placeholder="댓글을 입력해주세요"
+                  textAlignVertical="center"
+                  multiline={true}
+                />
+              </View>
+              <View className="flex-row items-center justify-end m-3 gap-3">
+                <TouchableOpacity
+                  onPress={handleEditCancel}
+                  className="px-5 py-1 bg-blue-50 rounded-xl self-end"
+                >
+                  <Text className="text-blue-500 font-semibold text-sm">
+                    취소
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {}}
+                  className="px-5 py-1 bg-blue-500 rounded-xl self-end"
+                >
+                  <Text className="text-white font-semibold text-sm">저장</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ) : (
+            <Text className="ml-10">{item.commentContent}</Text>
+          )}
           <View className="mt-2">
             <RecommentList recomments={item.RecommentList} />
           </View>

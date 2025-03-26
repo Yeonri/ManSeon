@@ -3,19 +3,19 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 export function AddRecomment() {
   return (
     <View className="border border-stone-200 rounded-lg ml-7">
-      <View className="flex-row items-center mx-3 my-1 justify-between">
+      <View className="flex-row items-center mx-3 mt-1">
         <TextInput
-          placeholder="내용을 입력해주세요"
+          placeholder="답글을 입력해주세요"
           textAlignVertical="center"
           multiline={true}
         />
-        <TouchableOpacity
-          onPress={() => {}}
-          className="px-3 py-1 bg-blue-100 rounded-xl"
-        >
-          <Text className="text-blue-600 font-semibold text-sm">저장</Text>
-        </TouchableOpacity>
       </View>
+      <TouchableOpacity
+        onPress={() => {}}
+        className="mx-3 mb-3 px-5 py-1 bg-blue-500 rounded-xl self-end"
+      >
+        <Text className="text-white font-semibold text-sm">저장</Text>
+      </TouchableOpacity>
     </View>
   );
 }
