@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -35,6 +36,9 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Users user;
+
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comment;
 
     //Column
     @Schema(description = "게시물 제목")

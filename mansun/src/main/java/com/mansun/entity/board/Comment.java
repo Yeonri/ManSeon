@@ -9,6 +9,7 @@ import lombok.*;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -32,6 +33,13 @@ public class Comment {
     @ManyToOne
     @JoinColumn
     private Users user;
+
+    @ManyToOne
+    @JoinColumn
+    private Board board;
+
+    @OneToMany(mappedBy = "comment")
+    private List<Recomment> recomment;
 
 //    Column
     @Schema(description = "댓글 내용")

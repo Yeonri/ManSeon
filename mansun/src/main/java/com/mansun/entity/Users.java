@@ -4,6 +4,8 @@ import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.badge.Badges;
 import com.mansun.entity.badge.UserBadge;
 import com.mansun.entity.board.Board;
+import com.mansun.entity.board.Comment;
+import com.mansun.entity.board.Recomment;
 import com.mansun.entity.fish.Fish;
 import com.mansun.entity.follow.Follower;
 import com.mansun.entity.follow.Following;
@@ -48,6 +50,12 @@ public class Users {
 
     @OneToMany(mappedBy = "user")
     private List<Following> following;
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Recomment> recomments;
 
     //    Column
     @Schema(description = "유저의 이메일")
