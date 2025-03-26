@@ -1,6 +1,8 @@
 package com.mansun.features.recomment.service;
 
+import com.mansun.entity.board.Recomment;
 import com.mansun.features.recomment.repository.RecommentRepository;
+import com.mansun.requestDto.recomment.CreateRecommentReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,8 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class RecommentServiceImpl implements RecommentService{
     private final RecommentRepository repository;
 
-    public void createRecomment() {
-
+    public void createRecomment(CreateRecommentReqDto req) {
+        repository.save(Recomment.builder()
+                .build());
     }
 
     public void updateRecomment(){
