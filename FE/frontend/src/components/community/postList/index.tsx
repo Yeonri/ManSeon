@@ -36,8 +36,12 @@ export function PostList() {
                     source={{ uri: item.profileImg }}
                     className="w-8 h-8 mr-2 rounded-full"
                   />
-                  <Text className="mr-3 font-semibold">{item.nickname}</Text>
-                  <Text>{formatTime(item.createAt)}</Text>
+                  <Text className="mr-3 font-semibold text-neutral-600">
+                    {item.nickname}
+                  </Text>
+                  <Text className="text-neutral-500">
+                    {formatTime(item.createAt)}
+                  </Text>
                 </View>
                 <View className="flex-row gap-3">
                   <View className="flex-row gap-1">

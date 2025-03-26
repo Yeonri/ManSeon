@@ -7,9 +7,12 @@ STAGED_FILES=$(git diff --name-only --cached --relative | grep -E '\.(js|jsx|ts|
 
 if [ -n "$STAGED_FILES" ]; then
   echo "🔍 Linting & Formatting staged files..."
-  echo "$STAGED_FILES" | xargs yarn lint --fix
-  echo "$STAGED_FILES" | xargs yarn format
-  git add $STAGED_FILES
+
+  echo "$STAGED_FILES" | xargs yarn eslint --fix
+
+  echo "$STAGED_FILES" | xargs yarn prettier --write
+
+  echo "$STAGED_FILES" | xargs git add
 else
   echo "✅ No relevant staged files to lint or format."
 fi
