@@ -1,5 +1,6 @@
 import { Image, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import prohibitedList from "../../data/prohibitedList";
 
 export function ProhibitedScreen() {
@@ -15,7 +16,8 @@ export function ProhibitedScreen() {
   });
 
   return (
-    <SafeAreaView className="bg-white flex-1">
+    <SafeAreaView>
+      <HeaderBeforeTitle name="금어기" />
       {/* 월 정보 */}
       <View className="self-center bg-blue-500 rounded-full w-60 h-10 mt-4 mb-6 items-center justify-center">
         <Text className="text-white font-bold text-base"> {month}월</Text>

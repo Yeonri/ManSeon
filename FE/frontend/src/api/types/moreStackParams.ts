@@ -3,4 +3,7 @@ export type MoreStackParams = {
   Tutorial: undefined;
   Prohibited: undefined;
   Rule: undefined;
+  Myposts: undefined;
+  FishingList: undefined;
+  CollectionList: undefined;
 };

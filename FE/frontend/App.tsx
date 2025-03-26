@@ -1,11 +1,18 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import "./global.css";
 import { BottomTabNavigator } from "./src/navigation/bottomTabNavigator";
 
 export default function App(): React.JSX.Element {
+  const mainTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: "white",
+    },
+  };
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={mainTheme}>
       <BottomTabNavigator />
     </NavigationContainer>
   );
