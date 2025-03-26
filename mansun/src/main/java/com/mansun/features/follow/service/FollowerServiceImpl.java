@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class FollowServiceImpl {
+public class FollowerServiceImpl implements FollowerService {
     private final FollowerRepositoy followerRepositoy;
     private final FollowingRepository followingRepository;
 
