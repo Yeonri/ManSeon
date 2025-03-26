@@ -1800,19 +1800,19 @@
   dependencies:
     color "^4.2.3"
 
-"@react-navigation/elements@^2.2.8":
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-2.2.8.tgz#b63fb2128940744c927f9931faa88e433de10eb2"
-  integrity sha512-wJoeywG/hHIml4+ycFiQKofYczkLNbHw0s5i8tSXJYzhZ0B1P3s945Tuuf0OreZtnK5XX4K3p3VQ66RtBWA88w==
+"@react-navigation/elements@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-2.3.0.tgz#c74763038fe48049d8c3b0528a29d7bd90acc460"
+  integrity sha512-2VGB6rFejk1fGxU4PuqPKXPzuqD0nC6iCSjMRsyM5CetcwiEidHmv4nGIXvw7D9CvqoZxvcQWxL4X3uSodj0PA==
   dependencies:
     color "^4.2.3"
 
-"@react-navigation/native-stack@^7.3.1":
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/@react-navigation/native-stack/-/native-stack-7.3.1.tgz#9bb4f84a99db7b3410c27db3569593f68ad76d38"
-  integrity sha512-8linY6xYQ6cD02VCmOpkOIAN3MKw90drU+uWGbf6hiOEVXKceDRX0z71/+nXUN5CwzrCu9YAFaVFDZzHX/kkSQ==
+"@react-navigation/native-stack@^7.3.2":
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/@react-navigation/native-stack/-/native-stack-7.3.2.tgz#50b20bcbdafc607ad97c579a87af73bf8549d4c8"
+  integrity sha512-onHWY9xnDEdPMP/vNmmz68AUhV4BTiLFT083JFhBQOArvRGxcRmVc97vPz4+8UwahWv5qR8ZObvttyeJSRiE6w==
   dependencies:
-    "@react-navigation/elements" "^2.2.8"
+    "@react-navigation/elements" "^2.3.0"
     warn-once "^0.1.1"
 
 "@react-navigation/native@^7.0.15":
