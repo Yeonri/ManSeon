@@ -1,0 +1,65 @@
+[
+  {
+    "postId": 2,
+    "userId": 102,
+    "createAt": "2025-03-23T09:15:00.000Z",
+    "profileImg": "https://i.pinimg.com/736x/22/8b/6d/228b6d0349a757640dfda98c3b1bb2b3.jpg",
+    "postImg": "https://i.pinimg.com/474x/fb/63/bf/fb63bf18d9598f537d9d0a24f8c92b5e.jpg"
+  },
+  {
+    "postId": 5,
+    "userId": 105,
+    "createAt": "2025-03-22T14:10:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/45/37/93/4537932e76ebcc6186f86b75d9eeac87.jpg",
+    "postImg": "https://i.pinimg.com/474x/e4/f9/86/e4f9867012eaa4c66dd2ac09a5c70216.jpg"
+  },
+  {
+    "postId": 7,
+    "userId": 107,
+    "createAt": "2025-03-21T18:30:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/fa/be/d2/fabed24c0c83f8e81a96d5da2b94581c.jpg",
+    "postImg": "https://i.pinimg.com/474x/71/ba/4a/71ba4aae314afe6bb4d7bc9b4845d9e1.jpg"
+  },
+  {
+    "postId": 9,
+    "userId": 109,
+    "createAt": "2025-03-18T07:30:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/39/bd/40/39bd40fa120dc120c76492f3227686b0.jpg",
+    "postImg": "https://i.pinimg.com/474x/52/29/17/522917bc263952d9e26fa699410c2a61.jpg"
+  },
+  {
+    "postId": 12,
+    "userId": 112,
+    "createAt": "2025-03-12T10:25:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/aa/aa/f9/aaaaf924dea384a6648c46e2109c30af.jpg",
+    "postImg": "https://i.pinimg.com/474x/3c/c3/08/3cc308dcee8b645db53eca490d76c698.jpg"
+  },
+  {
+    "postId": 13,
+    "userId": 113,
+    "createAt": "2025-03-11T08:40:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/09/ac/1c/09ac1c7f6daa637934f79dd3495bca0c.jpg",
+    "postImg": "https://i.pinimg.com/474x/78/57/a8/7857a8c4bee8df3b97baebd03574f128.jpg"
+  },
+  {
+    "postId": 16,
+    "userId": 116,
+    "createAt": "2025-03-05T12:10:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/8f/1b/6b/8f1b6bd31e2db05d42259e382bf4c080.jpg",
+    "postImg": "https://i.pinimg.com/474x/be/52/77/be527713fa1a0fc0d2b6162a81b5bcef.jpg"
+  },
+  {
+    "postId": 18,
+    "userId": 118,
+    "createAt": "2025-02-24T17:45:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/8a/ff/f0/8afff0aa570409805241058309f3d14b.jpg",
+    "postImg": "https://i.pinimg.com/474x/b5/95/0f/b5950f6e17a645ed4d3541b0e2c0e6ac.jpg"
+  },
+  {
+    "postId": 19,
+    "userId": 119,
+    "createAt": "2025-02-20T11:30:00.000Z",
+    "profileImg": "https://i.pinimg.com/474x/9b/e6/e1/9be6e19d808d0046c5dbf63394adee10.jpg",
+    "postImg": "https://i.pinimg.com/474x/b5/5e/eb/b55eeb10e69b371159a008a0c3ebde47.jpg"
+  }
+]
