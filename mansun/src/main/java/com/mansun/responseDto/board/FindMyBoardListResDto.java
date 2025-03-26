@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Builder
 public class FindMyBoardListResDto {
+    Long boardId;
     String title;
     String content;
 }
