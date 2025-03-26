@@ -1,7 +1,10 @@
 package com.mansun.common.configuration;
 
+import com.mansun.common.auth.jwt.CustomLogoutFilter;
 import com.mansun.common.auth.jwt.JwtFilter;
 import com.mansun.common.auth.jwt.LoginFilter;
+import com.mansun.common.auth.refresh.repository.RefreshRepository;
+import lombok.CustomLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.mansun.common.auth.jwt.JwtUtil;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +26,7 @@ import com.mansun.common.auth.jwt.JwtUtil;
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
+    private final RefreshRepository refreshRepository;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -60,16 +65,16 @@ public class SecurityConfig {
 //        때문에 해당 경로는 /api/users에 있지 않다. 
 //        로그인만을 위한 문이 있다고 이해하는 게 가장 빠르다
 //        또한 email이란 input name으로 읽어오게 설정했다.
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil){{
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil,refreshRepository){{
             setFilterProcessesUrl("/api/users/login");
             setUsernameParameter("email");
         }}, UsernamePasswordAuthenticationFilter.class);
 
+        http.addFilterAt(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
 
         //세션 설정
         http.sessionManagement((session) -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
         return http.build();
     }
 }

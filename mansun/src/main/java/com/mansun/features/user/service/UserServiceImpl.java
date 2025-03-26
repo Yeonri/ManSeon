@@ -55,7 +55,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                         .username(userParam.getName())
                         .phoneNum(userParam.getPhoneNum())
                         .build());
-
     }
 
     //해당 부분이 로그인이다 Spring Security에서 override해서 불러온다
