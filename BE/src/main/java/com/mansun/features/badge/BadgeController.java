@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/badge")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @Tag(name = "BadgeController",description = "전체 뱃지 및 유저 뱃지의 CRUD를 관리하는 컨트롤러")
 public class BadgeController {
     private final BadgeServiceImpl badgeService;
