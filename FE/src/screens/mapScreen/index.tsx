@@ -44,22 +44,22 @@ export function MapScreen() {
           <FilterButton
             label="전체"
             active={activeFilter === "all"}
-            // onPress={() => setActiveFilter("all")}
+            onPress={() => setActiveFilter("all")}
           />
           <FilterButton
             label="내 포인트"
             active={activeFilter === "myPoint"}
-            // onPress={() => setActiveFilter("myPoint")}
+            onPress={() => setActiveFilter("myPoint")}
           />
           <FilterButton
             label="북마크"
             active={activeFilter === "bookmark"}
-            // onPress={() => setActiveFilter("bookmark")}
+            onPress={() => setActiveFilter("bookmark")}
           />
           <FilterButton
             label="추천"
             active={activeFilter === "recommended"}
-            // onPress={() => setActiveFilter("recommended")}
+            onPress={() => setActiveFilter("recommended")}
           />
         </View>
       </View>
