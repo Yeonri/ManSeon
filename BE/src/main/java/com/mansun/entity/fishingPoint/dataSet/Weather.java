@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,9 +15,13 @@ public class Weather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long weatherId;
 
+//    연관 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private FishingPoint points;
+
+    @OneToMany(mappedBy = "")
+    private List<WaveHeight> waveHeight;
 
 //    Column
     private LocalDate weatherDate;
