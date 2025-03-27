@@ -1,0 +1,41 @@
+package com.mansun.features.board.service;
+
+import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.requestDto.board.CreateBoardReqDto;
+import com.mansun.requestDto.board.DeleteMyBoardReqDto;
+import com.mansun.requestDto.board.UpdateMyBoardReqDto;
+import com.mansun.responseDto.board.FindBoardResDto;
+import com.mansun.responseDto.board.FindMyBoardListResDto;
+import com.mansun.responseDto.board.allBoardListResDto;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public interface BoardService {
+    //내 게시판 글 작성
+    void createBoard(
+            CustomUserDetails customUserDetails,
+            CreateBoardReqDto boardParam);
+
+    //전체 게시글 조회
+    List<allBoardListResDto> findAllBoardList();
+
+    //내 게시판 글 열람
+    List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails);
+
+    //UserId와 BoardId로 게시글 단 건 조회
+    FindBoardResDto findBoard(CustomUserDetails customUserDetails, Long boardId);
+
+    //내 게시판 글 수정
+    void updateMyBoard(
+            CustomUserDetails customUserDetails,
+            UpdateMyBoardReqDto boardParam);
+
+    //내 게시판 글 삭제
+    void deleteMyBoard(
+            CustomUserDetails customUserDetails,
+            DeleteMyBoardReqDto boardParam);
+}
