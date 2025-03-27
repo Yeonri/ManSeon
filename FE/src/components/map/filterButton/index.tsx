@@ -15,7 +15,7 @@ export function FilterButton({
   return (
     <TouchableOpacity
       onPress={onPress}
-      className="flex-row items-center self-auto px-4 py-2 mx-1 rounded-full bg-white shadow-sm"
+      className="flex-row items-center self-auto px-4 py-2 mx-1 rounded-full bg-white"
     >
       <View className="mr-2">
         <IconMarker />
