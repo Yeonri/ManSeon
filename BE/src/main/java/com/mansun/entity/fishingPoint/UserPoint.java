@@ -1,4 +1,4 @@
-package com.mansun.entity.point;
+package com.mansun.entity.fishingPoint;
 
 import com.mansun.entity.Users;
 import jakarta.persistence.*;
