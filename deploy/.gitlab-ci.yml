@@ -5,10 +5,24 @@ stages:
   - push
   - cleanup
   - deploy
+#################
+# 1-1. build_FE #
+#################
+build_FE:
+  stage: build
+  variables:
+    DOCKERFILE_PATH: depoly/Dockerfile.fe
+    CONTEXT: FE
+  script:
+    - docker build --no-cache -t build-fe -f $DOCKERFILE_PATH $CONTEXT
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
+    when: always
+  - when: never
 
-######################
-# 1-1. build_BE_test #
-######################
+#################
+# 1-2. build_BE #
+#################
 
 build_BE:
   stage: build
@@ -43,10 +57,36 @@ build_BE:
     when: always
   - when: never
 
+#################
+# 2-1. push_FE  #
+#################
+push_FE:
+  stage: push
+  script:
+    # FE/dev
+    - |
+      if [ "$CI_COMMIT_BRANCH" == "FE/dev" ]; then
+        docker run --rm -v /home/ubuntu/nginx:/output build-fe \
+          sh -c "cp /app/android/app/build/outputs/apk/release/app-release.apk /output/"
+      fi
+    # FE/rel
+    - |
+      if [ "$CI_COMMIT_BRANCH" == "FE/rel" ]; then
+        docker run --rm -v /home/gitlab-runner/nginx:/output build-fe \
+        sh -c "cp /app/android/app/build/outputs/apk/release/app-release.apk /output/" \
+      scp -i /home/gitlab-runner/J12B210T.pem /home/gitlab-runner/nginx/app-release.apk ubuntu@j12b210.p.ssafy.io /home/nginx/
+      fi
 
-#######################
-# 2-2. push_BE_test   #
-#######################
+  dependencies:
+    - build_FE
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
+    when: always
+  - when: never
+
+#################
+# 2-2. push_BE  #
+#################
 
 push_BE:
   stage: push
@@ -90,14 +130,14 @@ push_BE:
 cleanup:
   stage: cleanup
   script:
-
     # 정리 (캐시고 뭐고... 지금 안 쓸랭 나중에... 하자...)
     - docker image prune -f
     - docker builder prune -f
   dependencies:
     - build_BE
+    - build_FE
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_REF_NAME == "BE/dev" || $CI_COMMIT_REF_NAME == "BE/rel")
+    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "BE/dev" || $CI_COMMIT_BRANCH == "BE/rel")
       when: always
     - when: never
 
@@ -106,28 +146,47 @@ cleanup:
 # 4. deploy 단계   #
 ##################
 
-## deploy_dev은 나중에 작성할게...  하둡이 더 급해
-
-
-#test 서버는 따로 환경변수 처리 X
-deploy_test:
+deploy_BE_dev:
   stage: deploy
+  variables:
+    IMAGE_NAME_DEV: "$IMAGE_BE_DEV"
   script:
-    
     #  디렉토리 이동
     - cd /home/ubuntu/
-
-    # 컨테이너 on .env 참조
-    - docker compose up -d
-
-    - echo "===================================="
-    - echo "          배포 완료!!!"
-    - echo "===================================="
+    # 컨테이너 on .env 참조 (개발 단계에서는 .env X )
+    - docker run $IMAGE_NAME_DEV:latest -d
 
   dependencies:
     - push_BE
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == "BE/dev"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "BE/dev"
+      when: always
+    - when: never
+
+deploy_BE_rel:
+  stage: deploy
+  variables:
+    IMAGE_NAME_REL: "$IMAGE_BE_REL"
+    MAIN_SERVER_URI: "ubuntu@j12b210.p.ssafy.io"
+    PEM_KEY: "/home/gitlab-runner/J12B210T.pem"
+  script:
+    # SSH를 통해 B210-main-server에서 명령어 실행(터미널 생성)
+    - |
+      ssh -tt -i $PEM_KEY $MAIN_SERVER_URI << 'EOF'
+
+        # docker 컨테이너 내리고 지움
+        docker ps -aq --filter "ancestor=$IMAGE_NAME_REL:latest" | xargs -r docker rm -f
+        # 새로운 이미지 허브에서 부르기
+        docker pull $IMAGE_NAME_REL:latest
+        docker run -d --name backend --network cluster_net -p 8081:8080 $IMAGE_NAME_REL:latest
+        # 나가기
+        exit
+      EOF
+
+  dependencies:
+    - push_BE
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "BE/rel"
       when: always
     - when: never
 
