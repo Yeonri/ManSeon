@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/fishes")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class FishController {
     private final FishServiceImpl fishService;
     private final FishTypeServiceImpl fishTypeService;

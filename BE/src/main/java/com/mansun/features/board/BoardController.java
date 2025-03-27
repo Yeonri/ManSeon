@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/board")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @Tag(name = "BoardController", description = "게시판의 게시물의 CRUD를 담당하는 컨트롤러")
 public class BoardController {
     private final BoardServiceImpl boardservice;
