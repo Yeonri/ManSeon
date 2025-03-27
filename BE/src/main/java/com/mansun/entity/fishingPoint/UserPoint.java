@@ -2,10 +2,16 @@ package com.mansun.entity.fishingPoint;
 
 import com.mansun.entity.Users;
 import jakarta.persistence.*;
+import lombok.*;
 
+@Builder
+@Getter
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserPoint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pk;
+    private Long pointId;
 
 //    연관 관계
     @ManyToOne(fetch = FetchType.EAGER)
