@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "하이 저수지",
+    "latitude": 34.946,
+    "longitude": 128.136
+  },
+  {
+    "id": 2,
+    "name": "하동 저수지",
+    "latitude": 35.803,
+    "longitude": 129.31
+  },
+  {
+    "id": 3,
+    "name": "은하 저수지",
+    "latitude": 35.466,
+    "longitude": 129.166
+  },
+  {
+    "id": 4,
+    "name": "하화도방파제",
+    "latitude": 34.594,
+    "longitude": 127.617
+  },
+  {
+    "id": 5,
+    "name": "하의웅곶",
+    "latitude": 34.609,
+    "longitude": 126.309
+  },
+  {
+    "id": 6,
+    "name": "물하태도선장",
+    "latitude": 34.327,
+    "longitude": 126.776
+  },
+  {
+    "id": 7,
+    "name": "하도방파제",
+    "latitude": 33.519,
+    "longitude": 126.905
+  },
+  {
+    "id": 8,
+    "name": "하모방파제",
+    "latitude": 33.506,
+    "longitude": 126.93
+  },
+  {
+    "id": 9,
+    "name": "하조도항",
+    "latitude": 34.432,
+    "longitude": 126.123
+  },
+  {
+    "id": 10,
+    "name": "하문항",
+    "latitude": 34.487,
+    "longitude": 126.487
+  }
+]
