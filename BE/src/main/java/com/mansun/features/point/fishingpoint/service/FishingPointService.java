@@ -1,4 +1,4 @@
-package com.mansun.features.fishingPoint.service;
+package com.mansun.features.point.fishingpoint.service;
 
 import org.springframework.stereotype.Service;
 

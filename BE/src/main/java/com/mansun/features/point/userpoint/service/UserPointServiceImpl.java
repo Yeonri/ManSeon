@@ -1,12 +1,12 @@
-package com.mansun.features.fishingPoint.service;
+package com.mansun.features.point.userpoint.service;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
 import com.mansun.entity.fishingPoint.UserPoint;
-import com.mansun.features.fishingPoint.repository.FishingPointRepository;
-import com.mansun.features.fishingPoint.repository.UserPointRepository;
+import com.mansun.features.point.fishingpoint.repository.FishingPointRepository;
+import com.mansun.features.point.userpoint.repository.UserPointRepository;
 import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;
-import com.mansun.responseDto.fishingPoint.FindUserPointListResDto;
+import com.mansun.responseDto.fishingPoint.UserPointListResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +32,13 @@ public class UserPointServiceImpl implements UserPointService {
     }
 
     @Override
-    public List<FindUserPointListResDto> findUserPointList(
+    public List<UserPointListResDto> findUserPointList(
             CustomUserDetails customUserDetails
     ) {
         List<UserPoint> userPointList = userPointRepository.findByUser_UserId(customUserDetails.getUserId());
         return userPointList.stream()
                 .map(
-                        up -> FindUserPointListResDto
+                        up -> UserPointListResDto
                                 .builder()
                                 .pointId(up.getPointId())
                                 .pointName(up.getPointName())

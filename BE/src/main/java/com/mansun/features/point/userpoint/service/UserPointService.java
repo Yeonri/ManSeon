@@ -1,8 +1,8 @@
-package com.mansun.features.fishingPoint.service;
+package com.mansun.features.point.userpoint.service;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;
-import com.mansun.responseDto.fishingPoint.FindUserPointListResDto;
+import com.mansun.responseDto.fishingPoint.UserPointListResDto;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public interface UserPointService {
             CustomUserDetails customUserDetails,
             CreateUserPointReqDto req);
 
-    List<FindUserPointListResDto> findUserPointList(
+    List<UserPointListResDto> findUserPointList(
             CustomUserDetails customUserDetails
     );
 }
