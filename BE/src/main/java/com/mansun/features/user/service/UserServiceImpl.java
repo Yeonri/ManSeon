@@ -18,6 +18,7 @@ import com.mansun.responseDto.user.GetMyInfoResDto;
 import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,13 +42,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     public void createUser(CreateUserReqDto userParam) {
         //중복 Email이 있을 경우 회원가입 불허
-        boolean existUser=userRepository.existsByEmail(userParam.getEmail());
-        if(existUser){
-            return;
-        }
-        //이 시점부터는 중복 회원이 없다고 판명
+        if(userRepository.existsByEmail(userParam.getEmail())){
+            throw new DuplicateKeyException("이미 해당 Email로 가입한 회원이 있습니다.");
+        }        //이 시점부터는 중복 회원이 없다고 판명
         //비밀번호 인코딩을 위한 BCrypt Encoder ->  추가 변동 가능성 있음 Argon을 적용해볼까 하는 고민이 있음
-
         userRepository.save(Users.builder()
                         .email(userParam.getEmail())
                         .password(bCryptPasswordEncoder.encode(userParam.getPassword()))

@@ -58,6 +58,8 @@ public class SecurityConfig {
                 .requestMatchers(/*Swagger의 설정이다 순서가 가장 앞에 있어야 하므로 주의*/
                         "/v3/api-docs/**").permitAll()
                 .requestMatchers("/api/**"/*회원 가입 권한 허용*/).permitAll()
+                .requestMatchers("/error").permitAll()
+//                위의 /error는 개발 단계에서 에러 메시지를 그대로 보낸다. 운영 서버에서는 없어야 하는 것
                 .anyRequest().authenticated());
 
         http.addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);

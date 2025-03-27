@@ -24,6 +24,7 @@ public class ReissueController {
 
     private final RefreshRepository refreshRepository;
 
+    //요청을 받는 방법과 받지 않고 로그인 시 만료되었다면 자동으로 연장할 수 있는 방법을 강구해야할 듯
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
 
