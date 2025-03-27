@@ -11,7 +11,7 @@ stages:
 build_FE:
   stage: build
   variables:
-    DOCKERFILE_PATH: depoly/Dockerfile.fe
+    DOCKERFILE_PATH: deploy/Dockerfile.fe
     CONTEXT: FE
   script:
     - docker build --no-cache -t build-fe -f $DOCKERFILE_PATH $CONTEXT
@@ -178,7 +178,7 @@ deploy_BE_rel:
         docker ps -aq --filter "ancestor=$IMAGE_NAME_REL:latest" | xargs -r docker rm -f
         # 새로운 이미지 허브에서 부르기
         docker pull $IMAGE_NAME_REL:latest
-        docker run -d --name backend --network cluster_net -p 8081:8080 $IMAGE_NAME_REL:latest
+        docker run -d --name app --network cluster_net -p 8081:8080 $IMAGE_NAME_REL:latest
         # 나가기
         exit
       EOF
