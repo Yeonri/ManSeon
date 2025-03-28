@@ -1,11 +1,12 @@
-package com.mansun.entity.point.children;
+package com.mansun.entity.fishingPoint.dataSet;
 
-import com.mansun.entity.point.FishingPoint;
+import com.mansun.entity.fishingPoint.FishingPoint;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,9 +15,13 @@ public class Weather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long weatherId;
 
+//    연관 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private FishingPoint points;
+
+    @OneToMany(mappedBy = "")
+    private List<WaveHeight> waveHeight;
 
 //    Column
     private LocalDate weatherDate;

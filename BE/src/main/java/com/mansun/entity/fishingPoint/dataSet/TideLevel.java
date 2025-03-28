@@ -1,6 +1,5 @@
-package com.mansun.entity.point.children;
+package com.mansun.entity.fishingPoint.dataSet;
 
-import com.mansun.entity.point.children.Observatory;
 import jakarta.persistence.*;
 import lombok.Getter;
 

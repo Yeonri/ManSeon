@@ -1,9 +1,7 @@
-package com.mansun.entity.point;
+package com.mansun.entity.fishingPoint;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.mansun.entity.fishingPoint.dataSet.MarineZone;
+import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
@@ -12,6 +10,9 @@ public class FishingPoint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
+    private MarineZone marineZone;
 
 
 //    Column

@@ -1,10 +1,12 @@
-package com.mansun.entity.point.children;
+package com.mansun.entity.fishingPoint.dataSet;
 
-import com.mansun.entity.point.children.Observatory;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Getter
 public class SeaTemperature {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;

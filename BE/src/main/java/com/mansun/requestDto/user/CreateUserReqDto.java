@@ -7,13 +7,13 @@ import lombok.Getter;
 @Schema(description = "회원가입할 유저의 필요 정보")
 public class CreateUserReqDto {
     @Schema(defaultValue = "1234@naver.com")
-    private String email;
+    String email;
     @Schema(defaultValue = "1234")
-    private String password;
+    String password;
     @Schema(defaultValue = "1234")
-    private String name;
+    String name;
     @Schema(defaultValue = "01012341234")
-    private String phoneNum;
+    String phoneNum;
     @Schema(defaultValue = "1234")
-    private String nickname;
+    String nickname;
 }

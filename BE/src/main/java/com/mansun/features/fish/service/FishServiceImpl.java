@@ -1,7 +1,9 @@
 package com.mansun.features.fish.service;
 
 import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.entity.Users;
 import com.mansun.entity.fish.Fish;
+import com.mansun.entity.fish.FishType;
 import com.mansun.features.fish.repository.FishRepository;
 import com.mansun.requestDto.fish.CreateFishReqDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
@@ -29,6 +31,7 @@ public class FishServiceImpl implements FishService {
                 .lng(req.getLng())
                 .size(req.getSize())
                 .bait(req.getBait())
+                .user(new Users(customUserDetails))
                 .equipment(req.getEquipment())
                 .fishImg(req.getFishImg())
                 .build());

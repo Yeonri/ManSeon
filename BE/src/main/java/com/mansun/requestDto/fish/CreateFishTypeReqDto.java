@@ -1,14 +1,16 @@
 package com.mansun.requestDto.fish;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import lombok.Builder;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
-@Builder
 @Getter
+@Setter
+@NoArgsConstructor
 public class CreateFishTypeReqDto {
-    private String fishName;
-    private String fishPlace;
-    private String characteristic;
+    @JsonProperty("fishName")
+    String fishName;
+    @JsonProperty("fishPlace")
+    String fishPlace;
+    @JsonProperty("characteristic")
+    String characteristic;
 }

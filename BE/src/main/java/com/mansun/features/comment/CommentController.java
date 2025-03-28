@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/comment")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 @Tag(name = "CommentController", description = "댓글의 CUD를 담당하는 컨트롤러(조회 기능은 게시판 컨트롤러에서 일괄 처리 예정)")
 public class CommentController {
     private final CommentServiceImpl commentService;

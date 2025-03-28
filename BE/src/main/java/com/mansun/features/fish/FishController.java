@@ -19,14 +19,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/fishes")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class FishController {
     private final FishServiceImpl fishService;
     private final FishTypeServiceImpl fishTypeService;
 
     // 어종은 추가될 뿐 수정되거나 삭제되지 않는다.
     @Operation(summary = "전체 어종의 추가 기능")
-    @PostMapping("/fishType/add")
-    public ResponseEntity<OnlyMessageResDto> addNewFishType(CreateFishTypeReqDto req) {
+    @PostMapping("/fishtype/add")
+    public ResponseEntity<OnlyMessageResDto> addNewFishType(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            CreateFishTypeReqDto req) {
+        System.out.println(req.getFishPlace()+" "+req.getFishName()+" "+req.getCharacteristic());
         fishTypeService.addNewFishType(req);
         return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 어종이 추가되었습니다."));
     }
@@ -36,6 +40,7 @@ public class FishController {
     public ResponseEntity<OnlyMessageResDto> createFish(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             CreateFishReqDto req) {
+        System.out.println(req.getEquipment()+" "+req.getFishImg()+" "+req.getBait());
         fishService.createFish(customUserDetails, req);
         return ResponseEntity.ok(new OnlyMessageResDto("내 기록이 정상적으로 추가되었습니다"));
     }

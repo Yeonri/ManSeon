@@ -29,12 +29,10 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-
     public Users(CustomUserDetails customUserDetails){
         this.setEmail(customUserDetails.getUsername());
         this.setUserId(customUserDetails.getUserId());
     }
-
     //    연관 관계
     @OneToMany(mappedBy = "user")
     private List<Board> board;

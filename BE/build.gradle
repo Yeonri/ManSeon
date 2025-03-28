@@ -23,6 +23,21 @@ repositories {
 	mavenCentral()
 }
 
+def querydslDir = "$buildDir/generated"
+
+//아래의 옵션을 추가함으로서 STS의 에러를 방지한다.
+sourceSets {
+	main {
+		java {
+			srcDirs += querydslDir
+		}
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -41,17 +56,19 @@ dependencies {
 	//swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
 
-	//스프링 시큐리티 추가 Oauth의 설정 용이함과 비밀번호 Encoding을 위해서 추가 별도의 필터 설정은 하지 않을 생각
+	//스프링 시큐리티
 	implementation "org.springframework.boot:spring-boot-starter-security"
 
 	//Querydsl 추가
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
-	// Spring data redis 추가
+	// Spring data redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	implementation "io.github.cdimascio:java-dotenv:5.2.2"
 
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'

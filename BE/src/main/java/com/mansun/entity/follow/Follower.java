@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class Follower {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn

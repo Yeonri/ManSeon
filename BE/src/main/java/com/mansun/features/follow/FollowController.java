@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/follow")
-@CrossOrigin("/")
+@CrossOrigin("*")
 @RequiredArgsConstructor
 @Tag(name = "FollowController",description = "팔로워의 수와 연관 정보를 담당하는 컨트롤러")
 public class FollowController {
