@@ -1,45 +1,62 @@
 ##############################
 # 1. Build (Android APK 빌드) #
-############################## 
-FROM node:18 as builder
+##############################
+FROM node:22.13 as build
 
-# 패키지 설치
-RUN apt-get update && apt-get install -y \
-    openjdk-8-jdk \
-    wget \
-    unzip && \
+# 필수 패키지 설치 (wget, unzip)
+RUN apt-get update && apt-get install -y wget unzip && \
     rm -rf /var/lib/apt/lists/*
 
+# Oracle JDK 17.0.7 설치
+RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" \
+    -O /tmp/jdk-17.0.7_linux-x64_bin.tar.gz "https://download.oracle.com/java/17/archive/jdk-17.0.7_linux-x64_bin.tar.gz" && \
+    mkdir -p /usr/local/java && \
+    tar -xzf /tmp/jdk-17.0.7_linux-x64_bin.tar.gz -C /usr/local/java && \
+    rm /tmp/jdk-17.0.7_linux-x64_bin.tar.gz
+
 # JAVA 환경 변수 설정
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV JAVA_HOME=/usr/local/java/jdk-17.0.7
+ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Android SDK 환경 변수 설정
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
 
 # Android Command Line Tools 설치
-RUN mkdir -p ${ANDROID_SDK_ROOT} && \
+RUN mkdir -p ${ANDROID_SDK_ROOT}/cmdline-tools && \
     cd ${ANDROID_SDK_ROOT} && \
     wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O cmdline-tools.zip && \
-    unzip cmdline-tools.zip && \
+    unzip cmdline-tools.zip -d ${ANDROID_SDK_ROOT}/cmdline-tools && \
     rm cmdline-tools.zip && \
-    mkdir -p cmdline-tools/latest && \
-    mv cmdline-tools/* cmdline-tools/latest/
+    mv ${ANDROID_SDK_ROOT}/cmdline-tools/cmdline-tools ${ANDROID_SDK_ROOT}/cmdline-tools/latest
 
-# PATH 업데이트: command-line tools 사용시 필요하다고 함
+# PATH 업데이트: Android command-line tools 사용
 ENV PATH=${PATH}:${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin
 
+# 라이선스 동의 및 필요한 Android 패키지 설치
 RUN yes | sdkmanager --licenses && \
     sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0" "ndk;27.1.12297006"
 
 # 작업 디렉토리 생성 및 의존성 설치
 WORKDIR /app
-
 COPY package.json yarn.lock ./
 RUN yarn install
 
-# 전체 소스 복사 및 Android 빌드 실행
+# 전체 소스 복사 후 Android 빌드 실행 (gradlew 사용)
 COPY . .
 WORKDIR /app/android
-RUN ./gradlew assembleRelease
+RUN chmod +x ./gradlew && ./gradlew assembleRelease
+# 빌드 산출물은 /app/android/app/build/outputs/apk/release/app-release.apk 로 생성됨
 
-# 빌드 산출물은 /app/android/app/build/outputs/apk/release/app-release.apk 로 생성된다고 가정
+##############################
+# 2. 배포 이미지 (Nginx) #
+##############################
+FROM nginx:alpine
+
+# 빌드된 APK 파일을 Nginx의 기본 경로로 복사
+COPY --from=build /app/android/app/build/outputs/apk/release/app-release.apk /usr/share/nginx/html/
+
+# 포트 노출
+EXPOSE 80
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]

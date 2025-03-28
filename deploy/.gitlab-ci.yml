@@ -5,20 +5,6 @@ stages:
   - push
   - cleanup
   - deploy
-#################
-# 1-1. build_FE #
-#################
-build_FE:
-  stage: build
-  variables:
-    DOCKERFILE_PATH: deploy/Dockerfile.fe
-    CONTEXT: FE
-  script:
-    - docker build --no-cache -t build-fe -f $DOCKERFILE_PATH $CONTEXT
-  rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
-    when: always
-  - when: never
 
 #################
 # 1-2. build_BE #
@@ -57,32 +43,6 @@ build_BE:
     when: always
   - when: never
 
-#################
-# 2-1. push_FE  #
-#################
-push_FE:
-  stage: push
-  script:
-    # FE/dev
-    - |
-      if [ "$CI_COMMIT_BRANCH" == "FE/dev" ]; then
-        docker run --rm -v /home/ubuntu/nginx:/output build-fe \
-          sh -c "cp /app/android/app/build/outputs/apk/release/app-release.apk /output/"
-      fi
-    # FE/rel
-    - |
-      if [ "$CI_COMMIT_BRANCH" == "FE/rel" ]; then
-        docker run --rm -v /home/gitlab-runner/nginx:/output build-fe \
-        sh -c "cp /app/android/app/build/outputs/apk/release/app-release.apk /output/" \
-      scp -i /home/gitlab-runner/J12B210T.pem /home/gitlab-runner/nginx/app-release.apk ubuntu@j12b210.p.ssafy.io /home/nginx/
-      fi
-
-  dependencies:
-    - build_FE
-  rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
-    when: always
-  - when: never
 
 #################
 # 2-2. push_BE  #
@@ -133,9 +93,8 @@ cleanup:
     - docker builder prune -f
   dependencies:
     - build_BE
-    - build_FE
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "BE/dev" || $CI_COMMIT_BRANCH == "BE/rel")
+    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "*/dev" || $CI_COMMIT_BRANCH == "*/rel")
       when: always
     - when: never
 
@@ -173,6 +132,7 @@ deploy_BE_dev:
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "BE/dev"
       when: always
     - when: never
+
 
 deploy_BE_rel:
   stage: deploy
