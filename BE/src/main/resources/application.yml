@@ -6,7 +6,18 @@ spring:
     import:
       optional:file:.env[.properties]
   jwt:
-    secret: ${JWT_SECRET}
+    secret: OnetwothreeDroptheBeat134vasndjnaiosuervoiuasoeruvnasopieurvanpsoierunaspoieruvnaposieurn
+  security:
+     oauth2:
+       client:
+         registration:
+           kakao:
+             client-name: kakao
+             client-id: 4df41bec6f36ccdec491270265b88e43
+#             client-secret:
+             redirect-uri: http://localhost:8080/oauth/callback
+             client-authentication-method:
+             scope: name,email
   data:
     redis:
       host: ${REDIS_HOST}
@@ -22,7 +33,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: ${JPA_DDL}
+      ddl-auto: ${JPA_DDL=validate}
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     open-in-view: true #자잘한 경고 뜨는 거 때문에 설정 명시
