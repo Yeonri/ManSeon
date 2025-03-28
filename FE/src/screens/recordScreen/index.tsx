@@ -3,20 +3,22 @@ import { Image, View } from "react-native";
 import { PhotoFile } from "react-native-vision-camera";
 import { CameraView } from "../../components/cameraRecord/cameraView";
 import { PermissionCheck } from "../../components/common/permissionCheck";
-import { PermissionNotice } from "../../components/common/permissionNotice";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
+// import { useLocationPermission } from "../../hooks/useLocationPermission";
 
 export function RecordScreen() {
-  const hasPermission = useCameraPermission();
+  const hasCameraPermission = useCameraPermission();
+  // const hasLocationPermission = useLocationPermission();
   const [photo, setPhoto] = useState<PhotoFile | null>(null);
 
-  if (hasPermission === null) {
+  if (hasCameraPermission === null) {
     return <PermissionCheck name="카메라" />;
+  } else {
   }
 
-  if (hasPermission === false) {
-    return <PermissionNotice name="카메라" />;
-  }
+  // if (hasLocationPermission === null) {
+  //   return <PermissionCheck name="위치" />;
+  // }
 
   return (
     <View className="flex-1">

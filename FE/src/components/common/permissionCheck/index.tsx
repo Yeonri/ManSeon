@@ -1,6 +1,6 @@
+import { ActivityIndicator, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBeforeLogo } from "../headerBeforeLogo";
-import { ActivityIndicator, Text, View } from "react-native";
 
 export function PermissionCheck({ name }: { name: string }) {
   return (

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
+import { PermissionAlert } from "../../utils/permissionAlert";
 
 function isAuthorized(status: CameraPermissionStatus): boolean {
-  return status === ("granted" as CameraPermissionStatus);
+  return status === "granted";
 }
 
 export function useCameraPermission() {
@@ -14,7 +15,6 @@ export function useCameraPermission() {
       console.log("[카메라 권한] 현재:", currentStatus);
 
       if (isAuthorized(currentStatus)) {
-        console.log("[카메라 권한] 허용");
         setHasPermission(true);
         return;
       }
@@ -22,12 +22,14 @@ export function useCameraPermission() {
       const requestedStatus = await Camera.requestCameraPermission();
       console.log("[카메라 권한] 요청 후:", requestedStatus);
 
-      const updatedStatus = await Camera.getCameraPermissionStatus();
-      console.log("[카메라 권한] 요청 후 다시 확인:", updatedStatus);
+      if (requestedStatus === "denied") {
+        console.log("[카메라 권한] BLOCKED");
+        PermissionAlert("카메라");
+        setHasPermission(false);
+        return;
+      }
 
-      const isAllowed = isAuthorized(updatedStatus);
-      console.log("[카메라 권한] 결과:", isAllowed);
-      setHasPermission(isAllowed);
+      setHasPermission(isAuthorized(requestedStatus));
     }
 
     getPermissionStatus();
