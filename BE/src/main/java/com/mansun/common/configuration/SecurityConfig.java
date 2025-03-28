@@ -2,9 +2,10 @@ package com.mansun.common.configuration;
 
 import com.mansun.common.auth.jwt.CustomLogoutFilter;
 import com.mansun.common.auth.jwt.JwtFilter;
+import com.mansun.common.auth.jwt.JwtUtil;
 import com.mansun.common.auth.jwt.LoginFilter;
+import com.mansun.common.auth.oauth.CustomOAuth2UserService;
 import com.mansun.common.auth.refresh.repository.RefreshRepository;
-import lombok.CustomLog;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +17,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.mansun.common.auth.jwt.JwtUtil;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
@@ -27,12 +26,12 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
 //    BCryptPasswordEncoder를 사용했으나 현재 가장 우수한 인코더는 Argon이다.
 //    향후 바꿀 가능성이 있다.
     @Bean
@@ -48,10 +47,15 @@ public class SecurityConfig {
         http.csrf((auth) -> auth.disable());
 
         //Form 로그인 방식 disable
-        http.formLogin(auth-> auth.disable());
+        http.formLogin(auth -> auth.disable());
 
         //http basic 인증 방식 disable
         http.httpBasic((auth) -> auth.disable());
+
+        http.oauth2Login(oauth2 ->
+                oauth2.userInfoEndpoint(userInfoEndPointConfig -> userInfoEndPointConfig.userService(customOAuth2UserService)));
+//                Customizer.withDefaults()
+//                );
 
         //경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
@@ -67,7 +71,7 @@ public class SecurityConfig {
 //        때문에 해당 경로는 /api/users에 있지 않다. 
 //        로그인만을 위한 문이 있다고 이해하는 게 가장 빠르다
 //        또한 email이란 input name으로 읽어오게 설정했다.
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil,refreshRepository){{
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository) {{
             setFilterProcessesUrl("/api/users/login");
             setUsernameParameter("email");
         }}, UsernamePasswordAuthenticationFilter.class);
