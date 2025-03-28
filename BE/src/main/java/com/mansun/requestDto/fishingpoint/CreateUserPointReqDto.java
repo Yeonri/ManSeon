@@ -9,5 +9,4 @@ public class CreateUserPointReqDto {
     String depthRange;
     float lat;
     float lng;
-
 }
