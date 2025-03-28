@@ -23,7 +23,7 @@ public class FishType {
     private List<Fish> type;
 
     //    Column
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     @Schema(description = "물고기 종 이름")
     private String fishName;
 

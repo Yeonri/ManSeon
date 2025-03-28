@@ -1,10 +1,7 @@
 package com.mansun.entity.badge;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import javax.annotation.processing.Generated;
@@ -22,7 +19,9 @@ public class Badges {
 
 //    Column
     @Schema(description = "뱃지 이름")
+    @Column(nullable = false,unique = true)
     private String badgeName;
+    @Column(nullable = false)
     @Schema(description = "뱃지 이미지 경로")
     private String badgeImg;
 

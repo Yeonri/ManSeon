@@ -9,18 +9,17 @@ import com.mansun.features.fish.repository.FishRepository;
 import com.mansun.features.point.fishingpoint.repository.FishingPointRepository;
 import com.mansun.features.point.fishingpoint.repository.TideLevelRepository;
 import com.mansun.features.point.fishingpoint.repository.WeatherRepository;
+import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
 import com.mansun.requestDto.fishingpoint.SearchPointReqDto;
 import com.mansun.responseDto.fishingPoint.AllPointResDto;
 import com.mansun.responseDto.fishingPoint.OnePointDetailInfoResDto;
 import com.mansun.responseDto.fishingPoint.OnePointResDto;
 import com.mansun.responseDto.fishingPoint.SearchPointResDto;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +27,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FishingPointServiceImpl {
     private final EntityManager em;
+
     private final FishingPointRepository fishingPointRepository;
     private final TideLevelRepository tideLevelRepository;
+    private final FishRepository fishRepository;
+    private final WeatherRepository weatherRepository;
 
     //포인트 명에 따른 검색 기능
     public List<SearchPointResDto> searchFishingPointList(
@@ -39,10 +41,20 @@ public class FishingPointServiceImpl {
         return null;
     }
 
+    public void createAllPoint(CreateFishingPointReqDto req) {
+        fishingPointRepository.save(
+                FishingPoint.builder()
+                        .pointName(req.getPointName())
+                        .lng(req.getPointLng())
+                        .lat(req.getPointLat())
+                        .build()
+        );
+    }
+
+
     //전체 포인트 리스트
     public List<AllPointResDto> findAllPointList() {
         List<FishingPoint> fishingPointList = fishingPointRepository.findAll();
-
         return fishingPointList.stream().map(
                 fp -> AllPointResDto
                         .builder()
@@ -57,21 +69,17 @@ public class FishingPointServiceImpl {
         return OnePointResDto
                 .builder()
                 .pointName(point.getPointName())
-                .pointLng(point.getPointLng())
-                .pointLat(point.getPointLat())
+                .pointLng(point.getLng())
+                .pointLat(point.getLat())
                 .build();
-
     }
-
-    private final FishRepository fishRepository;
-    private final WeatherRepository weatherRepository;
 
     public OnePointDetailInfoResDto findOnePointDetailInfo(CustomUserDetails customUserDetails, Long pointId) {
         //날씨
-        List<Weather> weatherList=weatherRepository.findByWeatherDateBetweenAndPoints_PointId(LocalDate.now(),LocalDate.now().plusDays(7),pointId);
+        List<Weather> weatherList = weatherRepository.findByWeatherDateBetweenAndPoints_PointId(LocalDate.now(), LocalDate.now().plusDays(7), pointId);
         //조위
         Long obsId = fishingPointRepository.findById(pointId).orElseThrow().getPointId();
-        List<TideLevel> tideLevelList=tideLevelRepository.findByObs_ObsId(obsId);
+        List<TideLevel> tideLevelList = tideLevelRepository.findByObs_ObsId(obsId);
         //물고기
         List<Fish> myFishList = fishRepository.findByUser_UserId(customUserDetails.getUserId());
         return OnePointDetailInfoResDto.builder()

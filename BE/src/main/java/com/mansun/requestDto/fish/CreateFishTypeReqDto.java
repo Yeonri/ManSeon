@@ -7,10 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 public class CreateFishTypeReqDto {
-    @JsonProperty("fishName")
     String fishName;
-    @JsonProperty("fishPlace")
     String fishPlace;
-    @JsonProperty("characteristic")
     String characteristic;
 }

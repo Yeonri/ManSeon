@@ -22,7 +22,8 @@ public class UserPointServiceImpl implements UserPointService {
     public void createUserPoint(
             CustomUserDetails customUserDetails,
             CreateUserPointReqDto req) {
-        userPointRepository.save(UserPoint
+        userPointRepository.save(
+                UserPoint
                 .builder()
                 .user(new Users(customUserDetails))
                 .pointName(req.getPointName())
