@@ -21,8 +21,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FishServiceImpl implements FishService {
     private final FishRepository repository;
+
     @Override
-    public void createFish(CustomUserDetails customUserDetails,CreateFishReqDto req) {
+    public void createFish(CustomUserDetails customUserDetails, CreateFishReqDto req) {
         //도감기록을 추출할 때 어떤 검증 절차를 거쳐야 하는가??
         repository.save(Fish
                 .builder()
@@ -39,23 +40,26 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public List<FindFishListResDto> findMyFishList(CustomUserDetails customUserDetails) {
-        List<Fish> findFishList=repository.findByUser_UserId(customUserDetails.getUserId());
+        List<Fish> findFishList = repository.findByUser_UserId(customUserDetails.getUserId());
         return findFishList.stream().map(
-                f->FindFishListResDto.builder().build()
+                f ->
+                    FindFishListResDto.builder()
+                            .fishId(f.getFishId())
+                            .build()
         ).collect(Collectors.toList());
     }
 
     @Override
-    public List<FindFishListResDto> findOthersFishList(CustomUserDetails customUserDetails,Long userId) {
-        List<Fish> findFishList=repository.findByUser_UserId(userId);
+    public List<FindFishListResDto> findOthersFishList(CustomUserDetails customUserDetails, Long userId) {
+        List<Fish> findFishList = repository.findByUser_UserId(userId);
         return findFishList.stream().map(
-                f->FindFishListResDto.builder().build()
+                f -> FindFishListResDto.builder().build()
         ).collect(Collectors.toList());
     }
 
     @Override
-    public FindFishResDto findMyFish(CustomUserDetails customUserDetails,Long fishId) {
-        Fish findFish=repository.findByUser_UserIdAndFishId(customUserDetails.getUserId(), fishId);
+    public FindFishResDto findMyFish(CustomUserDetails customUserDetails, Long fishId) {
+        Fish findFish = repository.findByUser_UserIdAndFishId(customUserDetails.getUserId(), fishId);
         return FindFishResDto
                 .builder()
                 .fishId(findFish.getFishId())
@@ -70,8 +74,8 @@ public class FishServiceImpl implements FishService {
     }
 
     @Override
-    public FindFishResDto findOtherFish(CustomUserDetails customUserDetails,Long userId,Long fishId) {
-        Fish findFish=repository.findByUser_UserIdAndFishId(userId, fishId);
+    public FindFishResDto findOtherFish(CustomUserDetails customUserDetails, Long userId, Long fishId) {
+        Fish findFish = repository.findByUser_UserIdAndFishId(userId, fishId);
         return FindFishResDto
                 .builder()
                 .fishId(findFish.getFishId())

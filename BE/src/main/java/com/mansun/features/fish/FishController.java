@@ -29,8 +29,7 @@ public class FishController {
     @PostMapping("/fishtype/add")
     public ResponseEntity<OnlyMessageResDto> addNewFishType(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            CreateFishTypeReqDto req) {
-        System.out.println(req.getFishPlace()+" "+req.getFishName()+" "+req.getCharacteristic());
+            @RequestBody CreateFishTypeReqDto req) {
         fishTypeService.addNewFishType(req);
         return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 어종이 추가되었습니다."));
     }
@@ -39,8 +38,7 @@ public class FishController {
     @PostMapping("/fish/add")
     public ResponseEntity<OnlyMessageResDto> createFish(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            CreateFishReqDto req) {
-        System.out.println(req.getEquipment()+" "+req.getFishImg()+" "+req.getBait());
+            @RequestBody CreateFishReqDto req) {
         fishService.createFish(customUserDetails, req);
         return ResponseEntity.ok(new OnlyMessageResDto("내 기록이 정상적으로 추가되었습니다"));
     }
@@ -52,7 +50,6 @@ public class FishController {
     ) {
         List<FindFishListResDto> myList = fishService.findMyFishList(customUserDetails);
         return ResponseEntity.ok(myList);
-
     }
 
     @Operation(summary = "타인 물고기 도감 리스트 열람")
