@@ -5,43 +5,6 @@ stages:
   - push
   - cleanup
   - deploy
-#################
-# 1-1. build_FE #
-#################
-build_FE:
-  stage: build
-  variables:
-    IMAGE_NAME_DEV: "$IMAGE_FE_DEV"
-    IMAGE_NAME_REL: "$IMAGE_FE_REL"
-    DOCKERFILE_PATH: deploy/Dockerfile.fe
-    CONTEXT: FE
-    GOOGLE_MAPS_API_KEY: "$GOOGLE_MAPS_API_KEY"
-  script:
-    # 환경변수 설정
-    - echo "VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID" >> FE/.env
-
-    # FE/dev
-    - |
-      if [ "$CI_COMMIT_REF_NAME" == "FE/dev" ]; then
-        docker compose -f /home/ubuntu/docker-compose.yml down
-        docker image prune -f
-        docker builder prune -f
-        docker build --no-cache -t $IMAGE_NAME_DEV:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
-        docker tag $IMAGE_NAME_DEV:$CI_COMMIT_SHA $IMAGE_NAME_DEV:latest
-      fi
-      
-    # BE/rel
-    - |
-      if [ "$CI_COMMIT_REF_NAME" == "BE/rel" ]; then
-        docker build --no-cache -t $IMAGE_NAME_REL:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
-        docker tag $IMAGE_NAME_REL:$CI_COMMIT_SHA $IMAGE_NAME_REL:latest
-      fi
-
-    - docker build --no-cache -t build-fe -f $DOCKERFILE_PATH $CONTEXT
-  rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
-    when: always
-  - when: never
 
 #################
 # 1-2. build_BE #
@@ -80,40 +43,6 @@ build_BE:
     when: always
   - when: never
 
-#################
-# 2-1. push_FE  #
-#################
-push_FE:
-  stage: push
-  variables:
-    IMAGE_NAME_DEV: "$IMAGE_FE_DEV"
-    IMAGE_NAME_REL: "$IMAGE_FE_REL"
-    DOCKERHUB_ID: "$DOCKERHUB_USERNAME"
-    DOCKERHUB_PW: "$DOCKERHUB_PASSWORD"
-  script:
-
-    - echo $DOCKERHUB_PW | docker login -u $DOCKERHUB_ID --password-stdin
-
-    # FE/dev
-    - |
-      if [ "$CI_COMMIT_REF_NAME" == "FE/dev" ]; then
-        docker push $IMAGE_NAME_DEV:$CI_COMMIT_SHA
-        docker push $IMAGE_NAME_DEV:latest
-      fi
-
-    # FE/rel
-    - |
-      if [ "$CI_COMMIT_REF_NAME" == "FE/rel" ]; then
-        docker push $IMAGE_NAME_REL:$CI_COMMIT_SHA
-        docker push $IMAGE_NAME_REL:latest
-      fi
-
-  dependencies:
-    - build_FE
-  rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
-    when: always
-  - when: never
 
 #################
 # 2-2. push_BE  #
@@ -164,7 +93,6 @@ cleanup:
     - docker builder prune -f
   dependencies:
     - build_BE
-    - build_FE
   rules:
     - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "*/dev" || $CI_COMMIT_BRANCH == "*/rel")
       when: always
@@ -174,23 +102,6 @@ cleanup:
 ##################
 # 4. deploy 단계   #
 ##################
-
-deploy_FE_dev:
-  stage: deploy
-
-  script:
-    #  디렉토리 이동
-    - cd /home/ubuntu/
-
-    # 컨테이너 on .env 참조
-    - docker compose --env-file /home/ubuntu/.env up --build -d
-
-  dependencies:
-    - push_FE
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "FE/dev"
-      when: always
-    - when: never
 
 deploy_BE_dev:
   stage: deploy
@@ -222,34 +133,7 @@ deploy_BE_dev:
       when: always
     - when: never
 
-deploy_FE_rel:
-  stage: deploy
-  variables:
-    MAIN_SERVER_URI: ubuntu@j12b210.p.ssafy.io
-    PEM_KEY: /home/gitlab-runner/J12B210T.pem
-  script:
-    
-    # SSH를 통해 main-server에서 명령어 실행(터미널 생성)
-    - |
-      ssh -tt -i $PEM_KEY "$MAIN_SERVER_URI" << 'EOF'
 
-        # 컨테이너 off
-        docker compose down
-        # 기존 이미지 제거
-        docker rmi $(docker images -q)
-        # 컨테이너 on .env 참조
-        docker compose --env-file /home/ubuntu/.env up --build -d
-        # 나가기
-        exit
-      EOF
-
-  dependencies:
-    - push_FE
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "FE/rel"
-      when: always
-    - when: never
-    
 deploy_BE_rel:
   stage: deploy
   variables:
