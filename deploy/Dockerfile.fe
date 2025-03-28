@@ -7,15 +7,15 @@ FROM node:22.13 as build
 RUN apt-get update && apt-get install -y wget unzip && \
     rm -rf /var/lib/apt/lists/*
 
-# Oracle JDK 17.0.14 설치
+# Oracle JDK 17.0.7 설치
 RUN wget --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" \
-    -O /tmp/jdk-17.0.14_linux-x64_bin.tar.gz "https://download.oracle.com/java/17/archive/jdk-17.0.14_linux-x64_bin.tar.gz" && \
+    -O /tmp/jdk-17.0.7_linux-x64_bin.tar.gz "https://download.oracle.com/java/17/archive/jdk-17.0.7_linux-x64_bin.tar.gz" && \
     mkdir -p /usr/local/java && \
-    tar -xzf /tmp/jdk-17.0.14_linux-x64_bin.tar.gz -C /usr/local/java && \
-    rm /tmp/jdk-17.0.14_linux-x64_bin.tar.gz
+    tar -xzf /tmp/jdk-17.0.7_linux-x64_bin.tar.gz -C /usr/local/java && \
+    rm /tmp/jdk-17.0.7_linux-x64_bin.tar.gz
 
 # JAVA 환경 변수 설정
-ENV JAVA_HOME=/usr/local/java/jdk-17.0.14
+ENV JAVA_HOME=/usr/local/java/jdk-17.0.7
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Android SDK 환경 변수 설정
