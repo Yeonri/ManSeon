@@ -40,7 +40,8 @@ build_BE:
       if [ "$CI_COMMIT_REF_NAME" == "BE/dev" ]; then
         docker compose -f /home/ubuntu/docker-compose.yml down
         docker image prune -f
-        docker build --no-cache -t $IMAGE_NAME_DEV:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
+        docker builder prune -f
+        docker build -t $IMAGE_NAME_DEV:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
         docker tag $IMAGE_NAME_DEV:$CI_COMMIT_SHA $IMAGE_NAME_DEV:latest
       fi
 
@@ -50,7 +51,6 @@ build_BE:
         docker build --no-cache -t $IMAGE_NAME_REL:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
         docker tag $IMAGE_NAME_REL:$CI_COMMIT_SHA $IMAGE_NAME_REL:latest
       fi
-
 
   rules:
   - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "BE/dev" || $CI_COMMIT_BRANCH == "BE/rel")
@@ -93,16 +93,15 @@ push_BE:
   variables:
     IMAGE_NAME_DEV: "$IMAGE_BE_DEV"
     IMAGE_NAME_REL: "$IMAGE_BE_REL"
-    DOCKERHUB_ID_DEV: "$DOCKERHUB_USERNAME_DEV"
-    DOCKERHUB_PW_DEV: "$DOCKERHUB_PASSWORD_DEV"
-    DOCKERHUB_ID_REL: "$DOCKERHUB_USERNAME_REL"
-    DOCKERHUB_PW_REL: "$DOCKERHUB_PASSWORD_REL"
+    DOCKERHUB_ID: "$DOCKERHUB_USERNAME"
+    DOCKERHUB_PW: "$DOCKERHUB_PASSWORD"
   script:
 
+    - echo $DOCKERHUB_PW | docker login -u $DOCKERHUB_ID --password-stdin
+    
     # BE/dev
     - |
       if [ "$CI_COMMIT_REF_NAME" == "BE/dev" ]; then
-        echo $DOCKERHUB_PW_DEV | docker login -u $DOCKERHUB_ID_DEV --password-stdin
         docker push $IMAGE_NAME_DEV:$CI_COMMIT_SHA
         docker push $IMAGE_NAME_DEV:latest
       fi
@@ -110,7 +109,6 @@ push_BE:
     # BE/rel
     - |
       if [ "$CI_COMMIT_REF_NAME" == "BE/rel" ]; then
-        echo $DOCKERHUB_PW_REL | docker login -u $DOCKERHUB_ID_REL --password-stdin
         docker push $IMAGE_NAME_REL:$CI_COMMIT_SHA
         docker push $IMAGE_NAME_REL:latest
       fi
@@ -149,12 +147,25 @@ cleanup:
 deploy_BE_dev:
   stage: deploy
   variables:
-    IMAGE_NAME_DEV: "$IMAGE_BE_DEV"
+    MYSQL_URL: "$MYSQL_URL_DEV"
+    MYSQL_USERNAME: "$MYSQL_USERNAME_DEV"
+    MYSQL_PASSWORD: "$MYSQL_PASSWORD_DEV"
+    JPA_DDL_DEV: create
+    JWT_SECRET: "$JWT_SECRET"
+
+
   script:
     #  디렉토리 이동
     - cd /home/ubuntu/
-    # 컨테이너 on .env 참조 (개발 단계에서는 .env X )
-    - docker run $IMAGE_NAME_DEV:latest -d
+    # 환경 변수
+    - echo "MYSQL_URL=$MYSQL_URL" >> .env
+    - echo "MYSQL_USERNAME=$MYSQL_USERNAME" >> .env
+    - echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
+    - echo "JPA_DDL_DEV=$JPA_DDL_DEV" >> .env
+    - echo "JWT_SECRET=$JWT_SECRET" >> .env
+
+    # 컨테이너 on .env 참조
+    - docker compose --env-file /home/ubuntu/.env up --build -d
 
   dependencies:
     - push_BE
@@ -166,22 +177,39 @@ deploy_BE_dev:
 deploy_BE_rel:
   stage: deploy
   variables:
-    IMAGE_NAME_REL: "$IMAGE_BE_REL"
-    MAIN_SERVER_URI: "ubuntu@j12b210.p.ssafy.io"
-    PEM_KEY: "/home/gitlab-runner/J12B210T.pem"
-  script:
-    # SSH를 통해 B210-main-server에서 명령어 실행(터미널 생성)
-    - |
-      ssh -tt -i $PEM_KEY $MAIN_SERVER_URI << 'EOF'
+    MYSQL_URL: "$MYSQL_URL_REL"
+    MYSQL_USERNAME: "$MYSQL_USERNAME_REL"
+    MYSQL_PASSWORD: "$MYSQL_PASSWORD_REL"
+    JPA_DDL_DEV: validate
+    JWT_SECRET: "$JWT_SECRET"
 
-        # docker 컨테이너 내리고 지움
-        docker ps -aq --filter "ancestor=$IMAGE_NAME_REL:latest" | xargs -r docker rm -f
-        # 새로운 이미지 허브에서 부르기
-        docker pull $IMAGE_NAME_REL:latest
-        docker run -d --name app --network cluster_net -p 8081:8080 $IMAGE_NAME_REL:latest
+    MAIN_SERVER_URI: ubuntu@j12b210.p.ssafy.io
+    PEM_KEY: /home/gitlab-runner/J12B210T.pem
+  script:
+    # 환경 변수
+    - echo "MYSQL_URL=$MYSQL_URL" >> .env
+    - echo "MYSQL_USERNAME=$MYSQL_USERNAME" >> .env
+    - echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
+    - echo "JPA_DDL_DEV=$JPA_DDL_DEV" >> .env
+    - echo "JWT_SECRET=$JWT_SECRET" >> .env
+
+    #.env 파일을 main-server로 전송
+    - scp -i $PEM_KEY .env "$MAIN_SERVER_URI:/home/ubuntu/"
+
+    # SSH를 통해 main-server에서 명령어 실행(터미널 생성)
+    - |
+      ssh -tt -i $PEM_KEY "$MAIN_SERVER_URI" << 'EOF'
+
+        # 컨테이너 off
+        docker compose down
+        # 기존 이미지 제거
+        docker rmi $(docker images -q)
+        # 컨테이너 on .env 참조
+        docker compose --env-file /home/ubuntu/.env up --build -d
         # 나가기
         exit
       EOF
+
 
   dependencies:
     - push_BE
