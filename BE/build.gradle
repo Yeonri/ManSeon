@@ -65,10 +65,12 @@ dependencies {
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
-	// Spring data redis
+//	Spring data redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
+//	환경 변수 사용을 위한 Spring dotenv 라이브러리
 	implementation "io.github.cdimascio:java-dotenv:5.2.2"
+//  카카오 Oauth 구현을 위한 oauth Client
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
