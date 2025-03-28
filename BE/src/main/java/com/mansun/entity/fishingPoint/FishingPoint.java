@@ -2,9 +2,15 @@ package com.mansun.entity.fishingPoint;
 
 import com.mansun.entity.fishingPoint.dataSet.MarineZone;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class FishingPoint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +23,8 @@ public class FishingPoint {
 
 //    Column
     private String pointName;
-    private float pointLat;
-    private float pointLng;
+    private float lat;
+    private float lng;
     private String primaryMaterial;
     private Integer weatherX;
     private Integer weatherY;

@@ -42,10 +42,13 @@ public class Board {
 
     //Column
     @Schema(description = "게시물 제목")
+    @Column(nullable = false)
     private String title;
     @Schema(description = "게시물 내용")
+    @Column(nullable = false)
     private String content;
     @Schema(description = "게시일")
+    @Column(nullable = false)
     private LocalDateTime createdAt;
     @Schema(description = "게시물 이미지")
     private String postImg;
