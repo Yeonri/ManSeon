@@ -1,8 +1,5 @@
-import { formatDistanceToNow } from "date-fns";
-import { ko } from "date-fns/locale";
 import { useState } from "react";
 import {
-  Alert,
   FlatList,
   Image,
   Text,
@@ -15,14 +12,12 @@ import IconArrow from "../../../assets/images/icon_arrow.svg";
 import IconDelete from "../../../assets/images/icon_delete.svg";
 import IconEdit from "../../../assets/images/icon_edit.svg";
 import TagFollow from "../../../assets/images/tag_follow.svg";
+import { DeleteAlert } from "../../../utils/deleteAlert";
+import { FormatTime } from "../../../utils/formatTime";
 
 export function RecommentList({ recomments }: { recomments: Recomment[] }) {
   const [editRecommentId, setEditRecommentId] = useState<number | null>(null);
   const [recommendContent, setRecommentContent] = useState("");
-
-  function formatTime(time: string) {
-    return formatDistanceToNow(new Date(time), { addSuffix: true, locale: ko });
-  }
 
   function handleRecomment(id: number, content: string) {
     setEditRecommentId(id);
@@ -31,13 +26,6 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
 
   function handleEditCancel() {
     setEditRecommentId(null);
-  }
-
-  function createDeleteAlert() {
-    Alert.alert("답글 삭제", "답글을 삭제하시겠습니까?", [
-      { text: "아니오", onPress: () => {} },
-      { text: "네", onPress: () => {} },
-    ]);
   }
 
   return (
@@ -72,13 +60,13 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
                   <IconEdit />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => createDeleteAlert()}
+                  onPress={() => DeleteAlert("답글")}
                   className="h-6"
                 >
                   <IconDelete />
                 </TouchableOpacity>
                 <Text className="text-neutral-400 text-sm">
-                  {formatTime(item.createAt)}
+                  {FormatTime(item.createAt)}
                 </Text>
               </View>
             </View>

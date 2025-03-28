@@ -1,12 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { formatDistanceToNow } from "date-fns";
-import { ko } from "date-fns/locale";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import IconComment from "../../../assets/images/icon_comment.svg";
 import IconLike from "../../../assets/images/icon_like.svg";
 import postsMocks from "../../../mocks/postsMocks.json";
+import { FormatTime } from "../../../utils/formatTime";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -16,10 +15,6 @@ export function PostList() {
 
   function handlePostClick(postId: number) {
     navigation.navigate("Post", { postId });
-  }
-
-  function formatTime(time: string) {
-    return formatDistanceToNow(new Date(time), { addSuffix: true, locale: ko });
   }
 
   return (
@@ -40,7 +35,7 @@ export function PostList() {
                     {item.nickname}
                   </Text>
                   <Text className="text-neutral-500">
-                    {formatTime(item.createAt)}
+                    {FormatTime(item.createAt)}
                   </Text>
                 </View>
                 <View className="flex-row gap-3">

@@ -1,8 +1,5 @@
-import { formatDistanceToNow } from "date-fns";
-import { ko } from "date-fns/locale";
 import { useState } from "react";
 import {
-  Alert,
   FlatList,
   Image,
   Text,
@@ -14,16 +11,14 @@ import { Comment } from "../../../api/types/Comment";
 import IconDelete from "../../../assets/images/icon_delete.svg";
 import IconEdit from "../../../assets/images/icon_edit.svg";
 import TagFollow from "../../../assets/images/tag_follow.svg";
+import { DeleteAlert } from "../../../utils/deleteAlert";
+import { FormatTime } from "../../../utils/formatTime";
 import { AddRecomment } from "../addRecomment";
 import { RecommentList } from "../recommentList";
 
 export function CommentList({ comments }: { comments: Comment[] }) {
   const [editCommentId, setEditCommentId] = useState<number | null>(null);
   const [commentContent, setCommentContent] = useState("");
-
-  function formatTime(time: string) {
-    return formatDistanceToNow(new Date(time), { addSuffix: true, locale: ko });
-  }
 
   function handleComment(id: number, content: string) {
     setEditCommentId(id);
@@ -32,13 +27,6 @@ export function CommentList({ comments }: { comments: Comment[] }) {
 
   function handleEditCancel() {
     setEditCommentId(null);
-  }
-
-  function createDeleteAlert() {
-    Alert.alert("댓글 삭제", "댓글을 삭제하시겠습니까?", [
-      { text: "아니오", onPress: () => {} },
-      { text: "네", onPress: () => {} },
-    ]);
   }
 
   return (
@@ -73,13 +61,13 @@ export function CommentList({ comments }: { comments: Comment[] }) {
                 <IconEdit />
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => createDeleteAlert()}
+                onPress={() => DeleteAlert("댓글")}
                 className="h-6"
               >
                 <IconDelete />
               </TouchableOpacity>
               <Text className="text-neutral-400 text-sm">
-                {formatTime(item.createAt)}
+                {FormatTime(item.createAt)}
               </Text>
             </View>
           </View>
