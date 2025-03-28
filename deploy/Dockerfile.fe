@@ -1,7 +1,7 @@
 ##############################
 # 1. Build (Android APK 빌드) #
 ############################## 
-FROM node:18 as builder
+FROM node:22.14 as builder
 
 # 패키지 설치
 RUN apt-get update && apt-get install -y \
@@ -43,3 +43,14 @@ WORKDIR /app/android
 RUN ./gradlew assembleRelease
 
 # 빌드 산출물은 /app/android/app/build/outputs/apk/release/app-release.apk 로 생성된다고 가정
+
+FROM nginx:alpine
+
+# 빌드된 파일을 Nginx의 기본 경로로 복사
+COPY --from=build /app/android/app/build/outputs/apk/release/app-release.apk /usr/share/nginx/html
+
+# 포트 작성
+EXPOSE 80
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]
