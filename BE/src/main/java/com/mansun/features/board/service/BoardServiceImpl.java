@@ -49,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
         List<Board> boardList = queryFactory
                 .selectFrom(board)
                 .leftJoin(board.comment, comment).fetchJoin()
-                .leftJoin(comment.recomment, recomment).fetchJoin()
+//                .leftJoin(comment.recomment, recomment).fetchJoin()
                 .distinct() // 중복 제거
                 .fetch();
 
@@ -57,6 +57,7 @@ public class BoardServiceImpl implements BoardService {
                 b -> allBoardListResDto
                         .builder()
                         .boardId(b.getBoardId())
+                        .title(b.getTitle())
                         .build()
         ).collect(Collectors.toList());
     }
