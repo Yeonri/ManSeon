@@ -6,4 +6,5 @@ export type MoreStackParams = {
   Myposts: undefined;
   FishingList: undefined;
   CollectionList: undefined;
+  Suggesttions: undefined;
 };

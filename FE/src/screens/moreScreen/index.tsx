@@ -51,6 +51,11 @@ export function MoreScreen() {
             </Text>
           </TouchableOpacity>
         </View>
+        <TouchableOpacity onPress={() => navigation.navigate("Suggesttions")}>
+          <Text className="p-5 px-10 bg-blue-50 text-blue-600 text-center text-xl">
+            문의사항
+          </Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
