@@ -39,8 +39,8 @@ export function useLocationPermission() {
       console.log("[위치 권한] 요청 후:", requestedStatus);
 
       // 만일 상태가 BLOCKED 상태면 설정창 이동을 유도한다.(=>utils에 따로 설정하자)
-      if (requestedStatus === RESULTS.BLOCKED) {
-        console.log("[위치 권한] BLOCKED => 설정으로 이동 필요");
+      if (requestedStatus === "denied") {
+        console.log("[위치 권한] BLOCKED => 설정으로 이동");
         PermissionAlert("위치");
         setHasPermission(false);
         return;
