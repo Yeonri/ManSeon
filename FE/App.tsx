@@ -1,7 +1,7 @@
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import "./global.css";
-import { BottomTabNavigator } from "./src/navigation/bottomTabNavigator";
+import { AppNavigator } from "./src/navigation/appNavigator";
 
 export default function App(): React.JSX.Element {
   const mainTheme = {
@@ -13,7 +13,7 @@ export default function App(): React.JSX.Element {
   };
   return (
     <NavigationContainer theme={mainTheme}>
-      <BottomTabNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 }
