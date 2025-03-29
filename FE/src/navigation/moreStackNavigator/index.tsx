@@ -4,6 +4,7 @@ import { CollectionListScreen } from "../../screens/collectionListScreen";
 import { FishingListScreen } from "../../screens/fishingListScreen";
 import { MoreScreen } from "../../screens/moreScreen";
 import { MyPostsScreen } from "../../screens/myPostsScreen";
+import { ProfileScreen } from "../../screens/profileScreen";
 import { ProhibitedScreen } from "../../screens/prohibitedScreen";
 import { RuleScreen } from "../../screens/ruleScreen";
 import { SuggestionsScreen } from "../../screens/suggestionsScreen";
@@ -21,7 +22,8 @@ export function MoreStackNavigator() {
       <Stack.Screen name="Tutorial" component={TutorialScreen} />
       <Stack.Screen name="FishingList" component={FishingListScreen} />
       <Stack.Screen name="CollectionList" component={CollectionListScreen} />
-      <Stack.Screen name="Suggesttions" component={SuggestionsScreen} />
+      <Stack.Screen name="Suggestions" component={SuggestionsScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
     </Stack.Navigator>
   );
 }
