@@ -6,7 +6,7 @@ interface CollectionCardProps {
   name: string;
   image: ImageSourcePropType;
   isCollected: boolean;
-  onPress?: () => void;
+  onPress: () => void;
 }
 
 function CollectionCard({
@@ -19,7 +19,8 @@ function CollectionCard({
   return (
     <TouchableOpacity
       className="w-[100px] h-[120px] rounded-xl overflow-hidden items-center justify-center border border-neutral-50"
-      onPress={onPress}
+      onPress={isCollected ? onPress : undefined}
+      disabled={!isCollected}
       activeOpacity={0.8}
     >
       <Image

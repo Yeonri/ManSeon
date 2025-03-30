@@ -1,6 +1,9 @@
+import { useNavigation } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import type { MoreStackParams } from "../../api/types/moreStackParams";
 import CollectionCard from "../../components/collection/collectionCard";
 import Dropdown from "../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
@@ -10,6 +13,9 @@ const sortOptions = ["가나다순", "잡은 물고기순", "최신순"];
 
 export function CollectionListScreen() {
   const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<MoreStackParams>>();
 
   const sortedData = useMemo(() => {
     const copyData = [...processedFishData];
@@ -46,7 +52,7 @@ export function CollectionListScreen() {
   }, [selectedSort]);
 
   return (
-    <SafeAreaView edges={["top"]} className="flex-1 ">
+    <SafeAreaView edges={["top"]} className="flex-1">
       <HeaderBeforeTitle name="낚시 도감" />
 
       <View className="px-5 mt-4 mb-5 items-end">
@@ -70,6 +76,14 @@ export function CollectionListScreen() {
             name={item.name}
             image={item.image}
             isCollected={item.is_collected}
+            onPress={() => {
+              navigation.navigate("CollectionDetail", {
+                name: item.name,
+                description: item.description,
+                image: item.image,
+                collection_info: item.collection_info,
+              });
+            }}
           />
         )}
       />
