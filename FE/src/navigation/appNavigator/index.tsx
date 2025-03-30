@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { BottomTabNavigator } from "../bottomTabNavigator";
+import { CameraScreen } from "../../screens/cameraScreen";
 import { RecordScreen } from "../../screens/recordScreen";
 
 export function AppNavigator() {
@@ -7,8 +8,9 @@ export function AppNavigator() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="bottomTabs" component={BottomTabNavigator} />
-      <Stack.Screen name="record" component={RecordScreen} />
+      <Stack.Screen name="BottomTabs" component={BottomTabNavigator} />
+      <Stack.Screen name="Camera" component={CameraScreen} />
+      <Stack.Screen name="Record" component={RecordScreen} />
     </Stack.Navigator>
   );
 }

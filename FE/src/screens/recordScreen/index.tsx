@@ -1,58 +1,9 @@
-import { useRef, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { PhotoFile } from "react-native-vision-camera";
-import { CameraView } from "../../components/cameraRecord/cameraView";
-import { PermissionCheck } from "../../components/common/permissionCheck";
-import { useCameraPermission } from "../../hooks/useCameraPermission";
-import { Modalize } from "react-native-modalize";
-import { ChevronRight, X } from "lucide-react-native";
-import { FullButton } from "../../components/common/fullButton";
+import { Text, View } from "react-native";
 
 export function RecordScreen() {
-  const hasCameraPermission = useCameraPermission();
-  const [photo, setPhoto] = useState<PhotoFile | null>(null);
-  const sheetRef = useRef<Modalize>(null);
-
-  function openBottomSheet() {
-    sheetRef.current?.open();
-  }
-
-  if (hasCameraPermission === null) {
-    return <PermissionCheck name="카메라" />;
-  }
-
   return (
     <View className="flex-1">
-      {photo ? (
-        <View className="flex-1">
-          <TouchableOpacity
-            onPress={() => setPhoto(null)}
-            className="absolute top-5 left-5 z-10"
-          >
-            <X color="white" size={50} />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={openBottomSheet}
-            className="absolute top-5 right-5 z-10"
-          >
-            <ChevronRight color="white" size={50} />
-          </TouchableOpacity>
-
-          <Image
-            source={{ uri: "file://" + photo.path }}
-            className="flex-1 resize-contain"
-          />
-        </View>
-      ) : (
-        <CameraView onPhotoTaken={setPhoto} />
-      )}
-      <Modalize ref={sheetRef} snapPoint={300}>
-        <View className="p-10">
-          <Text>여기에 물고기 컴포넌트가 나와야 함</Text>
-          <FullButton name="다음" onPress={() => {}} />
-        </View>
-      </Modalize>
+      <Text>기록 화면</Text>
     </View>
   );
 }

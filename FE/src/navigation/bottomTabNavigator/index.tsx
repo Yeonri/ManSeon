@@ -1,7 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MainScreen } from "../../screens/mainScreen";
 import { MapScreen } from "../../screens/mapScreen";
-import { RecordScreen } from "../../screens/recordScreen";
 import { CommunityStackNavigator } from "../communityStackNavigator";
 import { MoreStackNavigator } from "../moreStackNavigator";
 import {
@@ -14,17 +13,18 @@ import {
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../api/types/RootStackParamList";
+import { RootStackParams } from "../../api/types/RootStackParams";
+import { CameraScreen } from "../../screens/cameraScreen";
 
 const Tab = createBottomTabNavigator();
 
 function CustomBottomTabButton() {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("record")}
+      onPress={() => navigation.navigate("Camera")}
       className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-blue-600 justify-center items-center"
     >
       <Plus color="white" size={32} />
@@ -60,8 +60,8 @@ export function BottomTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="addRecord"
-        component={RecordScreen}
+        name="camera"
+        component={CameraScreen}
         options={{
           title: "",
           tabBarIcon: () => null,
