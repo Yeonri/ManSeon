@@ -4,22 +4,30 @@ import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
 import com.mansun.entity.fish.Fish;
 import com.mansun.entity.fish.FishType;
+import com.mansun.entity.fish.QFish;
 import com.mansun.features.fish.repository.FishRepository;
 import com.mansun.requestDto.fish.CreateFishReqDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class FishServiceImpl implements FishService {
+    private final JPAQueryFactory queryFactory;
+
     private final FishRepository repository;
 
     @Override
@@ -39,14 +47,31 @@ public class FishServiceImpl implements FishService {
     }
 
     @Override
-    public List<FindFishListResDto> findMyFishList(CustomUserDetails customUserDetails) {
-        List<Fish> findFishList = repository.findByUser_UserId(customUserDetails.getUserId());
-        return findFishList.stream().map(
-                f ->
+    public Map<LocalDate,List<FindFishListResDto>> findMyFishList(CustomUserDetails customUserDetails) {
+//        List<Fish> findFishList = repository.findByUser_UserId(customUserDetails.getUserId());
+        QFish fish = QFish.fish;
+
+        List<Fish> fishList = queryFactory
+                .selectFrom(fish)
+                .where(fish.user.eq(new Users(customUserDetails)))
+                .orderBy(fish.createdAt.desc())
+                .fetch();
+
+        Map<LocalDate, List<FindFishListResDto>> grouped = new LinkedHashMap<>();
+        for (Fish f : fishList) {
+            LocalDate date = f.getCreatedAt().toLocalDate();
+            grouped.computeIfAbsent(date, k -> new ArrayList<>()).add(
                     FindFishListResDto.builder()
                             .fishId(f.getFishId())
+                            .fishName(f.getFishType().getFishName())
+                            .createdAt(f.getCreatedAt().toLocalDate())
+                            .size(f.getSize())
+                            .fishImg(f.getFishImg())
                             .build()
-        ).collect(Collectors.toList());
+            );
+        }
+
+        return grouped;
     }
 
     @Override
