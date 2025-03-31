@@ -3,6 +3,7 @@ package com.mansun.common.auth.jwt;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.common.auth.refresh.Entity.RefreshEntity;
 import com.mansun.common.auth.refresh.repository.RefreshRepository;
+import com.mansun.common.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,7 +60,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         addRefreshEntity(email,refreshToken,86400000L);
 
-        response.setHeader("access", accessToken);
+        response.setHeader("access", "Bearer "+accessToken);
         response.addCookie(createCookie("refresh", refreshToken));
         response.setStatus(HttpStatus.OK.value());
     }
