@@ -31,6 +31,29 @@ spring:
         format_sql: true
         show_sql: true
         default_batch_fetch_size: 1000
+  security:
+    oauth2:
+      client:
+#        Client Registration 진행
+        registration:
+          kakao:
+#            환경 변수 설정해야 됨
+            client-id: 4df41bec6f36ccdec491270265b88e43
+#            client-secret: YOUR_KAKAO_CLIENT_SECRET  # REST API 키만 사용하는 경우 없어도 됩니다.
+            redirect-uri: http://localhost:8080/api/oauth2/callback
+            authorization-grant-type: authorization_code
+            client-name: kakao
+            scope:
+#              - nickname
+#              - email
+            provider: kakao
+        provider:
+#          아래의 내용들은 이미 문서에 공개된 것들이라 보안 필요 없다
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 logging.level:
   org.hibernate.SQL: debug
 
