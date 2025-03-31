@@ -25,7 +25,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<String> createComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid CreateCommentReqDto req) {
+            @Valid @RequestBody CreateCommentReqDto req) {
         commentService.createComment(customUserDetails, req);
         return ResponseEntity.ok("댓글이 게시되었습니다");
     }
@@ -34,7 +34,7 @@ public class CommentController {
     @PatchMapping
     public ResponseEntity<String> updateComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            UpdateCommentReqDto req
+            @Valid @RequestBody UpdateCommentReqDto req
     ) {
         commentService.updateComment(customUserDetails, req);
         return ResponseEntity.ok("댓글 수정이 완료되었습니다");
@@ -44,7 +44,7 @@ public class CommentController {
     @DeleteMapping
     public ResponseEntity<String> deleteComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            DeleteCommentReqDto req
+            @RequestBody DeleteCommentReqDto req
     ) {
         commentService.deleteComment(customUserDetails, req);
         return ResponseEntity.ok("댓글이 삭제되었습니다");

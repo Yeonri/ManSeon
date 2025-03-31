@@ -44,9 +44,7 @@ public class BoardController {
         return ResponseEntity.ok(boardservice.findAllBoardList());
     }
     // 전체 게시글 상세 열람 (내 게시물 상세 열람 포함)
-    @Operation(summary = "전체 게시글 상세 열람", parameters = {
-            @Parameter(name = "id", description = "게시판 아이디", required = true)
-    })
+    @Operation(summary = "전체 게시글 상세 열람")
     @GetMapping("/all/detail")
     public ResponseEntity<FindBoardResDto> findBoard(
             @RequestParam(value = "board_id") long boardId) {

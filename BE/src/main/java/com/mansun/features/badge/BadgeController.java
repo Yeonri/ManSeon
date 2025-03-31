@@ -56,7 +56,7 @@ public class BadgeController {
         return ResponseEntity.ok(new OnlyMessageResDto("뱃지가 삭제되었습니다"));
     }
 
-    @Operation(summary = "각 사용자의 뱃지 추가")
+    @Operation(summary = "각 사용자의 뱃지 추가 업적 달성을 어떻게 처리할지 문제로 미구현")
     @PostMapping
     public ResponseEntity<OnlyMessageResDto> addBadgeByUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails

@@ -65,6 +65,46 @@ public class SwaggerConfiguration {
                 ).build();
     }
 
+    @Bean
+    public GroupedOpenApi FishApi(){
+        return GroupedOpenApi.builder().group("Board API")
+                .packagesToScan(
+                        "com.mansun.features.fish",
+                        "com.mansun.requestDto.fish",
+                        "com.mansun.responseDto.fish"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi BadgeApi(){
+        return GroupedOpenApi.builder().group("Board API")
+                .packagesToScan(
+                        "com.mansun.features.badge",
+                        "com.mansun.requestDto.badge",
+                        "com.mansun.responseDto.badge"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi FishingPointApi(){
+        return GroupedOpenApi.builder().group("Board API")
+                .packagesToScan(
+                        "com.mansun.features.fishingPoint",
+                        "com.mansun.requestDto.fishingPoint",
+                        "com.mansun.responseDto.fishingPoint"
+                ).build();
+    }
+
+    @Bean
+    public GroupedOpenApi FollowApi(){
+        return GroupedOpenApi.builder().group("Board API")
+                .packagesToScan(
+                        "com.mansun.features.follow",
+                        "com.mansun.requestDto.follow",
+                        "com.mansun.responseDto.follow"
+                ).build();
+    }
+
 
     @Bean
     public GroupedOpenApi publicApi(){
