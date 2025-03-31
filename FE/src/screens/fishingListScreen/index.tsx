@@ -5,6 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FishingStackParams } from "../../api/types/FishingStackParams";
 import fishingListRecordMocks from "../../mocks/fishingRecordListMocks.json";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 interface FishingListScreenNavigationProps
   extends NativeStackNavigationProp<FishingStackParams, "FishingList"> {}
@@ -21,8 +23,12 @@ function groupItems<T>(items: T[], count: number): T[][] {
 export function FishingListScreen() {
   const navigation = useNavigation<FishingListScreenNavigationProps>();
 
-  function handleDetailClick(fishId: number) {
-    navigation.navigate("Fishing", { fishId });
+  function handleDetailClick(title: string, fishId: number) {
+    navigation.navigate("Fishing", { title, fishId });
+  }
+
+  function formatDate(date: string) {
+    return format(date, "yyyy.MM.dd (EEE)", { locale: ko });
   }
 
   const formattedSections = fishingListRecordMocks.map((section) => ({
@@ -35,13 +41,14 @@ export function FishingListScreen() {
       <HeaderBeforeTitle name="나의 낚시 기록" />
       <SectionList
         sections={formattedSections}
-        keyExtractor={(item, index) => `row-${index}`}
-        renderItem={({ item }) => (
+        renderItem={({ item, section }) => (
           <View className="flex-row justify-between mb-3">
             {item.map((fish, idx) => (
               <TouchableOpacity
                 key={idx}
-                onPress={() => handleDetailClick(fish.fishId)}
+                onPress={() =>
+                  handleDetailClick(formatDate(section.title), fish.fishId)
+                }
                 className="w-[30%] p-2 bg-blue-100 rounded-lg"
               >
                 <Image
@@ -55,7 +62,7 @@ export function FishingListScreen() {
           </View>
         )}
         renderSectionHeader={({ section: { title } }) => (
-          <Text className="text-2xl font-bold my-3">{title}</Text>
+          <Text className="text-2xl font-bold my-3">{formatDate(title)}</Text>
         )}
       />
     </SafeAreaView>
