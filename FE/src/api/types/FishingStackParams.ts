@@ -1,4 +1,6 @@
 export type FishingStackParams = {
   FishingList: undefined;
-  Fishing: undefined;
+  Fishing: {
+    fishId: number;
+  };
 };
