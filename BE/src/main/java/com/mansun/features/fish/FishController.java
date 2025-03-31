@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/fishes")
@@ -45,10 +47,10 @@ public class FishController {
 
     @Operation(summary = "내 물고기 도감 리스트 열람")
     @GetMapping("/list/my")
-    public ResponseEntity<List<FindFishListResDto>> getMyFishList(
+    public ResponseEntity<Map<LocalDate,List<FindFishListResDto>>> getMyFishList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
-        List<FindFishListResDto> myList = fishService.findMyFishList(customUserDetails);
+        Map<LocalDate,List<FindFishListResDto>> myList = fishService.findMyFishList(customUserDetails);
         return ResponseEntity.ok(myList);
     }
 

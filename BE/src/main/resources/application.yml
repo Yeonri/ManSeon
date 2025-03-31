@@ -33,7 +33,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: ${JPA_DDL=validate}
+      ddl-auto: ${JPA_DDL}
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     open-in-view: true #자잘한 경고 뜨는 거 때문에 설정 명시
