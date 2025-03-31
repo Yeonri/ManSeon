@@ -41,6 +41,10 @@ export function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          height: 60,
+          paddingTop: 5,
+        },
       }}
     >
       <Tab.Screen
