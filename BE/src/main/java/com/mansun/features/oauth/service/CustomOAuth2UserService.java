@@ -1,5 +1,11 @@
-package com.mansun.common.auth.oauth;
+package com.mansun.features.oauth.service;
 
+import com.mansun.entity.Users;
+import com.mansun.responseDto.oauth.GoogleResponse;
+import com.mansun.responseDto.oauth.KakaoResponse;
+import com.mansun.responseDto.oauth.NaverResponse;
+import com.mansun.responseDto.oauth.OAuth2Response;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -7,16 +13,16 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-
         OAuth2User oAuth2User = super.loadUser(userRequest);
-        System.out.println(oAuth2User);
 
         String registerationId = userRequest.getClientRegistration().getRegistrationId();
-        OAuth2Response oAuth2Response = null;
+        OAuth2Response oAuth2Response;
         if (registerationId.equals("kakao")) {
+            oAuth2Response = new KakaoResponse(oAuth2User.getAttributes());
         } else if (registerationId.equals("naver")) {
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
         } else if (registerationId.equals("google")) {
@@ -26,11 +32,11 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         String username = oAuth2Response.getProvider() + " " + oAuth2Response.getProviderId();
-        UserDto userDto=new UserDto();
-        userDto.setUsername(username);
-        userDto.setName(oAuth2Response.getName());
-        userDto.setRole("ROLE_USER");
+        Users user = new Users();
+        user.setUsername(username);
+        user.setUsername(oAuth2Response.getName());
+//        user.setRole("ROLE_USER");
 
-        return new CustomOAuth2Users(userDto );
+        return new CustomOAuth2Users(user);
     }
 }

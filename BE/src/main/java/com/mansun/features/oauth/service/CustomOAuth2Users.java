@@ -1,5 +1,6 @@
-package com.mansun.common.auth.oauth;
+package com.mansun.features.oauth.service;
 
+import com.mansun.entity.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -11,7 +12,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomOAuth2Users implements OAuth2User {
 
-    private final UserDto userDto;
+    private final Users user;
 
     @Override
     public Map<String, Object> getAttributes() {
@@ -25,7 +26,8 @@ public class CustomOAuth2Users implements OAuth2User {
         collection.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return userDto.getRole();
+//                return user.getRole();
+                return null;
             }
         });
         return collection;
@@ -33,10 +35,10 @@ public class CustomOAuth2Users implements OAuth2User {
 
     @Override
     public String getName() {
-        return userDto.getName();
+        return user.getUsername();
     }
 
-    public String getUsername() {
-        return userDto.getUsername();
+    public String getEmail() {
+        return user.getEmail();
     }
 }
