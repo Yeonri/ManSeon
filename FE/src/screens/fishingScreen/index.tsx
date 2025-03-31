@@ -1,9 +1,14 @@
 import { Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 
 export function FishingScreen() {
   return (
-    <View>
-      <Text>낚시 기록 상세</Text>
-    </View>
+    <SafeAreaView>
+      <HeaderBeforeTitle name="날짜" />
+      <View>
+        <Text>임시</Text>
+      </View>
+    </SafeAreaView>
   );
 }
