@@ -1,4 +1,4 @@
-package com.mansun.common.auth.oauth;
+package com.mansun.responseDto.oauth;
 
 public interface OAuth2Response {
     String getProvider();

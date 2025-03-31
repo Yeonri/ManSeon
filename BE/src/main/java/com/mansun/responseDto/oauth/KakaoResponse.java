@@ -1,16 +1,17 @@
-package com.mansun.common.auth.oauth;
+package com.mansun.responseDto.oauth;
 
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 
 @RequiredArgsConstructor
-public class NaverResponse implements OAuth2Response {
+public class KakaoResponse implements OAuth2Response{
     private final Map<String,Object> attribute;
+
 
     @Override
     public String getProvider() {
-        return "naver";
+        return "kakao";
     }
 
     @Override
