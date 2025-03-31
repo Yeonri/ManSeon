@@ -23,7 +23,7 @@ export function MoreScreen() {
 
         <View className="flex-row gap-4 mb-3 justify-center">
           <TouchableOpacity
-            onPress={() => navigation.navigate("Myposts")}
+            onPress={() => navigation.navigate("MyPosts")}
             className="w-20 items-center"
           >
             <Image

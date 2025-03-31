@@ -21,7 +21,7 @@ function Dropdown({ options, selected, onSelect }: DropdownProps) {
     <View className="relative z-10">
       <TouchableOpacity
         onPress={() => setOpen(!open)}
-        className="flex-row items-center justify-between px-4 py-1.5 rounded-md border border-gray-400 bg-white w-36"
+        className="flex-row items-center justify-between px-4 py-1.5 rounded-md border border-neutral-400 bg-white w-36"
         activeOpacity={0.8}
       >
         <Text className="text-base text-neutral-800">{selected}</Text>
@@ -33,7 +33,7 @@ function Dropdown({ options, selected, onSelect }: DropdownProps) {
       </TouchableOpacity>
 
       {open && (
-        <View className="absolute top-10 left-0 right-0 bg-white border border-gray-300 rounded-md w-36">
+        <View className="absolute top-10 left-0 right-0 bg-white border border-neutral-400 rounded-md w-36">
           {options.map((option) => (
             <TouchableOpacity
               key={option}

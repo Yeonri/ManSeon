@@ -5,6 +5,7 @@ import { CollectionScreen } from "../../screens/collectionScreen";
 import { FishingListScreen } from "../../screens/fishingListScreen";
 import { MoreScreen } from "../../screens/moreScreen";
 import { MyPostsScreen } from "../../screens/myPostsScreen";
+import { ProfileEditScreen } from "../../screens/profileEditScreen";
 import { ProfileScreen } from "../../screens/profileScreen";
 import { ProhibitedScreen } from "../../screens/prohibitedScreen";
 import { RuleScreen } from "../../screens/ruleScreen";
@@ -17,7 +18,7 @@ export function MoreStackNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="More" component={MoreScreen} />
-      <Stack.Screen name="Myposts" component={MyPostsScreen} />
+      <Stack.Screen name="MyPosts" component={MyPostsScreen} />
       <Stack.Screen name="Prohibited" component={ProhibitedScreen} />
       <Stack.Screen name="Rule" component={RuleScreen} />
       <Stack.Screen name="Tutorial" component={TutorialScreen} />
@@ -26,6 +27,7 @@ export function MoreStackNavigator() {
       <Stack.Screen name="CollectionDetail" component={CollectionScreen} />
       <Stack.Screen name="Suggestions" component={SuggestionsScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
     </Stack.Navigator>
   );
 }

@@ -5,7 +5,7 @@ export type MoreStackParams = {
   Tutorial: undefined;
   Prohibited: undefined;
   Rule: undefined;
-  Myposts: undefined;
+  MyPosts: undefined;
   FishingList: undefined;
   CollectionList: undefined;
   CollectionDetail: {
@@ -21,4 +21,5 @@ export type MoreStackParams = {
   };
   Suggestions: undefined;
   Profile: undefined;
+  ProfileEdit: undefined;
 };

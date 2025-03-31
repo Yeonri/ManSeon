@@ -101,7 +101,7 @@ export function PostScreen({ route }: PostScreenProps) {
           />
           <Text>{postsMocks[postId - 1].content}</Text>
         </View>
-        <View className="mt-2 mb-5 border-b border-gray-500" />
+        <View className="mt-2 mb-5 border-b border-neutral-500" />
         <View className="flex-row items-center">
           <IconComment />
           <Text className="mr-3">{postsMocks[postId - 1].commentNum}</Text>
