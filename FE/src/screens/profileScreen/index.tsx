@@ -40,13 +40,16 @@ export function ProfileScreen() {
             source={{ uri: user.profile_img }}
             className="w-24 h-24 rounded-full"
           />
-          <View className="flex-row items-center mt-2">
+          <TouchableOpacity
+            className="flex-row items-center mt-2"
+            onPress={() => navigation.navigate("ProfileEdit")}
+          >
             <Text className="text-2xl font-bold mr-1 text-blue-800 ">
               {user.name}
             </Text>
 
             <IconEdit />
-          </View>
+          </TouchableOpacity>
           <View className="flex-row justify-center mt-4 gap-4">
             <View className="items-center mx-4">
               <Text className="text-lg font-semibold">게시글</Text>
