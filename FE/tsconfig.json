@@ -2,6 +2,6 @@
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "jsx": "react-native",
-    "types": ["react", "react-native"]
+    "types": ["react", "react-native", "react-native-vision-camera", "react-native-permissions", "react-native-modalize"]
   }
 }

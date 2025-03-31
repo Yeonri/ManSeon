@@ -3,16 +3,7 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
-import { formatDistanceToNow } from "date-fns";
-import { ko } from "date-fns/locale";
-import {
-  Alert,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import IconComment from "../../assets/images/icon_comment.svg";
@@ -25,6 +16,8 @@ import { AddComment } from "../../components/community/addComment";
 import { CommentList } from "../../components/community/commentList";
 import commentsMocks from "../../mocks/commentsMocks.json";
 import postsMocks from "../../mocks/postsMocks.json";
+import { DeleteAlert } from "../../utils/deleteAlert";
+import { FormatTime } from "../../utils/formatTime";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -35,17 +28,6 @@ interface PostScreenNavigationProps
 export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
-
-  function formatTime(time: string) {
-    return formatDistanceToNow(new Date(time), { addSuffix: true, locale: ko });
-  }
-
-  function createDeleteAlert() {
-    Alert.alert("게시글 삭제", "게시글을 삭제하시겠습니까?", [
-      { text: "아니오", onPress: () => {} },
-      { text: "네", onPress: () => {} },
-    ]);
-  }
 
   return (
     <SafeAreaView>
@@ -84,13 +66,13 @@ export function PostScreen({ route }: PostScreenProps) {
               <IconEdit />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => createDeleteAlert()}
+              onPress={() => DeleteAlert("게시글")}
               className="h-6"
             >
               <IconDelete />
             </TouchableOpacity>
             <Text className="text-neutral-400 text-sm">
-              {formatTime(postsMocks[postId - 1].createAt)}
+              {FormatTime(postsMocks[postId - 1].createAt)}
             </Text>
           </View>
         </View>

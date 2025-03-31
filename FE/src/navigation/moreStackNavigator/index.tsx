@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { MoreStackParams } from "../../api/types/moreStackParams";
+import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { CollectionListScreen } from "../../screens/collectionListScreen";
 import { FishingListScreen } from "../../screens/fishingListScreen";
 import { MoreScreen } from "../../screens/moreScreen";
