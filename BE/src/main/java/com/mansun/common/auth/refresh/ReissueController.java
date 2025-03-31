@@ -1,6 +1,6 @@
 package com.mansun.common.auth.refresh;
 
-import com.mansun.common.auth.jwt.JwtUtil;
+import com.mansun.common.utils.JwtUtil;
 import com.mansun.common.auth.refresh.Entity.RefreshEntity;
 import com.mansun.common.auth.refresh.repository.RefreshRepository;
 import io.jsonwebtoken.ExpiredJwtException;

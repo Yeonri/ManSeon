@@ -2,9 +2,9 @@ package com.mansun.common.configuration;
 
 import com.mansun.common.auth.jwt.CustomLogoutFilter;
 import com.mansun.common.auth.jwt.JwtFilter;
-import com.mansun.common.auth.jwt.JwtUtil;
+import com.mansun.common.utils.JwtUtil;
 import com.mansun.common.auth.jwt.LoginFilter;
-import com.mansun.common.auth.oauth.CustomOAuth2UserService;
+import com.mansun.features.oauth.service.CustomOAuth2UserService;
 import com.mansun.common.auth.refresh.repository.RefreshRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +43,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        //cors disales
+        http.cors(auth->auth.disable());
         //csrf disable
         http.csrf((auth) -> auth.disable());
 
@@ -61,7 +63,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(/*Swagger의 설정이다 순서가 가장 앞에 있어야 하므로 주의*/
                         "/v3/api-docs/**").permitAll()
-                .requestMatchers("/api/**"/*회원 가입 권한 허용*/).permitAll()
+                .requestMatchers("/oauth2/authorization/**").permitAll()
+//                .requestMatchers("/api/oauth2/**").permitAll()
+                .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/error").permitAll()
 //                위의 /error는 개발 단계에서 에러 메시지를 그대로 보낸다. 운영 서버에서는 없어야 하는 것
                 .anyRequest().authenticated());
