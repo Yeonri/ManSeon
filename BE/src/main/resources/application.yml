@@ -29,7 +29,7 @@ spring:
     password: ${MYSQL_PASSWORD}
     hikari:
       pool-name: hikari
-      maximum-pool-size: 1000
+      maximum-pool-size: 50
   jpa:
     show-sql: true
     hibernate:
