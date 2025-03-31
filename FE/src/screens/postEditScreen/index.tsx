@@ -12,6 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { UploadImage } from "../../components/community/uploadImage";
+import { FullButton } from "../../components/common/fullButton";
 
 interface PostEditScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "EditPost"> {}
@@ -69,12 +70,7 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
               />
             </View>
           </View>
-          <TouchableOpacity
-            onPress={() => {}}
-            className="bg-blue-500 rounded-xl py-3 items-center"
-          >
-            <Text className="text-white font-bold">저장</Text>
-          </TouchableOpacity>
+          <FullButton name="저장" onPress={() => {}} />
         </View>
       </ScrollView>
     </SafeAreaView>

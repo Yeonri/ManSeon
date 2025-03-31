@@ -2,12 +2,12 @@ import { create } from "zustand";
 
 interface LoginState {
   isLoggedIn: boolean;
-  logIn: () => void;
-  logOut: () => void;
+  login: () => void;
+  logout: () => void;
 }
 
 export const useLoginStore = create<LoginState>((set) => ({
   isLoggedIn: false,
-  logIn: () => set({ isLoggedIn: true }),
-  logOut: () => set({ isLoggedIn: false }),
+  login: () => set({ isLoggedIn: true }),
+  logout: () => set({ isLoggedIn: false }),
 }));

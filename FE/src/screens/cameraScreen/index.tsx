@@ -1,15 +1,16 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ChevronLeft, ChevronRight, X } from "lucide-react-native";
 import { useRef, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { Modalize } from "react-native-modalize";
+import { useCameraPermission } from "../../hooks/useCameraPermission";
 import { PhotoFile } from "react-native-vision-camera";
-import { RootStackParams } from "../../api/types/RootStackParams";
+import { Modalize } from "react-native-modalize";
+import { PermissionCheck } from "../../components/common/permissionCheck";
+import { Image, TouchableOpacity, View } from "react-native";
+import { ChevronRight, X } from "lucide-react-native";
 import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
-import { PermissionCheck } from "../../components/common/permissionCheck";
-import { useCameraPermission } from "../../hooks/useCameraPermission";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../api/types/RootStackParams";
+import { Probability } from "../../components/cameraRecord/probability";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -17,14 +18,18 @@ export function CameraScreen() {
   const sheetRef = useRef<Modalize>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const [selectedFishName, setSelectedFishName] = useState<string | null>(null);
 
   function openBottomSheet() {
     sheetRef.current?.open();
   }
 
   function handleNext() {
-    if (photo?.path) {
-      navigation.navigate("Record", { photoUri: photo.path });
+    if (photo?.path && selectedFishName) {
+      navigation.navigate("Record", {
+        photoUri: photo.path,
+        fishName: selectedFishName,
+      });
     }
   }
 
@@ -40,7 +45,6 @@ export function CameraScreen() {
             onPress={() => setPhoto(null)}
             className="absolute top-5 left-5 z-10"
           >
-            <ChevronLeft color="white" size={50} />
             <X color="white" size={50} />
           </TouchableOpacity>
 
@@ -61,7 +65,8 @@ export function CameraScreen() {
       )}
       <Modalize ref={sheetRef} snapPoint={300}>
         <View className="p-10">
-          <Text>여기에 물고기 컴포넌트가 나와야 함</Text>
+          <Probability onSelectedFishName={setSelectedFishName} />
+          <View className="flex-1 p-5" />
           <FullButton name="다음" onPress={handleNext} />
         </View>
       </Modalize>

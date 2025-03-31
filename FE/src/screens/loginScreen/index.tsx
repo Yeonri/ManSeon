@@ -7,12 +7,14 @@ import LogoKakao from "../../assets/images/logo_kakao.svg";
 import LogoNaver from "../../assets/images/logo_naver.svg";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderCenter } from "../../components/common/headerCenter";
+import { useLoginStore } from "../../store/loginStore";
 
 interface LoginScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams, "Login"> {}
 
 export function LoginScreen() {
   const navigation = useNavigation<LoginScreenNavigationProps>();
+  const { login } = useLoginStore();
 
   return (
     <SafeAreaView className="gap-20 m-5">
@@ -30,7 +32,7 @@ export function LoginScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <FullButton name="로그인" onPress={() => {}} />
+      <FullButton name="로그인" onPress={login} />
       <View className="gap-10">
         <Text className="text- font-semibold text-center text-neutral-800">
           SNS 계정으로 시작하기

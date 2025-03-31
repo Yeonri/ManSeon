@@ -1,0 +1,37 @@
+[
+  {
+    "fishId": 3,
+    "fishImg": "https://i.pinimg.com/736x/07/14/d4/0714d46aab103ae3eea7ae1244f18722.jpg",
+    "fishName": "광어",
+    "probability": 85,
+    "character": "10cm 이하 방생"
+  },
+  {
+    "fishId": 1,
+    "fishImg": "https://i.pinimg.com/736x/07/14/d4/0714d46aab103ae3eea7ae1244f18722.jpg",
+    "fishName": "우럭",
+    "probability": 22,
+    "character": "산란기 보호 필요"
+  },
+  {
+    "fishId": 7,
+    "fishImg": "https://i.pinimg.com/736x/07/14/d4/0714d46aab103ae3eea7ae1244f18722.jpg",
+    "fishName": "도미",
+    "probability": 30,
+    "character": "30cm 이상만 포획 가능"
+  },
+  {
+    "fishId": 8,
+    "fishImg": "https://i.pinimg.com/736x/07/14/d4/0714d46aab103ae3eea7ae1244f18722.jpg",
+    "fishName": "농어",
+    "probability": 60,
+    "character": "야행성, 저활성도"
+  },
+  {
+    "fishId": 5,
+    "fishImg": "https://i.pinimg.com/736x/07/14/d4/0714d46aab103ae3eea7ae1244f18722.jpg",
+    "fishName": "고등어",
+    "probability": 92,
+    "character": "떼로 이동, 회유성 어종"
+  }
+]
