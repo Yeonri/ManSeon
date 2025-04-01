@@ -8,6 +8,7 @@ import IconEyeOpen from "../../assets/images/icon_eye_open.svg";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import userData from "../../mocks/userMocks.json";
+// import todayFishingPoint from "../../mocks/todayFishingPoint.json"
 
 export function ProfileEditScreen() {
   const navigation = useNavigation();
@@ -61,7 +62,7 @@ export function ProfileEditScreen() {
                 secureTextEntry={isSecure1}
               />
               <TouchableOpacity onPress={() => setIsSecure1(!isSecure1)}>
-                {isSecure1 ? <IconEyeClose /> : <IconEyeOpen />}
+                {isSecure1 ? <IconEyeOpen /> : <IconEyeClose />}
               </TouchableOpacity>
             </View>
           </View>
@@ -74,7 +75,7 @@ export function ProfileEditScreen() {
                 secureTextEntry={isSecure2}
               />
               <TouchableOpacity onPress={() => setIsSecure2(!isSecure1)}>
-                {isSecure2 ? <IconEyeClose /> : <IconEyeOpen />}
+                {isSecure2 ? <IconEyeOpen /> : <IconEyeClose />}
               </TouchableOpacity>
             </View>
           </View>
