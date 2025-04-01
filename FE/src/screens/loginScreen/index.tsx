@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthStackParams } from "../../api/types/AuthStackParams";
@@ -15,20 +16,35 @@ interface LoginScreenNavigationProps
 export function LoginScreen() {
   const navigation = useNavigation<LoginScreenNavigationProps>();
   const { login } = useLoginStore();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   return (
     <SafeAreaView className="gap-20 m-5">
-      <View className="m-5" />
+      <View />
       <HeaderCenter />
-      <View className="mx-10">
-        <TextInput placeholder="이메일을 입력해 주세요" />
-        <TextInput placeholder="비밀번호를 입력해 주세요" />
+      <View className="mx-10 gap-2">
+        <View className="gap-5">
+          <TextInput
+            placeholder="이메일을 입력해 주세요"
+            onChangeText={setEmail}
+            placeholderTextColor="#A1A1A1"
+            inputMode="email"
+            className="text-neutral-800 border-b border-neutral-200"
+          />
+          <TextInput
+            placeholder="비밀번호를 입력해 주세요"
+            onChangeText={setPassword}
+            placeholderTextColor="#A1A1A1"
+            className="text-neutral-800 border-b border-neutral-200"
+          />
+        </View>
         <View className="mt-5 flex-row justify-between">
           <TouchableOpacity onPress={() => {}}>
-            <Text>비밀번호 찾기</Text>
+            <Text className="text-neutral-600">비밀번호 찾기</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-            <Text>회원가입</Text>
+            <Text className="text-neutral-600">회원가입</Text>
           </TouchableOpacity>
         </View>
       </View>
