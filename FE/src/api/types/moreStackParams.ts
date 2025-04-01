@@ -4,6 +4,6 @@ export type MoreStackParams = {
   Prohibited: undefined;
   Rule: undefined;
   Myposts: undefined;
-  FishingList: undefined;
+  Fishings: undefined;
   CollectionList: undefined;
 };

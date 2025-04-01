@@ -18,7 +18,7 @@ export function MoreStackNavigator() {
       <Stack.Screen name="Prohibited" component={ProhibitedScreen} />
       <Stack.Screen name="Rule" component={RuleScreen} />
       <Stack.Screen name="Tutorial" component={TutorialScreen} />
-      <Stack.Screen name="FishingList" component={FishingStackNavigator} />
+      <Stack.Screen name="Fishings" component={FishingStackNavigator} />
       <Stack.Screen name="CollectionList" component={CollectionListScreen} />
     </Stack.Navigator>
   );
