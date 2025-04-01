@@ -1,11 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { CollectionListScreen } from "../../screens/collectionListScreen";
-<<<<<<< HEAD
 import { CollectionScreen } from "../../screens/collectionScreen";
-import { FishingListScreen } from "../../screens/fishingListScreen";
-=======
->>>>>>> 3600ddf2eb0f87e81aacd27b775fb80d2b136c7c
 import { MoreScreen } from "../../screens/moreScreen";
 import { MyPostsScreen } from "../../screens/myPostsScreen";
 import { ProfileEditScreen } from "../../screens/profileEditScreen";
