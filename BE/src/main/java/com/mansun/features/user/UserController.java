@@ -33,6 +33,15 @@ public class UserController {
         return ResponseEntity.ok(new OnlyMessageResDto("회원가입 성공"));
     }
 
+    @Operation(summary = "닉네임 설정")
+    @PostMapping("/nickname/set")
+    public ResponseEntity<OnlyMessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {
+        //아무것도 추가하지 않고 헤더만 추가해서 간다.
+        //만약 오류가 난다면 service 안에서 예외처리 반환 예정
+        userService.setNickname(req);
+        return ResponseEntity.ok(new OnlyMessageResDto("닉네임을 정했습니다."));
+    }
+
     // 로그인 과정의 대략적인 설명 : 해당 요청 mapping은 이곳에 있지 않다.
     // service의 loadbyusername과 common/auth/SecurityConfig 참고
     // Service에서는 우선 입력받은 email과 password를 이용해서 DB에서 사람을 찾는다.
