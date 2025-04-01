@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @Operation(summary = "닉네임 설정")
-    @PatchMapping
+    @PostMapping("/nickname/set")
     public ResponseEntity<OnlyMessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
         //만약 오류가 난다면 service 안에서 예외처리 반환 예정
