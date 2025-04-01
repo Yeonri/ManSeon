@@ -5,7 +5,7 @@ export default [
     start: 1,
     end: 2,
     period: "01.16 ~ 02.15",
-    img: require("../../assets/images/prohibited/대구.png"),
+    img: require("../../assets/images/fish/cod.png"),
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ export default [
     start: 12,
     end: 1,
     period: "12.01 ~ 01.31",
-    img: require("../../assets/images/prohibited/문치가자미.png"),
+    img: require("../../assets/images/fish/pseudopleuronectes_yokohamae.png"),
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ export default [
     start: 10,
     end: 11,
     period: "10.01 ~ 11.30",
-    img: require("../../assets/images/prohibited/연어.png"),
+    img: require("../../assets/images/fish/oncorhynchus_keta.png"),
   },
   {
     id: 4,
@@ -29,7 +29,7 @@ export default [
     start: 5,
     end: 7,
     period: "05.01 ~ 07.15",
-    img: require("../../assets/images/prohibited/전어.png"),
+    img: require("../../assets/images/fish/konosirus_punctatus.png"),
     info: "강원특별자치도 및 경상북도 제외",
   },
   {
@@ -38,7 +38,7 @@ export default [
     start: 11,
     end: 12,
     period: "11.01 ~ 12.30",
-    img: require("../../assets/images/prohibited/쥐노래미.png"),
+    img: require("../../assets/images/fish/hexagrammos_otakii.png"),
   },
   {
     id: 6,
@@ -46,7 +46,7 @@ export default [
     start: 6,
     end: 7,
     period: "06.01 ~ 07.15",
-    img: require("../../assets/images/prohibited/참홍어.png"),
+    img: require("../../assets/images/fish/raja_pulchra.png"),
   },
   {
     id: 7,
@@ -54,7 +54,7 @@ export default [
     start: 7,
     end: 7,
     period: "07.01 ~ 07.31",
-    img: require("../../assets/images/prohibited/참조기.png"),
+    img: require("../../assets/images/fish/larimichthys_polyactis.png"),
     info: "근해자망어업 중 유자망(유동성그물)을 사용하는 경우 4월 22일부터 8월 10일까지. 해당 기간 중 참조기를 어획량의 10% 미만으로  포획·채취하는 경우 제외",
   },
   {
@@ -63,7 +63,7 @@ export default [
     start: 7,
     end: 7,
     period: "07.01 ~ 07.31",
-    img: require("../../assets/images/prohibited/갈치.png"),
+    img: require("../../assets/images/fish/cutlassfish.png"),
     info: "북위 33도00분00초 이북 해역 한정. 근해채낚기어업 및 연안 복합어업 제외. 해당 구역에서 해당 기간 중 갈치를 어획량의  10% 미만으로  포획·채취하는 경우 제외",
   },
   {
@@ -72,7 +72,7 @@ export default [
     start: 4,
     end: 6,
     period: "04.01 ~ 06.30",
-    img: require("../../assets/images/prohibited/고등어.png"),
+    img: require("../../assets/images/fish/mackerel.png"),
     info: "기간 중 1개월의 범위 내에서 해양수산부장관이 정하여 고시하는 기간. 해당 기간 중 고등어를  10% 미만으로  포획·채취하는 경우 제외",
   },
   {
@@ -81,7 +81,7 @@ export default [
     start: 5,
     end: 7,
     period: "05.01 ~ 07.31",
-    img: require("../../assets/images/prohibited/말쥐치.png"),
+    img: require("../../assets/images/fish/thamnaconus_modestus.png"),
     info: "정치망어업, 연안어업 및 구획어업은 6월 1일부터 7월 31일까지",
   },
   {
@@ -90,7 +90,7 @@ export default [
     start: 7,
     end: 8,
     period: "07.21 ~ 08.20",
-    img: require("../../assets/images/prohibited/옥돔.png"),
+    img: require("../../assets/images/fish/tilefish.png"),
   },
   {
     id: 12,
@@ -98,7 +98,7 @@ export default [
     start: 1,
     end: 12,
     period: "01.01 ~ 12.31",
-    img: require("../../assets/images/prohibited/명태.png"),
+    img: require("../../assets/images/fish/gadus_chalcogrammus.png"),
   },
   {
     id: 13,
@@ -106,7 +106,7 @@ export default [
     start: 5,
     end: 5,
     period: "05.01 ~ 5.31",
-    img: require("../../assets/images/prohibited/삼치.png"),
+    img: require("../../assets/images/fish/scomberomorus_niphonius.png"),
   },
   {
     id: 14,
@@ -114,6 +114,6 @@ export default [
     start: 5,
     end: 5,
     period: "05.01 ~ 5.31",
-    img: require("../../assets/images/prohibited/감성돔.png"),
+    img: require("../../assets/images/fish/black_sea_bream.png"),
   },
 ];

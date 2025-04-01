@@ -89,7 +89,6 @@ export function MapScreen() {
         onSearch={() => {}}
         onClose={() => {
           setShowModal(false);
-          console.log("닫기 버튼 클릭~");
         }}
       />
     </SafeAreaView>
