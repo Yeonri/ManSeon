@@ -25,8 +25,7 @@ build_BE:
     - |
       if [ "$CI_COMMIT_REF_NAME" == "BE/dev" ]; then
         docker compose -f /home/ubuntu/docker-compose.yml down
-        docker image prune -f
-        docker builder prune -f
+        docker system prune -a --volumes
         docker build -t $IMAGE_NAME_DEV:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
         docker tag $IMAGE_NAME_DEV:$CI_COMMIT_SHA $IMAGE_NAME_DEV:latest
       fi
@@ -89,12 +88,14 @@ cleanup:
   stage: cleanup
   script:
     # 정리 (캐시고 뭐고... 지금 안 쓸랭 나중에... 하자...)
+    - 
     - docker image prune -f
     - docker builder prune -f
+
   dependencies:
     - build_BE
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "*/dev" || $CI_COMMIT_BRANCH == "*/rel")
+    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "BE/dev" || $CI_COMMIT_BRANCH == "BE/rel")
       when: always
     - when: never
 
