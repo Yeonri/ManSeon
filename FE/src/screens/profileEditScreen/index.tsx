@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import IconEdit from "../../assets/images/icon_edit.svg";
 import IconEyeClose from "../../assets/images/icon_eye_close.svg";
 import IconEyeOpen from "../../assets/images/icon_eye_open.svg";
-import Button from "../../components/common/Button";
+import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import userData from "../../mocks/userMocks.json";
 
@@ -80,12 +80,12 @@ export function ProfileEditScreen() {
           </View>
         </View>
         <View className="flex-row justify-between w-full px-10 mt-5">
-          <Button
+          <HalfButton
             title="취소"
             type="line"
             onPress={() => navigation.goBack()}
           />
-          <Button title="저장" type="default" />
+          <HalfButton title="저장" type="default" />
         </View>
       </View>
     </SafeAreaView>

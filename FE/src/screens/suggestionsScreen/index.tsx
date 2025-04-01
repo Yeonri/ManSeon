@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { ScrollView, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Button from "../../components/common/Button";
+import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { SaveModal } from "../../components/more/saveModal";
 
@@ -32,12 +32,12 @@ export function SuggestionsScreen() {
           </View>
 
           <View className="flex-1 flex-row justify-between px-10">
-            <Button
+            <HalfButton
               title="취소"
               type="line"
               onPress={() => navigation.goBack()}
             />
-            <Button title="저장" type="default" onPress={handleSave} />
+            <HalfButton title="저장" type="default" onPress={handleSave} />
           </View>
         </View>
       </ScrollView>

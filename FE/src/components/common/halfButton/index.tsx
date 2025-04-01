@@ -1,12 +1,12 @@
 import { Text, TouchableOpacity } from "react-native";
 
-interface ButtonProps {
+interface HalfButtonProps {
   title: string;
   type: "default" | "line";
   onPress?: () => void;
 }
 
-function Button({ title, type, onPress }: ButtonProps) {
+export function HalfButton({ title, type, onPress }: HalfButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -28,5 +28,3 @@ function Button({ title, type, onPress }: ButtonProps) {
     </TouchableOpacity>
   );
 }
-
-export default Button;
