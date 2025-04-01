@@ -25,8 +25,7 @@ build_BE:
     - |
       if [ "$CI_COMMIT_REF_NAME" == "BE/dev" ]; then
         docker compose -f /home/ubuntu/docker-compose.yml down
-        docker image prune -f
-        docker builder prune -f
+        docker rmi -f $(docker images -q)
         docker build -t $IMAGE_NAME_DEV:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
         docker tag $IMAGE_NAME_DEV:$CI_COMMIT_SHA $IMAGE_NAME_DEV:latest
       fi
@@ -91,10 +90,11 @@ cleanup:
     # 정리 (캐시고 뭐고... 지금 안 쓸랭 나중에... 하자...)
     - docker image prune -f
     - docker builder prune -f
+
   dependencies:
     - build_BE
   rules:
-    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "*/dev" || $CI_COMMIT_BRANCH == "*/rel")
+    - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "BE/dev" || $CI_COMMIT_BRANCH == "BE/rel")
       when: always
     - when: never
 
@@ -118,7 +118,7 @@ deploy_BE_dev:
     #  디렉토리 이동
     - cd /home/ubuntu/
     # 환경 변수
-    - rm .env
+    - echo "" > .env
     - echo "MYSQL_URL=$MYSQL_URL" >> .env
     - echo "MYSQL_USERNAME=$MYSQL_USERNAME" >> .env
     - echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env

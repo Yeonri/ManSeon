@@ -11,8 +11,6 @@ import java.util.List;
 
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class GetMyInfoResDto {
     String email;
     String username;
