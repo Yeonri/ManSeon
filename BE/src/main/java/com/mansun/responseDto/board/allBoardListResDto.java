@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class allBoardListResDto {
     Long boardId;
     String title;

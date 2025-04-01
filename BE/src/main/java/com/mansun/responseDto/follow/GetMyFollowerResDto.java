@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class GetMyFollowerResDto {
     Long friendId;
     String email;
