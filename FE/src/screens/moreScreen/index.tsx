@@ -38,7 +38,7 @@ export function MoreScreen() {
           </TouchableOpacity>
         </View>
         <View className="flex-row gap-2 justify-center">
-          <TouchableOpacity onPress={() => navigation.navigate("FishingList")}>
+          <TouchableOpacity onPress={() => navigation.navigate("Fishings")}>
             <Text className="p-5 bg-blue-50 text-blue-600 text-center text-xl">
               낚시 기록
             </Text>
