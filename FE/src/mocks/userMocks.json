@@ -1,0 +1,108 @@
+[
+  {
+    "id": 1,
+    "email": "user1@example.com",
+    "name": "김만선",
+    "phone__number": "010-1234-5678",
+    "password": "B210B210",
+    "nickname": "만선이",
+    "badges": [
+      {
+        "name": "처음 물고기를 잡았어요",
+        "is_earned": true,
+        "id": 1
+      },
+      {
+        "name": "첫 게시글 작성",
+        "is_earned": false,
+        "id": 2
+      },
+      {
+        "name": "첫 팔로우 친구 만들기",
+        "is_earned": false,
+        "id": 3
+      },
+      {
+        "name": "다른 지역에서도 물고기 잡기",
+        "is_earned": false,
+        "id": 4
+      },
+      {
+        "name": "같은 물고기 5번 잡기",
+        "is_earned": false,
+        "id": 5
+      },
+      {
+        "name": "물고기 수집가",
+        "is_earned": true,
+        "id": 6
+      },
+      {
+        "name": "프로필사진 설정",
+        "is_earned": true,
+        "id": 7
+      },
+      {
+        "name": "스팟공유",
+        "is_earned": true,
+        "id": 8
+      },
+      {
+        "name": "도감 물고기를 모두 채우기",
+        "is_earned": false,
+        "id": 9
+      }
+    ],
+    "collection__cnt": 4,
+    "posts": [
+      {
+        "title": "우럭 대풍이네요",
+        "content": "오늘은 친구랑 갔는데 우럭 4마리나 잡았습니다.",
+        "postImg": "https://picsum.photos/id/14/400/300",
+        "like": 42,
+        "commentNum": 9,
+        "postId": 1,
+        "createAt": "2024-01-12"
+      },
+      {
+        "title": "이번 주말 출조 후기!",
+        "content": "이번 주말에 동해로 출조 다녀왔습니다. 광어 손맛이 정말 좋네요!",
+        "postImg": "https://picsum.photos/id/34/400/300",
+        "like": 37,
+        "commentNum": 9,
+        "postId": 2,
+        "createAt": "2024-02-16"
+      },
+      {
+        "title": "입질은 왔지만 놓쳤어요",
+        "content": "바늘을 바꿔야 하나 고민되네요.",
+        "postImg": "https://picsum.photos/id/131/400/300",
+        "like": 13,
+        "commentNum": 5,
+        "postId": 3,
+        "createAt": "2024-01-21"
+      },
+      {
+        "title": "낚시 장비 추천좀요",
+        "content": "입문자에게 좋은 릴이 있을까요?",
+        "postImg": "https://picsum.photos/id/99/400/300",
+        "like": 41,
+        "commentNum": 1,
+        "postId": 4,
+        "createAt": "2024-02-10"
+      },
+      {
+        "title": "물고기가 안 잡히는 날",
+        "content": "그런 날도 있는 거겠죠? ㅎㅎ",
+        "postImg": "https://picsum.photos/id/130/400/300",
+        "like": 0,
+        "commentNum": 6,
+        "postId": 5,
+        "createAt": "2024-01-25"
+      }
+    ],
+    "profile_img": "https://picsum.photos/id/312/200/200",
+    "following_cnt": 7,
+    "follower_cnt": 4
+  }
+]
