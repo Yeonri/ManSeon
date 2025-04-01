@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MoreStackParams } from "../../api/types/moreStackParams";
+import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { NoticeList } from "../../components/more/notice";
 import { ProfileCard } from "../../components/more/profile";
@@ -77,7 +77,7 @@ export function MoreScreen() {
 
         <View className="flex-row mb-3 gap-10">
           <TouchableOpacity
-            onPress={() => navigation.navigate("FishingList")}
+            onPress={() => navigation.navigate("Fishings")}
             className="flex-row items-center px-4 py-3 w-5/12"
           >
             <Image

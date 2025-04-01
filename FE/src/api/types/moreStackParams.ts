@@ -6,7 +6,7 @@ export type MoreStackParams = {
   Prohibited: undefined;
   Rule: undefined;
   MyPosts: undefined;
-  FishingList: undefined;
+  Fishings: undefined;
   CollectionList: undefined;
   CollectionDetail: {
     name: string;

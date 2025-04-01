@@ -1,8 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { MoreStackParams } from "../../api/types/moreStackParams";
+import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { CollectionListScreen } from "../../screens/collectionListScreen";
+<<<<<<< HEAD
 import { CollectionScreen } from "../../screens/collectionScreen";
 import { FishingListScreen } from "../../screens/fishingListScreen";
+=======
+>>>>>>> 3600ddf2eb0f87e81aacd27b775fb80d2b136c7c
 import { MoreScreen } from "../../screens/moreScreen";
 import { MyPostsScreen } from "../../screens/myPostsScreen";
 import { ProfileEditScreen } from "../../screens/profileEditScreen";
@@ -11,6 +14,7 @@ import { ProhibitedScreen } from "../../screens/prohibitedScreen";
 import { RuleScreen } from "../../screens/ruleScreen";
 import { SuggestionsScreen } from "../../screens/suggestionsScreen";
 import { TutorialScreen } from "../../screens/tutorialScreen";
+import { FishingStackNavigator } from "../fishingStackNavigator";
 
 const Stack = createNativeStackNavigator<MoreStackParams>();
 
@@ -22,7 +26,7 @@ export function MoreStackNavigator() {
       <Stack.Screen name="Prohibited" component={ProhibitedScreen} />
       <Stack.Screen name="Rule" component={RuleScreen} />
       <Stack.Screen name="Tutorial" component={TutorialScreen} />
-      <Stack.Screen name="FishingList" component={FishingListScreen} />
+      <Stack.Screen name="Fishings" component={FishingStackNavigator} />
       <Stack.Screen name="CollectionList" component={CollectionListScreen} />
       <Stack.Screen name="CollectionDetail" component={CollectionScreen} />
       <Stack.Screen name="Suggestions" component={SuggestionsScreen} />
