@@ -3,9 +3,11 @@ package com.mansun.responseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Builder
-@Getter // 이거 지우면 오류난다. 절대 금지
+@Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class OnlyMessageResDto {
 	String message;

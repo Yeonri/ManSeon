@@ -5,5 +5,6 @@ import lombok.Getter;
 
 @Getter
 public class DeleteMyBoardReqDto {
+   @Schema(defaultValue = "1")
    private Long boardId;
 }
