@@ -12,8 +12,6 @@ import java.util.List;
 
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class OnePointDetailInfoResDto {
     List<Weather> myWeatherList;
     List<TideLevel> myTideLevelList;

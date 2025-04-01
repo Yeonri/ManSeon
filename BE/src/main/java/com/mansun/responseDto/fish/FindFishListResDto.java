@@ -9,8 +9,6 @@ import java.time.LocalDate;
 
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class FindFishListResDto {
     Long fishId;
     String fishName;

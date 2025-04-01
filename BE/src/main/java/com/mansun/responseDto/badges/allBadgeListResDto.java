@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class allBadgeListResDto {
     String badgeName;
     String badgeImg;
