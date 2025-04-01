@@ -88,7 +88,6 @@ cleanup:
   stage: cleanup
   script:
     # 정리 (캐시고 뭐고... 지금 안 쓸랭 나중에... 하자...)
-    - 
     - docker image prune -f
     - docker builder prune -f
 
