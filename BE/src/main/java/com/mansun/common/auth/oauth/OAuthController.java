@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequiredArgsConstructor
-public class oAuthController {
+public class OAuthController {
     //    http://kauth.kakao.com/oauth/authorize?client_id=4df41bec6f36ccdec491270265b88e43&redirect_uri=http://localhost:8080/auth/callback&response_type=code
 //    이 시점의 시작점이 바로 인가 코드 받아오기다
     private String clientId = "4df41bec6f36ccdec491270265b88e43";
