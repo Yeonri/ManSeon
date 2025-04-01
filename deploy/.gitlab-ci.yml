@@ -25,7 +25,7 @@ build_BE:
     - |
       if [ "$CI_COMMIT_REF_NAME" == "BE/dev" ]; then
         docker compose -f /home/ubuntu/docker-compose.yml down
-        docker system prune -af --volumes
+        docker rmi -f $(docker images -q)
         docker build -t $IMAGE_NAME_DEV:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
         docker tag $IMAGE_NAME_DEV:$CI_COMMIT_SHA $IMAGE_NAME_DEV:latest
       fi
