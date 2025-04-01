@@ -118,7 +118,7 @@ deploy_BE_dev:
     #  디렉토리 이동
     - cd /home/ubuntu/
     # 환경 변수
-    - rm .env
+    - echo "" > .env
     - echo "MYSQL_URL=$MYSQL_URL" >> .env
     - echo "MYSQL_USERNAME=$MYSQL_USERNAME" >> .env
     - echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
