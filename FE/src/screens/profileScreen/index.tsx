@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { MoreStackParams } from "../../api/types/moreStackParams";
+import { MoreStackParams } from "../../api/types/MoreStackParams";
 import type { Post } from "../../api/types/post";
 import IconEdit from "../../assets/images/icon_edit.svg";
 import IconMove from "../../assets/images/icon_move.svg";
