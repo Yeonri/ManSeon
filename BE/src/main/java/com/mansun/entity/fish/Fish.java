@@ -40,4 +40,6 @@ public class Fish {
 
     private String equipment;
     private String fishImg;
+
+    private boolean isDelete;
 }

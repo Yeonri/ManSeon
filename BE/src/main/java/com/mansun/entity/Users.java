@@ -82,4 +82,9 @@ public class Users {
 
     @Builder.Default
     private int followerNum = 0;
+
+
+    private String role;
+
+    private boolean isDelete;
 }

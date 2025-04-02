@@ -4,10 +4,9 @@ import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
 import com.mansun.features.user.service.UserServiceImpl;
 import com.mansun.requestDto.user.CreateUserReqDto;
+import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
-import com.mansun.requestDto.user.GetTheOtherOneInfoReqDto;
 import com.mansun.responseDto.OnlyMessageResDto;
-
 import com.mansun.responseDto.user.GetMyInfoResDto;
 import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,15 +20,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 @CrossOrigin("*")
-@Tag(name = "UserController",description = "사용자 정보의 CRUD를 담당하는 컨트롤러")
+@Tag(name = "UserController", description = "사용자 정보의 CRUD를 담당하는 컨트롤러")
 public class UserController {
     private final UserServiceImpl userService;
+
     @Operation(summary = "회원가입")
     @PostMapping
     public ResponseEntity<OnlyMessageResDto> createUser(@RequestBody CreateUserReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
         //만약 오류가 난다면 service 안에서 예외처리 반환 예정
         userService.createUser(req);
+        return ResponseEntity.ok(new OnlyMessageResDto("회원가입 성공"));
+    }
+
+    @Operation(summary = "닉네임 설정")
+    @PostMapping("/nickname/set")
+    public ResponseEntity<OnlyMessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {
+        //아무것도 추가하지 않고 헤더만 추가해서 간다.
+        //만약 오류가 난다면 service 안에서 예외처리 반환 예정
+        userService.setNickname(req);
         return ResponseEntity.ok(new OnlyMessageResDto("회원가입 성공"));
     }
 
@@ -42,24 +51,24 @@ public class UserController {
     @PatchMapping
     public ResponseEntity<OnlyMessageResDto> updateUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody UpdateUserReqDto req){
-        Users user=userService.updateUser(customUserDetails,req);
+            @RequestBody UpdateUserReqDto req) {
+        Users user = userService.updateUser(customUserDetails, req);
         return ResponseEntity.ok(new OnlyMessageResDto("회원 정보가 성공적으로 변경되었습니다."));
     }
 
     @Operation(summary = "회원정보 삭제")
     @DeleteMapping
-    public ResponseEntity<OnlyMessageResDto> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails){
+    public ResponseEntity<OnlyMessageResDto> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
 //        System.out.println(customUserDetails.getUserId());
         userService.deleteUser(customUserDetails.getUserId());
         return ResponseEntity.ok(new OnlyMessageResDto("회원 정보가 삭제되었습니다."));
     }
-    
+
 
     //닉네임 중복 체크
     @Operation(summary = "닉네임 중복 확인")
     @GetMapping("/nickname/duplicate")
-    public ResponseEntity<OnlyMessageResDto> checkDuplicateNickname(@RequestParam("nickname")String nickname){
+    public ResponseEntity<OnlyMessageResDto> checkDuplicateNickname(@RequestParam("nickname") String nickname) {
         userService.findByNickname(nickname);
         return ResponseEntity.ok(new OnlyMessageResDto("사용가능한 닉네임입니다."));
     }
@@ -68,8 +77,8 @@ public class UserController {
     @GetMapping("/me")
     public ResponseEntity<GetMyInfoResDto> getMyInformation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
-    ){
-        GetMyInfoResDto myInfoResDto=userService.findById(customUserDetails);
+    ) {
+        GetMyInfoResDto myInfoResDto = userService.findById(customUserDetails);
         return ResponseEntity.ok(myInfoResDto);
     }
 
@@ -78,8 +87,8 @@ public class UserController {
     public ResponseEntity<GetTheOtherOneInfoResDto> getTheOtherOneInformation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam("userId") Long req
-    ){
-        return ResponseEntity.ok(userService.findTheOtherOneInfo(customUserDetails,req));
+    ) {
+        return ResponseEntity.ok(userService.findTheOtherOneInfo(customUserDetails, req));
     }
 
 //    @Operation(summary = "팔로잉 리스트 가져오기")

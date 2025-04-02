@@ -5,12 +5,14 @@ import com.mansun.requestDto.fish.CreateFishReqDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface FishService {
     void createFish(CustomUserDetails customUserDetails, CreateFishReqDto req);
 
-    List<FindFishListResDto> findMyFishList(CustomUserDetails customUserDetails);
+    Map<LocalDate,List<FindFishListResDto>> findMyFishList(CustomUserDetails customUserDetails);
 
     List<FindFishListResDto> findOthersFishList(CustomUserDetails customUserDetails, Long userId);
 

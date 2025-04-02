@@ -9,17 +9,21 @@ import com.mansun.responseDto.OnlyMessageResDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/fishes")
 @RequiredArgsConstructor
 @CrossOrigin("*")
+@Tag(name = "FishController",description = "전체 어종 및 포획한 물고기의 CRUD를 담당하는 컨트롤러")
 public class FishController {
     private final FishServiceImpl fishService;
     private final FishTypeServiceImpl fishTypeService;
@@ -45,10 +49,10 @@ public class FishController {
 
     @Operation(summary = "내 물고기 도감 리스트 열람")
     @GetMapping("/list/my")
-    public ResponseEntity<List<FindFishListResDto>> getMyFishList(
+    public ResponseEntity<Map<LocalDate,List<FindFishListResDto>>> getMyFishList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
-        List<FindFishListResDto> myList = fishService.findMyFishList(customUserDetails);
+        Map<LocalDate,List<FindFishListResDto>> myList = fishService.findMyFishList(customUserDetails);
         return ResponseEntity.ok(myList);
     }
 

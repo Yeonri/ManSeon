@@ -60,7 +60,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         addRefreshEntity(email,refreshToken,86400000L);
 
-        response.setHeader("access", "Bearer "+accessToken);
+        response.setHeader("Authorization", "Bearer "+accessToken);
         response.addCookie(createCookie("refresh", refreshToken));
         response.setStatus(HttpStatus.OK.value());
     }

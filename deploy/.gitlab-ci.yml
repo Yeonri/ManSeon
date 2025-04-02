@@ -5,20 +5,6 @@ stages:
   - push
   - cleanup
   - deploy
-#################
-# 1-1. build_FE #
-#################
-build_FE:
-  stage: build
-  variables:
-    DOCKERFILE_PATH: deploy/Dockerfile.fe
-    CONTEXT: FE
-  script:
-    - docker build --no-cache -t build-fe -f $DOCKERFILE_PATH $CONTEXT
-  rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
-    when: always
-  - when: never
 
 #################
 # 1-2. build_BE #
@@ -39,8 +25,7 @@ build_BE:
     - |
       if [ "$CI_COMMIT_REF_NAME" == "BE/dev" ]; then
         docker compose -f /home/ubuntu/docker-compose.yml down
-        docker image prune -f
-        docker builder prune -f
+        docker rmi -f $(docker images -q)
         docker build -t $IMAGE_NAME_DEV:$CI_COMMIT_SHA -f $DOCKERFILE_PATH $CONTEXT
         docker tag $IMAGE_NAME_DEV:$CI_COMMIT_SHA $IMAGE_NAME_DEV:latest
       fi
@@ -57,32 +42,6 @@ build_BE:
     when: always
   - when: never
 
-#################
-# 2-1. push_FE  #
-#################
-push_FE:
-  stage: push
-  script:
-    # FE/dev
-    - |
-      if [ "$CI_COMMIT_BRANCH" == "FE/dev" ]; then
-        docker run --rm -v /home/ubuntu/nginx:/output build-fe \
-          sh -c "cp /app/android/app/build/outputs/apk/release/app-release.apk /output/"
-      fi
-    # FE/rel
-    - |
-      if [ "$CI_COMMIT_BRANCH" == "FE/rel" ]; then
-        docker run --rm -v /home/gitlab-runner/nginx:/output build-fe \
-        sh -c "cp /app/android/app/build/outputs/apk/release/app-release.apk /output/" \
-      scp -i /home/gitlab-runner/J12B210T.pem /home/gitlab-runner/nginx/app-release.apk ubuntu@j12b210.p.ssafy.io /home/nginx/
-      fi
-
-  dependencies:
-    - build_FE
-  rules:
-  - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "FE/dev" || $CI_COMMIT_BRANCH == "FE/rel")
-    when: always
-  - when: never
 
 #################
 # 2-2. push_BE  #
@@ -131,9 +90,9 @@ cleanup:
     # 정리 (캐시고 뭐고... 지금 안 쓸랭 나중에... 하자...)
     - docker image prune -f
     - docker builder prune -f
+
   dependencies:
     - build_BE
-    - build_FE
   rules:
     - if: $CI_PIPELINE_SOURCE == "push" && ($CI_COMMIT_BRANCH == "BE/dev" || $CI_COMMIT_BRANCH == "BE/rel")
       when: always
@@ -152,17 +111,20 @@ deploy_BE_dev:
     MYSQL_PASSWORD: "$MYSQL_PASSWORD_DEV"
     JPA_DDL_DEV: create
     JWT_SECRET: "$JWT_SECRET"
-
+    REDIS_HOST_DEV: "$REDIS_HOST_DEV"
+    REDIS_PORT_DEV: "$REDIS_PORT_DEV"
 
   script:
     #  디렉토리 이동
     - cd /home/ubuntu/
     # 환경 변수
+    - echo "" > .env
     - echo "MYSQL_URL=$MYSQL_URL" >> .env
     - echo "MYSQL_USERNAME=$MYSQL_USERNAME" >> .env
     - echo "MYSQL_PASSWORD=$MYSQL_PASSWORD" >> .env
     - echo "JPA_DDL_DEV=$JPA_DDL_DEV" >> .env
-    - echo "JWT_SECRET=$JWT_SECRET" >> .env
+    - echo "REDIS_HOST=$REDIS_HOST_DEV" >> .env
+    - echo "REDIS_PORT=$REDIS_PORT_DEV" >> .env
 
     # 컨테이너 on .env 참조
     - docker compose --env-file /home/ubuntu/.env up --build -d
@@ -173,6 +135,7 @@ deploy_BE_dev:
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "BE/dev"
       when: always
     - when: never
+
 
 deploy_BE_rel:
   stage: deploy

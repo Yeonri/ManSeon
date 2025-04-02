@@ -9,11 +9,13 @@ import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;
 import com.mansun.responseDto.fishingPoint.UserPointListResDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserPointServiceImpl implements UserPointService {
     private final UserPointRepository userPointRepository;

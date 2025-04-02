@@ -5,10 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class FindFishListResDto {
     Long fishId;
+    String fishName;
+    float size;
+    LocalDate createdAt;
+    String fishImg;
 }

@@ -31,4 +31,6 @@ public class MarineZone {
     private double lon_rt;
     private double lat_rb;
     private double lon_rb;
+
+    private boolean isDelete;
 }

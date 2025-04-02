@@ -23,4 +23,6 @@ public class WaveHeight {
     private double waveDirection;
     private double waveSpeed;
     private double windDirection;
+
+    private boolean isDelete;
 }

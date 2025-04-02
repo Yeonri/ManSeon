@@ -41,5 +41,5 @@ public class Weather {
     private int wsd;
     private int reh;
 
-
+    private boolean isDelete;
 }
