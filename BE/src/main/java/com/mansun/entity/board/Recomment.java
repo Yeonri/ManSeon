@@ -3,16 +3,14 @@ package com.mansun.entity.board;
 import com.mansun.entity.Users;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Builder
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 //별도로 MySQL엔 DB Index를 Board와 Comment를 복합키로 꽂아넣는다.

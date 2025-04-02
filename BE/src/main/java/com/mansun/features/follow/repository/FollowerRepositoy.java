@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface FollowerRepositoy extends JpaRepository<Follower, Long> {
 
-    List<Follower> findByUser_UserId(Long userId);
+    List<Follower> findByUser_UserIdAndDeletedFalse(Long userId);
 
-    int countAllByUser_UserId(Long userId);
+    int countAllByUser_UserIdAndDeletedFalse(Long userId);
 }

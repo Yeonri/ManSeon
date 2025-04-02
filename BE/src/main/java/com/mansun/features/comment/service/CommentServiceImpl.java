@@ -1,12 +1,15 @@
 package com.mansun.features.comment.service;
 
 import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.common.utils.NullAwareBeanUtils;
 import com.mansun.entity.board.Comment;
 import com.mansun.features.comment.repository.CommentRepository;
 import com.mansun.requestDto.comment.CreateCommentReqDto;
 import com.mansun.requestDto.comment.DeleteCommentReqDto;
 import com.mansun.requestDto.comment.UpdateCommentReqDto;
+import com.mansun.responseDto.comment.UpdateCommentResDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,17 +19,28 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
     @Override
-    public void createComment(CustomUserDetails customUserDetails, CreateCommentReqDto commentParam) {
-        commentRepository.save(new Comment(customUserDetails,commentParam));
+    public void createComment(CustomUserDetails customUserDetails, CreateCommentReqDto req) {
+        commentRepository.save(new Comment(customUserDetails,req));
     }
 
     @Override
-    public void updateComment(CustomUserDetails customUserDetails, UpdateCommentReqDto commentParam) {
-
+    public UpdateCommentResDto updateComment(CustomUserDetails customUserDetails, UpdateCommentReqDto req) {
+        Comment comment=commentRepository.findById(req.getCommentId()).orElseThrow();
+        BeanUtils.copyProperties(req,comment, NullAwareBeanUtils.getNullPropertyNames(req));
+        return UpdateCommentResDto
+                .builder()
+                .commentId(comment.getCommentId())
+                .commentContent(comment.getCommentContent())
+                .recomment(comment.getRecomment())
+                .recommentNum(comment.getRecommentNum())
+                .createdAt(comment.getCreatedAt())
+                .user(comment.getUser())
+                .build();
     }
 
     @Override
-    public void deleteComment(CustomUserDetails customUserDetails, DeleteCommentReqDto commentParam) {
-
+    public void deleteComment(CustomUserDetails customUserDetails, DeleteCommentReqDto req) {
+        Comment comment=commentRepository.findById(req.getCommentId()).orElseThrow();
+        comment.setDeleted(true);
     }
 }

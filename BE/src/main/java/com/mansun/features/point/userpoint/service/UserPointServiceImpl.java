@@ -38,7 +38,7 @@ public class UserPointServiceImpl implements UserPointService {
     public List<UserPointListResDto> findUserPointList(
             CustomUserDetails customUserDetails
     ) {
-        List<UserPoint> userPointList = userPointRepository.findByUser_UserId(customUserDetails.getUserId());
+        List<UserPoint> userPointList = userPointRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
         return userPointList.stream()
                 .map(
                         up -> UserPointListResDto

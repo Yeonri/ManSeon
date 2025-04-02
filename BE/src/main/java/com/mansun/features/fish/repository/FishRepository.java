@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface FishRepository extends JpaRepository<Fish,Long> {
-    Fish findByUser_UserIdAndFishId(Long userId, Long fishId);
-    List<Fish> findByUser_UserId(Long userId);
+    Fish findByUser_UserIdAndFishIdAndDeletedFalse(Long userId, Long fishId);
+    List<Fish> findByUser_UserIdAndDeletedFalse(Long userId);
 }

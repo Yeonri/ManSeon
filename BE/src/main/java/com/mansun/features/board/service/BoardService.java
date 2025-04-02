@@ -23,18 +23,20 @@ public interface BoardService {
     //전체 게시글 조회
     List<allBoardListResDto> findAllBoardList();
 
-    //내 게시판 글 열람
+    //내 게시글 리스트 열람
     List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails);
 
-    //UserId와 BoardId로 게시글 단 건 조회
+    //UserId와 BoardId로 단일 게시글 조회
     FindBoardResDto findBoard(CustomUserDetails customUserDetails, Long boardId);
 
-    //내 게시판 글 수정
+    //boardId로 단일 게시글 조회
+    FindBoardResDto findBoard(Long postId);
+
+    //내 게시글 수정
     void updateMyBoard(
             CustomUserDetails customUserDetails,
             UpdateMyBoardReqDto boardParam);
-
-    //내 게시판 글 삭제
+    //내 게시글 삭제
     void deleteMyBoard(
             CustomUserDetails customUserDetails,
             DeleteMyBoardReqDto boardParam);

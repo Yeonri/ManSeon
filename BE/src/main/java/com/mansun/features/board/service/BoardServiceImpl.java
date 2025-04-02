@@ -44,10 +44,11 @@ public class BoardServiceImpl implements BoardService {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
         QBoard board = QBoard.board;
         QComment comment = QComment.comment;
-        QRecomment recomment = QRecomment.recomment;
+//        QRecomment recomment = QRecomment.recomment;
 
         List<Board> boardList = queryFactory
                 .selectFrom(board)
+                .where(board.deleted.eq(false))
                 .leftJoin(board.comment, comment).fetchJoin()
 //                .leftJoin(comment.recomment, recomment).fetchJoin()
                 .distinct() // 중복 제거
@@ -65,7 +66,7 @@ public class BoardServiceImpl implements BoardService {
     //userId를 이용해서 게시글을 찾는 함수
     @Override
     public List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails) {
-        return boardrepository.findByUser_UserId(customUserDetails.getUserId())
+        return boardrepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId())
                 .stream()
                 .map(board -> FindMyBoardListResDto
                         .builder()
@@ -76,6 +77,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     //postId을 이용해서 게시글을 찾는 함수
+    @Override
     public FindBoardResDto findBoard(Long postId) {
         Board findboard = boardrepository.findById(postId).orElseThrow(
                 () -> new NoSuchElementException("게시글이 없습니다")

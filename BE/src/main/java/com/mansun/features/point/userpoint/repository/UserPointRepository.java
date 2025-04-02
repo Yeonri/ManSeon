@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface UserPointRepository extends JpaRepository<UserPoint,Long> {
-    public List<UserPoint> findByUser_UserId(Long userId);
+    public List<UserPoint> findByUser_UserIdAndDeletedFalse(Long userId);
 }
