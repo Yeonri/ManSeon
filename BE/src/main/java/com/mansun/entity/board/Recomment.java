@@ -10,12 +10,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 //별도로 MySQL엔 DB Index를 Board와 Comment를 복합키로 꽂아넣는다.
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 @Schema(title = "각 대댓글 정보", description = "각 대댓글이 담고 있는 대댓글 내용, 생성일")
 public class Recomment {
     @Id
@@ -40,6 +41,6 @@ public class Recomment {
     private String recommentContent;
     @Schema(description = "각 대댓글 생성일")
     private LocalDateTime createdAt;
-
-    private boolean isDelete;
+    @Builder.Default
+    private boolean deleted=false;
 }

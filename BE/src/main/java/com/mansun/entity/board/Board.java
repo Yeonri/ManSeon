@@ -10,12 +10,13 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 @Schema(title = "전체 게시판", description = "전체 게시판의 정보를 담은 Entity")
 public class Board {
     @Id
@@ -56,6 +57,6 @@ public class Board {
     private int likeNum;
     @Schema(description = "각 게시물의 댓글 수")
     private int commentNum;
-
-    private boolean isDelete;
+    @Builder.Default
+    private boolean deleted=false;
 }
