@@ -49,4 +49,6 @@ public class Comment {
     @Schema(description = "대댓글 수")
     private int recommentNum;
 
+    private boolean isDelete;
+
 }

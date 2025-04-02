@@ -16,4 +16,6 @@ public class Follower {
     @JoinColumn
     private Users user;
     private Long followerUserId;
+
+    private boolean isDelete;
 }

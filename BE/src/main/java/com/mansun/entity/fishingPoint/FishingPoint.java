@@ -30,4 +30,6 @@ public class FishingPoint {
     private Integer weatherY;
     private String sunmoonLocation;
     private String nearestTideStation;
+
+    private boolean isDelete;
 }

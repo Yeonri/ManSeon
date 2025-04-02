@@ -17,4 +17,6 @@ public class SeaTemperature {
     private LocalDateTime seaDate;
     private LocalDateTime seaTime;
     private float seaTemp;
+
+    private boolean isDelete;
 }

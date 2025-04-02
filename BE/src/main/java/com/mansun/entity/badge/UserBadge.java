@@ -26,4 +26,6 @@ public class UserBadge {
     @JoinColumn
     @Schema(title="회원이 소유한 뱃지")
     private Badges badge;
+
+    private boolean isDelete;
 }
