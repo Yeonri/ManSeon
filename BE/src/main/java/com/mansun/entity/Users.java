@@ -24,6 +24,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 @Schema(title = "유저 정보", description = "각 유저 정보로 활용되어야 할 Id,Email,name등의 정보가 담겨 있다")
 public class Users {
     @Id
@@ -85,5 +86,5 @@ public class Users {
 
     private String role;
 
-    private boolean isDelete;
+    private boolean deleted;
 }

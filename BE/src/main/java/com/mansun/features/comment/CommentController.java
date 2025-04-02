@@ -1,10 +1,12 @@
 package com.mansun.features.comment;
 
 import com.mansun.common.auth.CustomUserDetails;
+import com.mansun.entity.board.Comment;
 import com.mansun.features.comment.service.CommentServiceImpl;
 import com.mansun.requestDto.comment.CreateCommentReqDto;
 import com.mansun.requestDto.comment.DeleteCommentReqDto;
 import com.mansun.requestDto.comment.UpdateCommentReqDto;
+import com.mansun.responseDto.comment.UpdateCommentResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -32,19 +34,18 @@ public class CommentController {
 
     @Operation(summary = "댓글 수정")
     @PatchMapping
-    public ResponseEntity<String> updateComment(
+    public ResponseEntity<UpdateCommentResDto> updateComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid @RequestBody UpdateCommentReqDto req
+            @RequestBody UpdateCommentReqDto req
     ) {
-        commentService.updateComment(customUserDetails, req);
-        return ResponseEntity.ok("댓글 수정이 완료되었습니다");
+        return ResponseEntity.ok(commentService.updateComment(customUserDetails, req));
     }
 
     @Operation(summary = "댓글 삭제")
     @DeleteMapping
     public ResponseEntity<String> deleteComment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody DeleteCommentReqDto req
+            @Valid @RequestBody DeleteCommentReqDto req
     ) {
         commentService.deleteComment(customUserDetails, req);
         return ResponseEntity.ok("댓글이 삭제되었습니다");

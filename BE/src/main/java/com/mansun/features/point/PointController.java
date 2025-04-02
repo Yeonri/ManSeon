@@ -6,7 +6,7 @@ import com.mansun.features.point.userpoint.service.UserPointServiceImpl;
 import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
 import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;
 import com.mansun.requestDto.fishingpoint.SearchPointReqDto;
-import com.mansun.responseDto.OnlyMessageResDto;
+import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.fishingPoint.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,11 +28,11 @@ public class PointController {
 
     @Operation(summary = "전체 리스트에 어떤 포인트를 추가하는 것")
     @PostMapping("/list/all")
-    public ResponseEntity<OnlyMessageResDto> createAllPointList(
+    public ResponseEntity<MessageResDto> createAllPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateFishingPointReqDto req) {
         fishingPointService.createAllPoint(req);
-        return ResponseEntity.ok(new OnlyMessageResDto("전체 낚시 포인트에 추가되었습니다"));
+        return ResponseEntity.ok(new MessageResDto("전체 낚시 포인트에 추가되었습니다"));
     }
 
     @Operation(summary = "전체 리스트를 찾는 것")
@@ -52,11 +52,11 @@ public class PointController {
 
     @Operation(summary = "한 사용자의 UserPoint를 추가한다.")
     @PostMapping("/list/my")
-    public ResponseEntity<OnlyMessageResDto> createUserPoint(
+    public ResponseEntity<MessageResDto> createUserPoint(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateUserPointReqDto req) {
         userPointService.createUserPoint(customUserDetails, req);
-        return ResponseEntity.ok(new OnlyMessageResDto("내 포인트가 추가되었습니다."));
+        return ResponseEntity.ok(new MessageResDto("내 포인트가 추가되었습니다."));
     }
 
 
@@ -69,10 +69,10 @@ public class PointController {
 
 
     @DeleteMapping("/list/my")
-    public ResponseEntity<OnlyMessageResDto> deleteUserPoint(
+    public ResponseEntity<MessageResDto> deleteUserPoint(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         userPointService.deleteUserPoint(customUserDetails);
-        return ResponseEntity.ok(new OnlyMessageResDto("정상적으로 삭제되었습니다."));
+        return ResponseEntity.ok(new MessageResDto("정상적으로 삭제되었습니다."));
     }
 
     @GetMapping("/search")

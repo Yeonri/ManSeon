@@ -10,11 +10,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Builder
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 @Schema(title = "사용자가 포획한 물고기 종류",description = "사용자가 포획한 물고기의 종류")
 public class Fish {
     @Id
@@ -40,6 +41,6 @@ public class Fish {
 
     private String equipment;
     private String fishImg;
-
-    private boolean isDelete;
+    @Builder.Default
+    private boolean deleted=false;
 }

@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OnlyMessageResDto {
+public class MessageResDto {
 	String message;
 }

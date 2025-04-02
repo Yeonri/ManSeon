@@ -11,12 +11,13 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 @Schema(title = "각 게시물의 댓글 정보",description = "각 댓글 정보, 생성일, 대댓글 수")
 public class Comment {
     @Id
@@ -48,7 +49,6 @@ public class Comment {
     private LocalDateTime createdAt;
     @Schema(description = "대댓글 수")
     private int recommentNum;
-
-    private boolean isDelete;
-
+    @Builder.Default
+    private boolean deleted=false;
 }
