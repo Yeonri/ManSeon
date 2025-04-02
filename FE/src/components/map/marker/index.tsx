@@ -3,7 +3,7 @@ import { Marker } from "react-native-maps";
 
 interface MarkerProps {
   points: {
-    pointID: number;
+    pointId: number;
     latitude: number;
     longitude: number;
     name: string;
@@ -15,7 +15,7 @@ export function Markers({ points }: MarkerProps) {
     <View>
       {points.map((point) => (
         <Marker
-          key={`marker-${point.pointID}`}
+          key={`marker-${point.pointId}`}
           coordinate={{
             latitude: point.latitude,
             longitude: point.longitude,

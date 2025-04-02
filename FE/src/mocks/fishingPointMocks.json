@@ -1,7 +1,7 @@
 [
   {
     "name": "강릉 경포해변",
-    "pointID": 1,
+    "pointId": 1,
     "latitude": 37.7924,
     "longitude": 128.9022,
     "isBookmarked": true,
@@ -10,7 +10,7 @@
   },
   {
     "name": "속초 대포항",
-    "pointID": 2,
+    "pointId": 2,
     "latitude": 38.1912,
     "longitude": 128.5903,
     "isBookmarked": true,
@@ -19,7 +19,7 @@
   },
   {
     "name": "포항 구룡포항",
-    "pointID": 3,
+    "pointId": 3,
     "latitude": 35.9634,
     "longitude": 129.5692,
     "isBookmarked": false,
@@ -28,7 +28,7 @@
   },
   {
     "name": "울산 방어진항",
-    "pointID": 4,
+    "pointId": 4,
     "latitude": 35.4998,
     "longitude": 129.4309,
     "isBookmarked": false,
@@ -37,7 +37,7 @@
   },
   {
     "name": "부산 다대포해수욕장",
-    "pointID": 5,
+    "pointId": 5,
     "latitude": 35.0456,
     "longitude": 128.9661,
     "isBookmarked": false,
@@ -46,7 +46,7 @@
   },
   {
     "name": "부산 송정해변",
-    "pointID": 6,
+    "pointId": 6,
     "latitude": 35.1847,
     "longitude": 129.2011,
     "isBookmarked": false,
@@ -55,7 +55,7 @@
   },
   {
     "name": "여수 오동도",
-    "pointID": 7,
+    "pointId": 7,
     "latitude": 34.7368,
     "longitude": 127.7543,
     "isBookmarked": true,
@@ -64,7 +64,7 @@
   },
   {
     "name": "고흥 남열해수욕장",
-    "pointID": 8,
+    "pointId": 8,
     "latitude": 34.5391,
     "longitude": 127.4268,
     "isBookmarked": true,
@@ -73,7 +73,7 @@
   },
   {
     "name": "완도 신지명사해변",
-    "pointID": 9,
+    "pointId": 9,
     "latitude": 34.3154,
     "longitude": 126.7398,
     "isBookmarked": false,
@@ -82,7 +82,7 @@
   },
   {
     "name": "해남 송호해변",
-    "pointID": 10,
+    "pointId": 10,
     "latitude": 34.4739,
     "longitude": 126.5821,
     "isBookmarked": false,
@@ -91,7 +91,7 @@
   },
   {
     "name": "제주 협재해수욕장",
-    "pointID": 11,
+    "pointId": 11,
     "latitude": 33.3943,
     "longitude": 126.2396,
     "isBookmarked": false,
@@ -100,7 +100,7 @@
   },
   {
     "name": "제주 함덕해변",
-    "pointID": 12,
+    "pointId": 12,
     "latitude": 33.5431,
     "longitude": 126.6723,
     "isBookmarked": true,
@@ -109,7 +109,7 @@
   },
   {
     "name": "제주 월정리해변",
-    "pointID": 13,
+    "pointId": 13,
     "latitude": 33.5565,
     "longitude": 126.8013,
     "isBookmarked": false,
@@ -118,7 +118,7 @@
   },
   {
     "name": "통영 미륵도",
-    "pointID": 14,
+    "pointId": 14,
     "latitude": 34.8192,
     "longitude": 128.4223,
     "isBookmarked": false,
@@ -127,7 +127,7 @@
   },
   {
     "name": "거제 구조라해변",
-    "pointID": 15,
+    "pointId": 15,
     "latitude": 34.8496,
     "longitude": 128.6644,
     "isBookmarked": false,
@@ -136,7 +136,7 @@
   },
   {
     "name": "남해 상주은모래해변",
-    "pointID": 16,
+    "pointId": 16,
     "latitude": 34.7191,
     "longitude": 127.9442,
     "isBookmarked": true,
@@ -145,7 +145,7 @@
   },
   {
     "name": "고성 삼포해변",
-    "pointID": 17,
+    "pointId": 17,
     "latitude": 38.3222,
     "longitude": 128.5233,
     "isBookmarked": true,
@@ -154,7 +154,7 @@
   },
   {
     "name": "양양 낙산해수욕장",
-    "pointID": 18,
+    "pointId": 18,
     "latitude": 38.1274,
     "longitude": 128.6285,
     "isBookmarked": false,
@@ -163,7 +163,7 @@
   },
   {
     "name": "삼척 맹방해변",
-    "pointID": 19,
+    "pointId": 19,
     "latitude": 37.3497,
     "longitude": 129.2246,
     "isBookmarked": true,
@@ -172,7 +172,7 @@
   },
   {
     "name": "동해 묵호항",
-    "pointID": 20,
+    "pointId": 20,
     "latitude": 37.5523,
     "longitude": 129.1149,
     "isBookmarked": false,
@@ -181,7 +181,7 @@
   },
   {
     "name": "시흥 오이도항",
-    "pointID": 31,
+    "pointId": 31,
     "latitude": 37.3626,
     "longitude": 126.6811,
     "isBookmarked": false,
@@ -190,7 +190,7 @@
   },
   {
     "name": "화성 제부도",
-    "pointID": 32,
+    "pointId": 32,
     "latitude": 37.2251,
     "longitude": 126.6227,
     "isBookmarked": true,
@@ -199,7 +199,7 @@
   },
   {
     "name": "안산 탄도항",
-    "pointID": 33,
+    "pointId": 33,
     "latitude": 37.2158,
     "longitude": 126.5801,
     "isBookmarked": false,
@@ -208,7 +208,7 @@
   },
   {
     "name": "평택 서해대교 아래",
-    "pointID": 34,
+    "pointId": 34,
     "latitude": 36.9922,
     "longitude": 126.7773,
     "isBookmarked": true,
@@ -217,7 +217,7 @@
   },
   {
     "name": "당진 왜목마을",
-    "pointID": 35,
+    "pointId": 35,
     "latitude": 37.0103,
     "longitude": 126.5912,
     "isBookmarked": true,
@@ -226,7 +226,7 @@
   },
   {
     "name": "보령 무창포해변",
-    "pointID": 36,
+    "pointId": 36,
     "latitude": 36.1956,
     "longitude": 126.5132,
     "isBookmarked": false,
@@ -235,7 +235,7 @@
   },
   {
     "name": "제주 성산일출봉 근해",
-    "pointID": 37,
+    "pointId": 37,
     "latitude": 33.4592,
     "longitude": 126.9421,
     "isBookmarked": true,
@@ -244,7 +244,7 @@
   },
   {
     "name": "울릉도 저동항",
-    "pointID": 38,
+    "pointId": 38,
     "latitude": 37.4849,
     "longitude": 130.9053,
     "isBookmarked": true,
@@ -253,7 +253,7 @@
   },
   {
     "name": "독도 주변해역",
-    "pointID": 39,
+    "pointId": 39,
     "latitude": 37.2417,
     "longitude": 131.8658,
     "isBookmarked": false,
@@ -262,7 +262,7 @@
   },
   {
     "name": "사천 삼천포항",
-    "pointID": 40,
+    "pointId": 40,
     "latitude": 34.9293,
     "longitude": 128.0805,
     "isBookmarked": true,
@@ -271,7 +271,7 @@
   },
   {
     "name": "고흥 나로도항",
-    "pointID": 41,
+    "pointId": 41,
     "latitude": 34.4781,
     "longitude": 127.5332,
     "isBookmarked": true,
@@ -280,7 +280,7 @@
   },
   {
     "name": "완도 완도항",
-    "pointID": 42,
+    "pointId": 42,
     "latitude": 34.3125,
     "longitude": 126.7582,
     "isBookmarked": true,
@@ -289,7 +289,7 @@
   },
   {
     "name": "해남 땅끝마을",
-    "pointID": 43,
+    "pointId": 43,
     "latitude": 34.2967,
     "longitude": 126.5229,
     "isBookmarked": false,
@@ -298,7 +298,7 @@
   },
   {
     "name": "신안 증도항",
-    "pointID": 44,
+    "pointId": 44,
     "latitude": 34.7764,
     "longitude": 126.1167,
     "isBookmarked": true,
@@ -307,7 +307,7 @@
   },
   {
     "name": "영광 법성포",
-    "pointID": 45,
+    "pointId": 45,
     "latitude": 35.2792,
     "longitude": 126.4293,
     "isBookmarked": true,
@@ -316,7 +316,7 @@
   },
   {
     "name": "보성 율포해변",
-    "pointID": 46,
+    "pointId": 46,
     "latitude": 34.7933,
     "longitude": 127.3034,
     "isBookmarked": true,
@@ -325,7 +325,7 @@
   },
   {
     "name": "강진 마량항",
-    "pointID": 47,
+    "pointId": 47,
     "latitude": 34.5104,
     "longitude": 126.2705,
     "isBookmarked": true,
@@ -334,7 +334,7 @@
   },
   {
     "name": "태안 만리포해변",
-    "pointID": 48,
+    "pointId": 48,
     "latitude": 36.7875,
     "longitude": 126.1342,
     "isBookmarked": false,
@@ -343,7 +343,7 @@
   },
   {
     "name": "속초 청초호",
-    "pointID": 49,
+    "pointId": 49,
     "latitude": 38.1984,
     "longitude": 128.5931,
     "isBookmarked": true,
@@ -352,7 +352,7 @@
   },
   {
     "name": "포항 호미곶",
-    "pointID": 50,
+    "pointId": 50,
     "latitude": 36.0675,
     "longitude": 129.5681,
     "isBookmarked": true,

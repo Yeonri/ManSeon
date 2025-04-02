@@ -1,20 +1,20 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MainScreen } from "../../screens/mainScreen";
-import { MapScreen } from "../../screens/mapScreen";
-import { CommunityStackNavigator } from "../communityStackNavigator";
-import { MoreStackNavigator } from "../moreStackNavigator";
-import {
-  House,
-  MapPlus,
-  Plus,
-  MessagesSquare,
-  CircleEllipsis,
-} from "lucide-react-native";
-import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import {
+  CircleEllipsis,
+  House,
+  MapPlus,
+  MessagesSquare,
+  Plus,
+} from "lucide-react-native";
+import { TouchableOpacity } from "react-native";
 import { RootStackParams } from "../../api/types/RootStackParams";
 import { CameraScreen } from "../../screens/cameraScreen";
+import { MapScreen } from "../../screens/mapScreen";
+import { CommunityStackNavigator } from "../communityStackNavigator";
+import { MainStackNavigator } from "../mainStackNavigator";
+import { MoreStackNavigator } from "../moreStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -45,7 +45,7 @@ export function BottomTabNavigator() {
     >
       <Tab.Screen
         name="home"
-        component={MainScreen}
+        component={MainStackNavigator}
         options={{
           title: "홈",
           tabBarIcon: renderTabIcon(House),

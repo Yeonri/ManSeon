@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { BottomTabNavigator } from "../bottomTabNavigator";
 import { CameraScreen } from "../../screens/cameraScreen";
 import { RecordScreen } from "../../screens/recordScreen";
+import { BottomTabNavigator } from "../bottomTabNavigator";
 
 export function AppNavigator() {
   const Stack = createNativeStackNavigator();
