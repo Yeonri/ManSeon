@@ -1,11 +1,13 @@
-import { useMemo, useState } from "react";
-import { StatusBar, View } from "react-native";
+import { useMemo, useRef, useState } from "react";
+import { View } from "react-native";
 import MapView from "react-native-maps";
+import { Modalize } from "react-native-modalize";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
 import { FilterButton } from "../../components/map/filterButton";
 import { Markers } from "../../components/map/marker";
+import { MarkerDetail } from "../../components/map/markerDetail";
 import fishinPointMocks from "../../mocks/fishingPointMocks.json";
 
 export function MapScreen() {
@@ -22,8 +24,6 @@ export function MapScreen() {
     });
   }, [activeFilter]);
 
-  const statusBarHeight = StatusBar.currentHeight;
-
   const [keyword, setKeyword] = useState("");
 
   const handleSEarch = () => {
@@ -31,6 +31,9 @@ export function MapScreen() {
   };
 
   const [showModal, setShowModal] = useState(false);
+
+  const modalRef = useRef<Modalize>(null);
+  const [selectedPoint, setSelectedPoint] = useState<any>(null);
 
   return (
     <SafeAreaView className="flex-1">
@@ -69,7 +72,7 @@ export function MapScreen() {
         removeClippedSubviews={false}
         style={{
           position: "absolute",
-          top: statusBarHeight,
+          top: 0,
           bottom: 0,
           left: 0,
           right: 0,
@@ -81,8 +84,16 @@ export function MapScreen() {
           longitudeDelta: 7.5,
         }}
       >
-        <Markers points={filterPoints} />
+        <Markers
+          points={filterPoints}
+          onMarkerPress={(point) => {
+            setSelectedPoint(point);
+            modalRef.current?.open();
+          }}
+        />
       </MapView>
+
+      <MarkerDetail ref={modalRef} point={selectedPoint} />
 
       <SearchModal
         visible={showModal}

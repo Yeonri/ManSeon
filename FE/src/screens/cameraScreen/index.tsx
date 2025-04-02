@@ -1,15 +1,15 @@
-import { useRef, useState } from "react";
-import { useCameraPermission } from "../../hooks/useCameraPermission";
-import { PhotoFile } from "react-native-vision-camera";
-import { Modalize } from "react-native-modalize";
-import { PermissionCheck } from "../../components/common/permissionCheck";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { ChevronRight, X } from "lucide-react-native";
-import { CameraView } from "../../components/cameraRecord/cameraView";
-import { FullButton } from "../../components/common/fullButton";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ChevronRight, X } from "lucide-react-native";
+import { useRef, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Modalize } from "react-native-modalize";
+import { PhotoFile } from "react-native-vision-camera";
 import { RootStackParams } from "../../api/types/RootStackParams";
+import { CameraView } from "../../components/cameraRecord/cameraView";
+import { FullButton } from "../../components/common/fullButton";
+import { PermissionCheck } from "../../components/common/permissionCheck";
+import { useCameraPermission } from "../../hooks/useCameraPermission";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();

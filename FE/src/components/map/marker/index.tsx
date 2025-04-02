@@ -8,9 +8,10 @@ interface MarkerProps {
     longitude: number;
     name: string;
   }[];
+  onMarkerPress: (point: any) => void;
 }
 
-export function Markers({ points }: MarkerProps) {
+export function Markers({ points, onMarkerPress }: MarkerProps) {
   return (
     <View>
       {points.map((point) => (
@@ -20,7 +21,7 @@ export function Markers({ points }: MarkerProps) {
             latitude: point.latitude,
             longitude: point.longitude,
           }}
-          title={point.name}
+          onPress={() => onMarkerPress(point)}
         />
       ))}
     </View>
