@@ -5,6 +5,10 @@ import "./global.css";
 import { AppNavigator } from "./src/navigation/appNavigator";
 import { AuthStackNavigator } from "./src/navigation/authStackNavigator";
 import { useLoginStore } from "./src/store/loginStore";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
+
 export default function App(): React.JSX.Element {
   const mainTheme = {
     ...DefaultTheme,
@@ -17,9 +21,11 @@ export default function App(): React.JSX.Element {
 
   return (
     <GestureHandlerRootView className="flex-1">
-      <NavigationContainer theme={mainTheme}>
-        {isLoggedIn ? <AppNavigator /> : <AuthStackNavigator />}
-      </NavigationContainer>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer theme={mainTheme}>
+          {isLoggedIn ? <AppNavigator /> : <AuthStackNavigator />}
+        </NavigationContainer>
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }

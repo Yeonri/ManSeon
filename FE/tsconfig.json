@@ -9,7 +9,8 @@
       "react-native-permissions",
       "react-native-modalize",
       "axios",
-      "@react-native-async-storage/async-storage"
+      "@react-native-async-storage/async-storage",
+      "@tanstack/react-query"
     ]
   }
 }

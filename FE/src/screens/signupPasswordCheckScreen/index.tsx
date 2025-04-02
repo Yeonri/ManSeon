@@ -2,7 +2,7 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthStackParams } from "../../api/types/AuthStackParams";
 import { SignupStackParams } from "../../api/types/SignupStackParams";
@@ -10,6 +10,7 @@ import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
 import { ProgressBar } from "../../components/signup/progressBar";
+import { useSignup } from "../../api/quries/useSignup";
 
 interface SignupPasswordCheckScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams> {}
@@ -22,6 +23,7 @@ export function SignupPasswordCheckScreen() {
   const [touchedPassword, setTouchedPassword] = useState<boolean>(false);
   const [validPassword, setValidPassword] = useState<boolean>(false);
   const [seeOption1, setSeeOption1] = useState<boolean>(true);
+  const { mutate: signup } = useSignup();
 
   function handlePassword(text: string) {
     setTouchedPassword(true);
@@ -33,11 +35,22 @@ export function SignupPasswordCheckScreen() {
     );
   }
 
-  function finishSignup() {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Login" }],
-    });
+  function handleSignup() {
+    signup(
+      { email, password, name, phoneNum: phone },
+      {
+        onSuccess: () => {
+          Alert.alert("회원가입 성공", "로그인 후 이용해주세요.");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Login" }],
+          });
+        },
+        onError: () => {
+          Alert.alert("회원가입 실패", "잠시 후 다시 시도해주세요.");
+        },
+      }
+    );
   }
 
   return (
@@ -75,9 +88,9 @@ export function SignupPasswordCheckScreen() {
           </TouchableOpacity>
         </View>
         <FullButton
-          name="다음"
+          name="회원가입"
           disable={!validPassword}
-          onPress={finishSignup}
+          onPress={handleSignup}
         />
       </View>
     </SafeAreaView>

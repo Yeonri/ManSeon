@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import type { Post } from "../../../api/types/post";
+import type { Post } from "../../../api/types/Post";
 import { PostCard } from "../postCard";
 
 type ProfilePost = Pick<

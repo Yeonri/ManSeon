@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, TouchableOpacity, View } from "react-native";
 import { MoreStackParams } from "../../../api/types/MoreStackParams";
-import type { Post } from "../../../api/types/post";
+import type { Post } from "../../../api/types/Post";
 import IconMove from "../../../assets/images/icon_move.svg";
 import { PostCard } from "../postCard";
 

@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { Post } from "../../api/types/post";
+import type { Post } from "../../api/types/Post";
 import Dropdown from "../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { PostCard } from "../../components/profile/postCard";

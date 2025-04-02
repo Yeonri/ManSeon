@@ -20,11 +20,12 @@ export function SignupNameScreen() {
 
   function handleName(text: string) {
     setTouchedName(true);
+    setName(text);
+
     const hasSpace = /\s/.test(text);
     const newText = text.replace(/[^가-힣]/g, "");
-    setName(newText);
 
-    if (!hasSpace && newText.length >= 2 && text === newText) {
+    if (!hasSpace && newText.length >= 2 && newText) {
       setNext(true);
     } else setNext(false);
   }
