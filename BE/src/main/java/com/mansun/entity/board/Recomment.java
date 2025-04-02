@@ -40,4 +40,6 @@ public class Recomment {
     private String recommentContent;
     @Schema(description = "각 대댓글 생성일")
     private LocalDateTime createdAt;
+
+    private boolean isDelete;
 }

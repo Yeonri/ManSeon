@@ -18,4 +18,6 @@ public class TideLevel {
 
     private LocalDateTime recordTime;
     private int tideLevel;
+
+    private boolean isDelete;
 }

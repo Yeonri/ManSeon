@@ -34,4 +34,6 @@ public class FishType {
     @Column(nullable = false)
     @Schema(description = "물고기 특징")
     private String characteristic;
+
+    private boolean isDelete;
 }
