@@ -1,10 +1,11 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthStackParams } from "../../api/types/AuthStackParams";
+import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
@@ -15,17 +16,21 @@ interface SignupPasswordCheckScreenNavigationProps
 
 export function SignupPasswordCheckScreen() {
   const navigation = useNavigation<SignupPasswordCheckScreenNavigationProps>();
-  const [password, setPassword] = useState<string>("");
+  const route = useRoute<RouteProp<SignupStackParams, "PasswordCheck">>();
+  const { name, phone, email, password } = route.params;
+  const [NewPassword, setNewPassword] = useState<string>("");
   const [touchedPassword, setTouchedPassword] = useState<boolean>(false);
   const [validPassword, setValidPassword] = useState<boolean>(false);
   const [seeOption1, setSeeOption1] = useState<boolean>(true);
 
   function handlePassword(text: string) {
     setTouchedPassword(true);
-    // 비밀번호는 영어 대소문자, 숫자만 가능
     const newText = text.replace(/[^a-zA-Z0-9]/g, "");
-    setPassword(newText);
-    newText.length > 6 ? setValidPassword(true) : setValidPassword(false);
+    setNewPassword(newText);
+
+    setValidPassword(
+      newText.length >= 6 && text === newText && newText === password
+    );
   }
 
   function finishSignup() {
@@ -48,16 +53,17 @@ export function SignupPasswordCheckScreen() {
           </View>
           <ProgressBar num={4} />
         </View>
-        <View>
+        <View className="relative">
           <TextInput
-            placeholder="영어 대소문자, 숫자 6자리 이상"
+            placeholder="영어 대/소문자, 숫자 6자리 이상"
             placeholderTextColor="#A1A1A1"
+            value={NewPassword}
             onChangeText={(text) => handlePassword(text)}
             secureTextEntry={seeOption1}
-            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${touchedPassword && (!password || !validPassword) ? "border-2 border-error" : ""}`}
+            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${touchedPassword && !validPassword ? "border-2 border-error" : ""}`}
           />
-          {touchedPassword && (!password || !validPassword) ? (
-            <ErrorMessage content="입력 값이 올바르지 않습니다" />
+          {touchedPassword && !validPassword ? (
+            <ErrorMessage content="비밀번호가 동일하지 않습니다" />
           ) : (
             <View />
           )}
@@ -68,7 +74,11 @@ export function SignupPasswordCheckScreen() {
             {seeOption1 ? <Eye color="#525252" /> : <EyeOff color="#525252" />}
           </TouchableOpacity>
         </View>
-        <FullButton name="다음" onPress={finishSignup} />
+        <FullButton
+          name="다음"
+          disable={!validPassword}
+          onPress={finishSignup}
+        />
       </View>
     </SafeAreaView>
   );

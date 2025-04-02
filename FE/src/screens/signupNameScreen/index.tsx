@@ -16,12 +16,23 @@ export function SignupNameScreen() {
   const navigation = useNavigation<SignupNameScreenNavigationProps>();
   const [name, setName] = useState<string>("");
   const [touchedName, setTouchedName] = useState<boolean>(false);
+  const [next, setNext] = useState(false);
 
   function handleName(text: string) {
     setTouchedName(true);
-    // 이름은 한글만 허용
+    const hasSpace = /\s/.test(text);
     const newText = text.replace(/[^가-힣]/g, "");
     setName(newText);
+
+    if (!hasSpace && newText.length >= 2 && text === newText) {
+      setNext(true);
+    } else setNext(false);
+  }
+
+  function handleNext() {
+    if (name) {
+      navigation.navigate("PhoneNum", { name: name });
+    }
   }
 
   return (
@@ -41,19 +52,17 @@ export function SignupNameScreen() {
           <TextInput
             placeholder="이름을 입력해 주세요"
             placeholderTextColor="#A1A1A1"
+            value={name}
             onChangeText={(text) => handleName(text)}
-            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${!name && touchedName ? "border-2 border-error" : ""}`}
+            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${!next && touchedName ? "border-2 border-error" : ""}`}
           />
-          {!name && touchedName ? (
-            <ErrorMessage content="입력 값이 올바르지 않습니다" />
+          {!next && touchedName ? (
+            <ErrorMessage content="공백 없이 한글 2자 이상을 입력해 주세요" />
           ) : (
             <View />
           )}
         </View>
-        <FullButton
-          name="다음"
-          onPress={() => navigation.navigate("PhoneNum")}
-        />
+        <FullButton name="다음" disable={!next} onPress={handleNext} />
       </View>
     </SafeAreaView>
   );

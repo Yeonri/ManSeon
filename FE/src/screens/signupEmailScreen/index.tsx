@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Text, TextInput, View } from "react-native";
@@ -14,17 +14,19 @@ interface SignupEmailScreenNavigationProps
 
 export function SignupEmailScreen() {
   const navigation = useNavigation<SignupEmailScreenNavigationProps>();
+  const route = useRoute<RouteProp<SignupStackParams, "Email">>();
+  const { name, phone } = route.params;
   const [email, setEmail] = useState<string>("");
   const [touchedEmail, setTouchedEmail] = useState<boolean>(false);
-  const [validEmail, setValidEmail] = useState<boolean>(false);
+  const [next, setNext] = useState<boolean>(false);
 
   function handleEmail(text: string) {
     setTouchedEmail(true);
-    // 이메일은 한글 불가능
     const newText = text.replace(/[^a-zA-Z0-9@._-]/g, "");
     setEmail(newText);
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    regex.test(newText) ? setValidEmail(true) : setValidEmail(false);
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newText);
+
+    setNext(text === newText && isValid);
   }
 
   return (
@@ -45,10 +47,11 @@ export function SignupEmailScreen() {
             placeholder="이메일을 입력해 주세요"
             placeholderTextColor="#A1A1A1"
             inputMode="email"
+            value={email}
             onChangeText={(text) => handleEmail(text)}
-            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${touchedEmail && (!email || !validEmail) ? "border-2 border-error" : ""}`}
+            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${touchedEmail && !next ? "border-2 border-error" : ""}`}
           />
-          {touchedEmail && (!email || !validEmail) ? (
+          {touchedEmail && !next ? (
             <ErrorMessage content="입력 값이 올바르지 않습니다" />
           ) : (
             <View />
@@ -56,7 +59,14 @@ export function SignupEmailScreen() {
         </View>
         <FullButton
           name="다음"
-          onPress={() => navigation.navigate("Password")}
+          disable={!next}
+          onPress={() =>
+            navigation.navigate("Password", {
+              name: name,
+              phone: phone,
+              email: email,
+            })
+          }
         />
       </View>
     </SafeAreaView>

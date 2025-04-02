@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
@@ -15,6 +15,8 @@ interface SignupPasswordScreenNavigationProps
 
 export function SignupPasswordScreen() {
   const navigation = useNavigation<SignupPasswordScreenNavigationProps>();
+  const route = useRoute<RouteProp<SignupStackParams, "Password">>();
+  const { name, phone, email } = route.params;
   const [password, setPassword] = useState<string>("");
   const [touchedPassword, setTouchedPassword] = useState<boolean>(false);
   const [validPassword, setValidPassword] = useState<boolean>(false);
@@ -22,10 +24,9 @@ export function SignupPasswordScreen() {
 
   function handlePassword(text: string) {
     setTouchedPassword(true);
-    // 비밀번호는 영어 대소문자, 숫자만 가능
     const newText = text.replace(/[^a-zA-Z0-9]/g, "");
     setPassword(newText);
-    newText.length > 6 ? setValidPassword(true) : setValidPassword(false);
+    setValidPassword(newText.length >= 6 && text === newText);
   }
 
   return (
@@ -41,10 +42,11 @@ export function SignupPasswordScreen() {
           </View>
           <ProgressBar num={4} />
         </View>
-        <View>
+        <View className="relative">
           <TextInput
-            placeholder="영어 대소문자, 숫자 6자리 이상"
+            placeholder="영어 대/소문자, 숫자 6자리 이상"
             placeholderTextColor="#A1A1A1"
+            value={password}
             onChangeText={(text) => handlePassword(text)}
             secureTextEntry={seeOption1}
             className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${touchedPassword && (!password || !validPassword) ? "border-2 border-error" : ""}`}
@@ -63,7 +65,15 @@ export function SignupPasswordScreen() {
         </View>
         <FullButton
           name="다음"
-          onPress={() => navigation.navigate("PasswordCheck")}
+          disable={!validPassword}
+          onPress={() =>
+            navigation.navigate("PasswordCheck", {
+              name: name,
+              phone: phone,
+              email: email,
+              password: password,
+            })
+          }
         />
       </View>
     </SafeAreaView>

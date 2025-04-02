@@ -1,7 +1,12 @@
 export type SignupStackParams = {
   Name: undefined;
-  PhoneNum: undefined;
-  Email: undefined;
-  Password: undefined;
-  PasswordCheck: undefined;
+  PhoneNum: { name: string };
+  Email: { name: string; phone: string };
+  Password: { name: string; phone: string; email: string };
+  PasswordCheck: {
+    name: string;
+    phone: string;
+    email: string;
+    password: string;
+  };
 };

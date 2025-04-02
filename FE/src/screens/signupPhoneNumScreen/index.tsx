@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Text, TextInput, View } from "react-native";
@@ -14,14 +14,26 @@ interface SignupPhoneNumScreenNavigationProps
 
 export function SignupPhoneNumScreen() {
   const navigation = useNavigation<SignupPhoneNumScreenNavigationProps>();
+  const route = useRoute<RouteProp<SignupStackParams, "PhoneNum">>();
+  const { name } = route.params;
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [touchedPhoneNum, setTouchedPhoneNum] = useState<boolean>(false);
+  const [next, setNext] = useState<boolean>(false);
 
   function handlePhoneNum(text: string) {
     setTouchedPhoneNum(true);
-    // 번호는 숫자만 허용
     const newText = text.replace(/[^0-9]/g, "");
     setPhoneNum(newText);
+
+    if (text === newText && newText.length >= 7) {
+      setNext(true);
+    } else {
+      setNext(false);
+    }
+  }
+
+  function handleNext() {
+    navigation.navigate("Email", { name: name, phone: phoneNum });
   }
 
   return (
@@ -42,16 +54,21 @@ export function SignupPhoneNumScreen() {
             placeholder="숫자만 입력해 주세요"
             placeholderTextColor="#A1A1A1"
             inputMode="tel"
+            value={phoneNum}
             onChangeText={(text) => handlePhoneNum(text)}
-            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${!phoneNum && touchedPhoneNum ? "border-2 border-error" : ""}`}
+            className={`p-4 rounded-2xl text-neutral-800 bg-neutral-100 ${!next && touchedPhoneNum ? "border-2 border-error" : ""}`}
           />
-          {!phoneNum && touchedPhoneNum ? (
-            <ErrorMessage content="입력 값이 올바르지 않습니다" />
+          {!next && touchedPhoneNum ? (
+            <ErrorMessage content="7자리 이상 숫자를 입력해 주세요" />
           ) : (
             <View />
           )}
         </View>
-        <FullButton name="다음" onPress={() => navigation.navigate("Email")} />
+        <FullButton
+          name="다음"
+          disable={!next ? true : false}
+          onPress={handleNext}
+        />
       </View>
     </SafeAreaView>
   );
