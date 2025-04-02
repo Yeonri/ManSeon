@@ -67,8 +67,7 @@ public class BadgeController {
     }
 
     //사용자의 뱃지 리스트 추가 기능 구현을 위해서는 Fish 기능이 완료되어야 한다.
-
-    @Operation(summary = "각 사용자의 뱃지 리스트")
+    @Operation(summary = "나의 뱃지 리스트")
     @GetMapping
     public ResponseEntity<List<allBadgesByUserResDto>> findAllBadgesByUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails){

@@ -24,4 +24,6 @@ public class UserPoint {
     private String pointName;
     private float lat;
     private float lng;
+
+    private boolean isDelete;
 }

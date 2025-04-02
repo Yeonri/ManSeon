@@ -24,4 +24,6 @@ public class SunMoonTimes {
     private LocalDateTime sunset;
     private LocalDateTime moonrise;
     private LocalDateTime moonset;
+
+    private boolean isDelete;
 }

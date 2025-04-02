@@ -19,4 +19,6 @@ public class Observatory {
     private String obsCode;
     private float obsLat;
     private float obsLng;
+
+    private boolean isDelete;
 }
