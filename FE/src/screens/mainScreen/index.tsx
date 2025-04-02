@@ -13,7 +13,9 @@ import { PermissionCheck } from "../../components/common/permissionCheck";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
 import { BookmarkButton } from "../../components/main/bookmarkButton";
+import { FishingDonutChart } from "../../components/main/fishingDonutChart";
 import { FishingPointCard } from "../../components/main/fishingPointCard";
+import { FishingResult } from "../../components/main/fishingResult";
 import moonList from "../../data/moonList";
 import { useLocationPermission } from "../../hooks/useLocationPermission";
 import PostData from "../../mocks/postsMocks.json";
@@ -111,10 +113,24 @@ export function MainScreen() {
             <Text className="text-neutral-600 font-bold text-xl">
               내가 잡은 물고기
             </Text>
-            <Text> 그래프 넣을 예정~~</Text>
+            {/* 도넛차트 */}
+            <View className="flex-row">
+              {/* 차트 */}
+              <FishingDonutChart
+                fishingList={user.fising_list}
+                totalCount={user.fishing_total}
+              />
+              {/* 정보 */}
+              <View className="justify-center">
+                <FishingResult
+                  fishingResultList={user.fising_list}
+                  totalCount={user.fishing_total}
+                />
+              </View>
+            </View>
           </View>
 
-          <View className="w-[90%] h-px bg-neutral-100 self-center my-3" />
+          <View className="w-[90%] h-px bg-neutral-100 self-center my-2" />
 
           {/* 도감 */}
           <View>
@@ -141,7 +157,7 @@ export function MainScreen() {
             </View>
           </View>
 
-          <View className="w-[90%] h-px bg-neutral-100 self-center my-3" />
+          <View className="w-[90%] h-px bg-neutral-100 self-center my-2" />
 
           {/* 활동 배지*/}
           <View>
@@ -215,7 +231,7 @@ export function MainScreen() {
         </View>
 
         {/* 커뮤니티 */}
-        <View className="flex-1 border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
+        <View className="flex-1 border border-neutral-200 rounded-2xl gap-2 p-3 mb-10">
           <View className="flex-row justify-between">
             <Text className="text-neutral-600 font-bold text-xl">커뮤니티</Text>
 
