@@ -7,11 +7,12 @@ import lombok.*;
 
 import java.util.List;
 
+@Builder
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 @Schema(title = "전체 물고기 종류", description = "전체 어종이 담고 있어야 할 물고기 이름, 서식지, 특징")
 public class FishType {
     @Id
@@ -35,5 +36,6 @@ public class FishType {
     @Schema(description = "물고기 특징")
     private String characteristic;
 
-    private boolean isDelete;
+    @Builder.Default
+    private boolean deleted=false;
 }

@@ -6,12 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-@Entity
 @Builder
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 public class FishingPoint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
@@ -30,6 +30,6 @@ public class FishingPoint {
     private Integer weatherY;
     private String sunmoonLocation;
     private String nearestTideStation;
-
-    private boolean isDelete;
+    @Builder.Default
+    private boolean deleted=false;
 }

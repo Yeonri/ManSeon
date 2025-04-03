@@ -6,4 +6,8 @@ import lombok.Getter;
 @Builder
 @Getter
 public class CreateRecommentReqDto {
+    Long boardId;
+    Long commentId;
+
+    String content;
 }

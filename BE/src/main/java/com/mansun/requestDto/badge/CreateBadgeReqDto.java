@@ -7,5 +7,6 @@ import lombok.Getter;
 public class CreateBadgeReqDto {
     @Schema(defaultValue = "첫 게시물 작성")
     String badgeName;
+    @Schema(defaultValue = "Img Url")
     String badgeImg;
 }

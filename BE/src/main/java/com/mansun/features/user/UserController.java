@@ -6,15 +6,20 @@ import com.mansun.features.user.service.UserServiceImpl;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
-import com.mansun.responseDto.OnlyMessageResDto;
+import com.mansun.responseDto.MessageResDto;
+import com.mansun.responseDto.follow.GetMyFollowerResDto;
+import com.mansun.responseDto.follow.GetMyFollowingResDto;
 import com.mansun.responseDto.user.GetMyInfoResDto;
 import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -26,11 +31,11 @@ public class UserController {
 
     @Operation(summary = "회원가입")
     @PostMapping
-    public ResponseEntity<OnlyMessageResDto> createUser(@RequestBody CreateUserReqDto req) {
+    public ResponseEntity<MessageResDto> createUser(@RequestBody CreateUserReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
         //만약 오류가 난다면 service 안에서 예외처리 반환 예정
         userService.createUser(req);
-        return ResponseEntity.ok(new OnlyMessageResDto("회원가입 성공"));
+        return ResponseEntity.ok(new MessageResDto("회원가입 성공"));
     }
 
 //    @Operation(summary = "카카오를 통한 회원가입")
@@ -44,7 +49,7 @@ public class UserController {
 
     @Operation(summary = "닉네임 설정")
     @PostMapping("/nickname/set")
-    public ResponseEntity<OnlyMessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {
+    public ResponseEntity<MessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
         //만약 오류가 난다면 service 안에서 예외처리 반환 예정
         userService.setNickname(req);
@@ -58,28 +63,27 @@ public class UserController {
 
     @Operation(summary = "회원 정보 변경")
     @PatchMapping
-    public ResponseEntity<OnlyMessageResDto> updateUser(
+    public ResponseEntity<MessageResDto> updateUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody UpdateUserReqDto req) {
+            @Valid @RequestBody UpdateUserReqDto req) {
         Users user = userService.updateUser(customUserDetails, req);
-        return ResponseEntity.ok(new OnlyMessageResDto("회원 정보가 성공적으로 변경되었습니다."));
+        return ResponseEntity.ok(new MessageResDto("회원 정보가 성공적으로 변경되었습니다."));
     }
 
     @Operation(summary = "회원정보 삭제")
     @DeleteMapping
-    public ResponseEntity<OnlyMessageResDto> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-//        System.out.println(customUserDetails.getUserId());
+    public ResponseEntity<MessageResDto> deleteUser(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         userService.deleteUser(customUserDetails.getUserId());
-        return ResponseEntity.ok(new OnlyMessageResDto("회원 정보가 삭제되었습니다."));
+        return ResponseEntity.ok(new MessageResDto("회원 정보가 삭제되었습니다."));
     }
 
 
     //닉네임 중복 체크
     @Operation(summary = "닉네임 중복 확인")
     @GetMapping("/nickname/duplicate")
-    public ResponseEntity<OnlyMessageResDto> checkDuplicateNickname(@RequestParam("nickname") String nickname) {
+    public ResponseEntity<MessageResDto> checkDuplicateNickname(@RequestParam("nickname") String nickname) {
         userService.findByNickname(nickname);
-        return ResponseEntity.ok(new OnlyMessageResDto("사용가능한 닉네임입니다."));
+        return ResponseEntity.ok(new MessageResDto("사용가능한 닉네임입니다."));
     }
 
     @Operation(summary = "내 정보 가져오기")
@@ -100,19 +104,19 @@ public class UserController {
         return ResponseEntity.ok(userService.findTheOtherOneInfo(customUserDetails, req));
     }
 
-//    @Operation(summary = "팔로잉 리스트 가져오기")
-//    @GetMapping("/followings")
-//    public ResponseEntity<List<getMyFollowingResDto>> getMyFollowingList(
-//            @AuthenticationPrincipal CustomUserDetails customUserDetails
-//    ){
-//        return ResponseEntity.ok(userService.getMyFollowingFindById(customUserDetails));
-//    }
-//
-//    @Operation(summary="팔로워 리스트 가져오기")
-//    @GetMapping("/followers")
-//    public ResponseEntity<List<getMyFollowerResDto>> getMyFollowerList(
-//            @AuthenticationPrincipal CustomUserDetails customUserDetails
-//    ){
-//        return ResponseEntity.ok(userService.getMyFollowerFindById(customUserDetails));
-//    }
+    @Operation(summary = "팔로잉 리스트 가져오기")
+    @GetMapping("/followings")
+    public ResponseEntity<List<GetMyFollowingResDto>> getMyFollowingList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ){
+        return ResponseEntity.ok(userService.getMyFollowingFindById(customUserDetails));
+    }
+
+    @Operation(summary="팔로워 리스트 가져오기")
+    @GetMapping("/followers")
+    public ResponseEntity<List<GetMyFollowerResDto>> getMyFollowerList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ){
+        return ResponseEntity.ok(userService.getMyFollowerFindById(customUserDetails));
+    }
 }

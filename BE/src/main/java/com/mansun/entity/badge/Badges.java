@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 @Schema(title = "서비스에서 제공하는 뱃지의 종류", description = "서비스 전체 뱃지의 이름과 이미지를 가지고 있는 Dto")
 public class Badges {
     @Id
@@ -25,6 +26,7 @@ public class Badges {
     @Schema(description = "뱃지 이미지 경로")
     private String badgeImg;
 
-    private boolean isDelete;
+    @Builder.Default
+    private boolean deleted=false;
 
 }

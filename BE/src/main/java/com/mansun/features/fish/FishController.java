@@ -5,7 +5,7 @@ import com.mansun.features.fish.service.FishServiceImpl;
 import com.mansun.features.fish.service.FishTypeServiceImpl;
 import com.mansun.requestDto.fish.CreateFishReqDto;
 import com.mansun.requestDto.fish.CreateFishTypeReqDto;
-import com.mansun.responseDto.OnlyMessageResDto;
+import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,20 +31,20 @@ public class FishController {
     // 어종은 추가될 뿐 수정되거나 삭제되지 않는다.
     @Operation(summary = "전체 어종의 추가 기능")
     @PostMapping("/fishtype/add")
-    public ResponseEntity<OnlyMessageResDto> addNewFishType(
+    public ResponseEntity<MessageResDto> addNewFishType(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateFishTypeReqDto req) {
         fishTypeService.addNewFishType(req);
-        return ResponseEntity.ok(new OnlyMessageResDto("성공적으로 어종이 추가되었습니다."));
+        return ResponseEntity.ok(new MessageResDto("성공적으로 어종이 추가되었습니다."));
     }
 
     @Operation(summary = "내 물고기 도감 추가")
     @PostMapping("/fish/add")
-    public ResponseEntity<OnlyMessageResDto> createFish(
+    public ResponseEntity<MessageResDto> createFish(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateFishReqDto req) {
         fishService.createFish(customUserDetails, req);
-        return ResponseEntity.ok(new OnlyMessageResDto("내 기록이 정상적으로 추가되었습니다"));
+        return ResponseEntity.ok(new MessageResDto("내 기록이 정상적으로 추가되었습니다"));
     }
 
     @Operation(summary = "내 물고기 도감 리스트 열람")

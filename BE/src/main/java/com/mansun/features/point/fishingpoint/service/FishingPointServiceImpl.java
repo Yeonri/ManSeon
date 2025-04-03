@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class FishingPointServiceImpl {
+public class FishingPointServiceImpl implements FishingPointService{
     private final EntityManager em;
 
     private final FishingPointRepository fishingPointRepository;
@@ -34,6 +34,7 @@ public class FishingPointServiceImpl {
     private final WeatherRepository weatherRepository;
 
     //포인트 명에 따른 검색 기능
+    @Override
     public List<SearchPointResDto> searchFishingPointList(
             CustomUserDetails customUserDetails,
             SearchPointReqDto req
@@ -41,6 +42,7 @@ public class FishingPointServiceImpl {
         return null;
     }
 
+    @Override
     public void createAllPoint(CreateFishingPointReqDto req) {
         fishingPointRepository.save(
                 FishingPoint.builder()
@@ -53,6 +55,7 @@ public class FishingPointServiceImpl {
 
 
     //전체 포인트 리스트
+    @Override
     public List<AllPointResDto> findAllPointList() {
         List<FishingPoint> fishingPointList = fishingPointRepository.findAll();
         return fishingPointList.stream().map(
@@ -64,6 +67,7 @@ public class FishingPointServiceImpl {
         ).collect(Collectors.toList());
     }
 
+    @Override
     public OnePointResDto findOnePoint(Long pointId) {
         FishingPoint point = fishingPointRepository.findById(pointId).orElseThrow();
         return OnePointResDto
@@ -74,6 +78,7 @@ public class FishingPointServiceImpl {
                 .build();
     }
 
+    @Override
     public OnePointDetailInfoResDto findOnePointDetailInfo(CustomUserDetails customUserDetails, Long pointId) {
         //날씨
         List<Weather> weatherList = weatherRepository.findByWeatherDateBetweenAndPoints_PointId(LocalDate.now(), LocalDate.now().plusDays(7), pointId);
@@ -81,7 +86,7 @@ public class FishingPointServiceImpl {
         Long obsId = fishingPointRepository.findById(pointId).orElseThrow().getPointId();
         List<TideLevel> tideLevelList = tideLevelRepository.findByObs_ObsId(obsId);
         //물고기
-        List<Fish> myFishList = fishRepository.findByUser_UserId(customUserDetails.getUserId());
+        List<Fish> myFishList = fishRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
         return OnePointDetailInfoResDto.builder()
                 .myWeatherList(weatherList)
                 .myTideLevelList(tideLevelList)

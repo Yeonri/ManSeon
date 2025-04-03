@@ -9,6 +9,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
 public class UserPoint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
@@ -24,6 +25,6 @@ public class UserPoint {
     private String pointName;
     private float lat;
     private float lng;
-
-    private boolean isDelete;
+    @Builder.Default
+    private boolean deleted=false;
 }

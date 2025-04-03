@@ -76,7 +76,7 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public List<FindFishListResDto> findOthersFishList(CustomUserDetails customUserDetails, Long userId) {
-        List<Fish> findFishList = repository.findByUser_UserId(userId);
+        List<Fish> findFishList = repository.findByUser_UserIdAndDeletedFalse(userId);
         return findFishList.stream().map(
                 f -> FindFishListResDto.builder().build()
         ).collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public FindFishResDto findMyFish(CustomUserDetails customUserDetails, Long fishId) {
-        Fish findFish = repository.findByUser_UserIdAndFishId(customUserDetails.getUserId(), fishId);
+        Fish findFish = repository.findByUser_UserIdAndFishIdAndDeletedFalse(customUserDetails.getUserId(), fishId);
         return FindFishResDto
                 .builder()
                 .fishId(findFish.getFishId())
@@ -100,7 +100,7 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public FindFishResDto findOtherFish(CustomUserDetails customUserDetails, Long userId, Long fishId) {
-        Fish findFish = repository.findByUser_UserIdAndFishId(userId, fishId);
+        Fish findFish = repository.findByUser_UserIdAndFishIdAndDeletedFalse(userId, fishId);
         return FindFishResDto
                 .builder()
                 .fishId(findFish.getFishId())
