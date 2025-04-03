@@ -4,9 +4,10 @@ import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { Award, ChevronRight } from "lucide-react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { MainStackParams } from "../../api/types/MainStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { PermissionCheck } from "../../components/common/permissionCheck";
@@ -21,6 +22,7 @@ import { useLocationPermission } from "../../hooks/useLocationPermission";
 import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 import userData from "../../mocks/userMocks.json";
+import { useUserStore } from "../../store/userStore";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -37,11 +39,21 @@ export function MainScreen() {
 
   const navigation = useNavigation<MainScreenNavigationProps>();
 
+  const { data: user } = useGetMyInfo();
+
+  const setUser = useUserStore((state) => state.setUser);
+
+  useEffect(() => {
+    if (user) {
+      setUser(user);
+    }
+  }, [user, setUser]);
+
   if (hasLocationPermission === null) {
     return <PermissionCheck name="위치" />;
   }
 
-  const user = userData[0];
+  if (!user) return null;
 
   const nowKST = dayjs().tz("Asia/Seoul");
   const day = nowKST.date();
@@ -52,7 +64,9 @@ export function MainScreen() {
     setShowModal(true);
   };
 
-  const progress = (user.collection__cnt / 24) * 100;
+  const tmpuser = userData[0];
+
+  const progress = (tmpuser.collection__cnt / 24) * 100;
 
   const posts = PostData;
 
@@ -82,7 +96,7 @@ export function MainScreen() {
           {/* 안내멘트 */}
           <View className="flex-row items-baseline gap-1 ml-1">
             <Text className="text-white font-bold ml-3 mt-3 text-xl">
-              {user.name}
+              {user.username}
             </Text>
             <Text className="text-white">
               님 오늘의 도착지를 확인해 보세요!
@@ -117,14 +131,14 @@ export function MainScreen() {
             <View className="flex-row">
               {/* 차트 */}
               <FishingDonutChart
-                fishingList={user.fising_list}
-                totalCount={user.fishing_total}
+                fishingList={tmpuser.fising_list}
+                totalCount={tmpuser.fishing_total}
               />
               {/* 정보 */}
               <View className="justify-center">
                 <FishingResult
-                  fishingResultList={user.fising_list}
-                  totalCount={user.fishing_total}
+                  fishingResultList={tmpuser.fising_list}
+                  totalCount={tmpuser.fishing_total}
                 />
               </View>
             </View>
@@ -144,7 +158,7 @@ export function MainScreen() {
 
             <View className="flex-row justify-end mx-5 items-baseline">
               <Text className="text-blue-500 font-bold text-4xl">
-                {user.collection__cnt}
+                {tmpuser.collection__cnt}
               </Text>
               <Text className="text-neutral-400 font-bold text-xl"> / 24</Text>
             </View>
@@ -172,7 +186,7 @@ export function MainScreen() {
             </TouchableOpacity>
             <View className="flex-row justify-end mx-5 items-baseline">
               <Text className="text-blue-500 font-bold text-4xl">
-                {user.badges_cnt}
+                {tmpuser.badges_cnt}
               </Text>
               <Text className="text-neutral-400 font-bold text-xl"> / 9</Text>
             </View>
@@ -180,7 +194,7 @@ export function MainScreen() {
             <ScrollView horizontal className="mt-3">
               <View className="flex-row gap-x-3 px-1">
                 {Array.from({ length: 9 }).map((_, index) => {
-                  const isBlue = index < user.badges_cnt;
+                  const isBlue = index < tmpuser.badges_cnt;
                   const bgColor = isBlue ? "bg-blue-100" : "bg-neutral-200";
                   const iconColor = isBlue ? "#284AAA" : "#616161";
 
