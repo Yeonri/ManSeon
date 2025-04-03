@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface UserBadgeRepository extends JpaRepository<UserBadge, Long> {
     List<UserBadge> findByUser_UserIdAndDeletedFalse(Long userId);
+    int countAllByUser_UserId(Long userId);
 }
