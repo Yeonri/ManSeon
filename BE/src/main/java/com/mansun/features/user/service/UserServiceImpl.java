@@ -197,7 +197,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return followingList.stream().map(
                 u->GetMyFollowingResDto
                         .builder()
-                        .friendId(u.getUserId())
+                        .followerId(u.getUserId())
                         .email(u.getEmail())
                         .name(u.getUsername())
                         .nickname(u.getNickname())
@@ -222,7 +222,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return followerList.stream().map(
                 u->GetMyFollowerResDto
                         .builder()
-                        .friendId(u.getUserId())
+                        .followerId(u.getUserId())
                         .email(u.getEmail())
                         .name(u.getUsername())
                         .nickname(u.getNickname())
