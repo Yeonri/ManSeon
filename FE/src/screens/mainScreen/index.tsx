@@ -71,9 +71,9 @@ export function MainScreen() {
   const posts = PostData;
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1">
       <HeaderLogo />
-      <ScrollView className="mx-5">
+      <ScrollView className="px-5">
         {/* 물때 관련 */}
         <View>
           <View className="flex-row gap-3 items-end mt-5">
@@ -121,7 +121,7 @@ export function MainScreen() {
         </View>
 
         {/* 통계 및 수집 내용 관련 */}
-        <View className="flex-1 border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
+        <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
           {/* 통계 관련 */}
           <View>
             <Text className="text-neutral-600 font-bold text-xl">
@@ -213,7 +213,7 @@ export function MainScreen() {
         </View>
 
         {/* 오늘의 추천 포인트 */}
-        <View className="flex-1 border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
+        <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
           <View className="flex-row justify-between">
             <Text className="text-neutral-600 font-bold text-xl">
               오늘의 추천 포인트
@@ -245,7 +245,7 @@ export function MainScreen() {
         </View>
 
         {/* 커뮤니티 */}
-        <View className="flex-1 border border-neutral-200 rounded-2xl gap-2 p-3 mb-10">
+        <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-10">
           <View className="flex-row justify-between">
             <Text className="text-neutral-600 font-bold text-xl">커뮤니티</Text>
 
