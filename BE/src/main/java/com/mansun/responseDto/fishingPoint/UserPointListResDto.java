@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 public class UserPointListResDto {
-    Long pointId;
-    String pointName;
+    Long id;
+    String name;
+    float latitude;
+    float longitude;
 }

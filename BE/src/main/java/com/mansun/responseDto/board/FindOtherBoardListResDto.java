@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Builder
 @Getter
-public class FindMyBoardListResDto {
+public class FindOtherBoardListResDto {
     Long postId;
     String title;
     String content;

@@ -8,4 +8,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 public class SearchPointResDto {
+
+    Long pointId;
+
+    String pointName;
 }
