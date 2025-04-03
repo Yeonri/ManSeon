@@ -8,6 +8,7 @@ import com.mansun.requestDto.fish.CreateFishTypeReqDto;
 import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
+import com.mansun.responseDto.fishingPoint.FindFishDiaryListResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -38,8 +39,8 @@ public class FishController {
         return ResponseEntity.ok(new MessageResDto("성공적으로 어종이 추가되었습니다."));
     }
 
-    @Operation(summary = "내 물고기 도감 추가")
-    @PostMapping("/fish/add")
+    @Operation(summary = "내 물고기 일기 추가")
+    @PostMapping("/diary/my")
     public ResponseEntity<MessageResDto> createFish(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestBody CreateFishReqDto req) {
@@ -47,39 +48,52 @@ public class FishController {
         return ResponseEntity.ok(new MessageResDto("내 기록이 정상적으로 추가되었습니다"));
     }
 
-    @Operation(summary = "내 물고기 도감 리스트 열람")
-    @GetMapping("/list/my")
-    public ResponseEntity<Map<LocalDate,List<FindFishListResDto>>> getMyFishList(
+    @Operation(summary = "내 물고기 일기 리스트 열람")
+    @GetMapping("/diary/my")
+    public ResponseEntity<Map<LocalDate,List<FindFishDiaryListResDto>>> getMyFishDiaryList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
-        Map<LocalDate,List<FindFishListResDto>> myList = fishService.findMyFishList(customUserDetails);
-        return ResponseEntity.ok(myList);
+        return ResponseEntity.ok(fishService.findMyFishDiaryList(customUserDetails));
     }
 
-    @Operation(summary = "타인 물고기 도감 리스트 열람")
-    @GetMapping("/list/other")
-    public ResponseEntity<List<FindFishListResDto>> getOtherFishList(
+    @Operation(summary = "타인 물고기 일기 리스트 열람")
+    @GetMapping("/diary/other")
+    public ResponseEntity<List<FindFishDiaryListResDto>> getOtherFishDiaryList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam(value = "user_id") Long userId
     ) {
-        List<FindFishListResDto> otherList = fishService.findOthersFishList(customUserDetails, userId);
-        return ResponseEntity.ok(otherList);
+        return ResponseEntity.ok(fishService.findOthersFishDiaryList(customUserDetails, userId));
     }
 
-    @Operation(summary = "내 물고기 도감 상세 열람")
-    @GetMapping("/detail/my")
-    public ResponseEntity<FindFishResDto> getMyFishDetail(
+    @Operation(summary = "내 물고기 일기 상세 열람")
+    @GetMapping("/diary/detail/my")
+    public ResponseEntity<FindFishResDto> getMyFishDiaryDetail(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam("fish_id") Long fishId) {
         return ResponseEntity.ok(fishService.findMyFish(customUserDetails, fishId));
     }
 
-    @Operation(summary = "타인 물고기 도감 상세 열람")
-    @GetMapping("/detail/other")
-    public ResponseEntity<FindFishResDto> getMyFishDetail(
+    @Operation(summary = "타인 물고기 일기 상세 열람")
+    @GetMapping("/diary/detail/other")
+    public ResponseEntity<FindFishResDto> getOtherFishDiaryDetail(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam(value = "user_id") Long userId,
             @RequestParam("fish_id") Long fishId) {
         return ResponseEntity.ok(fishService.findOtherFish(customUserDetails, userId, fishId));
+    }
+
+    @Operation(summary = "내 물고기 도감 리스트")
+    @GetMapping("/list/my")
+    public ResponseEntity<List<FindFishListResDto>> getMyFishList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        return ResponseEntity.ok(fishService.findMyFishList(customUserDetails));
+    }
+
+    @Operation(summary = "타인 물고기 도감 리스트")
+    @GetMapping("/list/other")
+    public ResponseEntity<List<FindFishListResDto>> getOtherFishList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam("user_id") Long userId) {
+        return ResponseEntity.ok(fishService.findOtherFishList(customUserDetails,userId));
     }
 }

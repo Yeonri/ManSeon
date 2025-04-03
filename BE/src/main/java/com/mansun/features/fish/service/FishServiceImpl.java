@@ -3,12 +3,12 @@ package com.mansun.features.fish.service;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
 import com.mansun.entity.fish.Fish;
-import com.mansun.entity.fish.FishType;
 import com.mansun.entity.fish.QFish;
 import com.mansun.features.fish.repository.FishRepository;
 import com.mansun.requestDto.fish.CreateFishReqDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
+import com.mansun.responseDto.fishingPoint.FindFishDiaryListResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,12 +28,12 @@ import java.util.stream.Collectors;
 public class FishServiceImpl implements FishService {
     private final JPAQueryFactory queryFactory;
 
-    private final FishRepository repository;
+    private final FishRepository fishRepository;
 
     @Override
     public void createFish(CustomUserDetails customUserDetails, CreateFishReqDto req) {
         //도감기록을 추출할 때 어떤 검증 절차를 거쳐야 하는가??
-        repository.save(Fish
+        fishRepository.save(Fish
                 .builder()
                 .createdAt(LocalDateTime.now())
                 .lat(req.getLat())
@@ -47,25 +47,25 @@ public class FishServiceImpl implements FishService {
     }
 
     @Override
-    public Map<LocalDate,List<FindFishListResDto>> findMyFishList(CustomUserDetails customUserDetails) {
+    public Map<LocalDate, List<FindFishDiaryListResDto>> findMyFishDiaryList(CustomUserDetails customUserDetails) {
 //        List<Fish> findFishList = repository.findByUser_UserId(customUserDetails.getUserId());
         QFish fish = QFish.fish;
 
         List<Fish> fishList = queryFactory
                 .selectFrom(fish)
-                .where(fish.user.eq(new Users(customUserDetails)))
+                .where(fish.user.userId.eq(customUserDetails.getUserId()))
                 .orderBy(fish.createdAt.desc())
                 .fetch();
 
-        Map<LocalDate, List<FindFishListResDto>> grouped = new LinkedHashMap<>();
+        Map<LocalDate, List<FindFishDiaryListResDto>> grouped = new LinkedHashMap<>();
         for (Fish f : fishList) {
             LocalDate date = f.getCreatedAt().toLocalDate();
             grouped.computeIfAbsent(date, k -> new ArrayList<>()).add(
-                    FindFishListResDto.builder()
+                    FindFishDiaryListResDto.builder()
                             .fishId(f.getFishId())
-                            .fishName(f.getFishType().getFishName())
-                            .createdAt(f.getCreatedAt().toLocalDate())
+                            .fishType(f.getFishType().getFishName())
                             .size(f.getSize())
+                            .createdAt(f.getCreatedAt())
                             .fishImg(f.getFishImg())
                             .build()
             );
@@ -75,16 +75,23 @@ public class FishServiceImpl implements FishService {
     }
 
     @Override
-    public List<FindFishListResDto> findOthersFishList(CustomUserDetails customUserDetails, Long userId) {
-        List<Fish> findFishList = repository.findByUser_UserIdAndDeletedFalse(userId);
+    public List<FindFishDiaryListResDto> findOthersFishDiaryList(CustomUserDetails customUserDetails, Long userId) {
+        List<Fish> findFishList = fishRepository.findByUser_UserIdAndDeletedFalse(userId);
         return findFishList.stream().map(
-                f -> FindFishListResDto.builder().build()
+                f -> FindFishDiaryListResDto
+                        .builder()
+                        .fishId(f.getFishId())
+                        .fishType(f.getFishType().getFishName())
+                        .fishImg(f.getFishImg())
+                        .createdAt(f.getCreatedAt())
+                        .size(f.getSize())
+                        .build()
         ).collect(Collectors.toList());
     }
 
     @Override
     public FindFishResDto findMyFish(CustomUserDetails customUserDetails, Long fishId) {
-        Fish findFish = repository.findByUser_UserIdAndFishIdAndDeletedFalse(customUserDetails.getUserId(), fishId);
+        Fish findFish = fishRepository.findByUser_UserIdAndFishIdAndDeletedFalse(customUserDetails.getUserId(), fishId);
         return FindFishResDto
                 .builder()
                 .fishId(findFish.getFishId())
@@ -100,7 +107,7 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public FindFishResDto findOtherFish(CustomUserDetails customUserDetails, Long userId, Long fishId) {
-        Fish findFish = repository.findByUser_UserIdAndFishIdAndDeletedFalse(userId, fishId);
+        Fish findFish = fishRepository.findByUser_UserIdAndFishIdAndDeletedFalse(userId, fishId);
         return FindFishResDto
                 .builder()
                 .fishId(findFish.getFishId())
@@ -112,5 +119,41 @@ public class FishServiceImpl implements FishService {
                 .equipment(findFish.getEquipment())
                 .fishImg(findFish.getFishImg())
                 .build();
+    }
+
+    public List<FindFishListResDto> findMyFishList(CustomUserDetails customUserDetails) {
+        List<Fish> myFishList = fishRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
+        return myFishList.stream().map(
+                f -> FindFishListResDto
+                        .builder()
+                        .fishId(f.getFishId())
+                        .fishType(f.getFishType().getFishName())
+                        .size(f.getSize())
+                        .date(f.getCreatedAt().toLocalDate())
+                        .lat(f.getLat())
+                        .lng(f.getLng())
+                        .bait(f.getBait())
+                        .equipment(f.getEquipment())
+                        .fishImg(f.getFishImg())
+                        .build()
+        ).collect(Collectors.toList());
+    }
+
+    public List<FindFishListResDto> findOtherFishList(CustomUserDetails customUserDetails, Long userId) {
+        List<Fish> myFishList = fishRepository.findByUser_UserIdAndDeletedFalse(userId);
+        return myFishList.stream().map(
+                f -> FindFishListResDto
+                        .builder()
+                        .fishId(f.getFishId())
+                        .fishType(f.getFishType().getFishName())
+                        .size(f.getSize())
+                        .date(f.getCreatedAt().toLocalDate())
+                        .lat(f.getLat())
+                        .lng(f.getLng())
+                        .bait(f.getBait())
+                        .equipment(f.getEquipment())
+                        .fishImg(f.getFishImg())
+                        .build()
+        ).collect(Collectors.toList());
     }
 }
