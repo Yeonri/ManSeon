@@ -12,17 +12,23 @@ import java.time.LocalDateTime;
 public class SunMoonTimes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "sunmoon_id")
+    private Long sunmoonId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "point_id")
     private FishingPoint point;
 
 //    Column
+    @Column(name = "locdate")
     private LocalDate locDate;
+    @Column(name = "sunrise")
     private LocalDateTime sunrise;
+    @Column(name = "sunset")
     private LocalDateTime sunset;
+    @Column(name = "moonrise")
     private LocalDateTime moonrise;
+    @Column(name = "moonset")
     private LocalDateTime moonset;
 
     private boolean isDelete;

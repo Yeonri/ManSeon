@@ -9,20 +9,28 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class WaveHeight {
+public class Wave{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "Lzone")
     private MarineZone marineZone;
 
+    @Column(name = "date_time")
     private LocalDateTime dateTime;
+    @Column(name = "wave_height")
     private double waveHeight;
-    private double waveDirection;
-    private double waveSpeed;
-    private double windDirection;
 
+    @Column(name = "wvprd_max")
+    private double wvprdMax;
+
+    @Column(name = "wave_direction")
+    private double waveDirection;
+    @Column(name = "wave_speed")
+    private double waveSpeed;
+    @Column(name = "wind_direction")
+    private double windDirection;
     private boolean isDelete;
 }

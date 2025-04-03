@@ -13,11 +13,14 @@ public class TideLevel {
     private Long pk;
 //    연관관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "obs_code")
     private Observatory obs;
 
-    private LocalDateTime recordTime;
-    private int tideLevel;
+
+    @Column(name = "tph_time")
+    private LocalDateTime tphTime;
+    @Column(name = "hl_code")
+    private int hlCode;
 
     private boolean isDelete;
 }

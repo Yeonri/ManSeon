@@ -13,18 +13,18 @@ import java.util.List;
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column( name = "weather_id")
     private Long weatherId;
 
 //    연관 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "point_id")
     private FishingPoint points;
 
-    @OneToMany(mappedBy = "")
-    private List<WaveHeight> waveHeight;
-
 //    Column
+    @Column(name = "weather_date")
     private LocalDate weatherDate;
+    @Column(name = "weather_time")
     private LocalDateTime weatherTime;
     private int pop;
     private int pty;
@@ -34,8 +34,6 @@ public class Weather {
     private int tmp;
     private int tmn;
     private int tmx;
-    private int uuu;
-    private int vvv;
 
     private int vec;
     private int wsd;
