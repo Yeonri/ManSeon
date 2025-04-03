@@ -10,7 +10,6 @@ import com.mansun.features.point.fishingpoint.repository.FishingPointRepository;
 import com.mansun.features.point.fishingpoint.repository.TideLevelRepository;
 import com.mansun.features.point.fishingpoint.repository.WeatherRepository;
 import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
-import com.mansun.requestDto.fishingpoint.SearchPointReqDto;
 import com.mansun.responseDto.fishingPoint.AllPointResDto;
 import com.mansun.responseDto.fishingPoint.OnePointDetailInfoResDto;
 import com.mansun.responseDto.fishingPoint.OnePointResDto;
@@ -18,14 +17,16 @@ import com.mansun.responseDto.fishingPoint.SearchPointResDto;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
-public class FishingPointServiceImpl implements FishingPointService{
+public class FishingPointServiceImpl implements FishingPointService {
     private final EntityManager em;
 
     private final FishingPointRepository fishingPointRepository;
@@ -35,11 +36,17 @@ public class FishingPointServiceImpl implements FishingPointService{
 
     //포인트 명에 따른 검색 기능
     @Override
-    public List<SearchPointResDto> searchFishingPointList(
+    public SearchPointResDto searchFishingPointList(
             CustomUserDetails customUserDetails,
-            SearchPointReqDto req
+            String pointName
     ) {
-        return null;
+        FishingPoint fishingPoint =
+                fishingPointRepository.findFishingPointsByPointNameContaining(pointName);
+        return SearchPointResDto
+                .builder()
+                .pointId(fishingPoint.getPointId())
+                .pointName(fishingPoint.getPointName())
+                .build();
     }
 
     @Override
