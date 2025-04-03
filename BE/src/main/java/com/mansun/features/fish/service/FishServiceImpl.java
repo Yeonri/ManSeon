@@ -88,6 +88,7 @@ public class FishServiceImpl implements FishService {
 //    타인의 낚시 일기를 조회한다.
     @Override
     public List<FindFishDiaryListResDto> findOthersFishDiaryList(CustomUserDetails customUserDetails, Long userId) {
+//        UserId를 이용해 사용자가 잡은 Fish List를 조회한다.
         List<Fish> findFishList = fishRepository.findByUser_UserIdAndDeletedFalse(userId);
         return findFishList.stream().map(
                 f -> FindFishDiaryListResDto
