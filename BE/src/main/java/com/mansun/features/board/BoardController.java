@@ -11,6 +11,7 @@ import com.mansun.responseDto.board.FindMyBoardListResDto;
 import com.mansun.responseDto.board.FindOtherBoardListResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +31,7 @@ public class BoardController {
     @PostMapping
     public ResponseEntity<MessageResDto> createBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody CreateBoardReqDto req) {
+            @Valid @RequestBody CreateBoardReqDto req) {
         boardservice.createBoard(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("성공적으로 게시물이 생성되었습니다."));
     }
@@ -70,7 +71,7 @@ public class BoardController {
     @DeleteMapping
     public ResponseEntity<MessageResDto> deleteMyBoard(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody DeleteMyBoardReqDto req) {
+            @Valid @RequestBody DeleteMyBoardReqDto req) {
         boardservice.deleteMyBoard(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("성공적으로 게시글이 삭제되었습니다."));
     }
