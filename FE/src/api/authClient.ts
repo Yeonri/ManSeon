@@ -1,11 +1,11 @@
+import { API_BASE } from "@env";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios, {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
 } from "axios";
-import { API_BASE } from "@env";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 
 const authClient: AxiosInstance = axios.create({
@@ -32,7 +32,7 @@ function subscribeTokenRefresh(cb: (token: string) => void) {
 }
 
 async function refreshToken(): Promise<AxiosResponse> {
-  return axios.get(`${API_BASE}/oauth/gitlab/refresh`);
+  return axios.get(`${API_BASE}/reissue`);
 }
 
 authClient.interceptors.request.use(async (config) => {
