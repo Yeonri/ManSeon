@@ -84,6 +84,7 @@ public class Users {
     private int followerNum = 0;
 
 
+    @Schema(description = "권한")
     private String role;
 
     private boolean deleted;
