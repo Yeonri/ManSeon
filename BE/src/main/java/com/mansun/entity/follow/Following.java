@@ -18,7 +18,9 @@ public class Following {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Users user;
-    private Long followingUserId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Users following;
 
     @Builder.Default
     private boolean deleted=false;

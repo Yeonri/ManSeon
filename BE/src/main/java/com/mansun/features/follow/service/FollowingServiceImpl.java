@@ -30,7 +30,7 @@ public class FollowingServiceImpl implements FollowingService{
                 followingRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
         List<Users> userList = new ArrayList<>();
         for (Following f : followingList) {
-            userList.add(userRepository.findById(f.getFollowingUserId()).orElseThrow());
+            userList.add(userRepository.findById(f.getFollowing().getUserId()).orElseThrow());
         }
         return userList
                 .stream()
