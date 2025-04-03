@@ -2,9 +2,12 @@ package com.mansun.common.configuration;
 
 import com.mansun.common.auth.jwt.CustomLogoutFilter;
 import com.mansun.common.auth.jwt.JwtFilter;
+import com.mansun.common.auth.jwt.JwtUtil;
 import com.mansun.common.auth.jwt.LoginFilter;
+import com.mansun.common.auth.oauth.CustomOAuth2UserService;
+import com.mansun.common.auth.oauth.CustomSuccessHandler;
 import com.mansun.common.auth.refresh.repository.RefreshRepository;
-import lombok.CustomLog;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.mansun.common.auth.jwt.JwtUtil;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -27,13 +34,15 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
+    private final CustomSuccessHandler customSuccessHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-//    BCryptPasswordEncoder를 사용했으나 현재 가장 우수한 인코더는 Argon이다.
+    //    BCryptPasswordEncoder를 사용했으나 현재 가장 우수한 인코더는 Argon이다.
 //    향후 바꿀 가능성이 있다.
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -44,6 +53,27 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+        http.cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+
+            @Override
+            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                CorsConfiguration configuration = new CorsConfiguration();
+
+//                configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                configuration.setAllowedOrigins(Collections.singletonList("http://localhost:8081"));
+                configuration.setAllowedMethods(Collections.singletonList("*"));
+                configuration.setAllowCredentials(true);
+                configuration.setAllowedHeaders(Collections.singletonList("*"));
+                configuration.setMaxAge(3600L);
+
+                configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
+                configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+                return configuration;
+            }
+        }));
+
         //csrf disable
         http.csrf((auth) -> auth.disable());
 
@@ -53,10 +83,19 @@ public class SecurityConfig {
         //http basic 인증 방식 disable
         http.httpBasic((auth) -> auth.disable());
 
+        http
+                .oauth2Login((oauth2) -> oauth2
+                        .userInfoEndpoint((userInfoEndpointConfig) -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService))
+                        .successHandler(customSuccessHandler)
+                );
+
         //경로별 인가 작업
         http.authorizeHttpRequests((auth) -> auth
                 .requestMatchers(/*Swagger의 설정이다 순서가 가장 앞에 있어야 하므로 주의*/
                         "/v3/api-docs/**").permitAll()
+                .requestMatchers("http://localhost:8081"/*회원 가입 권한 허용*/).permitAll()
+                .requestMatchers("/oauth2/authorization/**"/*회원 가입 권한 허용*/).permitAll()
                 .requestMatchers("/api/**"/*회원 가입 권한 허용*/).permitAll()
                 .requestMatchers("/error").permitAll()
 //                위의 /error는 개발 단계에서 에러 메시지를 그대로 보낸다. 운영 서버에서는 없어야 하는 것

@@ -1,8 +1,9 @@
-package com.mansun.common.auth;
+package com.mansun.common.auth.oauth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mansun.common.auth.KakaoInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,8 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("oauth")
-public class oAuthController {
+public class OAuthController {
     //    http://kauth.kakao.com/oauth/authorize?client_id=4df41bec6f36ccdec491270265b88e43&redirect_uri=http://localhost:8080/auth/callback&response_type=code
 //    이 시점의 시작점이 바로 인가 코드 받아오기다
     private String clientId = "4df41bec6f36ccdec491270265b88e43";
@@ -26,7 +26,7 @@ public class oAuthController {
 //    private String accessToken=null;
 
     //이 메소드는 Kakao 로그인의 첫 시도를 위해 카카오 로그인을 위한 URl을 Client로 내려주ㅜㄴ다
-    @GetMapping("/kakao")
+    @GetMapping("/oauth2/authorization/kakao")
     public String callback() {
         StringBuilder url = new StringBuilder("http://kauth.kakao.com/oauth/authorize");
         url.append("?client_id=" + clientId)
@@ -39,7 +39,7 @@ public class oAuthController {
 
     //Redirect되어 카카오에서 로그인이 성공했을 경우 Redirect URI?code=???????의 형식으로 보여지게 된다.
     //이 코드가 바로 인가 코드이다.
-    @GetMapping("/callback")
+    @GetMapping("/login/oauth2/code/kakao")
     public String getAccessToken(@RequestParam("code") String code) throws JsonProcessingException {
         // HTTP Header 생성
         HttpHeaders headers = new HttpHeaders();
