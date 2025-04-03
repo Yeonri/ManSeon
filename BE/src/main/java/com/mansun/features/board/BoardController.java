@@ -8,7 +8,7 @@ import com.mansun.requestDto.board.UpdateMyBoardReqDto;
 import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.board.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
-import com.mansun.responseDto.board.allBoardListResDto;
+import com.mansun.responseDto.board.FindOtherBoardListResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -35,12 +35,12 @@ public class BoardController {
         return ResponseEntity.ok(new MessageResDto("성공적으로 게시물이 생성되었습니다."));
     }
 
-    @Operation(summary = "전체 게시글 리스트")
-    @GetMapping("/all")
-    public ResponseEntity<List<allBoardListResDto>> allBoardList(
-    ) {
-        return ResponseEntity.ok(boardservice.findAllBoardList());
-    }
+//    @Operation(summary = "전체 게시글 리스트")
+//    @GetMapping("/all")
+//    public ResponseEntity<List<allBoardListResDto>> allBoardList(
+//    ) {
+//        return ResponseEntity.ok(boardservice.findAllBoardList());
+//    }
 
     @Operation(summary = "전체 게시글 상세 열람(내 게시물 상세 열람 포함)")
     @GetMapping("/all/detail")
@@ -77,9 +77,10 @@ public class BoardController {
 
     @Operation(summary = "내 친구의 게시글 리스트 열람")
     @GetMapping
-    public ResponseEntity<MessageResDto> myFriendBoardList(
-            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    public ResponseEntity<List<FindOtherBoardListResDto>> myFriendBoardList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam("user_id") Long userId
     ) {
-        return null;
+        return ResponseEntity.ok(boardservice.findOtherBoardList(customUserDetails, userId));
     }
 }
