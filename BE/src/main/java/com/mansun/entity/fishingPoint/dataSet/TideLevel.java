@@ -21,6 +21,8 @@ public class TideLevel {
     private LocalDateTime tphTime;
     @Column(name = "hl_code")
     private int hlCode;
+    @Column(name = "tph_level")
+    private int tphLevel;
 
     private boolean isDelete;
 }
