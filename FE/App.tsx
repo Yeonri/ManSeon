@@ -1,11 +1,12 @@
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import SplashScreen from "react-native-splash-screen";
 import "./global.css";
 import { AppNavigator } from "./src/navigation/appNavigator";
 import { AuthStackNavigator } from "./src/navigation/authStackNavigator";
 import { useLoginStore } from "./src/store/loginStore";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { tokenStorage } from "./src/utils/tokenStorage";
 
 const queryClient = new QueryClient();
@@ -39,17 +40,16 @@ export default function App(): React.JSX.Element {
         useLoginStore.getState().setLogin({ accessToken, refreshToken });
       }
       setIsLoading(false);
+      SplashScreen.hide();
     }
     tryAutoLogin();
   }, []);
-
-  // if (isLoading) return null;
 
   return (
     <GestureHandlerRootView className="flex-1">
       <QueryClientProvider client={queryClient}>
         <NavigationContainer theme={mainTheme}>
-          {loggedIn ? <AppNavigator /> : <AuthStackNavigator />}
+          {!isLoading && (loggedIn ? <AppNavigator /> : <AuthStackNavigator />)}
         </NavigationContainer>
       </QueryClientProvider>
     </GestureHandlerRootView>
