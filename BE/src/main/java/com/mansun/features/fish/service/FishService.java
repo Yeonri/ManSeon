@@ -11,13 +11,14 @@ import java.util.List;
 import java.util.Map;
 
 public interface FishService {
+//    포획 시 사용자의 포획한 물고기 추가
     void createFish(CustomUserDetails customUserDetails, CreateFishReqDto req);
-
+//    날짜에 따른 내 포획 일기
     Map<LocalDate, List<FindFishDiaryListResDto>> findMyFishDiaryList(CustomUserDetails customUserDetails);
 
     List<FindFishDiaryListResDto> findOthersFishDiaryList(CustomUserDetails customUserDetails, Long userId);
-
+//    내가 포획한 물고기 단 건 조회
     FindFishResDto findMyFish(CustomUserDetails customUserDetails, Long fishId);
-
+//    타인이 포획한 물고기 단 건 조회
     FindFishResDto findOtherFish(CustomUserDetails customUserDetails, Long userId, Long fishId);
 }

@@ -35,6 +35,7 @@ public class FishServiceImpl implements FishService {
     private final FishRepository fishRepository;
     private final FishTypeRepository fishTypeRepository;
 
+//    내가 포획한 물고기 추가
     @Override
     public void createFish(CustomUserDetails customUserDetails, CreateFishReqDto req) {
         //도감기록을 추출할 때 어떤 검증 절차를 거쳐야 하는가??
@@ -51,19 +52,25 @@ public class FishServiceImpl implements FishService {
                 .build());
     }
 
+//    나의 일기 리스트 조회
     @Override
     public Map<LocalDate, List<FindFishDiaryListResDto>> findMyFishDiaryList(CustomUserDetails customUserDetails) {
         QFish fish = QFish.fish;
 
-        List<Fish> fishList = queryFactory
-                .selectFrom(fish)
-                .where(fish.user.userId.eq(customUserDetails.getUserId()))
-                .orderBy(fish.createdAt.desc())
-                .fetch();
+//
+//        List<Fish> fishList = queryFactory
+//                .selectFrom(fish)
+//                .where(fish.user.userId.eq(customUserDetails.getUserId()))
+//                .orderBy(fish.createdAt.desc())
+//                .fetch();
+        List<Fish> fishList=fishRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
 
+//        날짜를 key, 그날 잡은 물고기 리스트를 value로 하는 gruoped Map을 선언
         Map<LocalDate, List<FindFishDiaryListResDto>> grouped = new LinkedHashMap<>();
+//        리스트를 순회한다.
         for (Fish f : fishList) {
             LocalDate date = f.getCreatedAt().toLocalDate();
+//            그룹에 해당 key가 존재할 경우 그대로 추가하고, 없다면 새로운 List를 생성해 추가한다.
             grouped.computeIfAbsent(date, k -> new ArrayList<>()).add(
                     FindFishDiaryListResDto.builder()
                             .fishId(f.getFishId())
@@ -78,6 +85,7 @@ public class FishServiceImpl implements FishService {
         return grouped;
     }
 
+//    타인의 낚시 일기를 조회한다.
     @Override
     public List<FindFishDiaryListResDto> findOthersFishDiaryList(CustomUserDetails customUserDetails, Long userId) {
         List<Fish> findFishList = fishRepository.findByUser_UserIdAndDeletedFalse(userId);
@@ -93,6 +101,7 @@ public class FishServiceImpl implements FishService {
         ).collect(Collectors.toList());
     }
 
+//    fishId로 사용자가 잡은 물고기를 단건 조회한다.
     @Override
     public FindFishResDto findMyFish(CustomUserDetails customUserDetails, Long fishId) {
         Fish findFish = fishRepository.findByUser_UserIdAndFishIdAndDeletedFalse(customUserDetails.getUserId(), fishId);

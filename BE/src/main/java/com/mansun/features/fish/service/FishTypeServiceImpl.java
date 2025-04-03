@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class FishTypeServiceImpl implements FishTypeService{
     private final FishTypeRepository repository;
 
+//    새로운 어종 추가
     @Override
     public void addNewFishType(
             CreateFishTypeReqDto req
