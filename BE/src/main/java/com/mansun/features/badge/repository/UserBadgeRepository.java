@@ -8,6 +8,9 @@ import java.util.List;
 
 @Repository
 public interface UserBadgeRepository extends JpaRepository<UserBadge, Long> {
+    //UserId와 지워졌는지 여부 확인해서 User의 USerBadge를 모두 가져온다.
     List<UserBadge> findByUser_UserIdAndDeletedFalse(Long userId);
-    int countAllByUser_UserId(Long userId);
+
+    // User가 획득한 배지 중 지워지지 않은 전체 갯수
+    int countAllByUser_UserIdAndDeletedFalse(Long userId);
 }

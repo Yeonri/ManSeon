@@ -21,6 +21,7 @@ public class UserBadgeServicempl implements UserBadgeService{
     //사용자의 아이디를 이용해 지워지지 않은 뱃지를 조회
     @Override
     public List<allBadgesByUserResDto> getAllBadgesByUser(CustomUserDetails customUserDetails){
+
         List<UserBadge> allBadgesByUser=userBadgeRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
 
         return allBadgesByUser.stream()

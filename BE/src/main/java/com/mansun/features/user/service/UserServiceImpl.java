@@ -149,7 +149,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .phone_number(findUser.getPhoneNum())
                 .nickname(findUser.getNickname())
                 .badges(myBadgeList)
-                .badges_cnt(userBadgeRepository.countAllByUser_UserId(customUserDetails.getUserId()))
+                .badges_cnt(userBadgeRepository.countAllByUser_UserIdAndDeletedFalse(customUserDetails.getUserId()))
                 .collection_cnt(fishRepository.countAllByUser_UserId(customUserDetails.getUserId()))
                 .posts(myBoardList)
                 .build();
@@ -173,7 +173,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .phone_number(user.getPhoneNum())
                 .nickname(user.getNickname())
                 .badges(BadgeList)
-                .badges_cnt(userBadgeRepository.countAllByUser_UserId(userId))
+                .badges_cnt(userBadgeRepository.countAllByUser_UserIdAndDeletedFalse(userId))
                 .collection_cnt(fishRepository.countAllByUser_UserId(userId))
                 .posts(BoardList)
                 .build();
