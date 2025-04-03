@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.IOException;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -39,30 +40,62 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         return authenticationManager.authenticate(authToken);
     }
 
-    //로그인 성공시 실행하는 메소드 (여기서 JWT를 발급하면 됨)
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
         CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
-        //customUserDetails에서 email을 읽어낸다.(customUserDetails에서 왜 username으로 email 읽는지 설명)
-        String email = customUserDetails.getUsername();
-        //customUserDetails에서 userId를 읽어내 문자열로 변환한다.
+        String email = customUserDetails.getUsername(); // username은 email로 사용됨
         String userId = String.valueOf(customUserDetails.getUserId());
-
-//        Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
-//        Iterator<? extends GrantedAuthority> Iterator=authorities.iterator();
-//        GrantedAuthority auth=Iterator.next();
-//        String role=auth.getAuthority();
 
         String accessToken = jwtUtil.createJwt("access", email, userId, 60 * 60 * 60 * 10L);
         String refreshToken = jwtUtil.createJwt("refresh", email, userId, 60 * 60 * 60 * 60 * 60 * 10L);
 
-        addRefreshEntity(email,refreshToken,86400000L);
+        // DB에 refreshToken 저장
+        addRefreshEntity(email, refreshToken, 86400000L);
 
-        response.setHeader("Authorization", "Bearer "+accessToken);
-        response.addCookie(createCookie("refresh", refreshToken));
-        response.setStatus(HttpStatus.OK.value());
+        // JSON 응답 설정
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+
+        // JSON 형태로 응답 작성
+        String jsonResponse = String.format(
+                "{ \"accessToken\": \"%s\", \"refreshToken\": \"%s\" }",
+                accessToken, refreshToken
+        );
+
+        try {
+            response.getWriter().write(jsonResponse);
+        } catch (IOException e) {
+            throw new RuntimeException("토큰 응답 중 오류 발생", e);
+        }
     }
+
+
+    //로그인 성공시 실행하는 메소드 (여기서 JWT를 발급하면 됨)
+//    @Override
+//    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) {
+//        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+//
+//        //customUserDetails에서 email을 읽어낸다.(customUserDetails에서 왜 username으로 email 읽는지 설명)
+//        String email = customUserDetails.getUsername();
+//        //customUserDetails에서 userId를 읽어내 문자열로 변환한다.
+//        String userId = String.valueOf(customUserDetails.getUserId());
+//
+////        Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
+////        Iterator<? extends GrantedAuthority> Iterator=authorities.iterator();
+////        GrantedAuthority auth=Iterator.next();
+////        String role=auth.getAuthority();
+//
+//        String accessToken = jwtUtil.createJwt("access", email, userId, 60 * 60 * 60 * 10L);
+//        String refreshToken = jwtUtil.createJwt("refresh", email, userId, 60 * 60 * 60 * 60 * 60 * 10L);
+//
+//        addRefreshEntity(email,refreshToken,86400000L);
+//
+//        response.setHeader("Authorization", "Bearer "+accessToken);
+//        response.addCookie(createCookie("refresh", refreshToken));
+//        response.setStatus(HttpStatus.OK.value());
+//    }
 
     //로그인 실패시 실행하는 메소드
     @Override

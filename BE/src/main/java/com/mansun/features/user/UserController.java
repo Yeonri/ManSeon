@@ -33,6 +33,15 @@ public class UserController {
         return ResponseEntity.ok(new OnlyMessageResDto("회원가입 성공"));
     }
 
+//    @Operation(summary = "카카오를 통한 회원가입")
+//    @PostMapping
+//    public ResponseEntity<OnlyMessageResDto> createUserbyKakao(@RequestBody CreateUserByKakaoReqDto req) {
+//        //아무것도 추가하지 않고 헤더만 추가해서 간다.
+//        //만약 오류가 난다면 service 안에서 예외처리 반환 예정
+//        userService.createUserByKakao(req);
+//        return ResponseEntity.ok(new OnlyMessageResDto("회원가입 성공"));
+//    }
+
     @Operation(summary = "닉네임 설정")
     @PostMapping("/nickname/set")
     public ResponseEntity<OnlyMessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {

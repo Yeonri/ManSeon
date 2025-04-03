@@ -11,6 +11,7 @@ import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.features.follow.repository.FollowerRepositoy;
 import com.mansun.features.follow.repository.FollowingRepository;
 import com.mansun.features.user.repository.UserRepository;
+import com.mansun.requestDto.user.CreateUserByKakaoReqDto;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
@@ -56,6 +57,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .role("USER")
                 .build());
     }
+
+//    public void createUserByKakao(CreateUserByKakaoReqDto userParam) {
+//        //중복 Email이 있을 경우 회원가입 불허
+//        if (userRepository.existsByEmail(userParam.getEmail())) {
+//            userRepository.findByEmail(userParam)
+//
+//
+//            throw new DuplicateKeyException("이미 해당 Email로 가입한 회원이 있습니다.");
+//        }        //이 시점부터는 중복 회원이 없다고 판명
+//        //비밀번호 인코딩을 위한 BCrypt Encoder ->  추가 변동 가능성 있음 Argon을 적용해볼까 하는 고민이 있음
+//        userRepository.save(Users.builder()
+//                .email(userParam.getEmail())
+//                .password(bCryptPasswordEncoder.encode(userParam.getPassword()))
+////                        .nickname(userParam.getNickname())
+//                .username(userParam.getName())
+//                .phoneNum(userParam.getPhoneNum())
+//                .role("USER")
+//                .build());
+//    }
 
     public void setNickname(SetNicknameReqDto nicknameReqDto) {
         Users user = userRepository.findByEmail(nicknameReqDto.getEmail()).orElseThrow();
