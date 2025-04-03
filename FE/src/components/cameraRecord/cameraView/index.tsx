@@ -1,6 +1,7 @@
+import { Circle } from "lucide-react-native";
 import { useRef } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { Camera, useCameraDevice, PhotoFile } from "react-native-vision-camera";
+import { TouchableOpacity, View } from "react-native";
+import { Camera, PhotoFile, useCameraDevice } from "react-native-vision-camera";
 import { Loading } from "../../common/loading";
 
 interface CameraViewProps {
@@ -30,11 +31,21 @@ export function CameraView({ onPhotoTaken }: CameraViewProps) {
         isActive={true}
         photo={true}
       />
+      <View
+        className="absolute top-0 left-0 right-0 bg-black/30 border-b border-white"
+        style={{ height: "25%" }}
+      />
+
+      <View
+        className="absolute bottom-0 left-0 right-0 bg-black/30 border-t border-white"
+        style={{ height: "25%" }}
+      />
+
       <TouchableOpacity
         onPress={takePhoto}
-        className="absolute bottom-14 self-center bg-white px-8 py-8 rounded-full"
+        className="absolute bottom-14 self-center bg-white rounded-full p-1"
       >
-        <Text className="text-xl">📸</Text>
+        <Circle size={60} color={"#525252"} />
       </TouchableOpacity>
     </View>
   );

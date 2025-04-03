@@ -1,16 +1,17 @@
-import { useRef, useState } from "react";
-import { useCameraPermission } from "../../hooks/useCameraPermission";
-import { PhotoFile } from "react-native-vision-camera";
-import { Modalize } from "react-native-modalize";
-import { PermissionCheck } from "../../components/common/permissionCheck";
-import { Image, TouchableOpacity, View } from "react-native";
-import { ChevronRight, X } from "lucide-react-native";
-import { CameraView } from "../../components/cameraRecord/cameraView";
-import { FullButton } from "../../components/common/fullButton";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ChevronRight, X } from "lucide-react-native";
+import { useRef, useState } from "react";
+import { Image, TouchableOpacity, View } from "react-native";
+import { Modalize } from "react-native-modalize";
+import { PhotoFile } from "react-native-vision-camera";
 import { RootStackParams } from "../../api/types/RootStackParams";
+import { CameraView } from "../../components/cameraRecord/cameraView";
 import { Probability } from "../../components/cameraRecord/probability";
+import { FullButton } from "../../components/common/fullButton";
+import { PermissionCheck } from "../../components/common/permissionCheck";
+import { useCameraPermission } from "../../hooks/useCameraPermission";
+import { ResizeImage } from "../../utils/resizeImage";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -19,6 +20,20 @@ export function CameraScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [selectedFishName, setSelectedFishName] = useState<string | null>(null);
+
+  async function handlePhoto(original: PhotoFile) {
+    try {
+      const croppedUri = await ResizeImage("file://" + original.path);
+      const croppedPhoto: PhotoFile = {
+        ...original,
+        path: String(croppedUri).replace("file://", ""),
+      };
+      setPhoto(croppedPhoto);
+      console.log("[ResizeImage] 최종 이미지 URI:", croppedPhoto);
+    } catch (e: unknown) {
+      console.error("사진 처리 중 오류 발생", e);
+    }
+  }
 
   function openBottomSheet() {
     sheetRef.current?.open();
@@ -56,18 +71,20 @@ export function CameraScreen() {
           </TouchableOpacity>
 
           <Image
-            source={{ uri: "file://" + photo.path }}
-            className="flex-1 resize-contain"
+            source={{
+              uri: "file://" + photo.path,
+            }}
+            className="flex-1 object-contain"
           />
         </View>
       ) : (
-        <CameraView onPhotoTaken={setPhoto} />
+        <CameraView onPhotoTaken={handlePhoto} />
       )}
       <Modalize ref={sheetRef} snapPoint={300}>
         <View className="p-10">
           <Probability onSelectedFishName={setSelectedFishName} />
           <View className="flex-1 p-5" />
-          <FullButton name="다음" onPress={handleNext} />
+          <FullButton name="다음" disable={false} onPress={handleNext} />
         </View>
       </Modalize>
     </View>
