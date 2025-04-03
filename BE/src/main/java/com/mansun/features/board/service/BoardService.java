@@ -32,6 +32,8 @@ public interface BoardService {
     //UserId와 BoardId로 단일 게시글 조회
     FindBoardResDto findBoard(CustomUserDetails customUserDetails, Long boardId);
 
+    FindBoardResDto getBoardDetail(Long boardId);
+
     //boardId로 단일 게시글 조회
     FindBoardResDto findBoard(Long postId);
 

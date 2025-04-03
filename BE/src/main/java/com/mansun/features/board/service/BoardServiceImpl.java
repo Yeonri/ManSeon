@@ -75,15 +75,19 @@ public class BoardServiceImpl implements BoardService {
 //        return new PageImpl<>(content, pageable, total);
 //    }
 
+    @Override
     public FindBoardResDto getBoardDetail(Long boardId) {
+//       boardId를 이용해 댓글과 대댓글을 동시에 가져오는 로직을 짠다.
         Board board = boardrepository.findWithCommentsAndRecommentsByBoardId(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
         // soft delete 처리: 삭제된 댓글/대댓글은 제외
         board.getComment().removeIf(Comment::isDeleted);
+        //board의 댓글 리스트를 돌면서 지워진 대댓글은 지운다.
         for (Comment comment : board.getComment()) {
             comment.getRecomment().removeIf(Recomment::isDeleted);
         }
+//        FindBoardResDto에 맞춰 Builder로 한번에 객체를 생성해 반환
         return FindBoardResDto.builder()
                 .boardId(board.getBoardId())
                 .title(board.getTitle())
@@ -95,7 +99,9 @@ public class BoardServiceImpl implements BoardService {
     //userId를 이용해서 게시글을 찾는 함수
     @Override
     public List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails) {
-        System.out.println(customUserDetails.getUserId());
+//        내 게시글 리스트를 JWT token을 통한 user Id추출로
+//        나의 지워지지 않은 게시글 리스트를 얻은 후
+//        FindMyBoardListResDto로 한번에 객체를 만들어 반환
         return boardrepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId())
                 .stream()
                 .map(board -> FindMyBoardListResDto
@@ -112,6 +118,7 @@ public class BoardServiceImpl implements BoardService {
     }
 
     public List<FindOtherBoardListResDto> findOtherBoardList(CustomUserDetails customUserDetails, Long userId) {
+//        위 로직과 동일하나 찾는 것이 타인의 userId로 바뀌었다.
         return boardrepository.findByUser_UserIdAndDeletedFalse(userId)
                 .stream()
                 .map(board -> FindOtherBoardListResDto
@@ -127,12 +134,14 @@ public class BoardServiceImpl implements BoardService {
                 .toList();
     }
 
-    //postId을 이용해서 게시글을 찾는 함수
+    //boardId을 이용해서 게시글을 찾는 함수
     @Override
     public FindBoardResDto findBoard(Long boardId) {
+//        boardId를 이용해 단건 게시글을 찾은 후 만약 null이라면 예외 처리한다.
         Board findboard = boardrepository.findById(boardId).orElseThrow(
                 () -> new NoSuchElementException("게시글이 없습니다")
         );
+//        FindBoardResDto를 객체로 한번에 만들어 반환
         return FindBoardResDto
                 .builder()
                 .title(findboard.getTitle())
@@ -143,7 +152,11 @@ public class BoardServiceImpl implements BoardService {
     //사용자 정보와 boardId를 이용해서 단 건 게시글을 찾는 함수
     @Override
     public FindBoardResDto findBoard(CustomUserDetails customUserDetails, Long boardId) {
-        Board findboard = boardrepository.findBoardsByUser_UserIdAndBoardId(customUserDetails.getUserId(), boardId);
+//        UserId와 BoardId를 이용해서 지워지지 않은 단건 게시글을 조회한다.
+        Board findboard = boardrepository
+                .findBoardsByUser_UserIdAndBoardIdAndDeletedFalse(customUserDetails.getUserId(), boardId)
+                .orElseThrow();
+//        해당 단건 게시글을 Builder 객체로 반환
         return FindBoardResDto
                 .builder()
                 .title(findboard.getTitle())
@@ -155,7 +168,10 @@ public class BoardServiceImpl implements BoardService {
     public void updateMyBoard(
             CustomUserDetails customUserDetails,
             UpdateMyBoardReqDto req) {
+//        boardId로 단건 조회한다.
         Board findboard = boardrepository.findById(req.getPostId()).orElseThrow();
+//        단건 조회한 해당 게시글을 BeanUtils를 이용해 null값이 아닌 부분만 바꾼다
+//        이때 JPA Context가 작동
         BeanUtils.copyProperties(req, findboard, NullAwareBeanUtils.getNullPropertyNames(req));
     }
 
@@ -164,6 +180,7 @@ public class BoardServiceImpl implements BoardService {
     public void deleteMyBoard(
             CustomUserDetails customUserDetails,
             DeleteMyBoardReqDto boardParam) {
+//        soft Delete
         boardrepository.findById(boardParam.getBoardId())
                 .orElseThrow()
                 .setDeleted(true);
