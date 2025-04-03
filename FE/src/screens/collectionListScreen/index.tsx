@@ -3,7 +3,7 @@ import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { MoreStackParams } from "../../api/types/moreStackParams";
+import type { MoreStackParams } from "../../api/types/MoreStackParams";
 import CollectionCard from "../../components/collection/collectionCard";
 import Dropdown from "../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";

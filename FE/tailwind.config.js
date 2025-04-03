@@ -8,6 +8,9 @@ module.exports = {
       fontFamily: {
         custom: ["HakgyoansimMulgyeolB"],
       },
+      colors: {
+        error: "#EC6344",
+      },
     },
   },
   plugins: [],

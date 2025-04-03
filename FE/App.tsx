@@ -1,8 +1,15 @@
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import React from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { useEffect, useState } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import SplashScreen from "react-native-splash-screen";
 import "./global.css";
 import { AppNavigator } from "./src/navigation/appNavigator";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { AuthStackNavigator } from "./src/navigation/authStackNavigator";
+import { useLoginStore } from "./src/store/loginStore";
+import { tokenStorage } from "./src/utils/tokenStorage";
+
+const queryClient = new QueryClient();
 
 export default function App(): React.JSX.Element {
   const mainTheme = {
@@ -12,11 +19,39 @@ export default function App(): React.JSX.Element {
       background: "white",
     },
   };
+
+  const [loggedIn, setLoggedIn] = useState(useLoginStore.getState().isLoggedIn);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = useLoginStore.subscribe(
+      (state) => state.isLoggedIn,
+      (value) => setLoggedIn(value)
+    );
+    return unsubscribe;
+  }, []);
+
+  useEffect(() => {
+    async function tryAutoLogin() {
+      const accessToken = await tokenStorage.getAccessToken();
+      const refreshToken = await tokenStorage.getRefreshToken();
+
+      if (accessToken && refreshToken) {
+        useLoginStore.getState().setLogin({ accessToken, refreshToken });
+      }
+      setIsLoading(false);
+      SplashScreen.hide();
+    }
+    tryAutoLogin();
+  }, []);
+
   return (
     <GestureHandlerRootView className="flex-1">
-      <NavigationContainer theme={mainTheme}>
-        <AppNavigator />
-      </NavigationContainer>
+      <QueryClientProvider client={queryClient}>
+        <NavigationContainer theme={mainTheme}>
+          {!isLoading && (loggedIn ? <AppNavigator /> : <AuthStackNavigator />)}
+        </NavigationContainer>
+      </QueryClientProvider>
     </GestureHandlerRootView>
   );
 }

@@ -123,6 +123,18 @@ dependencies {
     }
 }
 
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core:1.13.1'
+    }
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'com.android.support') {
+            details.useVersion "28.0.0"
+            details.because "Force AndroidX, avoid support library conflicts"
+        }
+    }
+}
+
 allprojects {
     repositories {
         maven {

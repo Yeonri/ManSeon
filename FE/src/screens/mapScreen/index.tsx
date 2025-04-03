@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { StatusBar, View } from "react-native";
+import { View } from "react-native";
 import MapView from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SearchInput } from "../../components/common/searchInput";
@@ -21,8 +21,6 @@ export function MapScreen() {
       return true;
     });
   }, [activeFilter]);
-
-  const statusBarHeight = StatusBar.currentHeight;
 
   const [keyword, setKeyword] = useState("");
 
@@ -69,7 +67,7 @@ export function MapScreen() {
         removeClippedSubviews={false}
         style={{
           position: "absolute",
-          top: statusBarHeight,
+          top: 0,
           bottom: 0,
           left: 0,
           right: 0,

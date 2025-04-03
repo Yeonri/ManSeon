@@ -31,14 +31,14 @@ export function NoticeList() {
                 className="w-5 h-5 mt-0.5"
                 resizeMode="contain"
               />
-              <Text className="text-sm font-semibold text-black flex-1">
+              <Text className="text-sm font-semibold text-neutral-800 flex-1">
                 {item.title}
               </Text>
             </View>
 
             <Text
               numberOfLines={expandedId === item.id ? undefined : 1}
-              className="text-sm text-neutral-500 max-w-[95%]"
+              className="text-sm text-neutral-600 max-w-[95%]"
             >
               {item.content}
             </Text>
