@@ -3,11 +3,15 @@ package com.mansun.features.fish.service;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
 import com.mansun.entity.fish.Fish;
+import com.mansun.entity.fish.FishType;
 import com.mansun.entity.fish.QFish;
 import com.mansun.features.fish.repository.FishRepository;
+import com.mansun.features.fish.repository.FishTypeRepository;
 import com.mansun.requestDto.fish.CreateFishReqDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
+import com.mansun.responseDto.fish.collection.Collection;
+import com.mansun.responseDto.fish.collection.CollectionListResDto;
 import com.mansun.responseDto.fishingPoint.FindFishDiaryListResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +33,7 @@ public class FishServiceImpl implements FishService {
     private final JPAQueryFactory queryFactory;
 
     private final FishRepository fishRepository;
+    private final FishTypeRepository fishTypeRepository;
 
     @Override
     public void createFish(CustomUserDetails customUserDetails, CreateFishReqDto req) {
@@ -48,7 +53,6 @@ public class FishServiceImpl implements FishService {
 
     @Override
     public Map<LocalDate, List<FindFishDiaryListResDto>> findMyFishDiaryList(CustomUserDetails customUserDetails) {
-//        List<Fish> findFishList = repository.findByUser_UserId(customUserDetails.getUserId());
         QFish fish = QFish.fish;
 
         List<Fish> fishList = queryFactory
@@ -155,5 +159,33 @@ public class FishServiceImpl implements FishService {
                         .fishImg(f.getFishImg())
                         .build()
         ).collect(Collectors.toList());
+    }
+
+    public List<CollectionListResDto> findMyCollectionList(CustomUserDetails customUserDetails) {
+//        24종의 전체 어종을 모두 가져온다.
+        List<FishType> allFishTypeList = fishTypeRepository.findAll();
+//        반환할 리스트를 미리 생성한다.
+        List<CollectionListResDto> responselist = new ArrayList<>();
+//        24종의 전체 어종을 순회하면서 내가 잡았는지 확인한다.
+//        잡았다면 userId와 FishType으로 내가 잡은 해당어종 리스트를 불러온다.
+
+//        또한 잡은 위치의 포인트 위도와 경도, 잡은 시간을 기록한다.
+        for (FishType ft : allFishTypeList) {
+            List<Fish> capturedFishList = fishRepository
+                    .findByUser_UserIdAndFishType_FishType(customUserDetails.getUserId(), ft.getFishType());
+            responselist.add(new CollectionListResDto(
+                            ft.getFishType(),
+                            ft.getFishName(),
+                            ft.getCharacteristic(),
+                            ft.getFishImg(),
+                            !capturedFishList.isEmpty(),
+                            capturedFishList.stream().map(
+                                            cf -> new Collection(cf.getLat(), cf.getLng(), cf.getCreatedAt().toLocalDate())
+                                    )
+                                    .collect(Collectors.toList())
+                    )
+            );
+        }
+        return responselist;
     }
 }

@@ -36,6 +36,9 @@ public class FishType {
     @Schema(description = "물고기 특징")
     private String characteristic;
 
+    @Schema(description = "물고기 이미지")
+    private String fishImg;
+
     @Builder.Default
     private boolean deleted=false;
 }

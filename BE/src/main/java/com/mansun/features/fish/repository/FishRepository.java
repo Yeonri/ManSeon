@@ -11,4 +11,6 @@ public interface FishRepository extends JpaRepository<Fish,Long> {
     Fish findByUser_UserIdAndFishIdAndDeletedFalse(Long userId, Long fishId);
     List<Fish> findByUser_UserIdAndDeletedFalse(Long userId);
     int countAllByUser_UserId(Long userId);
+
+    List<Fish> findByUser_UserIdAndFishType_FishType(Long userId, Long fishType);
 }

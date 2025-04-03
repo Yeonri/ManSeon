@@ -8,6 +8,7 @@ import com.mansun.requestDto.fish.CreateFishTypeReqDto;
 import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.fish.FindFishListResDto;
 import com.mansun.responseDto.fish.FindFishResDto;
+import com.mansun.responseDto.fish.collection.CollectionListResDto;
 import com.mansun.responseDto.fishingPoint.FindFishDiaryListResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -84,9 +85,9 @@ public class FishController {
 
     @Operation(summary = "내 물고기 도감 리스트")
     @GetMapping("/list/my")
-    public ResponseEntity<List<FindFishListResDto>> getMyFishList(
+    public ResponseEntity<List<CollectionListResDto>> getMyFishList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        return ResponseEntity.ok(fishService.findMyFishList(customUserDetails));
+        return ResponseEntity.ok(fishService.findMyCollectionList(customUserDetails));
     }
 
     @Operation(summary = "타인 물고기 도감 리스트")
