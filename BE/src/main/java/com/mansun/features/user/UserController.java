@@ -91,8 +91,7 @@ public class UserController {
     public ResponseEntity<GetMyInfoResDto> getMyInformation(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
-        GetMyInfoResDto myInfoResDto = userService.findById(customUserDetails);
-        return ResponseEntity.ok(myInfoResDto);
+        return ResponseEntity.ok(userService.findById(customUserDetails));
     }
 
     @Operation(summary = "타인의 정보 가져오기")

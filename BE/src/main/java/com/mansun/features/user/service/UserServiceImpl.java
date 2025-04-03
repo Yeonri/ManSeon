@@ -12,6 +12,7 @@ import com.mansun.entity.follow.QFollower;
 import com.mansun.entity.follow.QFollowing;
 import com.mansun.features.badge.repository.UserBadgeRepository;
 import com.mansun.features.board.repository.BoardRepository;
+import com.mansun.features.fish.repository.FishRepository;
 import com.mansun.features.follow.repository.FollowerRepositoy;
 import com.mansun.features.follow.repository.FollowingRepository;
 import com.mansun.features.user.repository.UserRepository;
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserBadgeRepository userBadgeRepository;
     private final FollowerRepositoy followerRepositoy;
     private final FollowingRepository followingRepository;
+    private final FishRepository fishRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -139,14 +141,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<UserBadge> myBadgeList = userBadgeRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
         List<Board> myBoardList = boardRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
 
-        System.out.println("Last");
         return GetMyInfoResDto
                 .builder()
+                .id(findUser.getUserId())
                 .email(findUser.getEmail())
-                .username(findUser.getUsername())
+                .name(findUser.getUsername())
+                .phone_number(findUser.getPhoneNum())
                 .nickname(findUser.getNickname())
-                .myBadgeList(myBadgeList)
-                .myBoardList(myBoardList)
+                .badges(myBadgeList)
+                .badges_cnt(userBadgeRepository.countAllByUser_UserId(customUserDetails.getUserId()))
+                .collection_cnt(fishRepository.countAllByUser_UserId(customUserDetails.getUserId()))
+                .posts(myBoardList)
                 .build();
     }
 
@@ -162,11 +167,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         return GetTheOtherOneInfoResDto
                 .builder()
+                .id(userId)
                 .email(user.getEmail())
-                .username(user.getUsername())
+                .name(user.getUsername())
+                .phone_number(user.getPhoneNum())
                 .nickname(user.getNickname())
-                .badgeList(BadgeList)
-                .boardList(BoardList)
+                .badges(BadgeList)
+                .badges_cnt(userBadgeRepository.countAllByUser_UserId(userId))
+                .collection_cnt(fishRepository.countAllByUser_UserId(userId))
+                .posts(BoardList)
                 .build();
     }
 
