@@ -47,7 +47,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         // 사용자 저장 또는 조회
-        Users user = userRepository.findByEmail(oAuth2Response.getEmail())
+        Users user = userRepository.findByEmailAndDeletedFalse(oAuth2Response.getEmail())
                 .orElseGet(() -> {
                     Users newUser = new Users();
                     newUser.setEmail(oAuth2Response.getEmail());
