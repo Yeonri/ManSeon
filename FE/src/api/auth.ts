@@ -11,6 +11,12 @@ export async function signup(data: User): Promise<MessageResponse> {
 
 // 로그인
 export async function login(email: string, password: string): Promise<Auth> {
-  const response = await client.post<Auth>("/users/login", { email, password });
+  const formData = new FormData();
+  formData.append("email", email);
+  formData.append("password", password);
+
+  const response = await client.post("/users/login", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
   return response.data;
 }

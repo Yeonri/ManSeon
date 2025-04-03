@@ -3,13 +3,13 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useLogin } from "../../api/quries/useLogin";
 import { AuthStackParams } from "../../api/types/AuthStackParams";
 import LogoKakao from "../../assets/images/logo_kakao.svg";
 import LogoNaver from "../../assets/images/logo_naver.svg";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderCenter } from "../../components/common/headerCenter";
 import { useLoginStore } from "../../store/loginStore";
-import { useLogin } from "../../api/quries/useLogin";
 import { tokenStorage } from "../../utils/tokenStorage";
 
 interface LoginScreenNavigationProps
