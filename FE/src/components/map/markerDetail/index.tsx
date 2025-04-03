@@ -2,6 +2,7 @@ import { Bookmark, X } from "lucide-react-native";
 import { forwardRef, Ref } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Modalize } from "react-native-modalize";
+import { FishingFishList } from "../fishingFishList";
 import { WeatherTable } from "../weatherTable";
 
 import dayjs from "dayjs";
@@ -98,6 +99,26 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
           {/* 표 */}
           <View className="mt-3">
             <WeatherTable data={point.weather_forecast} />
+          </View>
+
+          {/* 해당 포인트에서 내가 잡은 물고기 정보 */}
+          <View className="mt-3">
+            <Text className="text-neutral-800 font-semibold text-xl mb-3">
+              이 근처에서 잡힌 물고기
+            </Text>
+            <View className="bg-blue-50 p-3">
+              <FishingFishList data={point.my_caught_fish} />
+            </View>
+          </View>
+
+          {/* 해당 포인트 전체에서 잡은 물고기 정보 */}
+          <View className="mt-3">
+            <Text className="text-neutral-800 font-semibold text-xl mb-3">
+              이 포인트에서 내가 잡은 물고기
+            </Text>
+            <View className="bg-blue-50 p-3">
+              <FishingFishList data={point.caught_fish_summary} />
+            </View>
           </View>
         </ScrollView>
       </Modalize>

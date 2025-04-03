@@ -385,6 +385,35 @@
           "time": "02:00"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -772,6 +801,35 @@
           "value": 0.82,
           "time": "14:40"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -1161,6 +1219,35 @@
           "time": "22:11"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -1548,6 +1635,35 @@
           "value": 0.65,
           "time": "11:25"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -1937,6 +2053,35 @@
           "time": "04:48"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -2324,6 +2469,35 @@
           "value": 1.44,
           "time": "09:33"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -2713,6 +2887,35 @@
           "time": "15:29"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -3100,6 +3303,35 @@
           "value": 0.85,
           "time": "05:22"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -3489,6 +3721,35 @@
           "time": "04:28"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -3876,6 +4137,35 @@
           "value": 0.25,
           "time": "01:32"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -4265,6 +4555,35 @@
           "time": "16:34"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -4652,6 +4971,35 @@
           "value": 0.71,
           "time": "00:39"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -5041,6 +5389,35 @@
           "time": "20:16"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -5428,6 +5805,35 @@
           "value": 1.29,
           "time": "10:45"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -5817,6 +6223,35 @@
           "time": "14:09"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -6204,6 +6639,35 @@
           "value": 0.78,
           "time": "18:21"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -6593,6 +7057,35 @@
           "time": "09:12"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -6980,6 +7473,35 @@
           "value": 0.4,
           "time": "16:18"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -7369,6 +7891,35 @@
           "time": "19:20"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -7756,6 +8307,35 @@
           "value": 0.77,
           "time": "09:59"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -8145,6 +8725,35 @@
           "time": "15:53"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -8532,6 +9141,35 @@
           "value": 1.5,
           "time": "18:00"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -8921,6 +9559,35 @@
           "time": "04:17"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -9308,6 +9975,35 @@
           "value": 1.27,
           "time": "17:55"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -9697,6 +10393,35 @@
           "time": "03:14"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -10084,6 +10809,35 @@
           "value": 1.28,
           "time": "00:56"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -10473,6 +11227,35 @@
           "time": "13:17"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -10860,6 +11643,35 @@
           "value": 0.19,
           "time": "10:42"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -11249,6 +12061,35 @@
           "time": "01:32"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -11636,6 +12477,35 @@
           "value": 1.11,
           "time": "01:49"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -12025,6 +12895,35 @@
           "time": "10:04"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -12412,6 +13311,35 @@
           "value": 0.62,
           "time": "22:41"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -12801,6 +13729,35 @@
           "time": "17:08"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -13188,6 +14145,35 @@
           "value": 0.14,
           "time": "21:41"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -13577,6 +14563,35 @@
           "time": "22:39"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -13964,6 +14979,35 @@
           "value": 1.43,
           "time": "15:02"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -14353,6 +15397,35 @@
           "time": "18:47"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -14740,6 +15813,35 @@
           "value": 0.37,
           "time": "11:31"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   },
@@ -15129,6 +16231,35 @@
           "time": "00:26"
         }
       }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
+      }
     ]
   },
   {
@@ -15516,6 +16647,35 @@
           "value": 0.99,
           "time": "07:50"
         }
+      }
+    ],
+    "caught_fish_summary": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 12
+      },
+      {
+        "name": "우럭",
+        "image_url": "https://example.com/fish/rockfish.jpg",
+        "count": 7
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 4
+      }
+    ],
+    "my_caught_fish": [
+      {
+        "name": "고등어",
+        "image_url": "https://example.com/fish/mackerel.jpg",
+        "count": 3
+      },
+      {
+        "name": "광어",
+        "image_url": "https://example.com/fish/flatfish.jpg",
+        "count": 1
       }
     ]
   }
