@@ -8,7 +8,7 @@ import { NoticeList } from "../../components/more/notice";
 import { ProfileCard } from "../../components/more/profile";
 
 interface MoreScreenNavigationProps
-  extends NativeStackNavigationProp<MoreStackParams, "More"> {}
+  extends NativeStackNavigationProp<MoreStackParams> {}
 
 export function MoreScreen() {
   const navigation = useNavigation<MoreScreenNavigationProps>();

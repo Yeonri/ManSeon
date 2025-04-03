@@ -11,9 +11,9 @@ import {
 import { TouchableOpacity } from "react-native";
 import { RootStackParams } from "../../api/types/RootStackParams";
 import { CameraScreen } from "../../screens/cameraScreen";
-import { MainScreen } from "../../screens/mainScreen";
 import { MapScreen } from "../../screens/mapScreen";
 import { CommunityStackNavigator } from "../communityStackNavigator";
+import { MainStackNavigator } from "../mainStackNavigator";
 import { MoreStackNavigator } from "../moreStackNavigator";
 
 const Tab = createBottomTabNavigator();
@@ -49,7 +49,7 @@ export function BottomTabNavigator() {
     >
       <Tab.Screen
         name="home"
-        component={MainScreen}
+        component={MainStackNavigator}
         options={{
           title: "홈",
           tabBarIcon: renderTabIcon(House),

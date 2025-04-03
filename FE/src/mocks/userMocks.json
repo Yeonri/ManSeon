@@ -53,6 +53,7 @@
         "id": 9
       }
     ],
+    "badges_cnt": 4,
     "collection__cnt": 4,
     "posts": [
       {
@@ -103,6 +104,34 @@
     ],
     "profile_img": "https://picsum.photos/id/312/200/200",
     "following_cnt": 7,
-    "follower_cnt": 4
+    "follower_cnt": 4,
+    "fishing_total": 50,
+    "fising_list": [
+      {
+        "id": 1,
+        "name": "감성돔",
+        "cnt": 20
+      },
+      {
+        "id": 2,
+        "name": "낙지",
+        "cnt": 12
+      },
+      {
+        "id": 3,
+        "name": "문어",
+        "cnt": 8
+      },
+      {
+        "id": 4,
+        "name": "무늬오징어",
+        "cnt": 7
+      },
+      {
+        "id": 5,
+        "name": "전갱이",
+        "cnt": 3
+      }
+    ]
   }
 ]
