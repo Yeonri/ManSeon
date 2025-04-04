@@ -7,7 +7,11 @@
       "react-native",
       "react-native-vision-camera",
       "react-native-permissions",
-      "react-native-modalize"
+      "react-native-modalize",
+      "axios",
+      "@react-native-async-storage/async-storage",
+      "@tanstack/react-query",
+      "react-native-splash-screen"
     ]
   }
 }

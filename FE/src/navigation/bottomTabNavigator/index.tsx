@@ -25,7 +25,7 @@ function CustomBottomTabButton() {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Camera")}
-      className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-blue-600 justify-center items-center"
+      className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-blue-800 justify-center items-center"
     >
       <Plus color="white" size={32} />
     </TouchableOpacity>
@@ -41,6 +41,10 @@ export function BottomTabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        tabBarStyle: {
+          height: 60,
+          paddingTop: 5,
+        },
       }}
     >
       <Tab.Screen

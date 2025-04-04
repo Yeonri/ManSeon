@@ -1,5 +1,5 @@
 export type RootStackParams = {
   BottomTab: undefined;
   Camera: undefined;
-  Record: { photoUri: string };
+  Record: { photoUri: string; fishName: string };
 };

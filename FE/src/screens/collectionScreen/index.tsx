@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { MoreStackParams } from "../../api/types/moreStackParams";
+import type { MoreStackParams } from "../../api/types/MoreStackParams";
 import CollectionMapModal from "../../components/collection/collectionMapModal";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 
