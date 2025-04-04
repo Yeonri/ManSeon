@@ -1,16 +1,16 @@
-import { useRef, useState } from "react";
-import { useCameraPermission } from "../../hooks/useCameraPermission";
-import { PhotoFile } from "react-native-vision-camera";
-import { Modalize } from "react-native-modalize";
-import { PermissionCheck } from "../../components/common/permissionCheck";
-import { Image, TouchableOpacity, View } from "react-native";
-import { ChevronRight, X } from "lucide-react-native";
-import { CameraView } from "../../components/cameraRecord/cameraView";
-import { FullButton } from "../../components/common/fullButton";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ChevronRight, X } from "lucide-react-native";
+import { useRef, useState } from "react";
+import { Image, TouchableOpacity, View } from "react-native";
+import { Modalize } from "react-native-modalize";
+import { PhotoFile } from "react-native-vision-camera";
 import { RootStackParams } from "../../api/types/RootStackParams";
+import { CameraView } from "../../components/cameraRecord/cameraView";
 import { Probability } from "../../components/cameraRecord/probability";
+import { FullButton } from "../../components/common/fullButton";
+import { PermissionCheck } from "../../components/common/permissionCheck";
+import { useCameraPermission } from "../../hooks/useCameraPermission";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -19,6 +19,7 @@ export function CameraScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [selectedFishName, setSelectedFishName] = useState<string | null>(null);
+  const [next, setNext] = useState<boolean>(true);
 
   function openBottomSheet() {
     sheetRef.current?.open();
@@ -65,9 +66,12 @@ export function CameraScreen() {
       )}
       <Modalize ref={sheetRef} snapPoint={300}>
         <View className="p-10">
-          <Probability onSelectedFishName={setSelectedFishName} />
+          <Probability
+            onSelectedFishName={setSelectedFishName}
+            onNext={setNext}
+          />
           <View className="flex-1 p-5" />
-          <FullButton name="다음" onPress={handleNext} />
+          <FullButton name="다음" disable={next} onPress={handleNext} />
         </View>
       </Modalize>
     </View>
