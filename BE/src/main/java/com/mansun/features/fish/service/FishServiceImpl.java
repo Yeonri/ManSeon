@@ -57,7 +57,6 @@ public class FishServiceImpl implements FishService {
     public Map<LocalDate, List<FindFishDiaryListResDto>> findMyFishDiaryList(CustomUserDetails customUserDetails) {
         QFish fish = QFish.fish;
 
-//
 //        List<Fish> fishList = queryFactory
 //                .selectFrom(fish)
 //                .where(fish.user.userId.eq(customUserDetails.getUserId()))

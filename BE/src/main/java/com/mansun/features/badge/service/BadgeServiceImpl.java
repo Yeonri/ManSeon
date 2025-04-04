@@ -1,11 +1,13 @@
 package com.mansun.features.badge.service;
 
+import com.mansun.common.utils.NullAwareBeanUtils;
 import com.mansun.entity.badge.Badges;
 import com.mansun.features.badge.repository.BadgeRepository;
 import com.mansun.requestDto.badge.CreateBadgeReqDto;
 import com.mansun.requestDto.badge.updateBadgeReqDto;
 import com.mansun.responseDto.badges.allBadgeListResDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,6 +38,7 @@ public class BadgeServiceImpl implements BadgeService {
         return badgeRepository.findAll().stream()
                 .map(b ->
                         allBadgeListResDto.builder()
+                                .badgeId(b.getBadgeId())
                                 .badgeName(b.getBadgeName())
                                 .badgeImg(b.getBadgeImg())
                                 .build())
@@ -44,8 +47,10 @@ public class BadgeServiceImpl implements BadgeService {
 
     //전체 뱃지 중 단일 뱃지를 업데이트 하는 로직<not used>
     @Override
-    public void updateBadge(updateBadgeReqDto badgeParam) {
-
+    public void updateBadge(updateBadgeReqDto req) {
+        Badges badge =
+                badgeRepository.findById(req.getBadgeId()).orElseThrow();
+        BeanUtils.copyProperties(req, badge, NullAwareBeanUtils.getNullPropertyNames(req));
     }
 
     //전체 뱃지 중 단일 뱃지를 삭제하는 로직(soft Delete)

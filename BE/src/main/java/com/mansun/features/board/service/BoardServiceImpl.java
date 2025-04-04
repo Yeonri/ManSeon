@@ -9,21 +9,20 @@ import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
-import com.mansun.responseDto.board.BoardListResDto;
 import com.mansun.responseDto.board.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
 import com.mansun.responseDto.board.FindOtherBoardListResDto;
+import com.mansun.responseDto.board.allBoardListResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -41,8 +40,15 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardListResDto> findAllBoardList(Pageable pageable) {
-        return null;
+    public List<allBoardListResDto> findAllBoardList() {
+        List<Board> boardList = boardrepository.findAll();
+        return boardList.stream().map(
+                b -> allBoardListResDto.builder()
+                        .boardId(b.getBoardId())
+                        .title(b.getTitle())
+                        .build()
+
+        ).collect(Collectors.toList());
     }
 
     //어차피 더미 데이터 만들어도 10만건 이하라 전체 조회한다.
@@ -53,9 +59,9 @@ public class BoardServiceImpl implements BoardService {
 //
 //       List<BoardListResDto> content = queryFactory
 //                .select(new BoardListResDto(
-//                        board.boardId,
-//                        board.title,
-//                        user.nickname,
+//                        board.boardId.longValue(),
+//                        board.title.stringValue(),
+//                        user.nickname.stringValue(),
 //                        board.createdAt
 //                ))
 //                .from(board)
