@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 public class allBadgeListResDto {
+    Long badgeId;
     String badgeName;
     String badgeImg;
 }

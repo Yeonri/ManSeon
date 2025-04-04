@@ -50,7 +50,7 @@ public class PointController {
         return ResponseEntity.ok(fishingPointService.findOnePoint(pointId));
     }
 
-    @Operation(summary = "한 사용자의 UserPoint를 추가한다.")
+    @Operation(summary = "내 UserPoint를 추가한다.")
     @PostMapping("/list/my")
     public ResponseEntity<MessageResDto> createUserPoint(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,

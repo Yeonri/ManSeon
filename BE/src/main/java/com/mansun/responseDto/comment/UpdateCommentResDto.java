@@ -16,14 +16,8 @@ public class UpdateCommentResDto {
 
     //    연관 관계
 
-    private Users user;
-
-
-    private Board board;
-
-    private List<Recomment> recomment;
-
+    private Long UserId;
+    private Long BoardId;
     private String commentContent;
     private LocalDateTime createdAt;
-    private int recommentNum;
 }
