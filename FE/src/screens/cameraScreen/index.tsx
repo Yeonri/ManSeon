@@ -11,6 +11,7 @@ import { Probability } from "../../components/cameraRecord/probability";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
+import { imageToTensor } from "../../utils/imageProcessor";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -20,6 +21,7 @@ export function CameraScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [selectedFishName, setSelectedFishName] = useState<string | null>(null);
   const [next, setNext] = useState<boolean>(true);
+  const [processedUri, setProcessedUri] = useState<string | null>(null);
 
   function openBottomSheet() {
     sheetRef.current?.open();
@@ -31,6 +33,25 @@ export function CameraScreen() {
         photoUri: photo.path,
         fishName: selectedFishName,
       });
+    }
+  }
+
+  async function handlePhotoTaken(newPhoto: PhotoFile) {
+    try {
+      setPhoto(newPhoto);
+      const fileUri = newPhoto.path.startsWith("file://")
+        ? newPhoto.path
+        : `file://${newPhoto.path}`;
+
+      const { processedUri: uri } = await imageToTensor(fileUri);
+      setProcessedUri(uri);
+      // console.log("원본", newPhoto?.path);
+      // console.log("변환:", uri);
+    } catch (e: unknown) {
+      console.log(processedUri);
+      console.log("사진 처리 중 오류 발생", e);
+      if (e instanceof Error) throw new Error(e.message);
+      else throw new Error("unknown Error");
     }
   }
 
@@ -62,13 +83,14 @@ export function CameraScreen() {
           />
         </View>
       ) : (
-        <CameraView onPhotoTaken={setPhoto} />
+        <CameraView onPhotoTaken={handlePhotoTaken} />
       )}
       <Modalize ref={sheetRef} snapPoint={300}>
         <View className="p-10">
           <Probability
             onSelectedFishName={setSelectedFishName}
             onNext={setNext}
+            processedUri={processedUri}
           />
           <View className="flex-1 p-5" />
           <FullButton name="다음" disable={next} onPress={handleNext} />

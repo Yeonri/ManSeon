@@ -5,9 +5,15 @@ import fishesMocks from "../../../mocks/fishesMocks.json";
 interface ProbabilityProps {
   onSelectedFishName: (name: string) => void;
   onNext: (next: boolean) => void;
+  processedUri: string | null;
 }
 
-export function Probability({ onSelectedFishName, onNext }: ProbabilityProps) {
+export function Probability({
+  onSelectedFishName,
+  onNext,
+  processedUri,
+}: ProbabilityProps) {
+  console.log("processedUri:", processedUri);
   const sortedData = [...fishesMocks].sort(
     (a, b) => b.probability - a.probability
   );
