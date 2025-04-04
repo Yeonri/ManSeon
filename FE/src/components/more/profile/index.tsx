@@ -1,21 +1,41 @@
 import { Image, Text, View } from "react-native";
+import { User } from "../../../api/types/User";
 
-export function ProfileCard() {
+type ProfileCardUser = Pick<
+  User,
+  "name" | "profile_img" | "following_cnt" | "follower_cnt"
+>;
+
+interface Props {
+  user: ProfileCardUser;
+}
+
+export function ProfileCard({ user }: Props) {
+  console.log(user.profile_img);
   return (
     <View className="bg-blue-800 rounded-2xl px-5 py-6 mb-3 mx-4 flex-row items-center">
-      <Image
-        source={{
-          uri: "https://i.pinimg.com/736x/db/c2/fd/dbc2fdc3595a409809b967ac51c45750.jpg",
-        }}
-        className="w-20 h-20 rounded-full mr-4"
-        resizeMode="contain"
-      />
+      {user.profile_img === null ? (
+        <Image
+          source={require("../../../assets/images/mansun.png")}
+          className="w-24 h-24 rounded-full mr-4 bg-white"
+          resizeMode="contain"
+        />
+      ) : (
+        <Image
+          source={{
+            uri: user.profile_img,
+          }}
+          className="w-24 h-24 rounded-full mr-4 bg-white"
+          resizeMode="center"
+        />
+      )}
+
       <View>
         <View className="flex-row items-center gap-1">
-          <Text className="text-white text-xl font-bold">만선이</Text>
+          <Text className="text-white text-xl font-bold">{user.name}</Text>
         </View>
         <Text className="text-white text-base mt-1">
-          팔로잉 123명 / 팔로워 50명
+          팔로잉 {user.following_cnt}명 / 팔로워 {user.follower_cnt}명
         </Text>
       </View>
     </View>
