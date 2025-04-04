@@ -21,7 +21,6 @@ import moonList from "../../data/moonList";
 import { useLocationPermission } from "../../hooks/useLocationPermission";
 import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
-import userData from "../../mocks/userMocks.json";
 import { useUserStore } from "../../store/userStore";
 
 dayjs.extend(utc);
@@ -64,9 +63,7 @@ export function MainScreen() {
     setShowModal(true);
   };
 
-  const tmpuser = userData[0];
-
-  const progress = (tmpuser.collection__cnt / 24) * 100;
+  const progress = (user.collection_cnt / 24) * 100;
 
   const posts = PostData;
 
@@ -96,7 +93,7 @@ export function MainScreen() {
           {/* 안내멘트 */}
           <View className="flex-row items-baseline gap-1 ml-1">
             <Text className="text-white font-bold ml-3 mt-3 text-xl">
-              {user.username}
+              {user.name}
             </Text>
             <Text className="text-white">
               님 오늘의 도착지를 확인해 보세요!
@@ -127,7 +124,7 @@ export function MainScreen() {
             <Text className="text-neutral-600 font-bold text-xl">
               내가 잡은 물고기
             </Text>
-            {tmpuser.fishing_total === 0 ? (
+            {user.fishing_total === 0 ? (
               <View className="flex-row justify-center">
                 <View className="text-center justify-center">
                   <Text className="text-center font-semibold text-2xl">
@@ -147,14 +144,14 @@ export function MainScreen() {
               <View className="flex-row">
                 {/* 차트 */}
                 <FishingDonutChart
-                  fishingList={tmpuser.fising_list}
-                  totalCount={tmpuser.fishing_total}
+                  fishingList={user.fishing_list}
+                  totalCount={user.fishing_total}
                 />
                 {/* 정보 */}
                 <View className="justify-center">
                   <FishingResult
-                    fishingResultList={tmpuser.fising_list}
-                    totalCount={tmpuser.fishing_total}
+                    fishingResultList={user.fishing_list}
+                    totalCount={user.fishing_total}
                   />
                 </View>
               </View>
@@ -175,7 +172,7 @@ export function MainScreen() {
 
             <View className="flex-row justify-end mx-5 items-baseline">
               <Text className="text-blue-500 font-bold text-4xl">
-                {tmpuser.collection__cnt}
+                {user.collection_cnt}
               </Text>
               <Text className="text-neutral-400 font-bold text-xl"> / 24</Text>
             </View>
@@ -203,7 +200,7 @@ export function MainScreen() {
             </TouchableOpacity>
             <View className="flex-row justify-end mx-5 items-baseline">
               <Text className="text-blue-500 font-bold text-4xl">
-                {tmpuser.badges_cnt}
+                {user.badges_cnt}
               </Text>
               <Text className="text-neutral-400 font-bold text-xl"> / 9</Text>
             </View>
@@ -211,7 +208,7 @@ export function MainScreen() {
             <ScrollView horizontal className="mt-3">
               <View className="flex-row gap-x-3 px-1">
                 {Array.from({ length: 9 }).map((_, index) => {
-                  const isBlue = index < tmpuser.badges_cnt;
+                  const isBlue = index < user.badges_cnt;
                   const bgColor = isBlue ? "bg-blue-100" : "bg-neutral-200";
                   const iconColor = isBlue ? "#284AAA" : "#616161";
 

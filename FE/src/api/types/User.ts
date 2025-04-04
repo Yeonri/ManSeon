@@ -1,7 +1,15 @@
 export type User = {
-  email: string;
-  password: string;
-  username: string;
-  phoneNum: string;
   id: number;
+  email: string;
+  name: string;
+  phoneNum: string;
+  badges: [];
+  badges_cnt: number;
+  collection_cnt: number;
+  profile_img: string;
+  following_cnt: number;
+  follower_cnt: number;
+  fishing_total: number;
+  fishing_list: [];
+  posts: [];
 };
