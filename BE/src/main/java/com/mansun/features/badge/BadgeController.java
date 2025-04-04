@@ -43,7 +43,7 @@ public class BadgeController {
     }
 
     @Operation(summary = "전체 뱃지에서 단일 뱃지 수정")
-    @PatchMapping("/all/")
+    @PatchMapping("/all")
     public ResponseEntity<MessageResDto> updateOneOfAllBadge(@RequestBody updateBadgeReqDto req){
         badgeService.updateBadge(req);
         return ResponseEntity.ok(new MessageResDto("뱃지가 수정되었습니다"));
