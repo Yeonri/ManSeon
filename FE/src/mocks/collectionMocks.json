@@ -48,7 +48,7 @@
     "id": 5,
     "name": "쥐치",
     "description": "쥐치는 독특한 외형과 거친 피부를 가지고 있으며, 회나 무침으로 인기가 있는 어종입니다.",
-    "image": "../assets/images/fish/filefis.png",
+    "image": "../assets/images/fish/filefish.png",
     "is_collected": true,
     "collection_info": [
       {
