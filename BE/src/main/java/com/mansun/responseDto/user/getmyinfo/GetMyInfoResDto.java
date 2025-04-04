@@ -1,4 +1,4 @@
-package com.mansun.responseDto.user;
+package com.mansun.responseDto.user.getmyinfo;
 
 import com.mansun.entity.badge.UserBadge;
 import com.mansun.entity.board.Board;
@@ -27,5 +27,5 @@ public class GetMyInfoResDto {
     int follower_cnt;
     int fishing_total;
     List<Fish> fishing_list;
-    List<Board> posts;
+    List<PostResDto> posts;
 }
