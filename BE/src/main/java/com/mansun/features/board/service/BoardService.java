@@ -24,7 +24,8 @@ public interface BoardService {
             CreateBoardReqDto boardParam);
 
     //전체 게시글 조회
-    Page<BoardListResDto> findAllBoardList(Pageable pageable);
+    List<allBoardListResDto> findAllBoardList();
+//    Page<BoardListResDto> findAllBoardList(Pageable pageable);
 
     //내 게시글 리스트 열람
     List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails);
