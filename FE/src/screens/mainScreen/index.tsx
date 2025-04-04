@@ -127,21 +127,38 @@ export function MainScreen() {
             <Text className="text-neutral-600 font-bold text-xl">
               내가 잡은 물고기
             </Text>
-            {/* 도넛차트 */}
-            <View className="flex-row">
-              {/* 차트 */}
-              <FishingDonutChart
-                fishingList={tmpuser.fising_list}
-                totalCount={tmpuser.fishing_total}
-              />
-              {/* 정보 */}
-              <View className="justify-center">
-                <FishingResult
-                  fishingResultList={tmpuser.fising_list}
-                  totalCount={tmpuser.fishing_total}
+            {tmpuser.fishing_total === 0 ? (
+              <View className="flex-row justify-center">
+                <View className="text-center justify-center">
+                  <Text className="text-center font-semibold text-2xl">
+                    아직 잡은
+                  </Text>
+                  <Text className="font-semibold text-2xl">
+                    물고기가 없어요!
+                  </Text>
+                </View>
+                <Image
+                  source={require("../../assets/images/mansun.png")}
+                  className="h-44 w-44"
+                  resizeMode="contain"
                 />
               </View>
-            </View>
+            ) : (
+              <View className="flex-row">
+                {/* 차트 */}
+                <FishingDonutChart
+                  fishingList={tmpuser.fising_list}
+                  totalCount={tmpuser.fishing_total}
+                />
+                {/* 정보 */}
+                <View className="justify-center">
+                  <FishingResult
+                    fishingResultList={tmpuser.fising_list}
+                    totalCount={tmpuser.fishing_total}
+                  />
+                </View>
+              </View>
+            )}
           </View>
 
           <View className="w-[90%] h-px bg-neutral-100 self-center my-2" />
