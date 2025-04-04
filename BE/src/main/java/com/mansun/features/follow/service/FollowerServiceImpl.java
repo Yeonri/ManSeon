@@ -30,7 +30,7 @@ public class FollowerServiceImpl implements FollowerService {
 
         List<Users> userList = new ArrayList<>();
         for (Follower f : followerList) {
-            userList.add(userRepository.findById(f.getFollower().getUserId()).orElseThrow());
+            userList.add(userRepository.findById(f.getFollowerUser().getUserId()).orElseThrow());
         }
 
 

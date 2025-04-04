@@ -20,7 +20,7 @@ public class Follower {
     private Users user;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private Users follower;
+    private Users followerUser;
     @Builder.Default
     private boolean deleted=false;
 }
