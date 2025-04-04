@@ -3,7 +3,7 @@ const imageMap: { [filename: string]: any } = {
   "cod.png": require("../assets/images/fish/cod.png"),
   "crab.png": require("../assets/images/fish/crab.png"),
   "cutlassfish.png": require("../assets/images/fish/cutlassfish.png"),
-  "filefis.png": require("../assets/images/fish/filefis.png"),
+  "filefish.png": require("../assets/images/fish/filefish.png"),
   "olive_flounder.png": require("../assets/images/fish/olive_flounder.png"),
   "korean_rockfish.png": require("../assets/images/fish/korean_rockfish.png"),
   "mackerel.png": require("../assets/images/fish/mackerel.png"),
