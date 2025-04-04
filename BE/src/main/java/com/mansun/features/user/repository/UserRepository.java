@@ -7,15 +7,20 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users,Long> {
-    public Optional<Users> findByEmailAndDeletedFalse(String email);
+public interface UserRepository extends JpaRepository<Users, Long> {
+    Optional<Users> findByEmail(String email);
 
-    public Optional<Users> findByUserIdAndEmailAndDeletedFalse(Long userId, String email);
-    public boolean existsByEmailAndDeletedFalse(String email);
+    Optional<Users> findByPhoneNum(String phoneNum);
 
-    public boolean existsByNicknameAndDeletedFalse(String nickname);
+    Optional<Users> findByEmailAndDeletedFalse(String email);
 
-    public boolean existsByUserIdAndEmailAndDeletedFalse(Long userId, String email);
+    Optional<Users> findByUserIdAndEmailAndDeletedFalse(Long userId, String email);
 
-    public Optional<Users> findByNicknameAndDeletedFalse(String nickname);
+    boolean existsByEmailAndDeletedFalse(String email);
+
+    boolean existsByNicknameAndDeletedFalse(String nickname);
+
+    boolean existsByUserIdAndEmailAndDeletedFalse(Long userId, String email);
+
+    Optional<Users> findByNicknameAndDeletedFalse(String nickname);
 }

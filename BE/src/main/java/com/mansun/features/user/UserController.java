@@ -1,7 +1,6 @@
 package com.mansun.features.user;
 
 import com.mansun.common.auth.CustomUserDetails;
-import com.mansun.entity.Users;
 import com.mansun.features.user.service.UserServiceImpl;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.SetNicknameReqDto;
@@ -11,6 +10,8 @@ import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
 import com.mansun.responseDto.user.GetMyInfoResDto;
 import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
+import com.mansun.responseDto.user.VerifyEmailResDto;
+import com.mansun.responseDto.user.VerifyPhoneNumResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -66,7 +67,7 @@ public class UserController {
     public ResponseEntity<MessageResDto> updateUser(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Valid @RequestBody UpdateUserReqDto req) {
-        Users user = userService.updateUser(customUserDetails, req);
+        userService.updateUser(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("회원 정보가 성공적으로 변경되었습니다."));
     }
 
@@ -107,15 +108,32 @@ public class UserController {
     @GetMapping("/followings")
     public ResponseEntity<List<GetMyFollowingResDto>> getMyFollowingList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
-    ){
+    ) {
         return ResponseEntity.ok(userService.getMyFollowingFindById(customUserDetails));
     }
 
-    @Operation(summary="팔로워 리스트 가져오기")
+    @Operation(summary = "팔로워 리스트 가져오기")
     @GetMapping("/followers")
     public ResponseEntity<List<GetMyFollowerResDto>> getMyFollowerList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
-    ){
+    ) {
         return ResponseEntity.ok(userService.getMyFollowerFindById(customUserDetails));
     }
+
+    @Operation(summary = "회원가입 email unique 특성을 위한 검증")
+    @GetMapping("/verify/email")
+    public ResponseEntity<VerifyEmailResDto> verifyEmail(
+            @RequestParam("email") String email
+    ) {
+        return ResponseEntity.ok(userService.verifyEmail(email));
+    }
+
+    @Operation(summary = "회원가입 phoneNum unique 특성을 위한 검증")
+    @GetMapping("/verify/phone_num")
+    public ResponseEntity<VerifyPhoneNumResDto> verifyPhoneNum(
+            @RequestParam("phone_num") String phoneNum
+    ) {
+        return ResponseEntity.ok(userService.verifyPhoneNumResDto(phoneNum));
+    }
+
 }

@@ -13,12 +13,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface UserService {
     //회원가입 로직
-    public void createUser(CreateUserReqDto userParam);
+    void createUser(CreateUserReqDto userParam);
+
     void setNickname(SetNicknameReqDto nicknameReqDto);
+
     //회원 정보 수정
-    public Users updateUser(CustomUserDetails customUserDetails, UpdateUserReqDto userParam);
+    Users updateUser(CustomUserDetails customUserDetails, UpdateUserReqDto userParam);
 
     GetMyInfoResDto findById(CustomUserDetails customUserDetails);
+
     //회원 정보 삭제
-    public void deleteUser(Long userId);
+    void deleteUser(Long userId);
 }

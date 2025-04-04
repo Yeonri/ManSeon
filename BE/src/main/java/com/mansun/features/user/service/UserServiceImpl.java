@@ -7,7 +7,6 @@ import com.mansun.entity.QUsers;
 import com.mansun.entity.Users;
 import com.mansun.entity.badge.UserBadge;
 import com.mansun.entity.board.Board;
-import com.mansun.entity.follow.Following;
 import com.mansun.entity.follow.QFollower;
 import com.mansun.entity.follow.QFollowing;
 import com.mansun.features.badge.repository.UserBadgeRepository;
@@ -16,7 +15,6 @@ import com.mansun.features.fish.repository.FishRepository;
 import com.mansun.features.follow.repository.FollowerRepositoy;
 import com.mansun.features.follow.repository.FollowingRepository;
 import com.mansun.features.user.repository.UserRepository;
-import com.mansun.requestDto.user.CreateUserByKakaoReqDto;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
@@ -24,6 +22,8 @@ import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
 import com.mansun.responseDto.user.GetMyInfoResDto;
 import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
+import com.mansun.responseDto.user.VerifyEmailResDto;
+import com.mansun.responseDto.user.VerifyPhoneNumResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -123,7 +123,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void deleteUser(Long userId) {
 //        IllegalStateException이 뜨면 없는 ID이므로 처리 근데 거의 없을 거임
-        Users user=userRepository.findById(userId).orElseThrow();
+        Users user = userRepository.findById(userId).orElseThrow();
         user.setDeleted(true);
     }
 
@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    public List<GetMyFollowingResDto> getMyFollowingFindById(CustomUserDetails customUserDetails){
+    public List<GetMyFollowingResDto> getMyFollowingFindById(CustomUserDetails customUserDetails) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
         QUsers users = QUsers.users;
@@ -189,13 +189,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<Users> followingList = queryFactory
                 .select(users)
                 .from(following)
-                .join(users).on(users.userId.eq(following.followingUserId))
+                .join(users).on(users.userId.eq(following.followingUser.userId))
                 .where(following.user.userId.eq(customUserDetails.getUserId())
                         .and(following.deleted.eq(false)))
                 .fetch();
 
         return followingList.stream().map(
-                u->GetMyFollowingResDto
+                u -> GetMyFollowingResDto
                         .builder()
                         .followerId(u.getUserId())
                         .email(u.getEmail())
@@ -206,7 +206,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-    public List<GetMyFollowerResDto> getMyFollowerFindById(CustomUserDetails customUserDetails){
+    public List<GetMyFollowerResDto> getMyFollowerFindById(CustomUserDetails customUserDetails) {
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
         QUsers users = QUsers.users;
@@ -215,12 +215,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         List<Users> followerList = queryFactory
                 .select(users)
                 .from(follower)
-                .join(users).on(users.userId.eq(follower.followerUserId))
+                .join(users).on(users.userId.eq(follower.followerUser.userId))
                 .where(follower.user.userId.eq(customUserDetails.getUserId())
                         .and(follower.deleted.eq(false)))
                 .fetch();
         return followerList.stream().map(
-                u->GetMyFollowerResDto
+                u -> GetMyFollowerResDto
                         .builder()
                         .followerId(u.getUserId())
                         .email(u.getEmail())
@@ -229,4 +229,45 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                         .build()
         ).collect(Collectors.toList());
     }
+
+    public VerifyEmailResDto verifyEmail(String email) {
+        Optional<Users> user =
+                userRepository.findByEmail(email);
+
+        if (user.isEmpty()) {
+            return VerifyEmailResDto.builder()
+                    .ableToUse(true)
+                    .build();
+        } else if (user.get().isDeleted()) {
+            user.get().setDeleted(false);
+            return VerifyEmailResDto.builder()
+                    .ableToUse(true)
+                    .build();
+        } else {
+            return VerifyEmailResDto.builder()
+                    .ableToUse(false)
+                    .build();
+        }
+    }
+
+    public VerifyPhoneNumResDto verifyPhoneNumResDto(String phoneNum) {
+        Optional<Users> user =
+                userRepository.findByPhoneNum(phoneNum);
+
+        if (user.isEmpty()) {
+            return VerifyPhoneNumResDto.builder()
+                    .ableToUse(true)
+                    .build();
+        } else if (user.get().isDeleted()) {
+            user.get().setDeleted(false);
+            return VerifyPhoneNumResDto.builder()
+                    .ableToUse(true)
+                    .build();
+        } else {
+            return VerifyPhoneNumResDto.builder()
+                    .ableToUse(false)
+                    .build();
+        }
+    }
+
 }
