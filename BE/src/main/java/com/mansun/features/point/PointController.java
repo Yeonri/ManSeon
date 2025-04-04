@@ -60,7 +60,7 @@ public class PointController {
     }
 
 
-    @Operation(summary = "한 사용자의 UserPoint를 불러온다.")
+    @Operation(summary = "한 사용자의 UserPoint List를 불러온다.")
     @GetMapping("/list/my")
     public ResponseEntity<List<UserPointListResDto>> getUserPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -68,6 +68,7 @@ public class PointController {
     }
 
 
+    @Operation(summary = "내 리스트에서 UserPoint 삭제")
     @DeleteMapping("/list/my")
     public ResponseEntity<MessageResDto> deleteUserPoint(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -75,11 +76,12 @@ public class PointController {
         return ResponseEntity.ok(new MessageResDto("정상적으로 삭제되었습니다."));
     }
 
+    @Operation(summary = "정확한 포인트 이름으로 포인트 검색하기")
     @GetMapping("/search")
-    public ResponseEntity<List<SearchPointResDto>> searchFishingPointList(
+    public ResponseEntity<SearchPointResDto> searchFishingPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            SearchPointReqDto req) {
-        return ResponseEntity.ok(fishingPointService.searchFishingPointList(customUserDetails, req));
+            @RequestParam("point_name") String pointName) {
+        return ResponseEntity.ok(fishingPointService.searchFishingPointList(customUserDetails, pointName));
     }
 
     @Operation(summary = "상세 낚시 포인트 정보 불러오기, 시간별 예보,물 때 정보, 이 포인트에서 내가 잡은 물고기")

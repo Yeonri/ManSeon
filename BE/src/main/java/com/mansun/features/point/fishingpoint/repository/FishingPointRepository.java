@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface FishingPointRepository extends JpaRepository<FishingPoint,Long> {
-    public List<FishingPoint> findFishingPointsByPointNameContaining(String pointName);
+    FishingPoint findFishingPointsByPointNameContaining(String pointName);
 }

@@ -31,6 +31,7 @@ public class Board {
         this.setTitle(req.getTitle());
         this.setContent(req.getContent());
         this.setCreatedAt(LocalDateTime.now());
+        this.setDeleted(false);
     }
 
     //연관 관계

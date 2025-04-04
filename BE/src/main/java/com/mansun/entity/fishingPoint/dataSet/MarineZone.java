@@ -21,16 +21,25 @@ public class MarineZone {
     private List<FishingPoint> fishingPoint;
 
     @OneToMany(mappedBy = "marineZone")
-    private List<WaveHeight> waveHeight;
+    private List<Wave> waveHeight;
 
+    @Column(name = "lat_lb")
     private double lat_lb;
+    @Column(name = "lon_lb")
     private double lon_lb;
+    @Column(name = "lat_lt")
     private double lat_lt;
+    @Column(name = "lon_lt")
     private double lon_lt;
+    @Column(name = "lat_rt")
     private double lat_rt;
+    @Column(name = "lon_rt")
     private double lon_rt;
+    @Column(name = "lat_rb")
     private double lat_rb;
+    @Column(name = "lon_rb")
     private double lon_rb;
+
 
     private boolean isDelete;
 }

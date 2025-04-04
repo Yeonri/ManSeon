@@ -11,6 +11,7 @@ import com.mansun.responseDto.badges.allBadgeListResDto;
 import com.mansun.responseDto.badges.allBadgesByUserResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +30,8 @@ public class BadgeController {
 
     @Operation(summary = "전체 뱃지에서 단일 뱃지 추가")
     @PostMapping("/all")
-    public ResponseEntity<MessageResDto> createNewBadge(@RequestBody CreateBadgeReqDto req){
+    public ResponseEntity<MessageResDto> createNewBadge(
+            @Valid @RequestBody CreateBadgeReqDto req){
         badgeService.createBadge(req);
         return ResponseEntity.ok(new MessageResDto("뱃지가 추가되었습니다"));
     }
@@ -49,7 +51,8 @@ public class BadgeController {
 
     @Operation(summary = "전체 뱃지에서 단일 뱃지 삭제")
     @DeleteMapping("/all")
-    public ResponseEntity<MessageResDto> deleteOneOfAllBadge(@RequestBody deleteBadgesReqDto req){
+    public ResponseEntity<MessageResDto> deleteOneOfAllBadge(
+            @Valid @RequestBody deleteBadgesReqDto req){
         badgeService.deleteBadge(req.getBadgeId());
         return ResponseEntity.ok(new MessageResDto("뱃지가 삭제되었습니다"));
     }

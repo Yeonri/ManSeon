@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
-@Schema(title = "사용자가 포획한 물고기 종류",description = "사용자가 포획한 물고기의 종류")
+@Table(indexes = @Index(name = "isDelete", columnList = "isDelete"))
+@Schema(title = "사용자가 포획한 물고기 종류", description = "사용자가 포획한 물고기의 종류")
 public class Fish {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +36,15 @@ public class Fish {
     private float lat;
     private float lng;
 
+    @Schema(description = "물고기의 크기")
     private float size;
+    @Schema(description = "미끼")
     private String bait;
-
+    @Schema(description = "사용한 장비")
     private String equipment;
+    @Schema(description = "물고기 사진")
     private String fishImg;
+
     @Builder.Default
-    private boolean deleted=false;
+    private boolean deleted = false;
 }

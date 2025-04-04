@@ -43,8 +43,10 @@ public class UserPointServiceImpl implements UserPointService {
                 .map(
                         up -> UserPointListResDto
                                 .builder()
-                                .pointId(up.getPointId())
-                                .pointName(up.getPointName())
+                                .id(up.getPointId())
+                                .name(up.getPointName())
+                                .latitude(up.getLat())
+                                .longitude(up.getLng())
                                 .build()
                 ).collect(Collectors.toList());
     }

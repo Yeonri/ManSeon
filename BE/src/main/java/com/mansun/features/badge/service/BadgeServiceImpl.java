@@ -21,7 +21,7 @@ public class BadgeServiceImpl implements BadgeService {
     //신규 뱃지를 생성하는 로직
     @Override
     public void createBadge(CreateBadgeReqDto badgeParam) {
-        Badges saveBadge = badgeRepository.save(
+        badgeRepository.save(
                 Badges
                         .builder()
                         .badgeName(badgeParam.getBadgeName())

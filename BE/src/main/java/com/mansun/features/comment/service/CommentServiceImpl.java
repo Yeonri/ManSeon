@@ -18,15 +18,20 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService{
     private final CommentRepository commentRepository;
+//    댓글 생성
     @Override
     public void createComment(CustomUserDetails customUserDetails, CreateCommentReqDto req) {
         commentRepository.save(new Comment(customUserDetails,req));
     }
 
+//    댓글 ㅜ정
     @Override
     public UpdateCommentResDto updateComment(CustomUserDetails customUserDetails, UpdateCommentReqDto req) {
+//        댓글을 commentId로 찾고
         Comment comment=commentRepository.findById(req.getCommentId()).orElseThrow();
+//        BeanUtils로 null이 아닌 값을 수정하고
         BeanUtils.copyProperties(req,comment, NullAwareBeanUtils.getNullPropertyNames(req));
+//        return한다.
         return UpdateCommentResDto
                 .builder()
                 .commentId(comment.getCommentId())
@@ -40,6 +45,7 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public void deleteComment(CustomUserDetails customUserDetails, DeleteCommentReqDto req) {
+//        delete Column을 true로 바꾼다.
         Comment comment=commentRepository.findById(req.getCommentId()).orElseThrow();
         comment.setDeleted(true);
     }

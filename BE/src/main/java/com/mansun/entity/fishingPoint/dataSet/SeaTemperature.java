@@ -12,10 +12,14 @@ public class SeaTemperature {
     private Long pk;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Observatory obs;
+    @JoinColumn(name = "obs_code")
+    private Observatory obsCode;
 
+    @Column(name = "sea_date")
     private LocalDateTime seaDate;
+    @Column(name = "sea_time")
     private LocalDateTime seaTime;
+    @Column(name = "sea_temp")
     private float seaTemp;
 
     private boolean isDelete;

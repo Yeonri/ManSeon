@@ -3,32 +3,34 @@ package com.mansun.features.board.service;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.common.utils.NullAwareBeanUtils;
 import com.mansun.entity.board.Board;
-import com.mansun.entity.board.QBoard;
-import com.mansun.entity.board.QComment;
-import com.mansun.entity.board.QRecomment;
+import com.mansun.entity.board.Comment;
+import com.mansun.entity.board.Recomment;
 import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
+import com.mansun.responseDto.board.BoardListResDto;
 import com.mansun.responseDto.board.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
-import com.mansun.responseDto.board.allBoardListResDto;
+import com.mansun.responseDto.board.FindOtherBoardListResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
     private final EntityManager em;
+    private final JPAQueryFactory queryFactory;
     private final BoardRepository boardrepository;
 
     //게시글을 작성하는 함수
@@ -38,50 +40,108 @@ public class BoardServiceImpl implements BoardService {
         boardrepository.save(board);//별도의 인증 과정은 필요 없다.
     }
 
-    //어차피 더미 데이터 만들어도 10만건 이하라 전체 조회한다.
     @Override
-    public List<allBoardListResDto> findAllBoardList() {
-        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
-        QBoard board = QBoard.board;
-        QComment comment = QComment.comment;
-//        QRecomment recomment = QRecomment.recomment;
+    public Page<BoardListResDto> findAllBoardList(Pageable pageable) {
+        return null;
+    }
 
-        List<Board> boardList = queryFactory
-                .selectFrom(board)
-                .where(board.deleted.eq(false))
-                .leftJoin(board.comment, comment).fetchJoin()
-//                .leftJoin(comment.recomment, recomment).fetchJoin()
-                .distinct() // 중복 제거
-                .fetch();
+    //어차피 더미 데이터 만들어도 10만건 이하라 전체 조회한다.
+//    @Override
+//    public Page<BoardListResDto> findAllBoardList(Pageable pageable) {
+//        QBoard board = QBoard.board;
+//        QUsers user = QUsers.users;
+//
+//       List<BoardListResDto> content = queryFactory
+//                .select(new BoardListResDto(
+//                        board.boardId,
+//                        board.title,
+//                        user.nickname,
+//                        board.createdAt
+//                ))
+//                .from(board)
+//                .join(board.user, user)
+//               .where(board.deleted.eq(false)) // 삭제되지 않은 게시글만
+//                .offset(pageable.getOffset())
+//                .limit(pageable.getPageSize())
+//                .orderBy(board.createdAt.desc())
+//                .fetch();
+//
+//        Long total = queryFactory
+//                .select(board.count())
+//                .from(board)
+//                .where(board.deleted.eq(false))
+//                .fetchOne();
+//
+//        return new PageImpl<>(content, pageable, total);
+//    }
 
-        return boardList.stream().map(
-                b -> allBoardListResDto
-                        .builder()
-                        .boardId(b.getBoardId())
-                        .title(b.getTitle())
-                        .build()
-        ).collect(Collectors.toList());
+    @Override
+    public FindBoardResDto getBoardDetail(Long boardId) {
+//       boardId를 이용해 댓글과 대댓글을 동시에 가져오는 로직을 짠다.
+        Board board = boardrepository.findWithCommentsAndRecommentsByBoardId(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+
+        // soft delete 처리: 삭제된 댓글/대댓글은 제외
+        board.getComment().removeIf(Comment::isDeleted);
+        //board의 댓글 리스트를 돌면서 지워진 대댓글은 지운다.
+        for (Comment comment : board.getComment()) {
+            comment.getRecomment().removeIf(Recomment::isDeleted);
+        }
+//        FindBoardResDto에 맞춰 Builder로 한번에 객체를 생성해 반환
+        return FindBoardResDto.builder()
+                .boardId(board.getBoardId())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .commentList(board.getComment())
+                .build();
     }
 
     //userId를 이용해서 게시글을 찾는 함수
     @Override
     public List<FindMyBoardListResDto> findMyBoardList(CustomUserDetails customUserDetails) {
+//        내 게시글 리스트를 JWT token을 통한 user Id추출로
+//        나의 지워지지 않은 게시글 리스트를 얻은 후
+//        FindMyBoardListResDto로 한번에 객체를 만들어 반환
         return boardrepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId())
                 .stream()
                 .map(board -> FindMyBoardListResDto
                         .builder()
+                        .postId(board.getBoardId())
+                        .userId(board.getUser().getUserId())
+                        .postImg(board.getPostImg())
+                        .profileImg(board.getUser().getProfileImg())
+                        .createdAt(board.getCreatedAt())
                         .title(board.getTitle())
                         .content(board.getContent())
                         .build())
                 .toList();
     }
 
-    //postId을 이용해서 게시글을 찾는 함수
+    public List<FindOtherBoardListResDto> findOtherBoardList(CustomUserDetails customUserDetails, Long userId) {
+//        위 로직과 동일하나 찾는 것이 타인의 userId로 바뀌었다.
+        return boardrepository.findByUser_UserIdAndDeletedFalse(userId)
+                .stream()
+                .map(board -> FindOtherBoardListResDto
+                        .builder()
+                        .postId(board.getBoardId())
+                        .userId(board.getUser().getUserId())
+                        .postImg(board.getPostImg())
+                        .profileImg(board.getUser().getProfileImg())
+                        .createdAt(board.getCreatedAt())
+                        .title(board.getTitle())
+                        .content(board.getContent())
+                        .build())
+                .toList();
+    }
+
+    //boardId을 이용해서 게시글을 찾는 함수
     @Override
-    public FindBoardResDto findBoard(Long postId) {
-        Board findboard = boardrepository.findById(postId).orElseThrow(
+    public FindBoardResDto findBoard(Long boardId) {
+//        boardId를 이용해 단건 게시글을 찾은 후 만약 null이라면 예외 처리한다.
+        Board findboard = boardrepository.findById(boardId).orElseThrow(
                 () -> new NoSuchElementException("게시글이 없습니다")
         );
+//        FindBoardResDto를 객체로 한번에 만들어 반환
         return FindBoardResDto
                 .builder()
                 .title(findboard.getTitle())
@@ -92,7 +152,11 @@ public class BoardServiceImpl implements BoardService {
     //사용자 정보와 boardId를 이용해서 단 건 게시글을 찾는 함수
     @Override
     public FindBoardResDto findBoard(CustomUserDetails customUserDetails, Long boardId) {
-        Board findboard = boardrepository.findBoardsByUser_UserIdAndBoardId(customUserDetails.getUserId(), boardId);
+//        UserId와 BoardId를 이용해서 지워지지 않은 단건 게시글을 조회한다.
+        Board findboard = boardrepository
+                .findBoardsByUser_UserIdAndBoardIdAndDeletedFalse(customUserDetails.getUserId(), boardId)
+                .orElseThrow();
+//        해당 단건 게시글을 Builder 객체로 반환
         return FindBoardResDto
                 .builder()
                 .title(findboard.getTitle())
@@ -104,7 +168,10 @@ public class BoardServiceImpl implements BoardService {
     public void updateMyBoard(
             CustomUserDetails customUserDetails,
             UpdateMyBoardReqDto req) {
+//        boardId로 단건 조회한다.
         Board findboard = boardrepository.findById(req.getPostId()).orElseThrow();
+//        단건 조회한 해당 게시글을 BeanUtils를 이용해 null값이 아닌 부분만 바꾼다
+//        이때 JPA Context가 작동
         BeanUtils.copyProperties(req, findboard, NullAwareBeanUtils.getNullPropertyNames(req));
     }
 
@@ -113,6 +180,9 @@ public class BoardServiceImpl implements BoardService {
     public void deleteMyBoard(
             CustomUserDetails customUserDetails,
             DeleteMyBoardReqDto boardParam) {
-        boardrepository.deleteById(boardParam.getBoardId());
+//        soft Delete
+        boardrepository.findById(boardParam.getBoardId())
+                .orElseThrow()
+                .setDeleted(true);
     }
 }
