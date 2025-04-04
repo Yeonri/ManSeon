@@ -7,11 +7,11 @@ import { Modalize } from "react-native-modalize";
 import { PhotoFile } from "react-native-vision-camera";
 import { RootStackParams } from "../../api/types/RootStackParams";
 import { CameraView } from "../../components/cameraRecord/cameraView";
-import { Probability } from "../../components/cameraRecord/probability";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
 import { imageToTensor } from "../../utils/imageProcessor";
+import { loadModel, runModelOnImage } from "../../utils/tfliteRunner";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -22,6 +22,7 @@ export function CameraScreen() {
   const [selectedFishName, setSelectedFishName] = useState<string | null>(null);
   const [next, setNext] = useState<boolean>(true);
   const [processedUri, setProcessedUri] = useState<string | null>(null);
+  const [predictionResults, setPredictionResults] = useState<any[]>([]);
 
   function openBottomSheet() {
     sheetRef.current?.open();
@@ -47,6 +48,12 @@ export function CameraScreen() {
       setProcessedUri(uri);
       // console.log("원본", newPhoto?.path);
       // console.log("변환:", uri);
+
+      await loadModel();
+      console.log("모델 로딩 했음");
+      const results = await runModelOnImage(uri);
+      console.log("추론 결과", results);
+      setPredictionResults(results);
     } catch (e: unknown) {
       console.log(processedUri);
       console.log("사진 처리 중 오류 발생", e);
@@ -87,11 +94,11 @@ export function CameraScreen() {
       )}
       <Modalize ref={sheetRef} snapPoint={300}>
         <View className="p-10">
-          <Probability
+          {/* <Probability
             onSelectedFishName={setSelectedFishName}
             onNext={setNext}
             processedUri={processedUri}
-          />
+          /> */}
           <View className="flex-1 p-5" />
           <FullButton name="다음" disable={next} onPress={handleNext} />
         </View>

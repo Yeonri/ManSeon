@@ -1,0 +1,8 @@
+diff --git a/node_modules/react-native-fast-tflite/src/TensorflowModule.ts b/node_modules/react-native-fast-tflite/src/TensorflowModule.ts
+index c41f9bd..043c7f7 100644
+--- a/node_modules/react-native-fast-tflite/src/TensorflowModule.ts
++++ b/node_modules/react-native-fast-tflite/src/TensorflowModule.ts
+@@ -1 +1,2 @@
+-export { default as TensorflowModule } from '../spec/NativeRNTflite'
++export { default as TensorflowModule } from '../spec/NativeRNTflite.js';
++
