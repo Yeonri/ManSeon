@@ -20,10 +20,11 @@ import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
 import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
-import com.mansun.responseDto.user.GetMyInfoResDto;
+import com.mansun.responseDto.user.getmyinfo.GetMyInfoResDto;
 import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
 import com.mansun.responseDto.user.VerifyEmailResDto;
 import com.mansun.responseDto.user.VerifyPhoneNumResDto;
+import com.mansun.responseDto.user.getmyinfo.PostResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -151,7 +152,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .badges(myBadgeList)
                 .badges_cnt(userBadgeRepository.countAllByUser_UserIdAndDeletedFalse(customUserDetails.getUserId()))
                 .collection_cnt(fishRepository.countAllByUser_UserId(customUserDetails.getUserId()))
-                .posts(myBoardList)
+                .posts(myBoardList.stream().map(
+                        b-> PostResDto.builder()
+                                .title(b.getTitle())
+                                .content(b.getContent())
+                                .commentNum(b.getCommentNum())
+                                .createdAt(b.getCreatedAt().toLocalDate())
+                                .like(b.getLikeNum())
+                                .postImg(b.getPostImg())
+                                .postId(b.getBoardId())
+                                .build()
+                ).collect(Collectors.toList()))
                 .build();
     }
 

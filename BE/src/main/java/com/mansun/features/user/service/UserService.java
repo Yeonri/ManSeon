@@ -5,7 +5,7 @@ import com.mansun.entity.Users;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
-import com.mansun.responseDto.user.GetMyInfoResDto;
+import com.mansun.responseDto.user.getmyinfo.GetMyInfoResDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -8,7 +8,7 @@ import com.mansun.requestDto.user.UpdateUserReqDto;
 import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
-import com.mansun.responseDto.user.GetMyInfoResDto;
+import com.mansun.responseDto.user.getmyinfo.GetMyInfoResDto;
 import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
 import com.mansun.responseDto.user.VerifyEmailResDto;
 import com.mansun.responseDto.user.VerifyPhoneNumResDto;
