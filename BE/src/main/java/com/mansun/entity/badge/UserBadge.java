@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
+@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 @Schema(title = "유저가 가지고 있는 뱃지 종류", description = "회원이 가진 뱃지와 전체 뱃지를 확인하는 중간 Entity")
 public class UserBadge {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete", columnList = "isDelete"))
+@Table(indexes = @Index(name = "isDelete", columnList = "deleted"))
 @Schema(title = "사용자가 포획한 물고기 종류", description = "사용자가 포획한 물고기의 종류")
 public class Fish {
     @Id

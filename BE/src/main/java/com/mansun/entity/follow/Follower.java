@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
+@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class Follower {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

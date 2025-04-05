@@ -47,8 +47,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String email = customUserDetails.getUsername(); // username은 email로 사용됨
         String userId = String.valueOf(customUserDetails.getUserId());
 
-        String accessToken = jwtUtil.createJwt("access", email, userId, 60 * 60 * 60 * 10L);
-        String refreshToken = jwtUtil.createJwt("refresh", email, userId, 60 * 60 * 60 * 60 * 60 * 10L);
+        String accessToken = jwtUtil.createJwt("access", email, userId,  7L * 24 * 60 * 60 * 1000);
+        String refreshToken = jwtUtil.createJwt("refresh", email, userId,  7L * 24 * 60 * 60 * 1000);
 
         // DB에 refreshToken 저장
         addRefreshEntity(email, refreshToken, 86400000L);

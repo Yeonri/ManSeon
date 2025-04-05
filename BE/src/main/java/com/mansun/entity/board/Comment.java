@@ -17,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
+@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 @Schema(title = "각 게시물의 댓글 정보",description = "각 댓글 정보, 생성일, 대댓글 수")
 public class Comment {
     @Id

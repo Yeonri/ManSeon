@@ -11,8 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
+@AllArgsConstructor@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 @Schema(title = "전체 물고기 종류", description = "전체 어종이 담고 있어야 할 물고기 이름, 서식지, 특징")
 public class FishType {
     @Id

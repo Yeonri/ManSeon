@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete", columnList = "isDelete"))
+@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class UserPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

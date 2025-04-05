@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
+@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class Observatory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +25,5 @@ public class Observatory {
     @Column(name = "obs_lng")
     private float obsLng;
 
-    private boolean isDelete;
+    private boolean deleted;
 }
