@@ -68,7 +68,7 @@ export function MainScreen() {
   const posts = PostData;
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView edges={["top"]} className="flex-1">
       <HeaderLogo />
       <ScrollView className="px-5">
         {/* 물때 관련 */}
