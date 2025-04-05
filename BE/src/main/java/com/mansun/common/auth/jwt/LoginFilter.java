@@ -82,10 +82,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 //        //customUserDetails에서 userId를 읽어내 문자열로 변환한다.
 //        String userId = String.valueOf(customUserDetails.getUserId());
 //
-////        Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
-////        Iterator<? extends GrantedAuthority> Iterator=authorities.iterator();
-////        GrantedAuthority auth=Iterator.next();
-////        String role=auth.getAuthority();
+//        Collection<? extends GrantedAuthority> authorities=authentication.getAuthorities();
+//        Iterator<? extends GrantedAuthority> Iterator=authorities.iterator();
+//        GrantedAuthority auth=Iterator.next();
+//        String role=auth.getAuthority();
 //
 //        String accessToken = jwtUtil.createJwt("access", email, userId, 60 * 60 * 60 * 10L);
 //        String refreshToken = jwtUtil.createJwt("refresh", email, userId, 60 * 60 * 60 * 60 * 60 * 10L);
