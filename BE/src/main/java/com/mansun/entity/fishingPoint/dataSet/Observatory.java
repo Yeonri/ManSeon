@@ -4,22 +4,27 @@ import com.mansun.entity.fishingPoint.FishingPoint;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class Observatory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "obs_id")
-    private Long obsId;
+    private String obsCode;
 //    연관 관계
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
-    private FishingPoint point;
+
+    @OneToMany(mappedBy = "obsCode")
+    private List<FishingPoint> fishingPoint;
+
+    @OneToMany(mappedBy = "obsCode")
+    private List<TideLevel> tideLevel;
+
+    @OneToMany(mappedBy = "obsCode")
+    private List<SeaTemperature> seaTemperature;
 
 //    Column
-    @Column( name = "obs_code")
-    private String obsCode;
     @Column(name = "obs_lat")
     private float obsLat;
     @Column(name = "obs_lng")

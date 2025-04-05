@@ -14,13 +14,13 @@ import java.util.List;
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column( name = "weather_id")
+    @Column(name = "weather_id",columnDefinition = "INT UNSIGNED")
     private Long weatherId;
 
 //    연관 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "point_id")
-    private FishingPoint points;
+    private FishingPoint fishingPoint;
 
 //    Column
     @Column(name = "weather_date")

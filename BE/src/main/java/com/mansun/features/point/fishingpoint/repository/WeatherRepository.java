@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface WeatherRepository extends JpaRepository<Weather,Long> {
-    public List<Weather> findByWeatherDateBetweenAndPoints_PointId(LocalDate startDate, LocalDate endDate, Long pointId);
+    public List<Weather> findByWeatherDateBetweenAndFishingPoint_PointId(LocalDate startDate, LocalDate endDate, Long pointId);
 }

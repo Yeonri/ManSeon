@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface TideLevelRepository extends JpaRepository<TideLevel,Long> {
-    public List<TideLevel> findByObs_ObsId(Long obsId);
+    public List<TideLevel> findByObsCode_ObsCode(String obsCode);
 }
