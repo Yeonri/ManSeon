@@ -27,7 +27,7 @@ public class RecommentController {
     @PostMapping
     public ResponseEntity<MessageResDto> createRecomment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid CreateRecommentReqDto req) {
+            @Valid @RequestBody CreateRecommentReqDto req) {
         service.createRecomment(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("대댓글이 추가되었습니다."));
     }

@@ -28,6 +28,7 @@ public class RecommentServiceImpl implements RecommentService {
 
     @Override
     public void createRecomment(CustomUserDetails customUserDetails, CreateRecommentReqDto req) {
+        System.out.println(req.getPostId()+" "+req.getCommentId()+" "+req.getContent());
         Comment comment=commentRepository.findById(req.getCommentId()).orElseThrow();
         repository.save(
                 Recomment.builder()

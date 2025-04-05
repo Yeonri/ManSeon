@@ -1,4 +1,4 @@
-package com.mansun.responseDto.board;
+package com.mansun.responseDto.board.findboard;
 
 import com.mansun.entity.board.Comment;
 import com.mansun.entity.board.Recomment;
@@ -7,14 +7,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Builder
 @Getter
 public class FindBoardResDto {
-    Long boardId;
+    Long postId;
+    Long userId;
+    String nickname;
+    String profileImg;
     String title;
     String content;
-    List<Comment> commentList;
-    List<Recomment> recommentList;
+    LocalDate createdAt;
+    String postImg;
+    int commentNum;
+    int like;
+    List<FindBoardCommentResDto> commentList;
 }
