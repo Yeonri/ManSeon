@@ -1,31 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, TouchableOpacity, View } from "react-native";
+import { useMyPosts } from "../../../api/quries/useMypost";
 import { MoreStackParams } from "../../../api/types/MoreStackParams";
-import type { Post } from "../../../api/types/Post";
 import IconMove from "../../../assets/images/icon_move.svg";
 import { PostCard } from "../postCard";
-
-type ProfilePost = Pick<
-  Post,
-  | "postId"
-  | "title"
-  | "content"
-  | "postImg"
-  | "like"
-  | "commentNum"
-  | "createAt"
->;
-
-type MyPostListProps = {
-  posts: ProfilePost[];
-};
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams, "More"> {}
 
-export function MyPostList({ posts }: MyPostListProps) {
+export function MyPostList() {
   const navigation = useNavigation<MoreScreenNavigationProps>();
+  const { data: posts = [] } = useMyPosts();
+
+  console.log("게시글 확인:", posts);
 
   return (
     <View className="mt-4">

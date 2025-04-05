@@ -2,44 +2,52 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
-import type { Post } from "../../api/types/Post";
 import IconEdit from "../../assets/images/icon_edit.svg";
 import IconMove from "../../assets/images/icon_move.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
 import { MyPostList } from "../../components/profile/myPostList";
-import userData from "../../mocks/userMocks.json";
-
-type ProfilePost = Pick<
-  Post,
-  | "postId"
-  | "title"
-  | "content"
-  | "postImg"
-  | "like"
-  | "commentNum"
-  | "createAt"
->;
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams, "More"> {}
 
 export function ProfileScreen() {
   const navigation = useNavigation<MoreScreenNavigationProps>();
-  const user = userData[0];
+  const { data: user, isLoading } = useGetMyInfo();
 
-  const progress = (user.collection__cnt / 24) * 100;
+  if (isLoading || !user) {
+    return (
+      <SafeAreaView className="flex-1 justify-center items-center">
+        <Text>유저 정보를 불러오는 중입니다~</Text>
+      </SafeAreaView>
+    );
+  }
+
+  const progress = (user.collection_cnt / 24) * 100;
 
   return (
     <SafeAreaView>
       <HeaderBeforeLogo />
       <ScrollView className="mb-5">
         <View className="items-center mt-6 mb-6">
-          <Image
-            source={{ uri: user.profile_img }}
-            className="w-24 h-24 rounded-full"
-          />
+          {user.profile_img === null ? (
+            <Image
+              source={require("../../assets/images/mansun.png")}
+              className="w-24 h-24 rounded-full mr-4 bg-white"
+              resizeMode="contain"
+            />
+          ) : (
+            <Image
+              source={{
+                uri: user.profile_img,
+              }}
+              className="w-24 h-24 rounded-full mr-4 bg-white"
+              resizeMode="center"
+            />
+          )}
+
           <TouchableOpacity
             className="flex-row items-center mt-2"
             onPress={() => navigation.navigate("ProfileEdit")}
@@ -87,7 +95,7 @@ export function ProfileScreen() {
           <View className="bg-blue-100 rounded-2xl px-4 py-3 mx-5 mt-3">
             <View className="flex-row items-baseline gap-2">
               <Text className="text-5xl font-extrabold text-blue-600">
-                {user.collection__cnt}
+                {user.collection_cnt}
               </Text>
               <Text className="text-3xl text-neutral-400 font-bold ml-1">
                 / 24
@@ -105,7 +113,7 @@ export function ProfileScreen() {
         <BadgeList
           badges={user.badges.map(({ id, is_earned }) => ({ id, is_earned }))}
         />
-        <MyPostList posts={user.posts as ProfilePost[]} />
+        <MyPostList />
       </ScrollView>
     </SafeAreaView>
   );

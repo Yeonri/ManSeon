@@ -25,6 +25,6 @@ export async function login(email: string, password: string): Promise<Auth> {
 // 로그인한 유저 정보 가져오기
 export async function getMyInfo(): Promise<User> {
   const response = await authClient.get<User>("/users/me");
-  console.log(response);
+  console.log("로그인한 유저 정보", response);
   return response.data;
 }
