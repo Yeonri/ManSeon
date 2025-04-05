@@ -16,13 +16,13 @@ import java.util.List;
 public class MarineZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Lzone;
+    private Integer Lzone;
 
     @OneToMany(mappedBy = "marineZone")
     private List<FishingPoint> fishingPoint;
 
     @OneToMany(mappedBy = "marineZone")
-    private List<Wave> waveHeight;
+    private List<Wave> wave;
 
     @Column(name = "lat_lb")
     private double lat_lb;
@@ -40,7 +40,5 @@ public class MarineZone {
     private double lat_rb;
     @Column(name = "lon_rb")
     private double lon_rb;
-
-
     private boolean deleted;
 }

@@ -88,10 +88,10 @@ public class FishingPointServiceImpl implements FishingPointService {
     @Override
     public OnePointDetailInfoResDto findOnePointDetailInfo(CustomUserDetails customUserDetails, Long pointId) {
         //날씨
-        List<Weather> weatherList = weatherRepository.findByWeatherDateBetweenAndPoints_PointId(LocalDate.now(), LocalDate.now().plusDays(7), pointId);
+        List<Weather> weatherList = weatherRepository.findByWeatherDateBetweenAndFishingPoint_PointId(LocalDate.now(), LocalDate.now().plusDays(7), pointId);
         //조위
-        Long obsId = fishingPointRepository.findById(pointId).orElseThrow().getPointId();
-        List<TideLevel> tideLevelList = tideLevelRepository.findByObs_ObsId(obsId);
+        String obsCode = fishingPointRepository.findById(pointId).orElseThrow().getObsCode().getObsCode();
+        List<TideLevel> tideLevelList = tideLevelRepository.findByObsCode_ObsCode(obsCode);
         //물고기
         List<Fish> myFishList = fishRepository.findByUser_UserIdAndDeletedFalse(customUserDetails.getUserId());
         return OnePointDetailInfoResDto.builder()

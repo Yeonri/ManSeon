@@ -1,12 +1,18 @@
 package com.mansun.entity.fishingPoint;
 
 import com.mansun.entity.fishingPoint.dataSet.MarineZone;
+import com.mansun.entity.fishingPoint.dataSet.Observatory;
+import com.mansun.entity.fishingPoint.dataSet.SunMoonTimes;
+import com.mansun.entity.fishingPoint.dataSet.Weather;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 @Builder
 @Entity
 @NoArgsConstructor
@@ -15,12 +21,22 @@ import lombok.NoArgsConstructor;
 @Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class FishingPoint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "point_id")
+    @Column(name = "point_id",columnDefinition = "INT UNSIGNED")
     private Long pointId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Lzone")
+    @JoinColumn
     private MarineZone marineZone;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "obs_code")
+    private Observatory obsCode;
+
+    @OneToMany(mappedBy = "fishingPoint")
+    private List<Weather> weatherList;
+
+    @OneToMany(mappedBy = "fishingPoint")
+    private List<SunMoonTimes> sunMoonTimesList;
 
 
 //    Column

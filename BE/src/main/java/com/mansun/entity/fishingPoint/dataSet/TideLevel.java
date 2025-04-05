@@ -15,7 +15,7 @@ public class TideLevel {
 //    연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "obs_code")
-    private Observatory obs;
+    private Observatory obsCode;
 
 
     @Column(name = "tph_time")
