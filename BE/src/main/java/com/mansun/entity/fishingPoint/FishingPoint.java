@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(indexes = @Index(name = "isDelete",columnList = "isDelete"))
+@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class FishingPoint {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "point_id")
