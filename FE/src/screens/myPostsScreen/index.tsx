@@ -60,7 +60,6 @@ export function MyPostsScreen() {
           data={sortedData as ProfilePost[]}
           keyExtractor={(item) => item.postId.toString()}
           renderItem={({ item }) => <PostCard post={item} />}
-          contentContainerStyle={{ paddingBottom: 150 }}
         />
       </View>
     </SafeAreaView>

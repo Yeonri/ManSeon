@@ -34,7 +34,6 @@ export default function App(): React.JSX.Element {
 
   useEffect(() => {
     async function tryAutoLogin() {
-      await tokenStorage.clear(); // 토큰 문제로 임시 작성 -> 삭제 예정
       const accessToken = await tokenStorage.getAccessToken();
       const refreshToken = await tokenStorage.getRefreshToken();
 
