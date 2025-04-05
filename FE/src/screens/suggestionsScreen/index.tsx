@@ -43,7 +43,10 @@ export function SuggestionsScreen() {
       </ScrollView>
       <SaveModal
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={() => {
+          setModalVisible(false);
+          navigation.goBack();
+        }}
       />
     </SafeAreaView>
   );
