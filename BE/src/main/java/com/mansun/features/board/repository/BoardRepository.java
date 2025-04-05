@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface BoardRepository extends JpaRepository<Board,Long> {
 //    Board에서 userId에 해당하는 모든 게시물을 가져온다 페이징 미적용
 
+    List<Board> findAllByDeletedFalseOrderByCreatedAtDesc();
+
 //  _ 사용은 https://docs.spring.io/spring-data/jpa/reference/repositories/query-methods-details.html의 property Expression
     //userId와 boardId로 지워지지 않은 단일 게시글을 조회한다.
     Optional<Board> findBoardsByUser_UserIdAndBoardIdAndDeletedFalse(Long userId, Long boardId);

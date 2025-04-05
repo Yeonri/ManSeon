@@ -9,7 +9,9 @@ import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
-import com.mansun.responseDto.board.FindBoardResDto;
+import com.mansun.responseDto.board.findboard.FindBoardCommentRecommentResDto;
+import com.mansun.responseDto.board.findboard.FindBoardCommentResDto;
+import com.mansun.responseDto.board.findboard.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
 import com.mansun.responseDto.board.FindOtherBoardListResDto;
 import com.mansun.responseDto.board.allBoardListResDto;
@@ -41,13 +43,20 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public List<allBoardListResDto> findAllBoardList() {
-        List<Board> boardList = boardrepository.findAll();
+        List<Board> boardList = boardrepository.findAllByDeletedFalseOrderByCreatedAtDesc();
         return boardList.stream().map(
                 b -> allBoardListResDto.builder()
-                        .boardId(b.getBoardId())
+                        .postId(b.getBoardId())
+                        .userId(b.getUser().getUserId())
+                        .nickname(b.getUser().getUsername())
                         .title(b.getTitle())
+                        .content(b.getContent())
+                        .profileImg(b.getUser().getProfileImg())
+                        .createdAt(b.getCreatedAt().toLocalDate())
+                        .commentNum(b.getCommentNum())
+                        .like(b.getLikeNum())
+                        .postImg(b.getPostImg())
                         .build()
-
         ).collect(Collectors.toList());
     }
 
@@ -80,10 +89,10 @@ public class BoardServiceImpl implements BoardService {
 //
 //        return new PageImpl<>(content, pageable, total);
 //    }
-
+//       boardId를 이용해 댓글과 대댓글을 동시에 가져오는 로직을 짠다.
     @Override
     public FindBoardResDto getBoardDetail(Long boardId) {
-//       boardId를 이용해 댓글과 대댓글을 동시에 가져오는 로직을 짠다.
+
         Board board = boardrepository.findWithCommentsAndRecommentsByBoardId(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
 
@@ -94,11 +103,37 @@ public class BoardServiceImpl implements BoardService {
             comment.getRecomment().removeIf(Recomment::isDeleted);
         }
 //        FindBoardResDto에 맞춰 Builder로 한번에 객체를 생성해 반환
-        return FindBoardResDto.builder()
-                .boardId(board.getBoardId())
+        return FindBoardResDto
+                .builder()
+                .postId(board.getBoardId())
+                .userId(board.getUser().getUserId())
+                .nickname(board.getUser().getUsername())
+                .postImg(board.getPostImg())
+                .profileImg(board.getUser().getProfileImg())
+                .createdAt(board.getCreatedAt().toLocalDate())
                 .title(board.getTitle())
                 .content(board.getContent())
-                .commentList(board.getComment())
+                .commentList(board.getComment().stream().map(
+                        b-> FindBoardCommentResDto.builder()
+                                .commentId(b.getCommentId())
+                                .boardId(b.getBoard().getBoardId())
+                                .userId(b.getUser().getUserId())
+                                .username(b.getUser().getUsername())
+                                .nickname(b.getUser().getNickname())
+                                .createdAt(b.getCreatedAt())
+                                .commentContent(b.getCommentContent())
+                                .recommentNum(b.getRecommentNum())
+                                .recomment(b.getRecomment().stream().map(
+                                        r-> FindBoardCommentRecommentResDto.builder()
+                                                .recommentId(r.getRecommentId())
+                                                .recommentContent(r.getRecommentContent())
+                                                .userId(r.getUser().getUserId())
+                                                .boardId(r.getBoard().getBoardId())
+                                                .commentId(r.getComment().getCommentId())
+                                                .createdAt(r.getCreatedAt())
+                                                .build()
+                                ).collect(Collectors.toList()))
+                                .build()).collect(Collectors.toList()))
                 .build();
     }
 
@@ -144,14 +179,47 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public FindBoardResDto findBoard(Long boardId) {
 //        boardId를 이용해 단건 게시글을 찾은 후 만약 null이라면 예외 처리한다.
-        Board findboard = boardrepository.findById(boardId).orElseThrow(
+        Board board = boardrepository.findById(boardId).orElseThrow(
                 () -> new NoSuchElementException("게시글이 없습니다")
         );
+        // soft delete 처리: 삭제된 댓글/대댓글은 제외
+        board.getComment().removeIf(Comment::isDeleted);
+        //board의 댓글 리스트를 돌면서 지워진 대댓글은 지운다.
+        for (Comment comment : board.getComment()) {
+            comment.getRecomment().removeIf(Recomment::isDeleted);
+        }
 //        FindBoardResDto를 객체로 한번에 만들어 반환
         return FindBoardResDto
                 .builder()
-                .title(findboard.getTitle())
-                .content(findboard.getContent())
+                .postId(board.getBoardId())
+                .userId(board.getUser().getUserId())
+                .nickname(board.getUser().getUsername())
+                .postImg(board.getPostImg())
+                .profileImg(board.getUser().getProfileImg())
+                .createdAt(board.getCreatedAt().toLocalDate())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .commentList(board.getComment().stream().map(
+                        b-> FindBoardCommentResDto.builder()
+                                .commentId(b.getCommentId())
+                                .boardId(b.getBoard().getBoardId())
+                                .userId(b.getUser().getUserId())
+                                .username(b.getUser().getUsername())
+                                .nickname(b.getUser().getNickname())
+                                .createdAt(b.getCreatedAt())
+                                .commentContent(b.getCommentContent())
+                                .recommentNum(b.getRecommentNum())
+                                .recomment(b.getRecomment().stream().map(
+                                        r-> FindBoardCommentRecommentResDto.builder()
+                                                .recommentId(r.getRecommentId())
+                                                .recommentContent(r.getRecommentContent())
+                                                .userId(r.getUser().getUserId())
+                                                .boardId(r.getBoard().getBoardId())
+                                                .commentId(r.getComment().getCommentId())
+                                                .createdAt(r.getCreatedAt())
+                                                .build()
+                                ).collect(Collectors.toList()))
+                                .build()).collect(Collectors.toList()))
                 .build();
     }
 

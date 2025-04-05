@@ -6,7 +6,7 @@ import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
 import com.mansun.responseDto.MessageResDto;
-import com.mansun.responseDto.board.FindBoardResDto;
+import com.mansun.responseDto.board.findboard.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
 import com.mansun.responseDto.board.FindOtherBoardListResDto;
 import com.mansun.responseDto.board.allBoardListResDto;

@@ -4,12 +4,9 @@ import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
-import com.mansun.responseDto.board.BoardListResDto;
-import com.mansun.responseDto.board.FindBoardResDto;
+import com.mansun.responseDto.board.findboard.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
 import com.mansun.responseDto.board.allBoardListResDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
