@@ -10,4 +10,5 @@ public class CreateBoardReqDto {
     String title;
     @Schema(defaultValue = "ㅈㄱㄴ")
     String content;
+    String postImg;
 }

@@ -15,7 +15,8 @@ import java.util.List;
 public class MarineZone {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Lzone;
+    @Column(name = "Lzone")
+    private Integer lzone;
 
     @OneToMany(mappedBy = "marineZone")
     private List<FishingPoint> fishingPoint;

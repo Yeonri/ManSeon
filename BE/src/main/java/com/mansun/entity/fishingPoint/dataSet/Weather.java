@@ -28,14 +28,12 @@ public class Weather {
     private LocalDateTime weatherTime;
     private int pop;
     private int pty;
-    private int pcp;
-    private int sno;
+    private String pcp;
+    private String sno;
     private int sky;
     private int tmp;
     private int tmn;
     private int tmx;
 
-    private int vec;
-    private int wsd;
     private int reh;
 }

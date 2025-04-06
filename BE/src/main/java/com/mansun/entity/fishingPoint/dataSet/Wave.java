@@ -12,7 +12,8 @@ import java.time.LocalDateTime;
 public class Wave{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pk;
+    @Column(name = "wave_id")
+    private Long waveId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Lzone")
@@ -28,8 +29,9 @@ public class Wave{
 
     @Column(name = "wave_direction")
     private double waveDirection;
-    @Column(name = "wave_speed")
-    private double waveSpeed;
+
     @Column(name = "wind_direction")
     private double windDirection;
+    @Column(name = "wind_speed")
+    private double windSpeed;
 }
