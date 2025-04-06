@@ -8,6 +8,7 @@ interface BadgeListProps {
     posts: any[];
     following_cnt: number;
     follower_cnt: number;
+    profile_img: string;
   };
 }
 

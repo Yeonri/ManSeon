@@ -9,6 +9,8 @@ interface BadgeItemProps {
     posts: any[];
     following_cnt: number;
     follower_cnt: number;
+    profile_img: string;
+    collection_cnt: number;
   };
 }
 
@@ -21,6 +23,12 @@ export function BadgeItem({ id, user }: BadgeItemProps) {
         return user.posts.length >= 1;
       case 3:
         return user.following_cnt >= 1 || user.follower_cnt >= 1;
+      case 6:
+        return user.fishing_total >= 10;
+      case 7:
+        return user.profile_img !== null;
+      case 9:
+        return user.collection_cnt === 24;
       default:
         return false;
     }
