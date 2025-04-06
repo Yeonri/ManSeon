@@ -2,6 +2,7 @@ package com.mansun.features.board.service;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.common.utils.NullAwareBeanUtils;
+import com.mansun.entity.Users;
 import com.mansun.entity.board.Board;
 import com.mansun.entity.board.Comment;
 import com.mansun.entity.board.Recomment;
@@ -9,12 +10,12 @@ import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.requestDto.board.CreateBoardReqDto;
 import com.mansun.requestDto.board.DeleteMyBoardReqDto;
 import com.mansun.requestDto.board.UpdateMyBoardReqDto;
-import com.mansun.responseDto.board.findboard.FindBoardCommentRecommentResDto;
-import com.mansun.responseDto.board.findboard.FindBoardCommentResDto;
-import com.mansun.responseDto.board.findboard.FindBoardResDto;
 import com.mansun.responseDto.board.FindMyBoardListResDto;
 import com.mansun.responseDto.board.FindOtherBoardListResDto;
 import com.mansun.responseDto.board.allBoardListResDto;
+import com.mansun.responseDto.board.findboard.FindBoardCommentRecommentResDto;
+import com.mansun.responseDto.board.findboard.FindBoardCommentResDto;
+import com.mansun.responseDto.board.findboard.FindBoardResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -37,8 +39,15 @@ public class BoardServiceImpl implements BoardService {
     //게시글을 작성하는 함수
     @Override
     public void createBoard(CustomUserDetails customUserDetails, CreateBoardReqDto boardParam) {
-        Board board = new Board(customUserDetails, boardParam);
-        boardrepository.save(board);//별도의 인증 과정은 필요 없다.
+        boardrepository.save(Board.builder()
+                .title(boardParam.getTitle())
+                .content(boardParam.getContent())
+                .user(new Users(customUserDetails))
+                .createdAt(LocalDateTime.now())
+                .postImg(boardParam.getPostImg())
+                .likeNum(0)
+                .deleted(false)
+                .build());//별도의 인증 과정은 필요 없다.
     }
 
     @Override
@@ -114,7 +123,7 @@ public class BoardServiceImpl implements BoardService {
                 .title(board.getTitle())
                 .content(board.getContent())
                 .commentList(board.getComment().stream().map(
-                        b-> FindBoardCommentResDto.builder()
+                        b -> FindBoardCommentResDto.builder()
                                 .commentId(b.getCommentId())
                                 .boardId(b.getBoard().getBoardId())
                                 .userId(b.getUser().getUserId())
@@ -124,7 +133,7 @@ public class BoardServiceImpl implements BoardService {
                                 .commentContent(b.getCommentContent())
                                 .recommentNum(b.getRecommentNum())
                                 .recomment(b.getRecomment().stream().map(
-                                        r-> FindBoardCommentRecommentResDto.builder()
+                                        r -> FindBoardCommentRecommentResDto.builder()
                                                 .recommentId(r.getRecommentId())
                                                 .recommentContent(r.getRecommentContent())
                                                 .userId(r.getUser().getUserId())
@@ -200,7 +209,7 @@ public class BoardServiceImpl implements BoardService {
                 .title(board.getTitle())
                 .content(board.getContent())
                 .commentList(board.getComment().stream().map(
-                        b-> FindBoardCommentResDto.builder()
+                        b -> FindBoardCommentResDto.builder()
                                 .commentId(b.getCommentId())
                                 .boardId(b.getBoard().getBoardId())
                                 .userId(b.getUser().getUserId())
@@ -210,7 +219,7 @@ public class BoardServiceImpl implements BoardService {
                                 .commentContent(b.getCommentContent())
                                 .recommentNum(b.getRecommentNum())
                                 .recomment(b.getRecomment().stream().map(
-                                        r-> FindBoardCommentRecommentResDto.builder()
+                                        r -> FindBoardCommentRecommentResDto.builder()
                                                 .recommentId(r.getRecommentId())
                                                 .recommentContent(r.getRecommentContent())
                                                 .userId(r.getUser().getUserId())
