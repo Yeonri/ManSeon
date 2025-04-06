@@ -19,6 +19,6 @@ export function FormatTime(time: string) {
   return formatDistanceToNowStrict(parsedDate, {
     addSuffix: true,
     locale: ko,
-    unit: "minute", // 초 생략하고 무조건 분 단위부터 표시
+    unit: "minute",
   });
 }

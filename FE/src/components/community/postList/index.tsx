@@ -15,10 +15,11 @@ interface CommunityScreenNavigationProps
 export function PostList() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
   const { data: posts, refetch } = useGetPosts();
-  console.log("전체 게시글 :", posts);
+  // console.log("전체 게시글 :", posts);
 
   function handlePostClick(postId: number) {
     navigation.navigate("Post", { postId });
+    console.log(postId);
   }
 
   useFocusEffect(

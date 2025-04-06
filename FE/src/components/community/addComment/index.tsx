@@ -1,4 +1,5 @@
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+
 export function AddComment() {
   return (
     <View className="border border-stone-200 rounded-lg">
