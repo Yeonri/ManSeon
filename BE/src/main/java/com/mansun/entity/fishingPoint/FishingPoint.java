@@ -18,18 +18,18 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class FishingPoint {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "point_id",columnDefinition = "INT UNSIGNED")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "point_id", columnDefinition = "INT UNSIGNED")
     private Long pointId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "Lzone")
     private MarineZone marineZone;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "obs_code")
+    @JoinColumn(name = "nearest_obs_code")
     private Observatory obsCode;
 
     @OneToMany(mappedBy = "fishingPoint")
@@ -39,20 +39,23 @@ public class FishingPoint {
     private List<SunMoonTimes> sunMoonTimesList;
 
 
-//    Column
+    //    Column
     @Column(name = "point_name")
     @Schema(description = "낚시 포인트 이름")
     private String pointName;
 
-    @Column(name = "lat")
+    @Column(name = "point_lat")
     @Schema(description = "위도")
     private float lat;
-    @Column(name = "lng")
+    @Column(name = "point_lng")
     @Schema(description = "경도")
     private float lng;
     @Column(name = "primary_material")
     @Schema(description = "저질(물 속의 땅 구성)")
     private String primaryMaterial;
+    @Column(name = "depth_range")
+    @Schema(description = "수심 범위")
+    private String depthRange;
     @Column(name = "weather_x")
     @Schema
     private Integer weatherX;
@@ -61,9 +64,4 @@ public class FishingPoint {
     @Column(name = "sunmoon_location")
     @Schema(description = "일출 일몰 위치")
     private String sunmoonLocation;
-    @Column(name = "nearest_obs_code")
-    @Schema(description = "가장 가까운 관측소")
-    private String nearestObsCode;
-    @Builder.Default
-    private boolean deleted=false;
 }

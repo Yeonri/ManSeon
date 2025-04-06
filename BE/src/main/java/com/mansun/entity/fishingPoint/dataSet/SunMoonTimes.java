@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class SunMoonTimes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +31,4 @@ public class SunMoonTimes {
     @Column(name = "moonset")
     private LocalDateTime moonset;
 
-    private boolean deleted;
 }

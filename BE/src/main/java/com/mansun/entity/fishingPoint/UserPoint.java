@@ -33,6 +33,10 @@ public class UserPoint {
     private float lat;
     @Schema(description = "경도")
     private float lng;
+
+    @Column(name = "is_bookmarked")
+    @Schema(description = "북마크 포인트")
+    private String isBookmarked;
     @Builder.Default
     private boolean deleted = false;
 }

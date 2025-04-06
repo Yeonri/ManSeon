@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class SeaTemperature {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
@@ -23,5 +22,4 @@ public class SeaTemperature {
     @Column(name = "sea_temp")
     private float seaTemp;
 
-    private boolean deleted;
 }
