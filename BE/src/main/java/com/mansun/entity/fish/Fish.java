@@ -24,6 +24,7 @@ public class Fish {
 
     //연관관계
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn
     private Users user;
 
     @ManyToOne(fetch = FetchType.LAZY)
