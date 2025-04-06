@@ -40,5 +40,4 @@ public class MarineZone {
     private double lat_rb;
     @Column(name = "lon_rb")
     private double lon_rb;
-    private boolean deleted;
 }

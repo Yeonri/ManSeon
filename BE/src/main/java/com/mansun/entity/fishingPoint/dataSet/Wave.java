@@ -33,5 +33,4 @@ public class Wave{
     private double waveSpeed;
     @Column(name = "wind_direction")
     private double windDirection;
-    private boolean deleted;
 }

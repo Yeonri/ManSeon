@@ -39,6 +39,4 @@ public class Weather {
     private int vec;
     private int wsd;
     private int reh;
-
-    private boolean deleted;
 }

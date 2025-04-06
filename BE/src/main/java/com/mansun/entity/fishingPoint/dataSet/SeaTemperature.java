@@ -23,5 +23,4 @@ public class SeaTemperature {
     @Column(name = "sea_temp")
     private float seaTemp;
 
-    private boolean deleted;
 }

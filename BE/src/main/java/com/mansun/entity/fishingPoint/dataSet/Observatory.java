@@ -30,5 +30,4 @@ public class Observatory {
     @Column(name = "obs_lng")
     private float obsLng;
 
-    private boolean deleted;
 }

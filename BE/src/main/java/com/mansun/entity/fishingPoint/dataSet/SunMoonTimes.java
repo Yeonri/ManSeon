@@ -32,5 +32,4 @@ public class SunMoonTimes {
     @Column(name = "moonset")
     private LocalDateTime moonset;
 
-    private boolean deleted;
 }

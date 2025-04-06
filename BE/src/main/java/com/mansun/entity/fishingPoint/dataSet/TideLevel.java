@@ -25,5 +25,4 @@ public class TideLevel {
     @Column(name = "tph_level")
     private int tphLevel;
 
-    private boolean deleted;
 }
