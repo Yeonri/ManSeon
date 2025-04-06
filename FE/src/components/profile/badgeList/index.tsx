@@ -9,6 +9,7 @@ interface BadgeListProps {
     following_cnt: number;
     follower_cnt: number;
     profile_img: string;
+    collection_cnt: number;
   };
 }
 

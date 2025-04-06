@@ -65,7 +65,7 @@ export function ProfileScreen() {
               onPress={() => navigation.navigate("ProfileEdit")}
             >
               <Text className="text-2xl font-bold mr-1 text-blue-800 ">
-                {user.nickname}
+                {user.nickname ? user.nickname : user.name}
               </Text>
               <IconEdit />
             </TouchableOpacity>

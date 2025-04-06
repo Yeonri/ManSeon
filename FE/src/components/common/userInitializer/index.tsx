@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
-import { getMyInfo } from "../../../api/auth";
+import { getMyInfo } from "../../../api/user";
 import { useUserStore } from "../../../store/userStore";
 
 interface Props {

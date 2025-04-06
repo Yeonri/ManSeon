@@ -32,7 +32,9 @@ export function ProfileCard({ user }: Props) {
 
       <View>
         <View className="flex-row items-center gap-1">
-          <Text className="text-white text-xl font-bold">{user.nickname}</Text>
+          <Text className="text-white text-xl font-bold">
+            {user.nickname ? user.nickname : user.name}
+          </Text>
         </View>
         <Text className="text-white text-base mt-1">
           팔로잉 {user.following_cnt}명 / 팔로워 {user.follower_cnt}명

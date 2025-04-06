@@ -21,7 +21,7 @@ export function Markers({ points, onMarkerPress }: MarkerProps) {
             latitude: point.latitude,
             longitude: point.longitude,
           }}
-          image={require("../../../assets/images/icon_marker_default.png")}
+          // image={require("../../../assets/images/icon_marker_default.png")}
           onPress={() => onMarkerPress(point)}
         />
       ))}

@@ -93,7 +93,7 @@ export function MainScreen() {
           {/* 안내멘트 */}
           <View className="flex-row items-baseline gap-1 ml-1">
             <Text className="text-white font-bold ml-3 mt-3 text-xl">
-              {user.nickname}
+              {user.nickname ? user.nickname : user.name}
             </Text>
             <Text className="text-white">
               님 오늘의 도착지를 확인해 보세요!
