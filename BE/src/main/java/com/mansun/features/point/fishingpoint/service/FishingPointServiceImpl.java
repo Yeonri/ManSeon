@@ -7,15 +7,13 @@ import com.mansun.entity.fishingPoint.dataSet.SunMoonTimes;
 import com.mansun.entity.fishingPoint.dataSet.TideLevel;
 import com.mansun.entity.fishingPoint.dataSet.Weather;
 import com.mansun.features.fish.repository.FishRepository;
-import com.mansun.features.point.fishingpoint.repository.FishingPointRepository;
-import com.mansun.features.point.fishingpoint.repository.SunMoonTimesRepository;
-import com.mansun.features.point.fishingpoint.repository.TideLevelRepository;
-import com.mansun.features.point.fishingpoint.repository.WeatherRepository;
+import com.mansun.features.point.fishingpoint.repository.*;
 import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
-import com.mansun.responseDto.fishingPoint.AllPointResDto;
 import com.mansun.responseDto.fishingPoint.OnePointDetailInfoResDto;
 import com.mansun.responseDto.fishingPoint.OnePointResDto;
 import com.mansun.responseDto.fishingPoint.SearchPointResDto;
+import com.mansun.responseDto.fishingPoint.allPoint.AllPointResDto;
+import com.mansun.responseDto.fishingPoint.allPoint.ForecastResDto;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,6 +35,7 @@ public class FishingPointServiceImpl implements FishingPointService {
     private final FishRepository fishRepository;
     private final WeatherRepository weatherRepository;
     private final SunMoonTimesRepository sunMoonTimesRepository;
+    private final WaveHeightRepository waveHeightRepository;
 
     //포인트 명에 따른 검색 기능
     @Override
@@ -64,35 +63,101 @@ public class FishingPointServiceImpl implements FishingPointService {
         );
     }
 
-    private static class todaySunmoon{
-        LocalDateTime sunrise;
-        LocalDateTime sunset;
+    private String convertWindDirection(double degree) {
+        if (degree >= 337.5 || degree < 22.5) {
+            return "북";
+        } else if (degree < 67.5) {
+            return "북동";
+        } else if (degree < 112.5) {
+            return "동";
+        } else if (degree < 157.5) {
+            return "남동";
+        } else if (degree < 202.5) {
+            return "남";
+        } else if (degree < 247.5) {
+            return "남서";
+        } else if (degree < 292.5) {
+            return "서";
+        } else {
+            return "북서";
+        }
     }
 
     //전체 포인트 리스트
     @Override
-    public List<AllPointResDto> findAllPointList() {
+    public List<AllPointResDto> findAllPointList(CustomUserDetails customUserDetails) {
         List<FishingPoint> fishingPointList = fishingPointRepository.findAll();
-//        List<Weather> weatherForecast=weatherRepository.findAllByWeatherDateBetweenAndFishingPoint_PointId(LocalDateTime.now(),LocalDateTime.now().plusDays(7),);
-//        SunMoonTimes sunMoonTimes=sunMoonTimesRepository.findSunMoonTimesByLocDateAndFishingPoint_PointId(LocalDate.now(),);
+        SunMoonTimes sunMoon = sunMoonTimesRepository.findByLocDateAndFishingPoint_PointId(LocalDate.now(), 1L);
         return fishingPointList.stream().map(
-                fp -> AllPointResDto
-                        .builder()
-                        .pointId(fp.getPointId())
-                        .pointName(fp.getPointName())
-                        .latitude(fp.getLat())
-                        .longitude(fp.getLng())
-                        .water_depth(fp.getDepthRange())
-                        .seabed_type(fp.getPrimaryMaterial())
-//                        .sunrise(sunMoonTimes.getSunrise())
-//                        .sunset(sunMoonTimes.getSunset())
-//                        .temperature_max(fp)
-//                        .temperature_min()
-//                        .weather_forecast(weatherForecast)
-//                        .tide_info()
-//                        .caught_fish_summary()
-                        .build()
-        ).collect(Collectors.toList());
+                        fp -> AllPointResDto
+                                .builder()
+                                .pointId(fp.getPointId())
+                                .pointName(fp.getPointName())
+                                .latitude(fp.getLat())
+                                .longitude(fp.getLng())
+                                .water_depth(fp.getDepthRange())
+                                .seabed_type(fp.getPrimaryMaterial())
+//                                .sunrise(sunMoon.getSunrise())
+//                                .sunset(sunMoon.getSunset())
+//                                .temperature_max(
+//                                        weatherRepository
+//                                                .findFirstByWeatherDateAndFishingPoint_PointIdOrderByTmxDesc(LocalDate.now(), fp.getPointId()).getTmx())
+//                                .temperature_min(
+//                                        weatherRepository
+//                                                .findFirstByWeatherDateAndFishingPoint_PointIdOrderByTmnAsc(LocalDate.now(), fp.getPointId()).getTmn())
+//                                .weather_forecast(
+//                                        weatherRepository
+//                                                .findByWeatherDateBetweenAndFishingPoint_PointId(LocalDate.now(), LocalDate.now().plusDays(7), fp.getPointId())
+//                                                .stream()
+//                                                .map(weather ->
+//                                                        ForecastResDto.builder()
+//                                                                .date(weather.getWeatherDate())
+//                                                                .time(weather.getWeatherTime().toLocalTime())
+//                                                                .temperature(weather.getTmp())
+//                                                                .precipitation(weather.getPcp().equals("강수없음") ? 0 : Double.parseDouble(weather.getPcp()))
+//                                                                .precipitation_prob(weather.getPop())
+//                                                                .humidity(weather.getReh())
+//                                                                .sky(weather.getSky())
+//                                                                .wind_direction(convertWindDirection(
+//                                                                        waveHeightRepository
+//                                                                                .findFirstByMarineZone_LzoneAndDateTime(
+//                                                                                        fp.getMarineZone().getLzone(),
+//                                                                                        LocalDateTime.of(weather.getWeatherDate(), weather.getWeatherTime().toLocalTime())
+//                                                                                ).orElseThrow().getWindDirection())
+//                                                                )
+//                                                                .wind_speed(
+//                                                                        waveHeightRepository
+//                                                                                .findFirstByMarineZone_LzoneAndDateTime(
+//                                                                                        fp.getMarineZone().getLzone(),
+//                                                                                        LocalDateTime.of(weather.getWeatherDate(), weather.getWeatherTime().toLocalTime())
+//                                                                                ).orElseThrow().getWindSpeed())
+//                                                                .wave_height(
+//                                                                        waveHeightRepository
+//                                                                                .findFirstByMarineZone_LzoneAndDateTime(
+//                                                                                        fp.getMarineZone().getLzone(),
+//                                                                                        LocalDateTime.of(weather.getWeatherDate(), weather.getWeatherTime().toLocalTime())
+//                                                                                ).orElseThrow().getWaveHeight())
+//                                                                .water_temperature(waveHeightRepository
+//                                                                        .findFirstByMarineZone_LzoneAndDateTime(
+//                                                                                fp.getMarineZone().getLzone(),
+//                                                                                LocalDateTime.of(weather.getWeatherDate(), weather.getWeatherTime().toLocalTime())
+//                                                                        ).orElseThrow().getWaveHeight())
+//                                                                .wave_direction(
+//                                                                        convertWindDirection(
+//                                                                                waveHeightRepository
+//                                                                                        .findFirstByMarineZone_LzoneAndDateTime(
+//                                                                                                fp.getMarineZone().getLzone(),
+//                                                                                                LocalDateTime.of(weather.getWeatherDate(), weather.getWeatherTime().toLocalTime())
+//                                                                                        ).orElseThrow().getWaveDirection()))
+//                                                                .precipitation_type(weather.getPty())
+//                                                                .build()
+//                                                )
+//                                                .collect(Collectors.toList())
+//                                )
+//                                .tide_info(fp.getObsCode().getTideLevel())
+//                                .caught_fish_summary(fishRepository.findByUser_UserId(customUserDetails.getUserId()))
+                                .build())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -120,5 +185,10 @@ public class FishingPointServiceImpl implements FishingPointService {
                 .myTideLevelList(tideLevelList)
                 .myFishList(myFishList)
                 .build();
+    }
+
+    private static class todaySunmoon {
+        LocalDateTime sunrise;
+        LocalDateTime sunset;
     }
 }
