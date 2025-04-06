@@ -1,7 +1,4 @@
-import {
-  NativeStackNavigationProp,
-  NativeStackScreenProps,
-} from "@react-navigation/native-stack";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useState } from "react";
 import {
   Alert,
@@ -18,22 +15,18 @@ import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { UploadImage } from "../../components/community/uploadImage";
 import { FullButton } from "../../components/common/fullButton";
 import { useEditPost } from "../../api/quries/usePost";
-import { useNavigation } from "@react-navigation/native";
-import { launchImageLibrary } from "react-native-image-picker";
+import { selectImage } from "../../utils/selectImage";
 
 interface PostEditScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "EditPost"> {}
 
-interface PostEditScreenNavigationProps
-  extends NativeStackNavigationProp<CommunityStackParams, "EditPost"> {}
-
-export function PostEditScreen({ route }: PostEditScreenProps) {
+export function PostEditScreen({ route, navigation }: PostEditScreenProps) {
   const { postId, title, content, postImg } = route.params;
   const [editTitle, setEditTitle] = useState(title);
   const [editContent, setEditContent] = useState(content);
   const [editPostImage, setEditPostImage] = useState(postImg);
+  const isSavable = editTitle.trim() !== "" && editContent.trim() !== "";
   const { mutate: editPost } = useEditPost();
-  const navigation = useNavigation<PostEditScreenNavigationProps>();
 
   function handleEdit() {
     // console.log("게시글 편집 시작");
@@ -68,19 +61,6 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
     ]);
   }
 
-  function uploadImage() {
-    launchImageLibrary({ mediaType: "photo" }, (res) => {
-      if (res.didCancel) {
-        console.log("이미지 선택 취소");
-      } else if (res.errorCode) {
-        console.log("에러 발생:", res.errorMessage);
-      } else if (res.assets && res.assets.length > 0) {
-        const selectedImageUri = res.assets[0].uri;
-        setEditPostImage(selectedImageUri!);
-      }
-    });
-  }
-
   return (
     <SafeAreaView>
       <HeaderBeforeTitle name="게시글 편집" />
@@ -89,7 +69,7 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
           <View>
             {/* 제목 */}
             <Text className="text-lg font-bold text-neutral-600">제목</Text>
-            <View className="border-b border-stone-200">
+            <View className="border-b border-neutral-200">
               <TextInput
                 value={editTitle}
                 onChangeText={setEditTitle}
@@ -112,7 +92,13 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
                 />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity onPress={uploadImage}>
+              <TouchableOpacity
+                onPress={() => {
+                  selectImage((uri) => {
+                    setEditPostImage(uri);
+                  });
+                }}
+              >
                 <UploadImage />
               </TouchableOpacity>
             )}
@@ -120,7 +106,7 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
           <View className="gap-5">
             {/* 내용 */}
             <Text className="text-lg font-bold text-neutral-800">내용</Text>
-            <View className="border border-stone-200 rounded-lg min-h-48">
+            <View className="border border-neutral-200 rounded-lg min-h-48">
               <TextInput
                 value={editContent}
                 onChangeText={setEditContent}
@@ -131,7 +117,7 @@ export function PostEditScreen({ route }: PostEditScreenProps) {
               />
             </View>
           </View>
-          <FullButton name="저장" disable={false} onPress={handleEdit} />
+          <FullButton name="저장" disable={!isSavable} onPress={handleEdit} />
         </View>
         <View className="m-12" />
       </ScrollView>
