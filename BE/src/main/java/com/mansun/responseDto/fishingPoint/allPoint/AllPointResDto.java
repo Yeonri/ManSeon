@@ -1,4 +1,4 @@
-package com.mansun.responseDto.fishingPoint;
+package com.mansun.responseDto.fishingPoint.allPoint;
 
 import com.mansun.entity.fish.Fish;
 import com.mansun.entity.fishingPoint.dataSet.TideLevel;
@@ -28,7 +28,7 @@ public class AllPointResDto {
     LocalDateTime sunset;
     float temperature_max;
     float temperature_min;
-    List<Weather> weather_forecast;
+    List<ForecastResDto> weather_forecast;
     List<TideLevel> tide_info;
     List<Fish> caught_fish_summary;
 }
