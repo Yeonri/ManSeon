@@ -52,7 +52,7 @@ public class BoardServiceImpl implements BoardService {
                         .title(b.getTitle())
                         .content(b.getContent())
                         .profileImg(b.getUser().getProfileImg())
-                        .createdAt(b.getCreatedAt().toLocalDate())
+                        .createdAt(b.getCreatedAt())
                         .commentNum(b.getCommentNum())
                         .like(b.getLikeNum())
                         .postImg(b.getPostImg())

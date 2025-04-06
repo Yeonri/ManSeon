@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -17,7 +18,7 @@ public class allBoardListResDto {
     String profileImg;
     String title;
     String content;
-    LocalDate createdAt;
+    LocalDateTime createdAt;
     String postImg;
     int commentNum;
     int like;
