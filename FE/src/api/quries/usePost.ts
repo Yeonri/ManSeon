@@ -13,6 +13,7 @@ export function useGetPosts() {
   return useQuery({
     queryKey: ["posts"],
     queryFn: () => getPosts(),
+    staleTime: 1000, // 1초
     refetchOnMount: true,
   });
 }

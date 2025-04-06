@@ -6,18 +6,16 @@ import {
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CommunityStackParams } from "../../api/types/CommunityStackParams";
-import IconComment from "../../assets/images/icon_comment.svg";
-import IconDelete from "../../assets/images/icon_delete.svg";
-import IconEdit from "../../assets/images/icon_edit.svg";
-import IconLike from "../../assets/images/icon_like.svg";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { AddComment } from "../../components/community/addComment";
 import { CommentList } from "../../components/community/commentList";
 import commentsMocks from "../../mocks/commentsMocks.json";
-import postsMocks from "../../mocks/postsMocks.json";
 import { DeleteAlert } from "../../utils/deleteAlert";
 import { FormatTime } from "../../utils/formatTime";
+import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
+import { useGetPostDetail } from "../../api/quries/usePost";
+import DefaultProfile from "../../assets/images/profile_default.svg";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -28,24 +26,33 @@ interface PostScreenNavigationProps
 export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
-
+  const { data: postDetail } = useGetPostDetail(postId);
+  console.log("상세 게시글:", postDetail);
   return (
     <SafeAreaView>
       <HeaderBeforeLogo />
       <ScrollView className="px-5 mt-2">
-        <Text className="font-bold mb-2 text-lg">
-          {postsMocks[postId - 1].title}
-        </Text>
+        <Text className="font-bold mb-2 text-lg">{postDetail.title}</Text>
         <View className="flex-row items-center justify-between">
           <View className="flex-row items-center gap-2">
             <TouchableOpacity className="flex-row items-center gap-2">
-              <Image
-                source={{ uri: postsMocks[postId - 1].profileImg }}
-                className="w-10 h-10 rounded-full"
-              />
-              <Text className="font-semibold">
-                {postsMocks[postId - 1].nickname}
-              </Text>
+              {postDetail.profileImg ? (
+                <Image
+                  source={{ uri: postDetail.profileImg }}
+                  className="w-8 h-8 mr-2 rounded-full"
+                />
+              ) : (
+                <View
+                  style={{
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    marginRight: 8,
+                  }}
+                >
+                  <DefaultProfile width={32} height={32} />
+                </View>
+              )}
+              <Text className="font-semibold">{postDetail.nickname}</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {}} className="h-4">
               <TagFollow />
@@ -56,39 +63,41 @@ export function PostScreen({ route }: PostScreenProps) {
               onPress={() =>
                 navigation.navigate("EditPost", {
                   postId: postId,
-                  title: postsMocks[postId - 1].title,
-                  content: postsMocks[postId - 1].content,
-                  postImg: postsMocks[postId - 1].postImg,
+                  title: postDetail.title,
+                  content: postDetail.content,
+                  postImg: postDetail.postImg,
                 })
               }
               className="h-6"
             >
-              <IconEdit />
+              <Pencil />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => DeleteAlert("게시글")}
               className="h-6"
             >
-              <IconDelete />
+              <Trash2 />
             </TouchableOpacity>
             <Text className="text-neutral-400 text-sm">
-              {FormatTime(postsMocks[postId - 1].createAt)}
+              {postDetail.createAt}
+              {/* {FormatTime(postDetail.createAt)} */}
             </Text>
           </View>
         </View>
         <View className="my-3 gap-3">
           <Image
-            source={{ uri: postsMocks[postId - 1].postImg }}
+            source={{ uri: postDetail.postImg }}
             className="w-full h-48 rounded-lg"
           />
-          <Text>{postsMocks[postId - 1].content}</Text>
+          <Text>{postDetail.content}</Text>
         </View>
         <View className="mt-2 mb-5 border-b border-neutral-500" />
         <View className="flex-row items-center">
-          <IconComment />
-          <Text className="mr-3">{postsMocks[postId - 1].commentNum}</Text>
-          <IconLike />
-          <Text className="ml-1">{postsMocks[postId - 1].like}</Text>
+          <MessageSquareMore />
+
+          <Text className="mr-3">{postDetail.commentNum}</Text>
+          <Heart />
+          <Text className="ml-1">{postDetail.like}</Text>
         </View>
         <View className="my-4">
           <AddComment />

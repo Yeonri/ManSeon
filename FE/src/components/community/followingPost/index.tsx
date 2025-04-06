@@ -1,10 +1,11 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import { useUserStore } from "../../../store/userStore";
 import { useGetFriendsPosts } from "../../../api/quries/usePost";
 import { Handshake } from "lucide-react-native";
+import { useCallback } from "react";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -12,12 +13,18 @@ interface CommunityScreenNavigationProps
 export function FollowingPost() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
   const userId = useUserStore((state) => state.user!.id);
-  const { data: friendsPosts } = useGetFriendsPosts(userId);
+  const { data: friendsPosts, refetch } = useGetFriendsPosts(userId);
   // console.log("친구 게시글: ", friendsPosts);
 
   function handlePostClick(postId: number) {
     navigation.navigate("Post", { postId });
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch])
+  );
 
   return (
     <View>

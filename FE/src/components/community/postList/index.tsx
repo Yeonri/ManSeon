@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
@@ -6,18 +6,26 @@ import { useGetPosts } from "../../../api/quries/usePost";
 import DefaultProfile from "../../../assets/images/profile_default.svg";
 import DefaultImage from "../../../assets/images/image_default.svg";
 import { Heart, MessageSquareMore } from "lucide-react-native";
+import { FormatTime } from "../../../utils/formatTime";
+import { useCallback } from "react";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
 
 export function PostList() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
-  const { data: posts } = useGetPosts();
-  // console.log("전체 게시글 :", posts);
+  const { data: posts, refetch } = useGetPosts();
+  console.log("전체 게시글 :", posts);
 
   function handlePostClick(postId: number) {
     navigation.navigate("Post", { postId });
   }
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch])
+  );
 
   return (
     <View className="mt-3 mb-5">
@@ -52,8 +60,7 @@ export function PostList() {
                     {item.nickname}
                   </Text>
                   <Text className="text-neutral-600">
-                    {/* 임시 확인용. 추후 삭제하고 주석처리한 코드 사용 예정 */}
-                    1시간 전{/* {FormatTime(item.createAt)} */}
+                    {FormatTime(item.createdAt)}
                   </Text>
                 </View>
                 <View className="flex-row gap-3">
