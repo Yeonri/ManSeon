@@ -1,28 +1,31 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { View } from "react-native";
 import MapView from "react-native-maps";
 import { Modalize } from "react-native-modalize";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useFishingPoints } from "../../api/quries/useFishingpoint";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
 import { FilterButton } from "../../components/map/filterButton";
 import { Markers } from "../../components/map/marker";
 import { MarkerDetail } from "../../components/map/markerDetail";
-import fishinPointMocks from "../../mocks/fishingPointMocks.json";
+// import fishinPointMocks from "../../mocks/fishingPointMocks.json";
 
 export function MapScreen() {
+  const { data: points = [] } = useFishingPoints();
+
   const [activeFilter, setActiveFilter] = useState<
     "all" | "myPoint" | "bookmark" | "recommended"
   >("all");
 
-  const filterPoints = useMemo(() => {
-    return fishinPointMocks.filter((point) => {
-      if (activeFilter === "myPoint") return point.isMyPoint;
-      if (activeFilter === "bookmark") return point.isBookmarked;
-      if (activeFilter === "recommended") return point.isRecommended;
-      return true;
-    });
-  }, [activeFilter]);
+  // const filterPoints = useMemo(() => {
+  //   return points.filter((point: any) => {
+  //     if (activeFilter === "myPoint") return point.isMyPoint;
+  //     if (activeFilter === "bookmark") return point.isBookmarked;
+  //     if (activeFilter === "recommended") return point.isRecommended;
+  //     return true;
+  //   });
+  // }, [points, activeFilter]);
 
   const [keyword, setKeyword] = useState("");
 
@@ -85,7 +88,7 @@ export function MapScreen() {
         }}
       >
         <Markers
-          points={filterPoints}
+          points={points}
           onMarkerPress={(point) => {
             setSelectedPoint(point);
             modalRef.current?.open();
