@@ -9,5 +9,5 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface SunMoonTimesRepository extends JpaRepository<SunMoonTimes,Long> {
-    SunMoonTimes findSunMoonTimesByLocDateAndFishingPoint_PointId(LocalDate locDate,Long pointId);
+    SunMoonTimes findByLocDateAndFishingPoint_PointId(LocalDate locDate,Long pointId);
 }

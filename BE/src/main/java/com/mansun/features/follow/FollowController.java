@@ -9,10 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +22,12 @@ public class FollowController {
     private final FollowerServiceImpl followerService;
     private final FollowingServiceImpl followingService;
 
+    @PostMapping("/follow/my")
+    public ResponseEntity<List<GetMyFollowingResDto>> addFollowing(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ){
+        return ResponseEntity.ok(followingService.findMyFollwingList(customUserDetails));
+    }
 
     @GetMapping("/following/my")
     public ResponseEntity<List<GetMyFollowingResDto>> getMyFollowingList(
@@ -38,5 +41,12 @@ public class FollowController {
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ){
         return ResponseEntity.ok(followerService.findMyFollowerList(customUserDetails));
+    }
+
+    @DeleteMapping("/follow/my")
+    public ResponseEntity<List<GetMyFollowingResDto>> removeFollowing(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ){
+        return ResponseEntity.ok(followingService.findMyFollwingList(customUserDetails));
     }
 }
