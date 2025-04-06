@@ -12,7 +12,7 @@ import { AddComment } from "../../components/community/addComment";
 import { CommentList } from "../../components/community/commentList";
 import { DeleteAlert } from "../../utils/deleteAlert";
 import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
-import { useGetPostDetail } from "../../api/quries/usePost";
+import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
 import DefaultProfile from "../../assets/images/profile_default.svg";
 import { Loading } from "../../components/common/loading";
 
@@ -26,7 +26,18 @@ export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
   const { data: postDetail } = useGetPostDetail(postId);
-  console.log("상세 게시글:", postDetail);
+  const { mutate: deletePost } = useDeletePost();
+  // console.log("상세 게시글:", postDetail);
+
+  function handleDelete() {
+    DeleteAlert("게시글", () => {
+      deletePost(postId, {
+        onSuccess: () => {
+          navigation.goBack();
+        },
+      });
+    });
+  }
 
   if (!postDetail) {
     return <Loading />;
@@ -90,10 +101,7 @@ export function PostScreen({ route }: PostScreenProps) {
               <Pencil color={"#A1A1A1"} size={20} />
             </TouchableOpacity>
             {/* 삭제 */}
-            <TouchableOpacity
-              onPress={() => DeleteAlert("게시글")}
-              className="h-6"
-            >
+            <TouchableOpacity onPress={handleDelete} className="h-6">
               <Trash2 color={"#A1A1A1"} size={20} />
             </TouchableOpacity>
           </View>
