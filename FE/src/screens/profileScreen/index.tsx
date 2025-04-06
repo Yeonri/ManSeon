@@ -130,11 +130,14 @@ export function ProfileScreen() {
         </TouchableOpacity>
 
         <BadgeList badgeIds={[1, 2, 3, 4, 5, 6, 7, 8, 9]} user={user} />
-        {isMyProfile ? (
-          <MyPostList />
-        ) : (
-          <UserPostList posts={otherData.posts} />
-        )}
+
+        <View className="mb-10">
+          {isMyProfile ? (
+            <MyPostList />
+          ) : (
+            <UserPostList posts={otherData.posts} />
+          )}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
