@@ -36,7 +36,8 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
             <View className="flex-row gap-2 items-center">
               <Bookmark />
               <Text className="text-xl font-bold text-neutral-800">
-                {point.pointName}
+                {point.name}
+                {/* {point.pointName} */}
               </Text>
             </View>
             <TouchableOpacity
