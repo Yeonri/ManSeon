@@ -22,7 +22,7 @@ export function ProfileEditScreen() {
 
   const [email, setEmail] = useState(user?.email);
   const [name, setName] = useState(user?.name);
-  const [phone, setPhone] = useState(user?.phoneNum);
+  const [phone, setPhone] = useState(user?.phone_number);
   const [password, setPassword] = useState("");
 
   const handleSave = async () => {
@@ -30,7 +30,7 @@ export function ProfileEditScreen() {
       await updateUserInfo({
         email: email,
         name: name,
-        phoneNum: phone,
+        phone_number: phone,
         nickname: nickname,
         password: password.length > 0 ? password : undefined,
       });

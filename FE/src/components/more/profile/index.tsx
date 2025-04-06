@@ -11,7 +11,6 @@ interface Props {
 }
 
 export function ProfileCard({ user }: Props) {
-  console.log(user.profile_img);
   return (
     <View className="bg-blue-800 rounded-2xl px-5 py-6 mb-3 mx-4 flex-row items-center">
       {user.profile_img === null ? (

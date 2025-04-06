@@ -2,7 +2,7 @@ export type User = {
   id: number;
   email: string;
   name: string;
-  phoneNum: string;
+  phone_number: string;
   nickname: string;
   badges: [];
   badges_cnt: number;
