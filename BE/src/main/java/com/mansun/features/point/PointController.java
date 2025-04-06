@@ -60,7 +60,7 @@ public class PointController {
     }
 
 
-    @Operation(summary = "한 사용자의 UserPoint List를 불러온다.")
+    @Operation(summary = "내 UserPoint List를 불러온다.")
     @GetMapping("/list/my")
     public ResponseEntity<List<UserPointListResDto>> getUserPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -92,4 +92,5 @@ public class PointController {
     ) {
         return ResponseEntity.ok(fishingPointService.findOnePointDetailInfo(customUserDetails, pointId));
     }
+
 }
