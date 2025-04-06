@@ -13,7 +13,7 @@ export function useGetPosts() {
   return useQuery({
     queryKey: ["posts"],
     queryFn: () => getPosts(),
-    staleTime: 1000, // 1초
+    staleTime: 1000,
     refetchOnMount: true,
   });
 }
@@ -40,8 +40,15 @@ export function useAddPost() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ title, content }: { title: string; content: string }) =>
-      addPost(title, content),
+    mutationFn: ({
+      title,
+      content,
+      postImage,
+    }: {
+      title: string;
+      content: string;
+      postImage: string;
+    }) => addPost(title, content, postImage),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
   });
 }
@@ -55,11 +62,13 @@ export function useEditPost() {
       boardId,
       title,
       content,
+      postImage,
     }: {
       boardId: number;
       title: string;
       content: string;
-    }) => editPost(boardId, title, content),
+      postImage: string;
+    }) => editPost(boardId, title, content, postImage),
     onSuccess: (boardId: number) =>
       queryClient.invalidateQueries({ queryKey: ["post", boardId] }),
   });

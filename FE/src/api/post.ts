@@ -34,9 +34,17 @@ export async function getPostDetail(boardId: number) {
 }
 
 // 게시글 작성
-export async function addPost(title: string, content: string) {
+export async function addPost(
+  title: string,
+  content: string,
+  postImage: string
+) {
   try {
-    const response = await authClient.post("/board", { title, content });
+    const response = await authClient.post("/board", {
+      title,
+      content,
+      postImage,
+    });
     return response.data;
   } catch (e: unknown) {
     handleError(e);
@@ -46,13 +54,15 @@ export async function addPost(title: string, content: string) {
 export async function editPost(
   boardId: number,
   title: string,
-  content: string
+  content: string,
+  postImage: string
 ) {
   try {
     const response = await authClient.put("/board", {
       boardId,
       title,
       content,
+      postImage,
     });
     return response.data;
   } catch (e: unknown) {
