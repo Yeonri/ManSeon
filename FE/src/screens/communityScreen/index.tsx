@@ -17,19 +17,15 @@ export function CommunityScreen() {
     <SafeAreaView>
       <HeaderLogo />
       <ScrollView className="px-5">
-        <View className="mt-2">
-          <Text className="text-neutral-600 mb-1">
-            내가 팔로잉한 친구 게시글
-          </Text>
-          <FollowingPost />
-        </View>
+        <FollowingPost />
         <TouchableOpacity
           onPress={() => navigation.navigate("AddPost")}
-          className="bg-blue-500 rounded-xl mt-3 py-3 items-center"
+          className="bg-blue-500 rounded-xl mt-3 py-3 items-center flex-row justify-center gap-2"
         >
-          <Text className="text-white font-bold">게시글 작성하기</Text>
+          <Text className="text-white">게시글 작성하기</Text>
         </TouchableOpacity>
         <PostList />
+        <View className="m-12" />
       </ScrollView>
     </SafeAreaView>
   );
