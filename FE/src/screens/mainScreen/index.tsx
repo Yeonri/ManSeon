@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
-import { Award, ChevronRight } from "lucide-react-native";
+import { ChevronRight } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -93,7 +93,7 @@ export function MainScreen() {
           {/* 안내멘트 */}
           <View className="flex-row items-baseline gap-1 ml-1">
             <Text className="text-white font-bold ml-3 mt-3 text-xl">
-              {user.name}
+              {user.nickname}
             </Text>
             <Text className="text-white">
               님 오늘의 도착지를 확인해 보세요!
@@ -188,7 +188,7 @@ export function MainScreen() {
           <View className="w-[90%] h-px bg-neutral-100 self-center my-2" />
 
           {/* 활동 배지*/}
-          <View>
+          {/* <View>
             <TouchableOpacity
               className="flex-row items-center -mb-3"
               onPress={() => navigation.navigate("Profile")}
@@ -223,7 +223,7 @@ export function MainScreen() {
                 })}
               </View>
             </ScrollView>
-          </View>
+          </View> */}
         </View>
 
         {/* 오늘의 추천 포인트 */}
@@ -263,7 +263,10 @@ export function MainScreen() {
           <View className="flex-row justify-between">
             <Text className="text-neutral-600 font-bold text-xl">커뮤니티</Text>
 
-            <TouchableOpacity className="flex-row items-center">
+            <TouchableOpacity
+              className="flex-row items-center"
+              onPress={() => navigation.navigate("Community")}
+            >
               <Text className="text-neutral-400 text-xl font-medium">
                 더 보기
               </Text>

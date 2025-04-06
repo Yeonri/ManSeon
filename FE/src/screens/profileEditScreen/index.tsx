@@ -28,10 +28,10 @@ export function ProfileEditScreen() {
   const handleSave = async () => {
     try {
       await updateUserInfo({
-        email,
-        name,
+        email: email,
+        name: name,
         phoneNum: phone,
-        nickname,
+        nickname: nickname,
         password: password.length > 0 ? password : undefined,
       });
       navigation.goBack();

@@ -1,21 +1,32 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
+import { useUserById } from "../../api/quries/useUser";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
 import IconEdit from "../../assets/images/icon_edit.svg";
 import IconMove from "../../assets/images/icon_move.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
 import { MyPostList } from "../../components/profile/myPostList";
+import { UserPostList } from "../../components/profile/userPostList";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams, "More"> {}
 
 export function ProfileScreen() {
   const navigation = useNavigation<MoreScreenNavigationProps>();
-  const { data: user, isLoading } = useGetMyInfo();
+
+  const route = useRoute();
+  const id = (route.params as { id?: number })?.id;
+
+  const { data: myData, isLoading: isLoadingMe } = useGetMyInfo();
+  const { data: otherData, isLoading: isLoadingOther } = useUserById(id ?? 0);
+
+  const isMyProfile = id === undefined;
+  const user = isMyProfile ? myData : otherData;
+  const isLoading = isMyProfile ? isLoadingMe : isLoadingOther;
 
   if (isLoading || !user) {
     return (
@@ -48,16 +59,22 @@ export function ProfileScreen() {
             />
           )}
 
-          <TouchableOpacity
-            className="flex-row items-center mt-2"
-            onPress={() => navigation.navigate("ProfileEdit")}
-          >
-            <Text className="text-2xl font-bold mr-1 text-blue-800 ">
-              {user.name}
+          {isMyProfile ? (
+            <TouchableOpacity
+              className="flex-row items-center mt-2"
+              onPress={() => navigation.navigate("ProfileEdit")}
+            >
+              <Text className="text-2xl font-bold mr-1 text-blue-800 ">
+                {user.nickname}
+              </Text>
+              <IconEdit />
+            </TouchableOpacity>
+          ) : (
+            <Text className="text-2xl font-bold mt-2 text-blue-800">
+              {user.nickname}
             </Text>
+          )}
 
-            <IconEdit />
-          </TouchableOpacity>
           <View className="flex-row justify-center mt-4 gap-4">
             <View className="items-center mx-4">
               <Text className="text-lg font-semibold">게시글</Text>
@@ -85,6 +102,7 @@ export function ProfileScreen() {
             </View>
           </View>
         </View>
+
         <TouchableOpacity onPress={() => navigation.navigate("CollectionList")}>
           <View className="flex-row items-center mx-5">
             <Text className="text-lg font-bold text-neutral-800">
@@ -110,10 +128,13 @@ export function ProfileScreen() {
             </View>
           </View>
         </TouchableOpacity>
-        <BadgeList
-          badges={user.badges.map(({ id, is_earned }) => ({ id, is_earned }))}
-        />
-        <MyPostList />
+
+        <BadgeList badgeIds={[1, 2, 3, 4, 5, 6, 7, 8, 9]} user={user} />
+        {isMyProfile ? (
+          <MyPostList />
+        ) : (
+          <UserPostList posts={otherData.posts} />
+        )}
       </ScrollView>
     </SafeAreaView>
   );

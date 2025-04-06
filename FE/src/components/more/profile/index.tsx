@@ -3,7 +3,7 @@ import { User } from "../../../api/types/User";
 
 type ProfileCardUser = Pick<
   User,
-  "name" | "profile_img" | "following_cnt" | "follower_cnt"
+  "name" | "profile_img" | "following_cnt" | "follower_cnt" | "nickname"
 >;
 
 interface Props {
@@ -32,7 +32,7 @@ export function ProfileCard({ user }: Props) {
 
       <View>
         <View className="flex-row items-center gap-1">
-          <Text className="text-white text-xl font-bold">{user.name}</Text>
+          <Text className="text-white text-xl font-bold">{user.nickname}</Text>
         </View>
         <Text className="text-white text-base mt-1">
           팔로잉 {user.following_cnt}명 / 팔로워 {user.follower_cnt}명
