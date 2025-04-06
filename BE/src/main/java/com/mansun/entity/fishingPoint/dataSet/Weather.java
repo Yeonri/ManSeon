@@ -10,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
 public class Weather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
