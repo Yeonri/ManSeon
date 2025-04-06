@@ -5,9 +5,15 @@ interface Props {
   clusters: any[];
   mapRef: React.RefObject<MapView | null>;
   onMarkerPress: (point: any) => void;
+  supercluster: any;
 }
 
-export function ClusterMarkers({ clusters, mapRef, onMarkerPress }: Props) {
+export function ClusterMarkers({
+  clusters,
+  mapRef,
+  onMarkerPress,
+  supercluster,
+}: Props) {
   return (
     <>
       {clusters.map((item) => {
@@ -20,16 +26,11 @@ export function ClusterMarkers({ clusters, mapRef, onMarkerPress }: Props) {
             <Marker
               key={`cluster-${item.id}`}
               coordinate={{ latitude, longitude }}
+              anchor={{ x: 0.5, y: 0.5 }}
               onPress={() => {
-                const expansionZoom = Math.min(
-                  20,
-                  // @ts-ignore
-                  new item.constructor({
-                    radius: 60,
-                    maxZoom: 20,
-                  }).getClusterExpansionZoom(item.id) || 10
+                const expansionZoom = supercluster.getClusterExpansionZoom(
+                  item.id
                 );
-
                 mapRef.current?.animateToRegion({
                   latitude,
                   longitude,
@@ -38,7 +39,7 @@ export function ClusterMarkers({ clusters, mapRef, onMarkerPress }: Props) {
                 });
               }}
             >
-              <View className="w-10 h-10 bg-blue-500 rounded-full justify-center items-center">
+              <View className="w-16 h-16 bg-blue-500/90 rounded-full justify-center items-center">
                 <Text className="text-white font-bold">{pointCount}</Text>
               </View>
             </Marker>

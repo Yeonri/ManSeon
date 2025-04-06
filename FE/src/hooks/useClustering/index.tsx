@@ -30,7 +30,7 @@ export function useClustering(points: any[], region: any, zoom: number) {
       zoom
     );
 
-    return clusters;
+    return { clusters, supercluster };
   }, [points, region, zoom]);
 
   return cluster;

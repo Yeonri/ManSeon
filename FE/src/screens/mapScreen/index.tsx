@@ -3,21 +3,20 @@ import { View } from "react-native";
 import MapView, { Region } from "react-native-maps";
 import { Modalize } from "react-native-modalize";
 import { SafeAreaView } from "react-native-safe-area-context";
-// import { useFishingPoints } from "../../api/quries/useFishingpoint";
+import { useFishingPoints } from "../../api/quries/useFishingpoint";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
 import { ClusterMarkers } from "../../components/map/clusterMarker";
 import { FilterButton } from "../../components/map/filterButton";
 import { MarkerDetail } from "../../components/map/markerDetail";
 import { useClustering } from "../../hooks/useClustering";
-import fishinPointMocks from "../../mocks/fishingPointMocks.json";
 
 export function MapScreen() {
   const [activeFilter, setActiveFilter] = useState<
     "all" | "myPoint" | "bookmark" | "recommended"
   >("all");
 
-  // const { data: points = [] } = useFishingPoints();
+  const { data: points = [] } = useFishingPoints();
 
   const [region, setRegion] = useState<Region>({
     latitude: 36.5,
@@ -27,13 +26,13 @@ export function MapScreen() {
   });
 
   const filterPoints = useMemo(() => {
-    return fishinPointMocks.filter((point: any) => {
+    return points.filter((point: any) => {
       if (activeFilter === "myPoint") return point.isMyPoint;
       if (activeFilter === "bookmark") return point.isBookmarked;
       if (activeFilter === "recommended") return point.isRecommended;
       return true;
     });
-  }, [activeFilter]);
+  }, [points, activeFilter]);
 
   const mapRef = useRef<MapView>(null);
   const modalRef = useRef<Modalize>(null);
@@ -45,7 +44,7 @@ export function MapScreen() {
   };
 
   const zoom = Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2);
-  const clusters = useClustering(filterPoints, region, zoom);
+  const { clusters, supercluster } = useClustering(filterPoints, region, zoom);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -96,6 +95,7 @@ export function MapScreen() {
             setSelectedPoint(point);
             modalRef.current?.open();
           }}
+          supercluster={supercluster}
         />
       </MapView>
 
