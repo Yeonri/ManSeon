@@ -5,9 +5,9 @@ import com.mansun.features.point.fishingpoint.service.FishingPointServiceImpl;
 import com.mansun.features.point.userpoint.service.UserPointServiceImpl;
 import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
 import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;
-import com.mansun.requestDto.fishingpoint.SearchPointReqDto;
 import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.fishingPoint.*;
+import com.mansun.responseDto.fishingPoint.allPoint.AllPointResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +39,7 @@ public class PointController {
     @GetMapping("/list/all")
     public ResponseEntity<List<AllPointResDto>> getOneOfAllPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        return ResponseEntity.ok(fishingPointService.findAllPointList());
+        return ResponseEntity.ok(fishingPointService.findAllPointList(customUserDetails));
     }
 
     @Operation(summary = "전체 리스트 중 하나의 포인트를 찾는 것")

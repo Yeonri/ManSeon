@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface FishRepository extends JpaRepository<Fish,Long> {
 //    UserId와 FishId를 통해 지워지지 않은 포획 물고기 단 건을 조회한다.
+    List<Fish> findByUser_UserId(Long userId);
     Fish findByUser_UserIdAndFishIdAndDeletedFalse(Long userId, Long fishId);
 //    UserId를 이용해 사용자의 지워지지 않은 물고기 리스트를 조회한다.
     List<Fish> findByUser_UserIdAndDeletedFalse(Long userId);
