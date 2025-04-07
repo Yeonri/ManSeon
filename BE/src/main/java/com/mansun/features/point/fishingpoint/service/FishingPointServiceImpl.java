@@ -3,10 +3,8 @@ package com.mansun.features.point.fishingpoint.service;
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.fish.Fish;
 import com.mansun.entity.fishingPoint.FishingPoint;
-import com.mansun.entity.fishingPoint.dataSet.SunMoonTimes;
-import com.mansun.entity.fishingPoint.dataSet.TideLevel;
-import com.mansun.entity.fishingPoint.dataSet.Wave;
-import com.mansun.entity.fishingPoint.dataSet.Weather;
+import com.mansun.entity.fishingPoint.QFishingPoint;
+import com.mansun.entity.fishingPoint.dataSet.*;
 import com.mansun.features.fish.repository.FishRepository;
 import com.mansun.features.point.fishingpoint.repository.*;
 import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
@@ -14,9 +12,10 @@ import com.mansun.responseDto.fishingPoint.OnePointDetailInfoResDto;
 import com.mansun.responseDto.fishingPoint.OnePointResDto;
 import com.mansun.responseDto.fishingPoint.SearchPointResDto;
 import com.mansun.responseDto.fishingPoint.allPoint.AllPointResDto;
-import com.mansun.responseDto.fishingPoint.allPoint.CaughtFishResDto;
 import com.mansun.responseDto.fishingPoint.allPoint.ForecastResDto;
-import com.mansun.responseDto.fishingPoint.allPoint.TideLevelResDto;
+import com.mansun.responseDto.fishingPoint.allPoint.SunMoonTimesResDto;
+import com.mansun.responseDto.fishingPoint.allPoint.TemperatureResDto;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,70 +90,114 @@ public class FishingPointServiceImpl implements FishingPointService {
     //전체 포인트 리스트
     @Override
     public List<AllPointResDto> findAllPointList(CustomUserDetails customUserDetails) {
+        JPAQueryFactory queryFactory = new JPAQueryFactory(em);
         List<FishingPoint> fishingPointList = fishingPointRepository.findAll();
-        SunMoonTimes sunMoon = sunMoonTimesRepository.findByLocDateAndFishingPoint_PointId(LocalDate.now(), 1L);
+
+        List<Long> pointIds = fishingPointList.stream()
+                .map(FishingPoint::getPointId)
+                .collect(Collectors.toList());
+
+        LocalDate today = LocalDate.now();
+
+        // 미리 SunMoonTimes 전체 조회
+        Map<Long, SunMoonTimes> sunMoonMap = sunMoonTimesRepository
+                .findByLocDateAndFishingPoint_PointIdIn(today, pointIds)
+                .stream()
+                .collect(Collectors.toMap(
+                        s -> s.getFishingPoint().getPointId(),
+                        s -> s
+                ));
+
+        // 미리 Weather 전체 조회
+        Map<Long, Weather> weatherMap = weatherRepository
+                .findFirstByWeatherDateAndFishingPoint_PointIdInOrderByTmxDesc(today, pointIds)
+                .stream()
+                .collect(Collectors.toMap(
+                        w -> w.getFishingPoint().getPointId(),
+                        w -> w,
+                        (w1, w2) -> w1 // 중복 처리
+                ));
+
+        // 날씨 예보: 전체 포인트에 대해 한 번의 쿼리로 7일간의 Weather를 조회
+        QWeather qWeather = QWeather.weather;
+        QFishingPoint qFishingPoint = QFishingPoint.fishingPoint;
+        QMarineZone qMarineZone = QMarineZone.marineZone;
+        QObservatory qObservatory = QObservatory.observatory;
+
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusDays(7);
+
+        List<Weather> weatherList = queryFactory
+                .selectFrom(qWeather)
+                .leftJoin(qWeather.fishingPoint, qFishingPoint).fetchJoin()
+                .leftJoin(qFishingPoint.marineZone, qMarineZone).fetchJoin()
+                .leftJoin(qFishingPoint.obsCode, qObservatory).fetchJoin()
+                .where(qWeather.weatherDate.between(startDate, endDate)
+                        .and(qFishingPoint.pointId.in(pointIds)))
+                .orderBy(qWeather.weatherDate.asc(), qWeather.weatherTime.asc())
+                .distinct() // 중복 제거
+                .fetch();
+
+        // weatherList를 FishingPoint별로 그룹핑 (포인트ID -> List<Weather>)
+        Map<Long, List<Weather>> forecastMap = weatherList.stream()
+                .collect(Collectors.groupingBy(w -> w.getFishingPoint().getPointId()));
+
+
+
         return fishingPointList.stream().map(
                         fp -> {
-                            SunMoonTimes sunmoon = sunMoonTimesRepository.findByLocDateAndFishingPoint_PointId(LocalDate.now(), fp.getPointId());
-                            LocalDateTime sunrise = sunmoon.getSunrise();
-                            LocalDateTime sunset = sunmoon.getSunset();
+                            Long pointId = fp.getPointId();
 
-                            Weather maxTempWeather = weatherRepository
-                                    .findFirstByWeatherDateAndFishingPoint_PointIdOrderByTmxDesc(LocalDate.now(), fp.getPointId());
-                            Weather minTempWeather = weatherRepository
-                                    .findFirstByWeatherDateAndFishingPoint_PointIdOrderByTmnAsc(LocalDate.now(), fp.getPointId());
+                            // SunMoonTimes
+                            SunMoonTimes sunMoonTimes = sunMoonMap.get(pointId);
+                            SunMoonTimesResDto sunMoonTimesResDto = null;
+                            if (sunMoonTimes != null) {
+                                sunMoonTimesResDto = SunMoonTimesResDto.builder()
+                                        .sunrise(sunMoonTimes.getSunrise().atOffset(ZoneOffset.UTC))
+                                        .sunset(sunMoonTimes.getSunset().atOffset(ZoneOffset.UTC))
+                                        .build();
+                            }
+                            // Weather
+                            Weather WeatherTempInfo = weatherMap.get(pointId);
 
-                            Double temperatureMax = (maxTempWeather != null)
-                                    ? (double) maxTempWeather.getTmx()
-                                    : null;
-                            Double temperatureMin = (minTempWeather != null)
-                                    ? (double) minTempWeather.getTmn()
-                                    : null;
+                            TemperatureResDto temperatureResDto = TemperatureResDto.builder()
+                                    .max(WeatherTempInfo == null ? 0 : WeatherTempInfo.getTmn())
+                                    .min(WeatherTempInfo == null ? 0 : WeatherTempInfo.getTmp())
+                                    .build();
+//                            List<ForecastResDto> forecastResDto =
+//                                    weatherList.stream().map(
+//                                            wi -> ForecastResDto.builder()
+//                                                    .date(LocalDateTime.of(wi.getWeatherDate(), wi.getWeatherTime().toLocalTime()).atOffset(ZoneOffset.UTC))
+//                                                    .sky(wi.getSky())
+//                                                    .temperature(wi.getTmp())
+//                                                    .precipitation(wi.getPcp())
+//                                                    .precipitation_prob(wi.getPop())
+//                                                    .precipitation_type(wi.getPty())
+//                                                    .humidity(wi.getReh())
+//                                                    .build()
+//                                    ).toList();
+//                            List<TideLevel> tideLevelList = tideLevelRepository.findByObsCode_ObsCode(fp.getObsCode().getObsCode());
 
-                            // (3) 일주일치 날씨 예보 (간단히 예시만)
-//                            List<Weather> weatherList = weatherRepository
-//                                    .findByWeatherDateBetweenAndFishingPoint_PointId(
-//                                            LocalDate.now(), LocalDate.now().plusDays(7), fp.getPointId());
-//
-//                            List<ForecastResDto> forecastDtoList = weatherList.stream()
-//                                    .map(w -> {
-//                                        // 예시로 WaveHeight도 함께 조회 (Optional 처리)
-//                                        LocalDateTime dateTime = LocalDateTime.of(w.getWeatherDate(), w.getWeatherTime().toLocalTime());
-//                                        Wave wave = waveHeightRepository
-//                                                .findFirstByMarineZone_LzoneAndDateTime(fp.getMarineZone().getLzone(), dateTime)
-//                                                .orElse(null);
-//
-//                                        // Weather + WaveHeight -> WeatherForecastDto 변환
-//                                        return ForecastResDto.builder()
-//                                                .date(w.getWeatherDate())
-//                                                .temperature(w.getTmp())
-//                                                .humidity(w.getReh())
-//                                                .precipitation_prob(w.getPop())
-//                                                .sky(w.getSky())
-//                                                .wind_speed(wave != null ? wave.getWindSpeed() : 0.0)
-//                                                .wave_height(wave != null ? wave.getWaveHeight() : 0.0)
-//                                                // ... 등등 필요한 필드를 채움 ...
-//                                                .build();
-//                                    })
-//                                    .collect(Collectors.toList());
+//                            List<TideLevelResDto> tideLevelResDto =
+//                                    tideLevelList.stream().map(
+//                                            tideLevel -> {
+//                                                tideLevel.get
+//                                            }
+//                                    ).toList();
+//                            List<Wave> waveList = waveHeightRepository.findByMarineZone_Lzone(fp.getMarineZone().getLzone());
+//                            List<WaveResDto> waveResDtoList = waveList.stream()
+//                                    .map(wl -> WaveResDto.builder()
+//                                            .wave_direction(
+//                                                    convertWindDirection(wl.getWaveDirection()))
+//                                            .wave_height(wl.getWaveHeight())
+//                                            .wind_direction(
+//                                                    convertWindDirection(wl.getWindDirection()))
+//                                            .wind_speed(wl.getWindSpeed())
+//                                            .build())
+//                                    .toList();
 
-                            List<TideLevelResDto> tideInfoList = fp.getObsCode().getTideLevel()
-                                    .stream()
-                                    .map(tideLevel -> {
-                                        return TideLevelResDto
-                                                .builder()
-                                                .tphTime(tideLevel.getTphTime().atOffset(ZoneOffset.UTC))
-                                                .tphLevel(tideLevel.getTphLevel())
-                                                .hlCode(tideLevel.getHlCode())
-                                                .build();
-                                    })
-                                    .toList();
-                            // (5) 잡힌 물고기 요약
-//                            List<CaughtFishResDto> caughtFishSummary = getCaughtFishSummary(customUserDetails, fp);
-
-
-                            assert temperatureMax != null;
-                            assert temperatureMin != null;
+//                            assert temperatureMax != null;
+//                            assert temperatureMin != null;
                             return AllPointResDto
                                     .builder()
                                     .pointId(fp.getPointId())
@@ -162,20 +206,20 @@ public class FishingPointServiceImpl implements FishingPointService {
                                     .longitude(fp.getLng())
                                     .water_depth(fp.getDepthRange())
                                     .seabed_type(fp.getPrimaryMaterial())
-                                    .sunrise(sunmoon.getSunrise().atOffset(ZoneOffset.UTC))
-                                    .sunset(sunmoon.getSunset().atOffset(ZoneOffset.UTC))
-                                    .temperature_max(temperatureMax.floatValue())
-                                    .temperature_min(temperatureMin.floatValue())
+                                    .sunrise(sunMoonTimesResDto != null ? sunMoonTimesResDto.getSunrise() : null)
+                                    .sunset(sunMoonTimesResDto != null ? sunMoonTimesResDto.getSunset() : null)
+                                    .temperature_max(temperatureResDto.getMax())
+                                    .temperature_min(temperatureResDto.getMin())
 //                                    .weather_forecast(forecastDtoList)
-                                    .tide_info(
-                                            tideInfoList.stream().map(
-                                                    tideLevel -> {
-                                                        return TideLevelResDto
-                                                                .builder()
-
-                                                                .build();
-                                                    }
-                                            ).collect(Collectors.toList()))
+//                                    .tide_info(
+//                                            tideInfoList.stream().map(
+//                                                    tideLevel -> {
+//                                                        return TideLevelResDto
+//                                                                .builder()
+//
+//                                                                .build();
+//                                                    }
+//                                            ).collect(Collectors.toList()))
 //                                    .caught_fish_summary(caughtFishSummary)
                                     .build();
                         })

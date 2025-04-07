@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface RecommentRepository extends JpaRepository<Recomment,Long> {
-    Optional<Recomment> findByUser_UserIdAndRecommentIdAndDeletedFalse(Long userId, Long recommentId);
+    Optional<Recomment> findByRecommentIdAndDeletedFalse(Long recommentId);
 }
