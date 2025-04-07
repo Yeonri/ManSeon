@@ -17,4 +17,5 @@ export type MainStackParams = {
     }[];
   };
   Profile: undefined;
+  Chatbot: undefined;
 };

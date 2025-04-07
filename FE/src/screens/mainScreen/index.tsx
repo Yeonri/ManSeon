@@ -1,3 +1,4 @@
+import Geolocation from "@react-native-community/geolocation";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
@@ -13,6 +14,7 @@ import { HeaderLogo } from "../../components/common/headerLogo";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
+import { ChatbotButton } from "../../components/main/chatbotButton";
 import { FishingDonutChart } from "../../components/main/fishingDonutChart";
 import { FishingPointCard } from "../../components/main/fishingPointCard";
 import { FishingResult } from "../../components/main/fishingResult";
@@ -20,6 +22,7 @@ import moonList from "../../data/moonList";
 import { useLocationPermission } from "../../hooks/useLocationPermission";
 import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
+import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
 
 dayjs.extend(utc);
@@ -40,6 +43,20 @@ export function MainScreen() {
   const { data: user } = useGetMyInfo();
 
   const setUser = useUserStore((state) => state.setUser);
+  const setLocation = useLocationStore((state) => state.setLocation);
+
+  // 위치 정보 가져오기
+  useEffect(() => {
+    if (hasLocationPermission) {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          setLocation(position.coords.latitude, position.coords.longitude);
+        },
+        (error) => console.log("Error getting location:", error),
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
+  }, [hasLocationPermission, setLocation]);
 
   useEffect(() => {
     if (user) {
@@ -71,32 +88,37 @@ export function MainScreen() {
       <HeaderLogo />
       <ScrollView className="px-5">
         {/* 물때 관련 */}
-        <View>
-          <View className="flex-row gap-3 items-end mt-5">
-            <Text>오늘의 물때</Text>
-            <Image source={moon!.img} className="h-5 w-5" />
+        <View className="flex-row justify-between items-center mr-10">
+          <View>
+            <View className="flex-row gap-3 items-end mt-5">
+              <Text>오늘의 물때</Text>
+              <Image source={moon!.img} className="h-5 w-5" />
+            </View>
+            <View className="flex-row items-center mt-2 gap-2">
+              <Text className="font-bold text-2xl">
+                {month}.{day}
+              </Text>
+              {/*음력 날짜는 수정 예정*/}
+              <Text>
+                (음력 {month}.{day})
+              </Text>
+            </View>
           </View>
-          <View className="flex-row items-center mt-2 gap-2">
-            <Text className="font-bold text-2xl">
-              {month}.{day}
-            </Text>
-            {/*음력 날짜는 수정 예정*/}
-            <Text>
-              (음력 {month}.{day})
-            </Text>
-          </View>
+          <ChatbotButton onPress={() => navigation.navigate("Chatbot")} />
         </View>
 
         {/* 검색 관련 */}
         <View className="flex h-32 bg-blue-500 rounded-2xl mt-5 mb-5">
           {/* 안내멘트 */}
-          <View className="flex-row items-baseline gap-1 ml-1">
-            <Text className="text-white font-bold ml-3 mt-3 text-xl">
-              {user.nickname ? user.nickname : user.name}
-            </Text>
-            <Text className="text-white">
-              님 오늘의 도착지를 확인해 보세요!
-            </Text>
+          <View className="flex-row justify-between items-center">
+            <View className="flex-row items-baseline gap-1 ml-1">
+              <Text className="text-white font-bold ml-3 mt-3 text-xl">
+                {user.nickname ? user.nickname : user.name}
+              </Text>
+              <Text className="text-white">
+                님 오늘의 도착지를 확인해 보세요!
+              </Text>
+            </View>
           </View>
 
           {/*검색창*/}
@@ -108,6 +130,7 @@ export function MainScreen() {
             />
           </View>
         </View>
+        <ChatbotButton onPress={() => navigation.navigate("Chatbot")} />
 
         {/* 통계 및 수집 내용 관련 */}
         <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
