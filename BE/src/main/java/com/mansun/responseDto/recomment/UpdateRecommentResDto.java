@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
@@ -26,5 +27,5 @@ public class UpdateRecommentResDto {
     //  Column
 
     private String recommentContent;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 }

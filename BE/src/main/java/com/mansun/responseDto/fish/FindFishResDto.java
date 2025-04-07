@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
 public class FindFishResDto {
     Long fishId;
     //Column
-    LocalDateTime createdAt;
+    OffsetDateTime createdAt;
     float lat;
     float lng;
 

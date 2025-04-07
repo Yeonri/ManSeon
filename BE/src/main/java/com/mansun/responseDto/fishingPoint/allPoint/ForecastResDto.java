@@ -3,15 +3,12 @@ package com.mansun.responseDto.fishingPoint.allPoint;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 
 @Builder
 @Getter
 public class ForecastResDto {
-    LocalDate date;
-    LocalTime time;
+    OffsetDateTime date;
     int sky;
     double temperature;
     double precipitation;

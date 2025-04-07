@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Builder
@@ -18,7 +19,7 @@ public class FindBoardCommentResDto {
     private String nickname;
     //    Column
     private String commentContent;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
     private int recommentNum;
     List<FindBoardCommentRecommentResDto> recomment;
 }

@@ -11,6 +11,7 @@ import java.util.List;
 public class Observatory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "obs_code")
     private String obsCode;
 //    연관 관계
 

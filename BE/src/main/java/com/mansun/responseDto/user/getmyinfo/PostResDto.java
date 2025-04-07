@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
@@ -15,5 +16,5 @@ public class PostResDto {
     int like;
     int commentNum;
     Long postId;
-    LocalDate createdAt;
+    OffsetDateTime createdAt;
 }

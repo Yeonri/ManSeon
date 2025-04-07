@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class TideLevel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "obs_code")
     private Long pk;
 //    연관관계
     @ManyToOne(fetch = FetchType.LAZY)
@@ -20,7 +21,7 @@ public class TideLevel {
     @Column(name = "tph_time")
     private LocalDateTime tphTime;
     @Column(name = "hl_code")
-    private int hlCode;
+    private String hlCode;
     @Column(name = "tph_level")
     private int tphLevel;
 

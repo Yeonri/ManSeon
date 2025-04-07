@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
@@ -19,5 +20,5 @@ public class FindBoardCommentRecommentResDto {
     private Long commentId;
     //  Column
     private String recommentContent;
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 }

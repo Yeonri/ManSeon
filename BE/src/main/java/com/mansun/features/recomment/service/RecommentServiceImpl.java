@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 @Service
 @Transactional
@@ -54,7 +55,7 @@ public class RecommentServiceImpl implements RecommentService {
                 .boardId(recomment.getBoard().getBoardId())
                 .commentId(recomment.getRecommentId())
                 .recommentContent(recomment.getRecommentContent())
-                .createdAt(recomment.getCreatedAt())
+                .createdAt(recomment.getCreatedAt().atOffset(ZoneOffset.UTC))
                 .build();
     }
 

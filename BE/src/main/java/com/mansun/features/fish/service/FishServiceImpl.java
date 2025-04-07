@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -75,7 +76,7 @@ public class FishServiceImpl implements FishService {
                             .fishId(f.getFishId())
                             .fishType(f.getFishType().getFishName())
                             .size(f.getSize())
-                            .createdAt(f.getCreatedAt())
+                            .createdAt(f.getCreatedAt().atOffset(ZoneOffset.UTC))
                             .fishImg(f.getFishImg())
                             .build()
             );
@@ -95,7 +96,7 @@ public class FishServiceImpl implements FishService {
                         .fishId(f.getFishId())
                         .fishType(f.getFishType().getFishName())
                         .fishImg(f.getFishImg())
-                        .createdAt(f.getCreatedAt())
+                        .createdAt(f.getCreatedAt().atOffset(ZoneOffset.UTC))
                         .size(f.getSize())
                         .build()
         ).collect(Collectors.toList());
@@ -111,7 +112,7 @@ public class FishServiceImpl implements FishService {
                 .lat(findFish.getLat())
                 .lng(findFish.getLng())
                 .size(findFish.getSize())
-                .createdAt(findFish.getCreatedAt())
+                .createdAt(findFish.getCreatedAt().atOffset(ZoneOffset.UTC))
                 .bait(findFish.getBait())
                 .equipment(findFish.getEquipment())
                 .fishImg(findFish.getFishImg())
@@ -127,7 +128,7 @@ public class FishServiceImpl implements FishService {
                 .lat(findFish.getLat())
                 .lng(findFish.getLng())
                 .size(findFish.getSize())
-                .createdAt(findFish.getCreatedAt())
+                .createdAt(findFish.getCreatedAt().atOffset(ZoneOffset.UTC))
                 .bait(findFish.getBait())
                 .equipment(findFish.getEquipment())
                 .fishImg(findFish.getFishImg())
@@ -142,7 +143,7 @@ public class FishServiceImpl implements FishService {
                         .fishId(f.getFishId())
                         .fishType(f.getFishType().getFishName())
                         .size(f.getSize())
-                        .date(f.getCreatedAt().toLocalDate())
+                        .date(f.getCreatedAt().atOffset(ZoneOffset.UTC))
                         .lat(f.getLat())
                         .lng(f.getLng())
                         .bait(f.getBait())
@@ -160,7 +161,7 @@ public class FishServiceImpl implements FishService {
                         .fishId(f.getFishId())
                         .fishType(f.getFishType().getFishName())
                         .size(f.getSize())
-                        .date(f.getCreatedAt().toLocalDate())
+                        .date(f.getCreatedAt().atOffset(ZoneOffset.UTC))
                         .lat(f.getLat())
                         .lng(f.getLng())
                         .bait(f.getBait())
@@ -189,7 +190,7 @@ public class FishServiceImpl implements FishService {
                             ft.getFishImg(),
                             !capturedFishList.isEmpty(),
                             capturedFishList.stream().map(
-                                            cf -> new Collection(cf.getLat(), cf.getLng(), cf.getCreatedAt().toLocalDate())
+                                            cf -> new Collection(cf.getLat(), cf.getLng(), cf.getCreatedAt().atOffset(ZoneOffset.UTC))
                                     )
                                     .collect(Collectors.toList())
                     )
