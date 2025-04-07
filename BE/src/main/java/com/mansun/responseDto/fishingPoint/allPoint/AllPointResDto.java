@@ -25,6 +25,6 @@ public class AllPointResDto {
     float temperature_max;
     float temperature_min;
     List<ForecastResDto> weather_forecast;
-    List<TideLevelResDto> tide_info;
+    List<TideDayResDto> tide_info;
     List<CaughtFishResDto> caught_fish_summary;
 }
