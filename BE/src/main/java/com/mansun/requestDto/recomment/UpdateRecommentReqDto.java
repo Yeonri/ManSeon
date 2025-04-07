@@ -7,4 +7,5 @@ import lombok.Getter;
 public class UpdateRecommentReqDto {
     @Schema(defaultValue = "1")
     Long recommentId;
+    String content;
 }

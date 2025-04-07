@@ -30,5 +30,4 @@ public class SunMoonTimes {
     private LocalDateTime moonrise;
     @Column(name = "moonset")
     private LocalDateTime moonset;
-
 }

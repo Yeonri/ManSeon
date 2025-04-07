@@ -45,7 +45,7 @@ public class RecommentServiceImpl implements RecommentService {
     @Override
     public UpdateRecommentResDto updateRecomment(CustomUserDetails customUserDetails, UpdateRecommentReqDto req) {
         Recomment recomment = repository
-                .findByUser_UserIdAndRecommentIdAndDeletedFalse(customUserDetails.getUserId(), req.getRecommentId())
+                .findByRecommentIdAndDeletedFalse(req.getRecommentId())
                 .orElseThrow();
         BeanUtils.copyProperties(req, recomment, NullAwareBeanUtils.getNullPropertyNames(req));
         return UpdateRecommentResDto
@@ -62,7 +62,7 @@ public class RecommentServiceImpl implements RecommentService {
     @Override
     public void deleteRecomment(CustomUserDetails customUserDetails, DeleteRecommentReqDto req) {
         Recomment recomment = repository
-                .findByUser_UserIdAndRecommentIdAndDeletedFalse(customUserDetails.getUserId(), req.getRecommentId())
+                .findByRecommentIdAndDeletedFalse(req.getRecommentId())
                 .orElseThrow();
         recomment.setDeleted(true);
     }

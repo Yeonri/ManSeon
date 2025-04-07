@@ -36,7 +36,7 @@ public class RecommentController {
     @PatchMapping
     public ResponseEntity<UpdateRecommentResDto> updateRecomment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid UpdateRecommentReqDto req) {
+            @RequestBody UpdateRecommentReqDto req) {
         return ResponseEntity.ok(service.updateRecomment(customUserDetails, req));
     }
 
@@ -44,7 +44,7 @@ public class RecommentController {
     @DeleteMapping
     public ResponseEntity<MessageResDto> deleteRecomment(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid DeleteRecommentReqDto req) {
+            @Valid @RequestBody DeleteRecommentReqDto req) {
         service.deleteRecomment(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("대댓글이 삭제되었습니다."));
     }
