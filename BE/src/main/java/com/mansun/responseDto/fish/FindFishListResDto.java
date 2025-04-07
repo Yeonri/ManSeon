@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
@@ -14,8 +15,8 @@ public class FindFishListResDto {
     Long fishId;
     String fishType;
     float size;
-    LocalDate date;
-    LocalDateTime createdAt;
+    OffsetDateTime date;
+    OffsetDateTime createdAt;
     float lat;
     float lng;
     String bait;

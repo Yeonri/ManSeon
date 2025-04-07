@@ -1,14 +1,10 @@
 package com.mansun.responseDto.fishingPoint.allPoint;
 
-import com.mansun.entity.fish.Fish;
-import com.mansun.entity.fishingPoint.dataSet.TideLevel;
-import com.mansun.entity.fishingPoint.dataSet.Weather;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Builder
@@ -24,11 +20,11 @@ public class AllPointResDto {
     boolean isRecommeded;
     String water_depth;
     String seabed_type;
-    LocalDateTime sunrise;
-    LocalDateTime sunset;
+    OffsetDateTime sunrise;
+    OffsetDateTime sunset;
     float temperature_max;
     float temperature_min;
     List<ForecastResDto> weather_forecast;
-    List<TideLevel> tide_info;
-    List<Fish> caught_fish_summary;
+    List<TideLevelResDto> tide_info;
+    List<CaughtFishResDto> caught_fish_summary;
 }

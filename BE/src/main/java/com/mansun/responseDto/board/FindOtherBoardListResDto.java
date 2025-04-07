@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
@@ -11,7 +12,7 @@ public class FindOtherBoardListResDto {
     Long postId;
     String title;
     String content;
-    LocalDateTime createdAt;
+    OffsetDateTime createdAt;
     Long userId;
     String profileImg;
     String postImg;

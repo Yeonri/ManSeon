@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Builder
@@ -19,7 +21,7 @@ public class FindBoardResDto {
     String profileImg;
     String title;
     String content;
-    LocalDate createdAt;
+    OffsetDateTime createdAt;
     String postImg;
     int commentNum;
     int like;

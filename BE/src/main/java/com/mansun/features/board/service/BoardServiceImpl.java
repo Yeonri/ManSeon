@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -61,7 +62,7 @@ public class BoardServiceImpl implements BoardService {
                         .title(b.getTitle())
                         .content(b.getContent())
                         .profileImg(b.getUser().getProfileImg())
-                        .createdAt(b.getCreatedAt())
+                        .createdAt(b.getCreatedAt().atOffset(ZoneOffset.UTC))
                         .commentNum(b.getCommentNum())
                         .like(b.getLikeNum())
                         .postImg(b.getPostImg())
@@ -119,7 +120,7 @@ public class BoardServiceImpl implements BoardService {
                 .nickname(board.getUser().getUsername())
                 .postImg(board.getPostImg())
                 .profileImg(board.getUser().getProfileImg())
-                .createdAt(board.getCreatedAt().toLocalDate())
+                .createdAt(board.getCreatedAt().atOffset(ZoneOffset.UTC))
                 .title(board.getTitle())
                 .content(board.getContent())
                 .commentList(board.getComment().stream().map(
@@ -129,7 +130,7 @@ public class BoardServiceImpl implements BoardService {
                                 .userId(b.getUser().getUserId())
                                 .username(b.getUser().getUsername())
                                 .nickname(b.getUser().getNickname())
-                                .createdAt(b.getCreatedAt())
+                                .createdAt(b.getCreatedAt().atOffset(ZoneOffset.UTC))
                                 .commentContent(b.getCommentContent())
                                 .recommentNum(b.getRecommentNum())
                                 .recomment(b.getRecomment().stream().map(
@@ -139,7 +140,7 @@ public class BoardServiceImpl implements BoardService {
                                                 .userId(r.getUser().getUserId())
                                                 .boardId(r.getBoard().getBoardId())
                                                 .commentId(r.getComment().getCommentId())
-                                                .createdAt(r.getCreatedAt())
+                                                .createdAt(r.getCreatedAt().atOffset(ZoneOffset.UTC))
                                                 .build()
                                 ).collect(Collectors.toList()))
                                 .build()).collect(Collectors.toList()))
@@ -160,7 +161,7 @@ public class BoardServiceImpl implements BoardService {
                         .userId(board.getUser().getUserId())
                         .postImg(board.getPostImg())
                         .profileImg(board.getUser().getProfileImg())
-                        .createdAt(board.getCreatedAt())
+                        .createdAt(board.getCreatedAt().atOffset(ZoneOffset.UTC))
                         .title(board.getTitle())
                         .content(board.getContent())
                         .build())
@@ -177,7 +178,7 @@ public class BoardServiceImpl implements BoardService {
                         .userId(board.getUser().getUserId())
                         .postImg(board.getPostImg())
                         .profileImg(board.getUser().getProfileImg())
-                        .createdAt(board.getCreatedAt())
+                        .createdAt(board.getCreatedAt().atOffset(ZoneOffset.UTC))
                         .title(board.getTitle())
                         .content(board.getContent())
                         .build())
@@ -205,7 +206,7 @@ public class BoardServiceImpl implements BoardService {
                 .nickname(board.getUser().getUsername())
                 .postImg(board.getPostImg())
                 .profileImg(board.getUser().getProfileImg())
-                .createdAt(board.getCreatedAt().toLocalDate())
+                .createdAt(board.getCreatedAt().atOffset(ZoneOffset.UTC))
                 .title(board.getTitle())
                 .content(board.getContent())
                 .commentList(board.getComment().stream().map(
@@ -215,7 +216,7 @@ public class BoardServiceImpl implements BoardService {
                                 .userId(b.getUser().getUserId())
                                 .username(b.getUser().getUsername())
                                 .nickname(b.getUser().getNickname())
-                                .createdAt(b.getCreatedAt())
+                                .createdAt(b.getCreatedAt().atOffset(ZoneOffset.UTC))
                                 .commentContent(b.getCommentContent())
                                 .recommentNum(b.getRecommentNum())
                                 .recomment(b.getRecomment().stream().map(
@@ -225,7 +226,7 @@ public class BoardServiceImpl implements BoardService {
                                                 .userId(r.getUser().getUserId())
                                                 .boardId(r.getBoard().getBoardId())
                                                 .commentId(r.getComment().getCommentId())
-                                                .createdAt(r.getCreatedAt())
+                                                .createdAt(r.getCreatedAt().atOffset(ZoneOffset.UTC))
                                                 .build()
                                 ).collect(Collectors.toList()))
                                 .build()).collect(Collectors.toList()))

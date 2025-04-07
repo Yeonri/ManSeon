@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Builder
 @Getter
@@ -18,7 +19,7 @@ public class allBoardListResDto {
     String profileImg;
     String title;
     String content;
-    LocalDateTime createdAt;
+    OffsetDateTime createdAt;
     String postImg;
     int commentNum;
     int like;

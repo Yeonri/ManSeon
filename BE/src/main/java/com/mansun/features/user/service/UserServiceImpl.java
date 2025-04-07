@@ -37,6 +37,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -157,7 +158,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                                 .title(b.getTitle())
                                 .content(b.getContent())
                                 .commentNum(b.getCommentNum())
-                                .createdAt(b.getCreatedAt().toLocalDate())
+                                .createdAt(b.getCreatedAt().atOffset(ZoneOffset.UTC))
                                 .like(b.getLikeNum())
                                 .postImg(b.getPostImg())
                                 .postId(b.getBoardId())
