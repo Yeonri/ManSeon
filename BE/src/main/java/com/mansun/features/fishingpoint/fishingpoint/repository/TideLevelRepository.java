@@ -5,11 +5,17 @@ import com.mansun.entity.fishingPoint.dataSet.TideLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Repository
 public interface TideLevelRepository extends JpaRepository<TideLevel,Long> {
+    List<TideLevel> findByObsCode_ObsCodeInAndTphTimeBetween(
+            List<String> obsCodes,
+            LocalDateTime startTime,
+            LocalDateTime endTime
+    );
     List<TideLevel> findByObsCode_ObsCodeIn(Collection<String> obsCode_obsCode);
     List<TideLevel> findByObsCode_ObsCode(String obsCode);
 }

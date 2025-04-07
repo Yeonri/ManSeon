@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
@@ -146,7 +147,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                 .collect(Collectors.groupingBy(w -> w.getFishingPoint().getPointId()));
 
         // -----------------------------
-        // [C] TideLevel / Wave (N+1 방지)
+        // [C] TideLevel / Wave (N+1 방지) - "오늘 하루치"만 조회
         // -----------------------------
         // 1) FishingPoint에서 obsCode, lzone 추출
         List<String> obsCodes = fishingPointList.stream()
@@ -155,26 +156,35 @@ public class FishingPointServiceImpl implements FishingPointService {
                 .distinct()
                 .toList();
 
-        // lzone을 Integer → String 으로 변환 예시
-        // (Wave 테이블에서 PK/FK를 int로 쓴다면 그대로 int를 쓸 수도 있음)
-        List<String> lzones = fishingPointList.stream()
-                .map(fp -> fp.getMarineZone().getLzone().toString())
+        List<Integer> lzones = fishingPointList.stream()
+                .map(fp -> fp.getMarineZone().getLzone())
                 .filter(Objects::nonNull)
                 .distinct()
                 .toList();
 
-        // 2) TideLevel 한 번에 조회 → Map(obsCode -> List<TideLevel>)
-        List<TideLevel> tideLevels = tideLevelRepository.findByObsCode_ObsCodeIn(obsCodes);
-        // 예: findByObsCodeIn(List<String> obsCodes)
-        // → TideLevel 엔티티 내 obsCode 필드 기준
+        // 2) "오늘 하루치" 범위 (00:00:00 ~ 23:59:59)
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime endOfDay   = LocalDate.now().atTime(LocalTime.MAX);
 
+        // ★★★ 여기서 기존 "findByObsCode_ObsCodeIn" 대신
+        //      "findByObsCode_ObsCodeInAndTphTimeBetween(...)" 사용
+        List<TideLevel> tideLevels = tideLevelRepository.findByObsCode_ObsCodeInAndTphTimeBetween(
+                obsCodes,
+                startOfDay,
+                endOfDay
+        );
+
+        // Map(obsCode -> List<TideLevel>)
         Map<String, List<TideLevel>> tideLevelMap = tideLevels.stream()
                 .collect(Collectors.groupingBy(t -> t.getObsCode().getObsCode()));
-//
-        // 3) Wave 한 번에 조회 → Map(lzone -> List<Wave>)
-        List<Wave> waveList = waveHeightRepository.findByMarineZone_LzoneIn(lzones);
-        // 예: findByMarineZone_LzoneIn(List<String> lzones)
 
+        // ★★★ Wave 하루치 조회
+        List<Wave> waveList = waveHeightRepository.findByMarineZone_LzoneInAndDateTimeBetween(
+                lzones,
+                startOfDay,
+                endOfDay
+        );
+        // Map(lzone -> List<Wave>)
         Map<String, List<Wave>> waveMap = waveList.stream()
                 .collect(Collectors.groupingBy(w -> w.getMarineZone().getLzone().toString()));
 
@@ -205,7 +215,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                     .min(weatherTempInfo == null ? 0 : weatherTempInfo.getTmp())
                     .build();
 
-            // (3) 3일 예보 정보 (위에서 만든 forecastMap)
+            // (3) 3일 예보 정보
             List<Weather> forecastList = forecastMap.getOrDefault(pointId, Collections.emptyList());
             List<ForecastResDto> forecastResDtoList = forecastList.stream()
                     .map(wi -> ForecastResDto.builder()
@@ -221,21 +231,20 @@ public class FishingPointServiceImpl implements FishingPointService {
                     )
                     .toList();
 
-            // (4) TideLevel
-            // obsCode가 null이거나 tideLevelMap에 없으면 빈 리스트
+            // (4) 오늘 하루치 TideLevel
             List<TideLevel> tideLevelForFp = obsCode == null
                     ? Collections.emptyList()
                     : tideLevelMap.getOrDefault(obsCode, Collections.emptyList());
 
             List<TideLevelResDto> tideLevelResDto = tideLevelForFp.stream()
                     .map(tide -> TideLevelResDto.builder()
-                            .tphTime(tide.getTphTime().atOffset(ZoneOffset.UTC))  // DATETIME → Offset
-                            .hlCode(tide.getHlCode())      // 'High/Low' 코드
-                            .tphLevel(tide.getTphLevel())  // 수위값
+                            .tphTime(tide.getTphTime().atOffset(ZoneOffset.UTC))
+                            .hlCode(tide.getHlCode())
+                            .tphLevel(tide.getTphLevel())
                             .build())
                     .toList();
 
-            // (5) Wave
+            // (5) 오늘 하루치 Wave
             List<Wave> waveForFp = (lzone == null)
                     ? Collections.emptyList()
                     : waveMap.getOrDefault(lzone, Collections.emptyList());
@@ -263,6 +272,8 @@ public class FishingPointServiceImpl implements FishingPointService {
                     .temperature_min(temperatureResDto.getMin())
                     .weather_forecast(forecastResDtoList)
                     .tide_info(tideLevelResDto)
+                    // ★ Wave도 AllPointResDto에 넣고 싶으면 DTO 필드 만들어 주입
+//                    .wave_info(waveResDtoList)
                     .build();
         }).collect(Collectors.toList());
     }
