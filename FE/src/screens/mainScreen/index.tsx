@@ -8,6 +8,7 @@ import { ChevronRight } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getPosts } from "../../api/post";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { MainStackParams } from "../../api/types/MainStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
@@ -20,7 +21,6 @@ import { FishingPointCard } from "../../components/main/fishingPointCard";
 import { FishingResult } from "../../components/main/fishingResult";
 import moonList from "../../data/moonList";
 import { useLocationPermission } from "../../hooks/useLocationPermission";
-import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
@@ -64,6 +64,17 @@ export function MainScreen() {
     }
   }, [user, setUser]);
 
+  const [posts, setPosts] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      const data = await getPosts();
+      if (data) setPosts(data);
+    }
+
+    fetchPosts();
+  }, []);
+
   if (hasLocationPermission === null) {
     return <PermissionCheck name="위치" />;
   }
@@ -80,8 +91,6 @@ export function MainScreen() {
   };
 
   const progress = (user.collection_cnt / 24) * 100;
-
-  const posts = PostData;
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1">
@@ -299,7 +308,11 @@ export function MainScreen() {
               {posts.slice(0, 10).map((post) => (
                 <Image
                   key={post.postId}
-                  source={{ uri: post.postImg }}
+                  source={
+                    post.postImg
+                      ? { uri: post.postImg }
+                      : require("../../assets/images/image_default.svg")
+                  }
                   className="w-24 h-24 rounded-md"
                 />
               ))}
