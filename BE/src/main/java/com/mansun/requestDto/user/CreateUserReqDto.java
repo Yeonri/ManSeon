@@ -11,7 +11,7 @@ public class CreateUserReqDto {
     @Schema(defaultValue = "1234")
     String password;
     @Schema(defaultValue = "1234")
-    String name;
+    String username;
     @Schema(defaultValue = "01012341234")
     String phoneNum;
 }

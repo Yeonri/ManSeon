@@ -1,4 +1,4 @@
-package com.mansun.features.point.fishingpoint.service;
+package com.mansun.features.fishingpoint.fishingpoint.service;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.fish.Fish;
@@ -6,7 +6,7 @@ import com.mansun.entity.fishingPoint.FishingPoint;
 import com.mansun.entity.fishingPoint.QFishingPoint;
 import com.mansun.entity.fishingPoint.dataSet.*;
 import com.mansun.features.fish.repository.FishRepository;
-import com.mansun.features.point.fishingpoint.repository.*;
+import com.mansun.features.fishingpoint.fishingpoint.repository.*;
 import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
 import com.mansun.responseDto.fishingPoint.OnePointDetailInfoResDto;
 import com.mansun.responseDto.fishingPoint.OnePointResDto;
@@ -142,8 +142,6 @@ public class FishingPointServiceImpl implements FishingPointService {
         Map<Long, List<Weather>> forecastMap = weatherList.stream()
                 .collect(Collectors.groupingBy(w -> w.getFishingPoint().getPointId()));
 
-
-
         return fishingPointList.stream().map(
                         fp -> {
                             Long pointId = fp.getPointId();
@@ -164,18 +162,18 @@ public class FishingPointServiceImpl implements FishingPointService {
                                     .max(WeatherTempInfo == null ? 0 : WeatherTempInfo.getTmn())
                                     .min(WeatherTempInfo == null ? 0 : WeatherTempInfo.getTmp())
                                     .build();
-//                            List<ForecastResDto> forecastResDto =
-//                                    weatherList.stream().map(
-//                                            wi -> ForecastResDto.builder()
-//                                                    .date(LocalDateTime.of(wi.getWeatherDate(), wi.getWeatherTime().toLocalTime()).atOffset(ZoneOffset.UTC))
-//                                                    .sky(wi.getSky())
-//                                                    .temperature(wi.getTmp())
-//                                                    .precipitation(wi.getPcp())
-//                                                    .precipitation_prob(wi.getPop())
-//                                                    .precipitation_type(wi.getPty())
-//                                                    .humidity(wi.getReh())
-//                                                    .build()
-//                                    ).toList();
+                            List<ForecastResDto> forecastResDto =
+                                    forecastMap.keySet().stream().map(
+                                            wi -> ForecastResDto.builder()
+                                                    .date(LocalDateTime.of(wi.getWeatherDate(), wi.getWeatherTime().toLocalTime()).atOffset(ZoneOffset.UTC))
+                                                    .sky(wi.getSky())
+                                                    .temperature(wi.getTmp())
+                                                    .precipitation(wi.getPcp())
+                                                    .precipitation_prob(wi.getPop())
+                                                    .precipitation_type(wi.getPty())
+                                                    .humidity(wi.getReh())
+                                                    .build()
+                                    ).toList();
 //                            List<TideLevel> tideLevelList = tideLevelRepository.findByObsCode_ObsCode(fp.getObsCode().getObsCode());
 
 //                            List<TideLevelResDto> tideLevelResDto =
@@ -210,7 +208,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                                     .sunset(sunMoonTimesResDto != null ? sunMoonTimesResDto.getSunset() : null)
                                     .temperature_max(temperatureResDto.getMax())
                                     .temperature_min(temperatureResDto.getMin())
-//                                    .weather_forecast(forecastDtoList)
+                                    .weather_forecast(forecastResDto)
 //                                    .tide_info(
 //                                            tideInfoList.stream().map(
 //                                                    tideLevel -> {

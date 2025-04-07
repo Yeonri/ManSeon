@@ -1,4 +1,4 @@
-package com.mansun.features.point.userpoint.repository;
+package com.mansun.features.fishingpoint.userpoint.repository;
 
 import com.mansun.entity.fishingPoint.UserPoint;
 import org.springframework.data.jpa.repository.JpaRepository;
