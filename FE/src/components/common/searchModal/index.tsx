@@ -1,5 +1,5 @@
+import { X } from "lucide-react-native";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
-import CloseIcon from "../../../assets/images/icon_close.svg";
 import { SearchInput } from "../searchInput";
 import { SearchResult } from "../searchResult";
 
@@ -27,7 +27,7 @@ export function SearchModal({
               onPress={onClose}
               className="right-0 top-0 p-1 flex-row-reverse -mb-4"
             >
-              <CloseIcon />
+              <X />
             </TouchableOpacity>
 
             <Text className="text-center text-lg font-semibold text-neutral-900">

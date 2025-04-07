@@ -1,0 +1,122 @@
+[
+  {
+    "friendId": 1,
+    "profile_img": "https://example.com/profiles/user1.jpg",
+    "nickname": "sunnyday",
+    "name": "김선우"
+  },
+  {
+    "friendId": 2,
+    "profile_img": "https://example.com/profiles/user2.jpg",
+    "nickname": "moonlight",
+    "name": "이달"
+  },
+  {
+    "friendId": 3,
+    "profile_img": "https://example.com/profiles/user3.jpg",
+    "nickname": "coffeeholic",
+    "name": "박지은"
+  },
+  {
+    "friendId": 4,
+    "profile_img": "https://example.com/profiles/user4.jpg",
+    "nickname": "booklover",
+    "name": "정서윤"
+  },
+  {
+    "friendId": 5,
+    "profile_img": "https://example.com/profiles/user5.jpg",
+    "nickname": "catmom",
+    "name": "최수지"
+  },
+  {
+    "friendId": 6,
+    "profile_img": "https://example.com/profiles/user6.jpg",
+    "nickname": "gogogo",
+    "name": "오지훈"
+  },
+  {
+    "friendId": 7,
+    "profile_img": "https://example.com/profiles/user7.jpg",
+    "nickname": "dailyjoy",
+    "name": "한민정"
+  },
+  {
+    "friendId": 8,
+    "profile_img": "https://example.com/profiles/user8.jpg",
+    "nickname": "mintcookie",
+    "name": "조민수"
+  },
+  {
+    "friendId": 9,
+    "profile_img": "https://example.com/profiles/user9.jpg",
+    "nickname": "rainbow",
+    "name": "윤하늘"
+  },
+  {
+    "friendId": 10,
+    "profile_img": "https://example.com/profiles/user10.jpg",
+    "nickname": "seaview",
+    "name": "장태현"
+  },
+  {
+    "friendId": 11,
+    "profile_img": "https://example.com/profiles/user11.jpg",
+    "nickname": "springiscoming",
+    "name": "이봄"
+  },
+  {
+    "friendId": 12,
+    "profile_img": "https://example.com/profiles/user12.jpg",
+    "nickname": "techlover",
+    "name": "김도윤"
+  },
+  {
+    "friendId": 13,
+    "profile_img": "https://example.com/profiles/user13.jpg",
+    "nickname": "plantmom",
+    "name": "허지민"
+  },
+  {
+    "friendId": 14,
+    "profile_img": "https://example.com/profiles/user14.jpg",
+    "nickname": "guitarboy",
+    "name": "남시우"
+  },
+  {
+    "friendId": 15,
+    "profile_img": "https://example.com/profiles/user15.jpg",
+    "nickname": "marathoner",
+    "name": "백민호"
+  },
+  {
+    "friendId": 16,
+    "profile_img": "https://example.com/profiles/user16.jpg",
+    "nickname": "sketchbook",
+    "name": "안지연"
+  },
+  {
+    "friendId": 17,
+    "profile_img": "https://example.com/profiles/user17.jpg",
+    "nickname": "cookinglover",
+    "name": "강예진"
+  },
+  {
+    "friendId": 18,
+    "profile_img": "https://example.com/profiles/user18.jpg",
+    "nickname": "codewizard",
+    "name": "문지후"
+  },
+  {
+    "friendId": 19,
+    "profile_img": "https://example.com/profiles/user19.jpg",
+    "nickname": "lazycat",
+    "name": "홍예림"
+  },
+  {
+    "friendId": 20,
+    "profile_img": "https://example.com/profiles/user20.jpg",
+    "nickname": "happyhour",
+    "name": "유건우"
+  }
+]

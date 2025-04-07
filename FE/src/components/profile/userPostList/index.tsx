@@ -10,7 +10,7 @@ type ProfilePost = Pick<
   | "postImg"
   | "like"
   | "commentNum"
-  | "createAt"
+  | "createdAt"
 >;
 
 type MyPostListProps = {

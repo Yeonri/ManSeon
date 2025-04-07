@@ -2,7 +2,6 @@ import { Bookmark, X } from "lucide-react-native";
 import { forwardRef, Ref } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Modalize } from "react-native-modalize";
-import { FishingFishList } from "../fishingFishList";
 import { TideChart } from "../tideChart";
 import { WeatherTable } from "../weatherTable";
 
@@ -36,7 +35,7 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
             <View className="flex-row gap-2 items-center">
               <Bookmark />
               <Text className="text-xl font-bold text-neutral-800">
-                {point.name}
+                {point.pointName}
               </Text>
             </View>
             <TouchableOpacity
@@ -51,7 +50,7 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
 
           {/* 수심 및 저질 */}
           <View className="flex-row gap-3 ml-9">
-            <Text className="mb-3">수심: 평균 {point.water_depth}m</Text>
+            <Text className="mb-3">수심: {point.water_depth}m</Text>
             <Text>저질: {point.seabed_type}</Text>
           </View>
 
@@ -72,25 +71,37 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
           <View className="flex-row justify-between mt-1">
             <View className="flex-row gap-2">
               <Text className="text-base">일출</Text>
-              <Text className="font-medium text-base">{point.sunrise}</Text>
+              {/* <Text className="font-medium text-base">{point.sunrise}</Text> */}
+              <Text className="font-medium text-base">
+                {point.sunrise ?? "-"}
+              </Text>
               <Text className="text-base">일몰</Text>
-              <Text className="font-medium text-base">{point.sunset}</Text>
+              {/* <Text className="font-medium text-base">{point.sunset}</Text> */}
+              <Text className="font-medium text-base">
+                {point.sunset ?? "-"}
+              </Text>
             </View>
 
             <View className="flex-row gap-1">
               <View className="flex-row gap-1">
                 <Text>최저</Text>
                 <TouchableOpacity className="border border-blue-500 px-2 rounded-2xl">
-                  <Text className="text-blue-500 font-medium">
+                  {/* <Text className="text-blue-500 font-medium">
                     {point.temperature_min}°C
+                  </Text> */}
+                  <Text className="text-blue-500 font-medium">
+                    {point.temperature_min ?? "-"}°C
                   </Text>
                 </TouchableOpacity>
               </View>
               <View className="flex-row gap-1">
                 <Text>최고</Text>
                 <TouchableOpacity className="border border-blue-500 bg-blue-500 px-2 rounded-2xl">
-                  <Text className="text-white font-medium">
+                  {/* <Text className="text-white font-medium">
                     {point.temperature_max}°C
+                  </Text> */}
+                  <Text className="text-white font-medium">
+                    {point.temperature_max ?? "-"}°C
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -111,24 +122,24 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
           </View>
 
           {/* 해당 포인트에서 내가 잡은 물고기 정보 */}
-          <View className="mt-3">
+          {/* <View className="mt-3">
             <Text className="text-neutral-800 font-semibold text-xl mb-3">
               이 근처에서 잡힌 물고기
             </Text>
             <View className="bg-blue-50 p-3">
               <FishingFishList data={point.my_caught_fish} />
             </View>
-          </View>
+          </View> */}
 
           {/* 해당 포인트 전체에서 잡은 물고기 정보 */}
-          <View className="mt-3">
+          {/* <View className="mt-3">
             <Text className="text-neutral-800 font-semibold text-xl mb-3">
               이 포인트에서 내가 잡은 물고기
             </Text>
             <View className="bg-blue-50 p-3">
               <FishingFishList data={point.caught_fish_summary} />
             </View>
-          </View>
+          </View> */}
         </ScrollView>
       </Modalize>
     );

@@ -18,8 +18,8 @@ interface TidePoint {
 
 interface TideInfo {
   date: string;
-  high_tide: TidePoint;
-  low_tide: TidePoint;
+  highTide: TidePoint;
+  lowTide: TidePoint;
 }
 
 interface Props {
@@ -28,8 +28,8 @@ interface Props {
 
 export function TideChart({ data }: Props) {
   const flattened: TidePoint[] = data.flatMap((item) => [
-    { value: item.high_tide.value, time: item.high_tide.time },
-    { value: item.low_tide.value, time: item.low_tide.time },
+    { value: item.highTide.value, time: item.highTide.time },
+    { value: item.lowTide.value, time: item.lowTide.time },
   ]);
 
   const pointPadding = 30;

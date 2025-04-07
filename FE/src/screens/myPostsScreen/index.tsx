@@ -1,11 +1,11 @@
 import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useMyPosts } from "../../api/quries/useMypost";
 import type { Post } from "../../api/types/Post";
 import Dropdown from "../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { PostCard } from "../../components/profile/postCard";
-import UserMock from "../../mocks/userMocks.json";
 
 type ProfilePost = Pick<
   Post,
@@ -15,14 +15,13 @@ type ProfilePost = Pick<
   | "postImg"
   | "like"
   | "commentNum"
-  | "createAt"
+  | "createdAt"
 >;
 
 const sortOptions = ["최신순", "오래된순"];
 
 export function MyPostsScreen() {
-  const user = UserMock[0];
-  const posts = user.posts;
+  const { data: posts = [] } = useMyPosts();
 
   const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
 
@@ -32,14 +31,14 @@ export function MyPostsScreen() {
     if (selectedSort === "최신순") {
       return copyData.sort(
         (a, b) =>
-          new Date(b.createAt).getTime() - new Date(a.createAt).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
     }
 
     if (selectedSort === "오래된순") {
       return copyData.sort(
         (a, b) =>
-          new Date(a.createAt).getTime() - new Date(b.createAt).getTime()
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
       );
     }
 
@@ -61,7 +60,6 @@ export function MyPostsScreen() {
           data={sortedData as ProfilePost[]}
           keyExtractor={(item) => item.postId.toString()}
           renderItem={({ item }) => <PostCard post={item} />}
-          contentContainerStyle={{ paddingBottom: 150 }}
         />
       </View>
     </SafeAreaView>

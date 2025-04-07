@@ -1,6 +1,6 @@
+import { X } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import CloseIcon from "../../../assets/images/icon_close.svg";
 
 interface CollectionMapModalProps {
   visible: boolean;
@@ -26,7 +26,7 @@ function CollectionMapModal({
           onPress={onClose}
           className="flex flex-row-reverse -mb-4"
         >
-          <CloseIcon />
+          <X />
         </TouchableOpacity>
         <Text className="text-lg font-bold text-center mb-3">스팟 정보</Text>
 

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMyInfo } from "../auth";
+import { getMyInfo } from "../user";
 
 export function useGetMyInfo() {
   return useQuery({
