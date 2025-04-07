@@ -9,7 +9,7 @@ import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { AddComment } from "../../components/community/addComment";
-import { CommentList } from "../../components/community/commentList";
+// import { CommentList } from "../../components/community/commentList";
 import { DeleteAlert } from "../../utils/deleteAlert";
 import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
 import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
@@ -17,6 +17,7 @@ import DefaultProfile from "../../assets/images/profile_default.svg";
 import { Loading } from "../../components/common/loading";
 import { FormatTime } from "../../utils/formatTime";
 import { useUserStore } from "../../store/userStore";
+import { CommentList } from "../../components/community/commentList";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -32,7 +33,7 @@ export function PostScreen({ route }: PostScreenProps) {
   const user = useUserStore((state) => state.user);
   const isOwner = user?.id === postDetail?.userId;
   console.log("상세 게시글:", postDetail);
-  console.log("유저 정보:", user);
+  // console.log("유저 정보:", user);
 
   function handleDelete() {
     DeleteAlert("게시글", () => {
@@ -143,7 +144,7 @@ export function PostScreen({ route }: PostScreenProps) {
         </View>
         {/* 댓글 추가 */}
         <View className="my-4">
-          <AddComment />
+          <AddComment postId={postDetail.boardId} />
         </View>
         {/* 댓글 목록 */}
         <CommentList comments={postDetail.commentList} />

@@ -25,16 +25,12 @@ export function useEditRecomment() {
 
   return useMutation({
     mutationFn: ({
-      postId,
-      commentId,
       recommentId,
       content,
     }: {
-      postId: number;
-      commentId: number;
       recommentId: number;
       content: string;
-    }) => editRecomment(postId, commentId, recommentId, content),
+    }) => editRecomment(recommentId, content),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
   });
 }

@@ -19,16 +19,9 @@ export async function addRecomment(
   }
 }
 // 답글 수정
-export async function editRecomment(
-  postId: number,
-  commentId: number,
-  recommentId: number,
-  content: string
-) {
+export async function editRecomment(recommentId: number, content: string) {
   try {
     const response = await authClient.put("/recomment", {
-      postId,
-      commentId,
       recommentId,
       content,
     });
