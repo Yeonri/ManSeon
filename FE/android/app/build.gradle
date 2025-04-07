@@ -69,16 +69,8 @@ dependencies {
     }
 
     // ✅ TensorFlow Lite Core (꼭 필요!)
-    implementation 'org.tensorflow:tensorflow-lite:2.13.0'
-
-    // (선택) GPU Delegate
-    // implementation 'org.tensorflow:tensorflow-lite-gpu:2.13.0'
-
-    // (선택) Support library for TensorImage, TensorBuffer 등
-    // implementation 'org.tensorflow:tensorflow-lite-support:0.4.3'
-
-    // (선택) 사용할 경우만 추가
-    // implementation 'org.tensorflow:tensorflow-lite-select-tf-ops:2.13.0'
+    implementation 'org.tensorflow:tensorflow-lite:2.16.1'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.16.1'
 }
 
 // 의존성 충돌 해결
@@ -98,7 +90,7 @@ configurations.all {
 allprojects {
     repositories {
         google()
-        mavenCentral() // ✅ 필수: TensorFlow Lite를 위한 중앙 저장소
+        mavenCentral()
         maven {
             url("$rootDir/../node_modules/react-native-maps/android")
         }

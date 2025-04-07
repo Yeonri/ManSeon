@@ -6672,11 +6672,6 @@ react-native-dotenv@^3.4.11:
   dependencies:
     dotenv "^16.4.5"
 
-react-native-fast-tflite@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-fast-tflite/-/react-native-fast-tflite-1.6.0.tgz#4949d60265856a493589ac55f655268a9ca6aeda"
-  integrity sha512-lHLMfsbQOxn79/oiY353fDZcAns+IzQkOH2JWILLPXqlDsOAgHV411uQArQ28SHAgHy2bOcQgXqYMG0WoPIwfw==
-
 react-native-fs@^2.20.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/react-native-fs/-/react-native-fs-2.20.0.tgz#05a9362b473bfc0910772c0acbb73a78dbc810f6"
