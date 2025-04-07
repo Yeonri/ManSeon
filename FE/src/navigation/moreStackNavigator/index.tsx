@@ -4,6 +4,7 @@ import { CollectionListScreen } from "../../screens/collectionListScreen";
 import { CollectionScreen } from "../../screens/collectionScreen";
 import { MoreScreen } from "../../screens/moreScreen";
 import { MyPostsScreen } from "../../screens/myPostsScreen";
+import { PostScreen } from "../../screens/postScreen";
 import { ProfileEditScreen } from "../../screens/profileEditScreen";
 import { ProfileScreen } from "../../screens/profileScreen";
 import { ProhibitedScreen } from "../../screens/prohibitedScreen";
@@ -28,6 +29,7 @@ export function MoreStackNavigator() {
       <Stack.Screen name="Suggestions" component={SuggestionsScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
+      <Stack.Screen name="Post" component={PostScreen} />
     </Stack.Navigator>
   );
 }

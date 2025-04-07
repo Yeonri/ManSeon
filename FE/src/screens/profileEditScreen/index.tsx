@@ -12,25 +12,13 @@ export function ProfileEditScreen() {
   const navigation = useNavigation();
   const user = useUserStore((state) => state.user);
 
-  // const [isSecure1, setIsSecure1] = useState(true);
-  // const [isSecure2, setIsSecure2] = useState(true);
-
   const [editingNickname, setEditingNickname] = useState(false);
   const [nickname, setNickname] = useState(user?.nickname || user?.name);
-
-  const [email, setEmail] = useState(user?.email);
-  const [name, setName] = useState(user?.name);
-  const [phone, setPhone] = useState(user?.phone_number);
-  // const [password, setPassword] = useState("");
 
   const handleSave = async () => {
     try {
       await updateUserInfo({
-        email: email,
-        name: name,
-        phone_number: phone,
         nickname: nickname,
-        // password: password.length > 0 ? password : undefined,
       });
       navigation.goBack();
     } catch (error) {
@@ -81,25 +69,24 @@ export function ProfileEditScreen() {
           <View className="flex w-full px-7 mb-3">
             <Text className="font-bold text-neutral-800">이메일</Text>
             <TextInput
-              value={email}
-              onChangeText={setEmail}
+              placeholder={user.email}
               className="border-b-2 border-b-neutral-300 py-3 w-full"
+              editable={false}
             />
           </View>
           <View className="flex w-full px-7 mb-3">
             <Text className="font-bold text-neutral-800">이름</Text>
             <TextInput
-              value={name}
-              onChangeText={setName}
+              placeholder={user.name}
+              editable={false}
               className="border-b-2 border-b-neutral-300 py-3 w-full"
             />
           </View>
           <View className="flex w-full px-7 mb-3">
             <Text className="font-bold text-neutral-800">전화번호</Text>
             <TextInput
-              inputMode="tel"
-              value={phone}
-              onChangeText={setPhone}
+              placeholder={user.phone_number}
+              editable={false}
               className="border-b-2 border-b-neutral-300 py-3 w-full"
             />
           </View>
