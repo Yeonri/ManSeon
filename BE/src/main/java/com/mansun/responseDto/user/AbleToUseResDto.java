@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class VerifyPhoneNumResDto {
+public class AbleToUseResDto {
     Boolean ableToUse;
 }
