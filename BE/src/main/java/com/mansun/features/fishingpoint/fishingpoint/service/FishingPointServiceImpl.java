@@ -162,9 +162,9 @@ public class FishingPointServiceImpl implements FishingPointService {
                 .toList();
 
 //        // 2) TideLevel 한 번에 조회 → Map(obsCode -> List<TideLevel>)
-        List<TideLevel> tideLevels = tideLevelRepository.findByObsCode_ObsCodeIn(obsCodes);
-        Map<String, List<TideLevel>> tideLevelMap = tideLevels.stream()
-                .collect(Collectors.groupingBy(t -> t.getObsCode().getObsCode()));
+//        List<TideLevel> tideLevels = tideLevelRepository.findByObsCode_ObsCodeIn(obsCodes);
+//        Map<String, List<TideLevel>> tideLevelMap = tideLevels.stream()
+//                .collect(Collectors.groupingBy(t -> t.getObsCode().getObsCode()));
 //
 //        // 3) Wave 한 번에 조회 → Map(lzone -> List<Wave>)
 //        List<Wave> waveList = waveHeightRepository.findByMarineZone_LzoneIn(lzones);
