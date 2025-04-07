@@ -1,5 +1,5 @@
+import { Search } from "lucide-react-native";
 import { TextInput, TouchableOpacity, View } from "react-native";
-import SearchIcon from "../../../assets/images/icon_search.svg";
 
 interface SearchInputProps {
   value: string;
@@ -23,7 +23,7 @@ export function SearchInput({
         className="flex-1 text-base text-neutral-900"
       />
       <TouchableOpacity onPress={onSearchPress} className="pl-2">
-        <SearchIcon />
+        <Search />
       </TouchableOpacity>
     </View>
   );
