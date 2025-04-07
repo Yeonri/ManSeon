@@ -4,8 +4,6 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateUserInfo } from "../../api/quries/useUserupdate";
 import IconEdit from "../../assets/images/icon_edit.svg";
-import IconEyeClose from "../../assets/images/icon_eye_close.svg";
-import IconEyeOpen from "../../assets/images/icon_eye_open.svg";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { useUserStore } from "../../store/userStore";
@@ -14,8 +12,8 @@ export function ProfileEditScreen() {
   const navigation = useNavigation();
   const user = useUserStore((state) => state.user);
 
-  const [isSecure1, setIsSecure1] = useState(true);
-  const [isSecure2, setIsSecure2] = useState(true);
+  // const [isSecure1, setIsSecure1] = useState(true);
+  // const [isSecure2, setIsSecure2] = useState(true);
 
   const [editingNickname, setEditingNickname] = useState(false);
   const [nickname, setNickname] = useState(user?.nickname || user?.name);
@@ -23,7 +21,7 @@ export function ProfileEditScreen() {
   const [email, setEmail] = useState(user?.email);
   const [name, setName] = useState(user?.name);
   const [phone, setPhone] = useState(user?.phone_number);
-  const [password, setPassword] = useState("");
+  // const [password, setPassword] = useState("");
 
   const handleSave = async () => {
     try {
@@ -32,7 +30,7 @@ export function ProfileEditScreen() {
         name: name,
         phone_number: phone,
         nickname: nickname,
-        password: password.length > 0 ? password : undefined,
+        // password: password.length > 0 ? password : undefined,
       });
       navigation.goBack();
     } catch (error) {
@@ -57,7 +55,7 @@ export function ProfileEditScreen() {
               ? { uri: user.profile_img }
               : require("../../assets/images/mansun.png")
           }
-          className="w-24 h-24 my-6 rounded-full mt-7 bg-white"
+          className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
           resizeMode="contain"
         />
         <View className="flex-row items-center">
@@ -79,7 +77,7 @@ export function ProfileEditScreen() {
           </TouchableOpacity>
         </View>
 
-        <View className="flex w-full mt-5">
+        <View className="flex w-full mt-16">
           <View className="flex w-full px-7 mb-3">
             <Text className="font-bold text-neutral-800">이메일</Text>
             <TextInput
@@ -99,12 +97,13 @@ export function ProfileEditScreen() {
           <View className="flex w-full px-7 mb-3">
             <Text className="font-bold text-neutral-800">전화번호</Text>
             <TextInput
+              inputMode="tel"
               value={phone}
               onChangeText={setPhone}
               className="border-b-2 border-b-neutral-300 py-3 w-full"
             />
           </View>
-          <View className="flex w-full px-7 mb-3">
+          {/* <View className="flex w-full px-7 mb-3">
             <Text className="font-bold text-neutral-800">비밀번호</Text>
             <View className="w-full flex-row items-center border-b-2 border-b-neutral-300">
               <TextInput
@@ -131,9 +130,9 @@ export function ProfileEditScreen() {
                 {isSecure2 ? <IconEyeOpen /> : <IconEyeClose />}
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
         </View>
-        <View className="flex-row justify-between w-full px-10 mt-5">
+        <View className="flex-row justify-between w-full px-10 mt-20">
           <HalfButton
             title="취소"
             type="line"
