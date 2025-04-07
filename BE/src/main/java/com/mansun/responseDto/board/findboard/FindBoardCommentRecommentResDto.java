@@ -18,6 +18,7 @@ public class FindBoardCommentRecommentResDto {
     private Long userId;
     private Long boardId;
     private Long commentId;
+    private String recommentUserProfile;
     //  Column
     private String recommentContent;
     private OffsetDateTime createdAt;

@@ -217,10 +217,12 @@ public class BoardServiceImpl implements BoardService {
                                 .username(b.getUser().getUsername())
                                 .nickname(b.getUser().getNickname())
                                 .createdAt(b.getCreatedAt().atOffset(ZoneOffset.UTC))
+                                .commentUserProfile(b.getUser().getProfileImg())
                                 .commentContent(b.getCommentContent())
                                 .recommentNum(b.getRecommentNum())
                                 .recomment(b.getRecomment().stream().map(
                                         r -> FindBoardCommentRecommentResDto.builder()
+                                                .recommentUserProfile(r.getUser().getProfileImg())
                                                 .recommentId(r.getRecommentId())
                                                 .recommentContent(r.getRecommentContent())
                                                 .userId(r.getUser().getUserId())
