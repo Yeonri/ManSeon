@@ -1,12 +1,11 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ChevronRight, PencilLine } from "lucide-react-native";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { useUserById } from "../../api/quries/useUser";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
-import IconEdit from "../../assets/images/icon_edit.svg";
-import IconMove from "../../assets/images/icon_move.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
 import { MyPostList } from "../../components/profile/myPostList";
@@ -67,7 +66,7 @@ export function ProfileScreen() {
               <Text className="text-2xl font-bold mr-1 text-blue-800 ">
                 {user.nickname ? user.nickname : user.name}
               </Text>
-              <IconEdit />
+              <PencilLine color="#737373" width={24} />
             </TouchableOpacity>
           ) : (
             <Text className="text-2xl font-bold mt-2 text-blue-800">
@@ -108,7 +107,7 @@ export function ProfileScreen() {
             <Text className="text-lg font-bold text-neutral-800">
               도감 현황
             </Text>
-            <IconMove />
+            <ChevronRight />
           </View>
           <View className="bg-blue-100 rounded-2xl px-4 py-3 mx-5 mt-3">
             <View className="flex-row items-baseline gap-2">

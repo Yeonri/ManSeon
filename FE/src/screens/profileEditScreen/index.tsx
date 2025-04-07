@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
+import { PencilLine } from "lucide-react-native";
 import { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateUserInfo } from "../../api/quries/useUserupdate";
-import IconEdit from "../../assets/images/icon_edit.svg";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { useUserStore } from "../../store/userStore";
@@ -73,7 +73,7 @@ export function ProfileEditScreen() {
           <TouchableOpacity
             onPress={() => setEditingNickname(!editingNickname)}
           >
-            <IconEdit />
+            <PencilLine color="#737373" width={24} />
           </TouchableOpacity>
         </View>
 

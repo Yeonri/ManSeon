@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ChevronRight } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useMyPosts } from "../../../api/quries/useMypost";
 import { MoreStackParams } from "../../../api/types/MoreStackParams";
-import IconMove from "../../../assets/images/icon_move.svg";
 import { PostCard } from "../postCard";
 
 interface MoreScreenNavigationProps
@@ -24,7 +24,7 @@ export function MyPostList() {
         <Text className="font-bold text-base text-neutral-800">
           내가 쓴 게시글
         </Text>
-        <IconMove />
+        <ChevronRight color="#262626" />
       </TouchableOpacity>
 
       <View className="px-4">
