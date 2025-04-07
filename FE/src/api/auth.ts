@@ -43,3 +43,11 @@ export async function checkPhoneNum(phoneNum: string) {
   );
   return response.data;
 }
+
+// 닉네임 중복 여부 확인 (true여야 가입 가능)
+export async function checkNickname(nickname: string) {
+  const response = await client.get(
+    `/users/nickname/duplicate?nickname=${nickname}`
+  );
+  return response.data;
+}

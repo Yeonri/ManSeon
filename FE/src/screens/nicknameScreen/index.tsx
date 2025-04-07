@@ -8,6 +8,7 @@ import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
+import { useGetCheckNickname } from "../../api/quries/useCheck";
 
 interface SignupNameScreenNavigationProps
   extends NativeStackNavigationProp<SignupStackParams> {}
@@ -20,6 +21,7 @@ export function NicknameScreen() {
   const [touchedNickname, setTouchedNickname] = useState<boolean>(false);
   const [next, setNext] = useState(false);
   const { mutate: uploadNickname } = useUploadNickname();
+  const { refetch: checkNickname } = useGetCheckNickname(nickname);
 
   function handleNickname(text: string) {
     setTouchedNickname(true);
@@ -29,19 +31,38 @@ export function NicknameScreen() {
     setNext(isValid);
   }
 
-  function handleUploadNickname() {
-    uploadNickname(
-      { email, nickname },
-      {
-        onSuccess: () => {
-          Alert.alert("회원가입 성공", "로그인 후 이용해주세요.");
-          navigation.getParent()?.reset({
-            index: 0,
-            routes: [{ name: "Login" }],
-          });
-        },
+  async function handleNext() {
+    try {
+      const { data } = await checkNickname();
+      // console.log("닉네임 중복 여부 확인(true가 가입 가능)", data);
+      if (data?.ableToUse === true) {
+        uploadNickname(
+          { email, nickname },
+          {
+            onSuccess: () => {
+              Alert.alert("회원가입 성공", "로그인 후 이용해주세요.");
+              navigation.getParent()?.reset({
+                index: 0,
+                routes: [{ name: "Login" }],
+              });
+            },
+          }
+        );
+      } else {
+        Alert.alert("닉네임 중복", "이미 사용 중인 닉네임입니다.");
       }
-    );
+    } catch (e: unknown) {
+      if (
+        typeof e === "object" &&
+        e !== null &&
+        "response" in e &&
+        (e as any).response?.data?.message?.includes("이미")
+      ) {
+        Alert.alert("닉네임 중복", (e as any).response.data.message);
+      } else {
+        Alert.alert("오류", "닉네임 확인 중 문제가 발생했습니다.");
+      }
+    }
   }
 
   return (
@@ -70,11 +91,7 @@ export function NicknameScreen() {
             <View />
           )}
         </View>
-        <FullButton
-          name="다음"
-          disable={!next}
-          onPress={handleUploadNickname}
-        />
+        <FullButton name="다음" disable={!next} onPress={handleNext} />
       </View>
     </SafeAreaView>
   );
