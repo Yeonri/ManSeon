@@ -3,7 +3,7 @@ import authClient from "../authClient";
 export async function updateUserInfo(data: {
   email?: string;
   name?: string;
-  phone_number?: string;
+  phone_number?: number;
   nickname?: string;
   password?: string;
   profile_img?: string;

@@ -6,7 +6,6 @@ import { ToggleButton } from "../../components/common/toggleButton";
 
 export function FriendsScreen() {
   const [selected, setSelected] = useState("팔로잉");
-  // const selectList = selected === "바다" ? ruleSeaList : ruleFreashwaterList;
 
   return (
     <SafeAreaView>
