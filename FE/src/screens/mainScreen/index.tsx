@@ -13,7 +13,6 @@ import { HeaderLogo } from "../../components/common/headerLogo";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
-import { BookmarkButton } from "../../components/main/bookmarkButton";
 import { FishingDonutChart } from "../../components/main/fishingDonutChart";
 import { FishingPointCard } from "../../components/main/fishingPointCard";
 import { FishingResult } from "../../components/main/fishingResult";
@@ -89,7 +88,7 @@ export function MainScreen() {
         </View>
 
         {/* 검색 관련 */}
-        <View className="flex h-40 bg-blue-500 rounded-2xl mt-5 mb-5">
+        <View className="flex h-32 bg-blue-500 rounded-2xl mt-5 mb-5">
           {/* 안내멘트 */}
           <View className="flex-row items-baseline gap-1 ml-1">
             <Text className="text-white font-bold ml-3 mt-3 text-xl">
@@ -101,19 +100,12 @@ export function MainScreen() {
           </View>
 
           {/*검색창*/}
-          <View className="mt-3 ml-3">
+          <View className="mt-5 ml-3">
             <SearchInput
               value={keyword}
               onChangeText={setKeyword}
               onSearchPress={handleSEarch}
             />
-          </View>
-
-          {/* 버튼 3개 */}
-          <View className="flex-row self-center gap-5 mx-3">
-            <BookmarkButton name="북마크1" />
-            <BookmarkButton name="북마크2" />
-            <BookmarkButton name="북마크3" />
           </View>
         </View>
 
