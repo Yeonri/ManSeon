@@ -1,10 +1,10 @@
-package com.mansun.features.point.userpoint.service;
+package com.mansun.features.fishingpoint.userpoint.service;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.entity.Users;
 import com.mansun.entity.fishingPoint.UserPoint;
-import com.mansun.features.point.fishingpoint.repository.FishingPointRepository;
-import com.mansun.features.point.userpoint.repository.UserPointRepository;
+import com.mansun.features.fishingpoint.fishingpoint.repository.FishingPointRepository;
+import com.mansun.features.fishingpoint.userpoint.repository.UserPointRepository;
 import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;
 import com.mansun.responseDto.fishingPoint.UserPointListResDto;
 import lombok.RequiredArgsConstructor;

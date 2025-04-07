@@ -1,4 +1,4 @@
-package com.mansun.features.point.userpoint.service;
+package com.mansun.features.fishingpoint.userpoint.service;
 
 import com.mansun.common.auth.CustomUserDetails;
 import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;

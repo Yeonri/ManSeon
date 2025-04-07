@@ -1,4 +1,4 @@
-package com.mansun.features.point.fishingpoint.repository;
+package com.mansun.features.fishingpoint.fishingpoint.repository;
 
 import com.mansun.entity.fishingPoint.dataSet.SeaTemperature;
 import org.springframework.data.jpa.repository.JpaRepository;

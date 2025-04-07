@@ -1,8 +1,8 @@
-package com.mansun.features.point;
+package com.mansun.features.fishingpoint;
 
 import com.mansun.common.auth.CustomUserDetails;
-import com.mansun.features.point.fishingpoint.service.FishingPointServiceImpl;
-import com.mansun.features.point.userpoint.service.UserPointServiceImpl;
+import com.mansun.features.fishingpoint.fishingpoint.service.FishingPointServiceImpl;
+import com.mansun.features.fishingpoint.userpoint.service.UserPointServiceImpl;
 import com.mansun.requestDto.fishingpoint.CreateFishingPointReqDto;
 import com.mansun.requestDto.fishingpoint.CreateUserPointReqDto;
 import com.mansun.responseDto.MessageResDto;
