@@ -33,7 +33,7 @@ export function PostAddScreen({ navigation }: PostAddScreenProps) {
       {
         title: addTitle,
         content: addContent,
-        postImage: addPostImage,
+        postImg: addPostImage,
       },
       {
         onSuccess: () => {

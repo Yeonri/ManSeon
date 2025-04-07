@@ -47,7 +47,7 @@ export function LoginScreen() {
     <SafeAreaView className="gap-20 m-5">
       <View />
       <HeaderCenter />
-      <View className="mx-10 gap-2">
+      <View className="mx-5 gap-2">
         <View className="gap-5">
           <TextInput
             placeholder="이메일을 입력해 주세요"
