@@ -130,7 +130,7 @@ public class FishingPointServiceImpl implements FishingPointService {
         // 필요하다면 QMarineZone, QObservatory 등 추가
 
         LocalDate startDate = LocalDate.now();
-        LocalDate endDate = startDate.plusDays(7);
+        LocalDate endDate = startDate.plusDays(3);
 
         // 한 번에 7일치 예보 조회
         List<Weather> weatherList = queryFactory
@@ -218,16 +218,16 @@ public class FishingPointServiceImpl implements FishingPointService {
                     .toList();
 
             // (4) TideLevel
-            List<TideLevel> tideLevelForFp = obsCode == null
-                    ? Collections.emptyList()
-                    : tideLevelMap.getOrDefault(obsCode, Collections.emptyList());
-
-            List<TideLevelResDto> tideLevelResDto = tideLevelForFp.stream()
-                    .map(tide -> TideLevelResDto.builder()
-                            .tphTime(tide.getTphTime().atOffset(ZoneOffset.UTC))
-                            .tphTime(tide.getTphTime().atOffset(ZoneOffset.UTC))
-                            .build())
-                    .toList();
+//            List<TideLevel> tideLevelForFp = obsCode == null
+//                    ? Collections.emptyList()
+//                    : tideLevelMap.getOrDefault(obsCode, Collections.emptyList());
+//
+//            List<TideLevelResDto> tideLevelResDto = tideLevelForFp.stream()
+//                    .map(tide -> TideLevelResDto.builder()
+//                            .tphTime(tide.getTphTime().atOffset(ZoneOffset.UTC))
+//                            .tphTime(tide.getTphTime().atOffset(ZoneOffset.UTC))
+//                            .build())
+//                    .toList();
 
             // (5) Wave
 //            List<Wave> waveForFp = lzone == null
