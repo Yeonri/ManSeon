@@ -6,18 +6,15 @@ import {
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CommunityStackParams } from "../../api/types/CommunityStackParams";
-import IconComment from "../../assets/images/icon_comment.svg";
-import IconDelete from "../../assets/images/icon_delete.svg";
-import IconEdit from "../../assets/images/icon_edit.svg";
-import IconLike from "../../assets/images/icon_like.svg";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { AddComment } from "../../components/community/addComment";
 import { CommentList } from "../../components/community/commentList";
-import commentsMocks from "../../mocks/commentsMocks.json";
-import postsMocks from "../../mocks/postsMocks.json";
 import { DeleteAlert } from "../../utils/deleteAlert";
-import { FormatTime } from "../../utils/formatTime";
+import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
+import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
+import DefaultProfile from "../../assets/images/profile_default.svg";
+import { Loading } from "../../components/common/loading";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -28,72 +25,118 @@ interface PostScreenNavigationProps
 export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
+  const { data: postDetail } = useGetPostDetail(postId);
+  const { mutate: deletePost } = useDeletePost();
+  // console.log("상세 게시글:", postDetail);
+
+  function handleDelete() {
+    DeleteAlert("게시글", () => {
+      deletePost(postId, {
+        onSuccess: () => {
+          navigation.goBack();
+        },
+      });
+    });
+  }
+
+  if (!postDetail) {
+    return <Loading />;
+  }
 
   return (
     <SafeAreaView>
       <HeaderBeforeLogo />
       <ScrollView className="px-5 mt-2">
-        <Text className="font-bold mb-2 text-lg">
-          {postsMocks[postId - 1].title}
+        {/* 제목 */}
+        <Text className="font-bold mb-2 text-lg text-neutral-800">
+          {postDetail.title}
         </Text>
         <View className="flex-row items-center justify-between">
+          {/* 작성자 정보 */}
           <View className="flex-row items-center gap-2">
-            <TouchableOpacity className="flex-row items-center gap-2">
-              <Image
-                source={{ uri: postsMocks[postId - 1].profileImg }}
-                className="w-10 h-10 rounded-full"
-              />
-              <Text className="font-semibold">
-                {postsMocks[postId - 1].nickname}
+            <TouchableOpacity className="flex-row items-center gap-1">
+              {postDetail.profileImg ? (
+                <Image
+                  source={{ uri: postDetail.profileImg }}
+                  className="w-8 h-8 mr-2 rounded-full"
+                />
+              ) : (
+                <View
+                  style={{
+                    borderRadius: 16,
+                    overflow: "hidden",
+                    marginRight: 8,
+                  }}
+                >
+                  <DefaultProfile width={32} height={32} />
+                </View>
+              )}
+              <Text className=" text-neutral-600 font-semibold">
+                {postDetail.nickname}
               </Text>
             </TouchableOpacity>
+            {/* 팔로잉 여부 */}
             <TouchableOpacity onPress={() => {}} className="h-4">
               <TagFollow />
             </TouchableOpacity>
           </View>
-          <View className="flex-row items-center gap-1">
+          <View className="flex-row items-center gap-2">
+            {/* 작성 시간 */}
+            <Text className="text-neutral-400 text-sm">
+              {/* {FormatTime(postDetail.createdAt)} */}
+              n시간 전
+            </Text>
+            {/* 수정 */}
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("EditPost", {
                   postId: postId,
-                  title: postsMocks[postId - 1].title,
-                  content: postsMocks[postId - 1].content,
-                  postImg: postsMocks[postId - 1].postImg,
+                  title: postDetail.title,
+                  content: postDetail.content,
+                  postImg: postDetail.postImg,
                 })
               }
               className="h-6"
             >
-              <IconEdit />
+              <Pencil color={"#A1A1A1"} size={20} />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => DeleteAlert("게시글")}
-              className="h-6"
-            >
-              <IconDelete />
+            {/* 삭제 */}
+            <TouchableOpacity onPress={handleDelete} className="h-6">
+              <Trash2 color={"#A1A1A1"} size={20} />
             </TouchableOpacity>
-            <Text className="text-neutral-400 text-sm">
-              {FormatTime(postsMocks[postId - 1].createAt)}
-            </Text>
           </View>
         </View>
         <View className="my-3 gap-3">
-          <Image
-            source={{ uri: postsMocks[postId - 1].postImg }}
-            className="w-full h-48 rounded-lg"
-          />
-          <Text>{postsMocks[postId - 1].content}</Text>
+          {/* 게시글 사진 */}
+          {postDetail.postImg ? (
+            <Image
+              source={{ uri: postDetail.postImg }}
+              className="w-full h-96 rounded-lg"
+            />
+          ) : null}
+          {/* 게시글 내용 */}
+          <Text className="text-neutral-800">{postDetail.content}</Text>
         </View>
-        <View className="mt-2 mb-5 border-b border-neutral-500" />
+        {/* 구분선 */}
+        <View className="mt-2 mb-5 border-b border-neutral-200" />
         <View className="flex-row items-center">
-          <IconComment />
-          <Text className="mr-3">{postsMocks[postId - 1].commentNum}</Text>
-          <IconLike />
-          <Text className="ml-1">{postsMocks[postId - 1].like}</Text>
+          {/* 댓글 수 */}
+          <View className="flex-row items-center gap-2">
+            <MessageSquareMore color={"#A1A1A1"} size={22} />
+            <Text className="mr-3">{postDetail.commentNum}</Text>
+          </View>
+          {/* 좋아요 수 */}
+          <View className="flex-row items-center gap-2">
+            <Heart color={"#A1A1A1"} size={22} />
+            <Text className="ml-1">{postDetail.like}</Text>
+          </View>
         </View>
+        {/* 댓글 추가 */}
         <View className="my-4">
           <AddComment />
         </View>
-        <CommentList comments={commentsMocks} />
+        {/* 댓글 목록 */}
+        <CommentList comments={postDetail.commentList} />
       </ScrollView>
     </SafeAreaView>
   );

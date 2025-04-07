@@ -18,7 +18,7 @@ export function CameraView({ onPhotoTaken }: CameraViewProps) {
   }
 
   if (device == null) {
-    return <Loading name="카메라" />;
+    return <Loading />;
   }
 
   return (

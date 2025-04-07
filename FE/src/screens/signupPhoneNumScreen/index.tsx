@@ -15,7 +15,7 @@ interface SignupPhoneNumScreenNavigationProps
 export function SignupPhoneNumScreen() {
   const navigation = useNavigation<SignupPhoneNumScreenNavigationProps>();
   const route = useRoute<RouteProp<SignupStackParams, "PhoneNum">>();
-  const { name } = route.params;
+  const { username } = route.params;
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [touchedPhoneNum, setTouchedPhoneNum] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
@@ -33,7 +33,7 @@ export function SignupPhoneNumScreen() {
   }
 
   function handleNext() {
-    navigation.navigate("Email", { name: name, phone: phoneNum });
+    navigation.navigate("Email", { username: username, phone: phoneNum });
   }
 
   return (
