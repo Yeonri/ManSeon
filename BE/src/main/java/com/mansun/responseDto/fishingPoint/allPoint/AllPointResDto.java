@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 
@@ -20,10 +21,10 @@ public class AllPointResDto {
     boolean isRecommeded;
     String water_depth;
     String seabed_type;
-    OffsetDateTime sunrise;
-    OffsetDateTime sunset;
-    float temperature_max;
-    float temperature_min;
+    String sunrise;
+    String sunset;
+    double temperature_max;
+    double temperature_min;
     List<ForecastResDto> weather_forecast;
     List<TideDayResDto> tide_info;
     List<CaughtFishResDto> caught_fish_summary;

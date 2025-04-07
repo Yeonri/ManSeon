@@ -32,8 +32,8 @@ public class Weather {
     private String sno;
     private int sky;
     private int tmp;
-    private int tmn;
-    private int tmx;
+    private int tmn=Integer.MIN_VALUE;
+    private int tmx=Integer.MAX_VALUE;
 
     private int reh;
 }
