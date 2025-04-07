@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface WaveHeightRepository extends JpaRepository<Wave,Long> {
-    List<Wave> findByMarineZone_Lzone(Integer marineZone_lzone);
+    List<Wave> findByMarineZone_LzoneIn(List<String> marineZone_lzone);
 }
