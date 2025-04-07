@@ -30,7 +30,7 @@ export function PostCard({ post }: PostCardProps) {
 
   function handlePostClick(postId: number) {
     navigation.navigate("Post", { postId });
-    console.log(postId);
+    console.log(post);
   }
 
   return (

@@ -3,18 +3,19 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
 import { CommunityStackParams } from "../../api/types/CommunityStackParams";
+import DefaultProfile from "../../assets/images/profile_default.svg";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
+import { Loading } from "../../components/common/loading";
 import { AddComment } from "../../components/community/addComment";
 import { CommentList } from "../../components/community/commentList";
+import { useUserStore } from "../../store/userStore";
 import { DeleteAlert } from "../../utils/deleteAlert";
-import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
-import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
-import DefaultProfile from "../../assets/images/profile_default.svg";
-import { Loading } from "../../components/common/loading";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -26,8 +27,9 @@ export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
   const { data: postDetail } = useGetPostDetail(postId);
+  const myId = useUserStore((state) => state.user?.id);
   const { mutate: deletePost } = useDeletePost();
-  // console.log("상세 게시글:", postDetail);
+  console.log("상세 게시글:", postDetail);
 
   function handleDelete() {
     DeleteAlert("게시글", () => {
@@ -37,6 +39,16 @@ export function PostScreen({ route }: PostScreenProps) {
         },
       });
     });
+  }
+
+  function handleProfileClick() {
+    const writerId = postDetail.userId;
+
+    if (myId === writerId) {
+      navigation.navigate("Profile");
+    } else {
+      navigation.navigate("UserProfile", { userId: writerId });
+    }
   }
 
   if (!postDetail) {
@@ -54,7 +66,10 @@ export function PostScreen({ route }: PostScreenProps) {
         <View className="flex-row items-center justify-between">
           {/* 작성자 정보 */}
           <View className="flex-row items-center gap-2">
-            <TouchableOpacity className="flex-row items-center gap-1">
+            <TouchableOpacity
+              className="flex-row items-center gap-1"
+              onPress={handleProfileClick}
+            >
               {postDetail.profileImg ? (
                 <Image
                   source={{ uri: postDetail.profileImg }}
