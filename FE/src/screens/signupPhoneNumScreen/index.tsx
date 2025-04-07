@@ -1,13 +1,15 @@
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { Alert, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
 import { ProgressBar } from "../../components/signup/progressBar";
+import { useGetCheckPhoneNum } from "../../api/quries/useCheck";
+import { handleError } from "../../utils/handleError";
 
 interface SignupPhoneNumScreenNavigationProps
   extends NativeStackNavigationProp<SignupStackParams> {}
@@ -19,6 +21,7 @@ export function SignupPhoneNumScreen() {
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [touchedPhoneNum, setTouchedPhoneNum] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
+  const { refetch: checkPhoneNum } = useGetCheckPhoneNum(phoneNum);
 
   function handlePhoneNum(text: string) {
     setTouchedPhoneNum(true);
@@ -32,8 +35,18 @@ export function SignupPhoneNumScreen() {
     }
   }
 
-  function handleNext() {
-    navigation.navigate("Email", { username: username, phone: phoneNum });
+  async function handleNext() {
+    try {
+      const { data } = await checkPhoneNum();
+      // console.log("핸드폰 번호 중복 여부 확인(true가 가입 가능): ", data);
+      if (data?.ableToUse === true) {
+        navigation.navigate("Email", { username: username, phone: phoneNum });
+      } else {
+        Alert.alert("핸드폰 번호 중복", "이미 사용 중인 핸드폰 번호입니다.");
+      }
+    } catch (e: unknown) {
+      handleError(e);
+    }
   }
 
   return (
@@ -64,11 +77,7 @@ export function SignupPhoneNumScreen() {
             <View />
           )}
         </View>
-        <FullButton
-          name="다음"
-          disable={!next ? true : false}
-          onPress={handleNext}
-        />
+        <FullButton name="다음" disable={!next} onPress={handleNext} />
       </View>
     </SafeAreaView>
   );

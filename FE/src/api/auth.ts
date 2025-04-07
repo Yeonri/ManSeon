@@ -29,3 +29,17 @@ export async function login(email: string, password: string): Promise<Auth> {
   });
   return response.data;
 }
+
+// 이메일 중복 여부 확인 (true여야 가입 가능)
+export async function checkEmail(email: string) {
+  const response = await client.get(`/users/verify/email?email=${email}`);
+  return response.data;
+}
+
+// 핸드폰 중복 여부 확인 (true여야 가입 가능)
+export async function checkPhoneNum(phoneNum: string) {
+  const response = await client.get(
+    `/users/verify/phone_num?phone_num=${phoneNum}`
+  );
+  return response.data;
+}
