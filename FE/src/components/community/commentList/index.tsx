@@ -151,7 +151,7 @@ export function CommentList({ comments }: { comments: Comment[] }) {
             <RecommentList recomments={item.recomment} />
           </View>
           <View className="my-4">
-            <AddRecomment />
+            <AddRecomment postId={item.boardId} commentId={item.commentId} />
           </View>
         </View>
       )}

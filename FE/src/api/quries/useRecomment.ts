@@ -7,11 +7,11 @@ export function useAddRecomment() {
 
   return useMutation({
     mutationFn: ({
-      PostId,
+      postId,
       commentId,
       content,
     }: {
-      PostId: number;
+      postId: number;
       commentId: number;
       content: string;
     }) => addRecomment(PostId, commentId, content),
