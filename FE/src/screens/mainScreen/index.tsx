@@ -137,40 +137,45 @@ export function MainScreen() {
         <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
           {/* 통계 관련 */}
           <View>
-            <Text className="text-neutral-600 font-bold text-xl">
-              내가 잡은 물고기
-            </Text>
             {user.fishing_total === 0 ? (
-              <View className="flex-row justify-center">
-                <View className="text-center justify-center">
-                  <Text className="text-center font-semibold text-2xl">
-                    아직 잡은
-                  </Text>
-                  <Text className="font-semibold text-2xl">
-                    물고기가 없어요!
-                  </Text>
-                </View>
+              <View className="justify-center items-center flex-row">
                 <Image
-                  source={require("../../assets/images/mansun.png")}
-                  className="h-44 w-44"
+                  source={require("../../assets/images/chatbot2.png")}
+                  className="h-44 w-44 -ml-5"
                   resizeMode="contain"
                 />
-              </View>
-            ) : (
-              <View className="flex-row">
-                {/* 차트 */}
-                <FishingDonutChart
-                  fishingList={user.fishing_list}
-                  totalCount={user.fishing_total}
-                />
-                {/* 정보 */}
-                <View className="justify-center">
-                  <FishingResult
-                    fishingResultList={user.fishing_list}
-                    totalCount={user.fishing_total}
-                  />
+                <View
+                  className="-ml-3
+                "
+                >
+                  <Text className="text-center font-semibold text-2xl text-blue-500">
+                    잡은 물고기가 없어요
+                  </Text>
+                  <Text className="text-center font-normal text-base">
+                    낚시 기록을 추가해 보세요!
+                  </Text>
                 </View>
               </View>
+            ) : (
+              <>
+                <Text className="text-neutral-600 font-bold text-xl">
+                  내가 잡은 물고기
+                </Text>
+                <View className="flex-row">
+                  {/* 차트 */}
+                  <FishingDonutChart
+                    fishingList={user.fishing_list}
+                    totalCount={user.fishing_total}
+                  />
+                  {/* 정보 */}
+                  <View className="justify-center">
+                    <FishingResult
+                      fishingResultList={user.fishing_list}
+                      totalCount={user.fishing_total}
+                    />
+                  </View>
+                </View>
+              </>
             )}
           </View>
 
