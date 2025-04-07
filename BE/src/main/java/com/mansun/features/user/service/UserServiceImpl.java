@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (userRepository.existsByEmailAndDeletedFalse(userParam.getEmail())) {
             throw new DuplicateKeyException("이미 해당 Email로 가입한 회원이 있습니다.");
         }        //이 시점부터는 중복 회원이 없다고 판명
-        if(userParam.getName()==null){
+        if(userParam.getUsername()==null){
             throw new NoSuchElementException("이름이 없습니다.");
         }
         //비밀번호 인코딩을 위한 BCrypt Encoder ->  추가 변동 가능성 있음 Argon을 적용해볼까 하는 고민이 있음
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .email(userParam.getEmail())
                 .password(bCryptPasswordEncoder.encode(userParam.getPassword()))
 //                        .nickname(userParam.getNickname())
-                .username(userParam.getName())
+                .username(userParam.getUsername())
                 .phoneNum(userParam.getPhoneNum())
                 .role("USER")
                 .build());
