@@ -260,7 +260,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                     .temperature_max(temperatureResDto.getMax())
                     .temperature_min(temperatureResDto.getMin())
                     .weather_forecast(forecastResDtoList)
-                    .tide_info(tideLevelResDto)
+//                    .tide_info(tideLevelResDto)
 //                    .wave_info(waveResDtoList)
                     // .caught_fish_summary(fishResDtoList)  // 필요 시
                     .build();
