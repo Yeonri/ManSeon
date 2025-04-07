@@ -162,18 +162,18 @@ public class FishingPointServiceImpl implements FishingPointService {
                                     .max(WeatherTempInfo == null ? 0 : WeatherTempInfo.getTmn())
                                     .min(WeatherTempInfo == null ? 0 : WeatherTempInfo.getTmp())
                                     .build();
-                            List<ForecastResDto> forecastResDto =
-                                    forecastMap.keySet().stream().map(
-                                            wi -> ForecastResDto.builder()
-                                                    .date(LocalDateTime.of(wi.getWeatherDate(), wi.getWeatherTime().toLocalTime()).atOffset(ZoneOffset.UTC))
-                                                    .sky(wi.getSky())
-                                                    .temperature(wi.getTmp())
-                                                    .precipitation(wi.getPcp())
-                                                    .precipitation_prob(wi.getPop())
-                                                    .precipitation_type(wi.getPty())
-                                                    .humidity(wi.getReh())
-                                                    .build()
-                                    ).toList();
+//                            List<ForecastResDto> forecastResDto =
+//                                    forecastMap.keySet().stream().map(
+//                                            wi -> ForecastResDto.builder()
+//                                                    .date(LocalDateTime.of(wi.getWeatherDate(), wi.getWeatherTime().toLocalTime()).atOffset(ZoneOffset.UTC))
+//                                                    .sky(wi.getSky())
+//                                                    .temperature(wi.getTmp())
+//                                                    .precipitation(wi.getPcp())
+//                                                    .precipitation_prob(wi.getPop())
+//                                                    .precipitation_type(wi.getPty())
+//                                                    .humidity(wi.getReh())
+//                                                    .build()
+//                                    ).toList();
 //                            List<TideLevel> tideLevelList = tideLevelRepository.findByObsCode_ObsCode(fp.getObsCode().getObsCode());
 
 //                            List<TideLevelResDto> tideLevelResDto =
@@ -208,7 +208,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                                     .sunset(sunMoonTimesResDto != null ? sunMoonTimesResDto.getSunset() : null)
                                     .temperature_max(temperatureResDto.getMax())
                                     .temperature_min(temperatureResDto.getMin())
-                                    .weather_forecast(forecastResDto)
+//                                    .weather_forecast(forecastResDto)
 //                                    .tide_info(
 //                                            tideInfoList.stream().map(
 //                                                    tideLevel -> {
