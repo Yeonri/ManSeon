@@ -104,7 +104,6 @@ export function MainScreen() {
               </Text>
             </View>
           </View>
-          <ChatbotButton onPress={() => navigation.navigate("Chatbot")} />
         </View>
 
         {/* 검색 관련 */}
@@ -130,6 +129,8 @@ export function MainScreen() {
             />
           </View>
         </View>
+
+        {/* 챗봇 */}
         <ChatbotButton onPress={() => navigation.navigate("Chatbot")} />
 
         {/* 통계 및 수집 내용 관련 */}

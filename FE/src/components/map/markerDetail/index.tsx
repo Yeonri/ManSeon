@@ -2,7 +2,6 @@ import { Bookmark, X } from "lucide-react-native";
 import { forwardRef, Ref } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Modalize } from "react-native-modalize";
-import { FishingFishList } from "../fishingFishList";
 import { TideChart } from "../tideChart";
 import { WeatherTable } from "../weatherTable";
 
@@ -36,8 +35,7 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
             <View className="flex-row gap-2 items-center">
               <Bookmark />
               <Text className="text-xl font-bold text-neutral-800">
-                {point.name}
-                {/* {point.pointName} */}
+                {point.pointName}
               </Text>
             </View>
             <TouchableOpacity
@@ -112,8 +110,7 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
 
           {/* 표 */}
           <View className="mt-3">
-            {/* <WeatherTable data={point.weather_forecast} /> */}
-            <WeatherTable data={point.weather_forecast ?? []} />
+            <WeatherTable data={point.weather_forecast} />
           </View>
 
           {/* 물때 그래프*/}
@@ -121,31 +118,28 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
             <Text className="text-neutral-800 font-semibold text-xl mb-3">
               물때 정보
             </Text>
-            {/* <TideChart data={point.tide_info} /> */}
-            <TideChart data={point.tide_info ?? []} />
+            <TideChart data={point.tide_info} />
           </View>
 
           {/* 해당 포인트에서 내가 잡은 물고기 정보 */}
-          <View className="mt-3">
+          {/* <View className="mt-3">
             <Text className="text-neutral-800 font-semibold text-xl mb-3">
               이 근처에서 잡힌 물고기
             </Text>
             <View className="bg-blue-50 p-3">
-              {/* <FishingFishList data={point.my_caught_fish} /> */}
-              <FishingFishList data={point.my_caught_fish ?? []} />
+              <FishingFishList data={point.my_caught_fish} />
             </View>
-          </View>
+          </View> */}
 
           {/* 해당 포인트 전체에서 잡은 물고기 정보 */}
-          <View className="mt-3">
+          {/* <View className="mt-3">
             <Text className="text-neutral-800 font-semibold text-xl mb-3">
               이 포인트에서 내가 잡은 물고기
             </Text>
             <View className="bg-blue-50 p-3">
-              {/* <FishingFishList data={point.caught_fish_summary} /> */}
-              <FishingFishList data={point.caught_fish_summary ?? []} />
+              <FishingFishList data={point.caught_fish_summary} />
             </View>
-          </View>
+          </View> */}
         </ScrollView>
       </Modalize>
     );

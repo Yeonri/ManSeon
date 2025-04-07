@@ -5,7 +5,7 @@ import { getWindArrowImageKey } from "../../../utils/windArrowImage";
 import { windArrowImageMap } from "../../../utils/windArrowImageMap";
 
 interface WeatherForecast {
-  datetime: string;
+  date: string;
   sky: number;
   temperature: number;
   precipitation_prob: number;
@@ -30,7 +30,7 @@ export function WeatherTable({ data }: Props) {
           <Text className="w-16 font-medium text-center">시각</Text>
           {data.map((item, idx) => (
             <Text key={idx} className="w-16 text-center text-base font-bold">
-              {new Date(item.datetime).getHours()}시
+              {new Date(item.date).getHours()}시
             </Text>
           ))}
         </View>
