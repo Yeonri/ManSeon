@@ -11,7 +11,7 @@
       "axios",
       "@react-native-async-storage/async-storage",
       "@tanstack/react-query",
-      "react-native-splash-screen"
+      "react-native-splash-screen",
     ]
   }
 }

@@ -2,11 +2,21 @@ import authClient from "./authClient";
 import client from "./client";
 import { Auth } from "./types/Auth";
 import { MessageResponse } from "./types/MessageResponse";
+import { Signup } from "./types/Signup";
 import { User } from "./types/User";
 
 // 회원가입
-export async function signup(data: User): Promise<MessageResponse> {
+export async function signup(data: Signup): Promise<MessageResponse> {
   const response = await client.post<MessageResponse>("/users", data);
+  return response.data;
+}
+
+// 닉네임 설정
+export async function uploadNickname(email: string, nickname: string) {
+  const response = await authClient.post("/users/nickname/set", {
+    email,
+    nickname,
+  });
   return response.data;
 }
 
