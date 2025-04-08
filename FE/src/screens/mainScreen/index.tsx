@@ -1,4 +1,4 @@
-import Geolocation from "@react-native-community/geolocation";
+import Geolocation from "react-native-geolocation-service";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
@@ -50,6 +50,11 @@ export function MainScreen() {
     if (hasLocationPermission) {
       Geolocation.getCurrentPosition(
         (position) => {
+          // console.log(
+          //   "위도, 경도:",
+          //   position.coords.latitude,
+          //   position.coords.longitude
+          // );
           setLocation(position.coords.latitude, position.coords.longitude);
         },
         (error) => console.log("Error getting location:", error),
