@@ -5,7 +5,7 @@ export type Post = {
   profileImg: string;
   title: string;
   content: string;
-  createAt: string;
+  createdAt: string;
   postImg: string;
   like: number;
   commentNum: number;

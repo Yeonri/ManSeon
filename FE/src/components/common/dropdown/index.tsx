@@ -1,7 +1,6 @@
+import { ChevronDown, ChevronUp } from "lucide-react-native";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import CloseIcon from "../../../assets/images/icon_dropdown_close.svg";
-import OpenIcon from "../../../assets/images/icon_dropdown_open.svg";
 
 interface DropdownProps {
   options: string[];
@@ -26,9 +25,9 @@ function Dropdown({ options, selected, onSelect }: DropdownProps) {
       >
         <Text className="text-base text-neutral-800">{selected}</Text>
         {open ? (
-          <OpenIcon width={20} height={20} />
+          <ChevronUp width={20} height={20} />
         ) : (
-          <CloseIcon width={20} height={20} />
+          <ChevronDown width={20} height={20} />
         )}
       </TouchableOpacity>
 

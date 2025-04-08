@@ -1,5 +1,5 @@
+import { MapPin } from "lucide-react-native";
 import { FlatList, Text, View } from "react-native";
-import MarkerIcon from "../../../assets/images/icon_marker.svg";
 import searchResultMocks from "../../../mocks/searchResultMocks.json";
 
 interface searchResultItem {
@@ -15,7 +15,7 @@ export function SearchResult() {
       <View className="mb-3">
         <View className="flex-row items-center">
           <View className="mr-2">
-            <MarkerIcon />
+            <MapPin />
           </View>
           <Text className="font-semibold text-xl text-neutral-600">
             {item.name}

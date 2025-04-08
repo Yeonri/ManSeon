@@ -1,11 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { useEffect } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { NoticeList } from "../../components/more/notice";
 import { ProfileCard } from "../../components/more/profile";
+import { useUserStore } from "../../store/userStore";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams> {}
@@ -13,15 +16,29 @@ interface MoreScreenNavigationProps
 export function MoreScreen() {
   const navigation = useNavigation<MoreScreenNavigationProps>();
 
+  const { data: user } = useGetMyInfo();
+
+  const setUser = useUserStore((state) => state.setUser);
+
+  useEffect(() => {
+    if (user) {
+      setUser(user);
+    }
+  }, [user, setUser]);
+
   return (
     <SafeAreaView>
       <HeaderLogo />
-      <View className="gap-y-2 px-3 pt-4">
+      <ScrollView className="gap-y-2 px-3 pt-4">
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-          <ProfileCard />
+          {user && (
+            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+              <ProfileCard user={user} />
+            </TouchableOpacity>
+          )}
         </TouchableOpacity>
 
-        <View className="flex-row gap-4 mb-3 justify-center">
+        <View className="flex-row gap-6 mb-3 mt-3 justify-center">
           <TouchableOpacity
             onPress={() => navigation.navigate("MyPosts")}
             className="w-20 items-center"
@@ -29,9 +46,9 @@ export function MoreScreen() {
             <Image
               source={require("../../assets/images/icon_mypost.png")}
               className="w-12 h-12 mb-2"
-              resizeMode="contain"
+              resizeMode="center"
             />
-            <Text className="text-base font-semibold text-black">
+            <Text className="text-base font-semibold text-neutral-800">
               내 게시글
             </Text>
           </TouchableOpacity>
@@ -45,7 +62,9 @@ export function MoreScreen() {
               className="w-12 h-12 mb-2"
               resizeMode="contain"
             />
-            <Text className="text-base font-semibold text-black">금어기</Text>
+            <Text className="text-base font-semibold text-neutral-800">
+              금어기
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -57,7 +76,7 @@ export function MoreScreen() {
               className="w-12 h-12 mb-2"
               resizeMode="contain"
             />
-            <Text className="text-base font-semibold text-black">
+            <Text className="text-base font-semibold text-neutral-800">
               방생 기준
             </Text>
           </TouchableOpacity>
@@ -71,11 +90,13 @@ export function MoreScreen() {
               className="w-12 h-12 mb-2"
               resizeMode="contain"
             />
-            <Text className="text-base font-semibold text-black">튜토리얼</Text>
+            <Text className="text-base font-semibold text-neutral-800">
+              튜토리얼
+            </Text>
           </TouchableOpacity>
         </View>
 
-        <View className="flex-row mb-3 gap-10">
+        <View className="flex-row mb-3 gap-9">
           <TouchableOpacity
             onPress={() => navigation.navigate("Fishings")}
             className="flex-row items-center px-4 py-3 w-5/12"
@@ -86,7 +107,7 @@ export function MoreScreen() {
               resizeMode="contain"
             />
             <View>
-              <Text className="text-base font-semibold text-black">
+              <Text className="text-base font-semibold text-neutral-800">
                 낚시 기록
               </Text>
               <Text className="text-xs text-neutral-400">
@@ -133,7 +154,7 @@ export function MoreScreen() {
             </Text>
           </View>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

@@ -15,7 +15,7 @@ interface SignupEmailScreenNavigationProps
 export function SignupEmailScreen() {
   const navigation = useNavigation<SignupEmailScreenNavigationProps>();
   const route = useRoute<RouteProp<SignupStackParams, "Email">>();
-  const { name, phone } = route.params;
+  const { username, phone } = route.params;
   const [email, setEmail] = useState<string>("");
   const [touchedEmail, setTouchedEmail] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
@@ -62,7 +62,7 @@ export function SignupEmailScreen() {
           disable={!next}
           onPress={() =>
             navigation.navigate("Password", {
-              name: name,
+              username: username,
               phone: phone,
               email: email,
             })

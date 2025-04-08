@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SplashScreen from "react-native-splash-screen";
 import "./global.css";
+import { UserInitializer } from "./src/components/common/userInitializer";
 import { AppNavigator } from "./src/navigation/appNavigator";
 import { AuthStackNavigator } from "./src/navigation/authStackNavigator";
 import { useLoginStore } from "./src/store/loginStore";
@@ -33,6 +34,7 @@ export default function App(): React.JSX.Element {
 
   useEffect(() => {
     async function tryAutoLogin() {
+      await tokenStorage.clear();
       const accessToken = await tokenStorage.getAccessToken();
       const refreshToken = await tokenStorage.getRefreshToken();
 
@@ -45,12 +47,22 @@ export default function App(): React.JSX.Element {
     tryAutoLogin();
   }, []);
 
+  let content = null;
+
+  if (!isLoading) {
+    content = loggedIn ? (
+      <UserInitializer>
+        <AppNavigator />
+      </UserInitializer>
+    ) : (
+      <AuthStackNavigator />
+    );
+  }
+
   return (
     <GestureHandlerRootView className="flex-1">
       <QueryClientProvider client={queryClient}>
-        <NavigationContainer theme={mainTheme}>
-          {!isLoading && (loggedIn ? <AppNavigator /> : <AuthStackNavigator />)}
-        </NavigationContainer>
+        <NavigationContainer theme={mainTheme}>{content}</NavigationContainer>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );
