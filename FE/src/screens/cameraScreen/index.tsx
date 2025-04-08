@@ -2,27 +2,39 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ChevronRight, X } from "lucide-react-native";
 import { useRef, useState } from "react";
-import { Image, Text, TouchableOpacity, View, Alert, ActivityIndicator } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Modalize } from "react-native-modalize";
 import { PhotoFile } from "react-native-vision-camera";
 import { RootStackParams } from "../../api/types/RootStackParams";
 import { CameraView } from "../../components/cameraRecord/cameraView";
-import { Probability } from "../../components/cameraRecord/probability";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
-import { classifyFishImage, DetectionResult } from "../../utils/nativeClassifier";
+import {
+  classifyFishImage,
+  DetectionResult,
+} from "../../utils/nativeClassifier";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
   const [photo, setPhoto] = useState<PhotoFile | null>(null);
   const [selectedFishName, setSelectedFishName] = useState<string | null>(null);
   const [next, setNext] = useState<boolean>(true);
-  const [detectedClassName, setDetectedClassName] = useState<string | null>(null);
+  const [detectedClassName, setDetectedClassName] = useState<string | null>(
+    null
+  );
   const [detectedScore, setDetectedScore] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const sheetRef = useRef<Modalize>(null);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParams>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [detectedResults, setDetectedResults] = useState<DetectionResult[]>([]);
 
   const openBottomSheet = () => sheetRef.current?.open();
@@ -41,34 +53,35 @@ export function CameraScreen() {
   const handlePhotoTaken = async (newPhoto: PhotoFile) => {
     try {
       setPhoto(newPhoto);
-      
+
       // 로딩 상태 표시
       setIsLoading(true);
 
       // 네이티브 모듈 호출
       const detectionResults = await classifyFishImage(newPhoto.path);
-      
+
       // 로딩 상태 해제
       setIsLoading(false);
 
       if (Array.isArray(detectionResults) && detectionResults.length > 0) {
         // 결과 처리 및 UI 업데이트
         console.log(`탐지 성공: ${detectionResults.length}개 객체`);
-        
+        console.log(detectionResults);
+
         // 탐지 결과 저장
         setDetectedResults(detectionResults);
-        
+
         // 가장 높은 신뢰도의 결과를 기본 선택으로 설정
         const topResult = detectionResults[0];
         setDetectedClassName(topResult.className);
         setDetectedScore(topResult.score);
-        
+
         // 사용자가 선택할 수 있도록 다음 버튼 활성화
         setNext(false);
-        
+
         // 기본 선택된 물고기 이름 설정
         setSelectedFishName(topResult.className);
-        
+
         // 결과가 있을 경우 바텀시트 열기
         openBottomSheet();
       } else {
@@ -83,7 +96,7 @@ export function CameraScreen() {
     } catch (e: unknown) {
       setIsLoading(false);
       console.error("❌ 사진 처리 중 오류 발생", e);
-      
+
       // 오류 메시지 표시
       Alert.alert(
         "처리 오류",
@@ -124,7 +137,7 @@ export function CameraScreen() {
             source={{ uri: "file://" + photo.path }}
             className="flex-1 resize-contain"
           />
-          
+
           {isLoading && (
             <View className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <ActivityIndicator size="large" color="#FFFFFF" />
@@ -144,7 +157,7 @@ export function CameraScreen() {
             detectedClassName={detectedClassName}
             probability={detectedScore}
           /> */}
-          
+
           {isLoading ? (
             <View className="items-center justify-center py-10">
               <ActivityIndicator size="large" color="#0000ff" />
@@ -164,13 +177,15 @@ export function CameraScreen() {
                     selectedFishName === item.className
                       ? "bg-blue-500 border-2 border-blue-700"
                       : index === 0
-                      ? "bg-blue-100"
-                      : "bg-neutral-100"
+                        ? "bg-blue-100"
+                        : "bg-neutral-100"
                   }`}
                 >
                   <Text
                     className={`text-lg font-semibold ${
-                      selectedFishName === item.className ? "text-white" : "text-black"
+                      selectedFishName === item.className
+                        ? "text-white"
+                        : "text-black"
                     }`}
                   >
                     {index + 1}. {item.className}
@@ -192,12 +207,12 @@ export function CameraScreen() {
               탐지 결과가 없습니다. 다른 사진을 시도해보세요.
             </Text>
           )}
-          
+
           <View className="flex-1 p-5" />
-          <FullButton 
-            name="다음" 
-            disable={!selectedFishName || detectedResults.length === 0} 
-            onPress={handleNext} 
+          <FullButton
+            name="다음"
+            disable={!selectedFishName || detectedResults.length === 0}
+            onPress={handleNext}
           />
         </View>
       </Modalize>
