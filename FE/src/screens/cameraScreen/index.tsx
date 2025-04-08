@@ -6,8 +6,10 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  ScrollView,
   Text,
   TouchableOpacity,
+  useWindowDimensions,
   View,
 } from "react-native";
 import { Modalize } from "react-native-modalize";
@@ -21,6 +23,8 @@ import {
   classifyFishImage,
   DetectionResult,
 } from "../../utils/nativeClassifier";
+import { TranslateFishName } from "../../utils/translateFishName";
+import imageMap from "../../utils/imageMap";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -36,15 +40,17 @@ export function CameraScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
   const [detectedResults, setDetectedResults] = useState<DetectionResult[]>([]);
+  const { width, height } = useWindowDimensions();
+  const imageWidth = width * 0.3;
+  const imageHeight = height * 0.15;
 
   const openBottomSheet = () => sheetRef.current?.open();
-  const closeBottomSheet = () => sheetRef.current?.close();
 
   const handleNext = () => {
     if (photo?.path && selectedFishName) {
       navigation.navigate("Record", {
         photoUri: photo.path,
-        fishName: selectedFishName,
+        fishName: TranslateFishName(selectedFishName),
       });
     }
   };
@@ -149,72 +155,79 @@ export function CameraScreen() {
         <CameraView onPhotoTaken={handlePhotoTaken} />
       )}
 
-      <Modalize ref={sheetRef} snapPoint={300}>
-        <View className="p-10">
-          {/* <Probability
-            onSelectedFishName={setSelectedFishName}
-            onNext={setNext}
-            detectedClassName={detectedClassName}
-            probability={detectedScore}
-          /> */}
-
-          {isLoading ? (
-            <View className="items-center justify-center py-10">
-              <ActivityIndicator size="large" color="#0000ff" />
-              <Text className="text-center mt-2">분석 중...</Text>
-            </View>
-          ) : detectedResults.length > 0 ? (
-            <>
-              <Text className="text-xl font-bold mb-4">탐지 결과</Text>
-              {detectedResults.map((item, index) => (
-                <TouchableOpacity
-                  key={`${item.className}_${index}`}
-                  onPress={() => {
-                    setSelectedFishName(item.className);
-                    setNext(false);
-                  }}
-                  className={`p-4 rounded-xl mb-2 ${
-                    selectedFishName === item.className
-                      ? "bg-blue-500 border-2 border-blue-700"
-                      : index === 0
-                        ? "bg-blue-100"
-                        : "bg-neutral-100"
-                  }`}
-                >
-                  <Text
-                    className={`text-lg font-semibold ${
+      <Modalize ref={sheetRef} snapPoint={height * 0.7}>
+        <ScrollView>
+          <View className="p-10">
+            {isLoading ? (
+              <View className="items-center justify-center py-10">
+                <ActivityIndicator size="large" color="#0000ff" />
+                <Text className="text-center mt-2">이미지 분석 중...</Text>
+              </View>
+            ) : detectedResults.length > 0 ? (
+              <>
+                <Text className="text-lg font-semibold mb-2 text-neutral-400">
+                  탐지 결과
+                </Text>
+                {detectedResults.map((item, index) => (
+                  <TouchableOpacity
+                    key={`${item.className}_${index}`}
+                    onPress={() => {
+                      setSelectedFishName(item.className);
+                      setNext(false);
+                    }}
+                    className={`p-4 rounded-xl mb-5 ${
                       selectedFishName === item.className
-                        ? "text-white"
-                        : "text-black"
+                        ? "bg-blue-500 border-4 border-blue-500"
+                        : "bg-blue-100"
                     }`}
                   >
-                    {index + 1}. {item.className}
-                  </Text>
-                  <Text
-                    className={`text-sm ${
-                      selectedFishName === item.className
-                        ? "text-blue-100"
-                        : "text-neutral-500"
-                    }`}
-                  >
-                    신뢰도: {(item.score * 100).toFixed(1)}%
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </>
-          ) : (
-            <Text className="text-neutral-500 text-center py-4">
-              탐지 결과가 없습니다. 다른 사진을 시도해보세요.
-            </Text>
-          )}
+                    <View className="flex-row px-5 justify-between items-center">
+                      <Image
+                        source={imageMap[`${item.className}.png`]}
+                        style={{
+                          width: imageWidth,
+                          height: imageHeight,
+                          resizeMode: "contain",
+                        }}
+                      />
+                      <View className="justify-center items-center gap-1">
+                        <Text
+                          className={`text-4xl font-bold ${
+                            selectedFishName === item.className
+                              ? "text-white"
+                              : "text-neutral-800"
+                          }`}
+                        >
+                          {TranslateFishName(item.className)}
+                        </Text>
+                        <Text
+                          className={`text-2xl ${
+                            selectedFishName === item.className
+                              ? "text-white"
+                              : "text-neutral-600"
+                          }`}
+                        >
+                          {(item.score * 100).toFixed(1)}%
+                        </Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
+              </>
+            ) : (
+              <Text className="text-neutral-500 text-center py-4">
+                탐지 결과가 없습니다. 다른 사진을 시도해보세요.
+              </Text>
+            )}
 
-          <View className="flex-1 p-5" />
-          <FullButton
-            name="다음"
-            disable={!selectedFishName || detectedResults.length === 0}
-            onPress={handleNext}
-          />
-        </View>
+            <View className="flex-1 p-5" />
+            <FullButton
+              name="다음"
+              disable={!selectedFishName || detectedResults.length === 0}
+              onPress={handleNext}
+            />
+          </View>
+        </ScrollView>
       </Modalize>
     </View>
   );
