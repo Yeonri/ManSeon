@@ -11,6 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { getPosts } from "../../api/post";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { MainStackParams } from "../../api/types/MainStackParams";
+import DefaultImage from "../../assets/images/image_default.svg";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { SearchInput } from "../../components/common/searchInput";
@@ -69,6 +70,7 @@ export function MainScreen() {
   useEffect(() => {
     async function fetchPosts() {
       const data = await getPosts();
+      console.log("게시글 확인:", data);
       if (data) setPosts(data);
     }
 
@@ -89,6 +91,10 @@ export function MainScreen() {
   const handleSEarch = () => {
     setShowModal(true);
   };
+
+  function handlePostClick(postId: number) {
+    navigation.navigate("Post", { postId });
+  }
 
   const progress = (user.collection_cnt / 24) * 100;
 
@@ -147,7 +153,7 @@ export function MainScreen() {
           {/* 통계 관련 */}
           <View>
             {user.fishing_total === 0 ? (
-              <View className="justify-center items-center flex-row">
+              <View className="justify-center items-center flex-row mt-5">
                 <Image
                   source={require("../../assets/images/chatbot2.png")}
                   className="h-44 w-44 -ml-5"
@@ -216,50 +222,12 @@ export function MainScreen() {
           </View>
 
           <View className="w-[90%] h-px bg-neutral-100 self-center my-2" />
-
-          {/* 활동 배지*/}
-          {/* <View>
-            <TouchableOpacity
-              className="flex-row items-center -mb-3"
-              onPress={() => navigation.navigate("Profile")}
-            >
-              <Text className="text-neutral-600 font-bold text-xl">
-                활동 배지
-              </Text>
-              <ChevronRight color="#525252" width={24} />
-            </TouchableOpacity>
-            <View className="flex-row justify-end mx-5 items-baseline">
-              <Text className="text-blue-500 font-bold text-4xl">
-                {user.badges_cnt}
-              </Text>
-              <Text className="text-neutral-400 font-bold text-xl"> / 9</Text>
-            </View>
-
-            <ScrollView horizontal className="mt-3">
-              <View className="flex-row gap-x-3 px-1">
-                {Array.from({ length: 9 }).map((_, index) => {
-                  const isBlue = index < user.badges_cnt;
-                  const bgColor = isBlue ? "bg-blue-100" : "bg-neutral-200";
-                  const iconColor = isBlue ? "#284AAA" : "#616161";
-
-                  return (
-                    <View
-                      key={index}
-                      className={`${bgColor} w-16 h-16 items-center justify-center rounded-full`}
-                    >
-                      <Award width={48} color={iconColor} strokeWidth={3} />
-                    </View>
-                  );
-                })}
-              </View>
-            </ScrollView>
-          </View> */}
         </View>
 
         {/* 오늘의 추천 포인트 */}
-        <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
+        <View className="border border-blue-50 bg-blue-50 rounded-2xl gap-2 p-3 mb-5">
           <View className="flex-row justify-between">
-            <Text className="text-neutral-600 font-bold text-xl">
+            <Text className="text-blue-500 font-bold text-xl">
               오늘의 추천 포인트
             </Text>
 
@@ -267,9 +235,7 @@ export function MainScreen() {
               className="flex-row items-center"
               onPress={() => navigation.navigate("Map")}
             >
-              <Text className="text-neutral-400 text-xl font-medium">
-                더 보기
-              </Text>
+              <Text className="text-xl font-medium">더 보기</Text>
               <ChevronRight color="#a3a3a3" width={24} />
             </TouchableOpacity>
           </View>
@@ -287,7 +253,6 @@ export function MainScreen() {
             </View>
           </ScrollView>
         </View>
-
         {/* 커뮤니티 */}
         <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-10">
           <View className="flex-row justify-between">
@@ -306,15 +271,21 @@ export function MainScreen() {
           <ScrollView horizontal className="mt-2">
             <View className="flex-row gap-x-3 px-1">
               {posts.slice(0, 10).map((post) => (
-                <Image
+                <TouchableOpacity
                   key={post.postId}
-                  source={
-                    post.postImg
-                      ? { uri: post.postImg }
-                      : require("../../assets/images/image_default.svg")
-                  }
-                  className="w-24 h-24 rounded-md"
-                />
+                  onPress={() => handlePostClick(post.postId)}
+                >
+                  {post.postImg ? (
+                    <Image
+                      source={{ uri: post.postImg }}
+                      className="w-24 h-24 rounded-md"
+                    />
+                  ) : (
+                    <View className="w-[85px] h-[85px] rounded-md overflow-hidden bg-neutral-100">
+                      <DefaultImage width={85} height={85} />
+                    </View>
+                  )}
+                </TouchableOpacity>
               ))}
             </View>
           </ScrollView>

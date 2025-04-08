@@ -14,7 +14,7 @@ export function FishingPointCard({
   longitude,
 }: fishingPointProps) {
   return (
-    <TouchableOpacity className="flex-row items-center bg-blue-50 rounded-2xl p-3">
+    <TouchableOpacity className="flex-row items-center bg-white border border-neutral-50 rounded-2xl p-3">
       <View className="w-20 h-20 rounded-xl overflow-hidden">
         <MapView
           style={{ width: "100%", height: "100%" }}

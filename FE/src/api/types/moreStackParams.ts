@@ -23,4 +23,5 @@ export type MoreStackParams = {
   Profile: undefined;
   ProfileEdit: undefined;
   Post: { postId: number };
+  Friends: undefined;
 };

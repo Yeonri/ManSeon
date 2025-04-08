@@ -5,6 +5,7 @@ import { CollectionScreen } from "../../screens/collectionScreen";
 import { CommunityScreen } from "../../screens/communityScreen";
 import { MainScreen } from "../../screens/mainScreen";
 import { MapScreen } from "../../screens/mapScreen";
+import { PostScreen } from "../../screens/postScreen";
 import { ProfileScreen } from "../../screens/profileScreen";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
@@ -18,6 +19,7 @@ export function MainStackNavigator() {
       <Stack.Screen name="CollectionList" component={CollectionListScreen} />
       <Stack.Screen name="CollectionDetail" component={CollectionScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Post" component={PostScreen} />
     </Stack.Navigator>
   );
 }
