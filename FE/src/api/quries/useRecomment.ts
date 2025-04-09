@@ -7,11 +7,11 @@ export function useAddRecomment() {
 
   return useMutation({
     mutationFn: ({
-      PostId,
+      postId,
       commentId,
       content,
     }: {
-      PostId: number;
+      postId: number;
       commentId: number;
       content: string;
     }) => addRecomment(PostId, commentId, content),
@@ -25,16 +25,12 @@ export function useEditRecomment() {
 
   return useMutation({
     mutationFn: ({
-      postId,
-      commentId,
       recommentId,
       content,
     }: {
-      postId: number;
-      commentId: number;
       recommentId: number;
       content: string;
-    }) => editRecomment(postId, commentId, recommentId, content),
+    }) => editRecomment(recommentId, content),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
   });
 }

@@ -18,14 +18,12 @@ export function useEditComment() {
 
   return useMutation({
     mutationFn: ({
-      postId,
       commentId,
       content,
     }: {
-      postId: number;
       commentId: number;
       content: string;
-    }) => editComment(postId, commentId, content),
+    }) => editComment(commentId, content),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
   });
 }

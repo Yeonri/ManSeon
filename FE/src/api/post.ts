@@ -34,16 +34,12 @@ export async function getPostDetail(boardId: number) {
 }
 
 // 게시글 작성
-export async function addPost(
-  title: string,
-  content: string,
-  postImage: string
-) {
+export async function addPost(title: string, content: string, postImg: string) {
   try {
     const response = await authClient.post("/board", {
       title,
       content,
-      postImage,
+      postImg,
     });
     return response.data;
   } catch (e: unknown) {

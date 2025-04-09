@@ -5,12 +5,13 @@ import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLogin } from "../../api/quries/useLogin";
 import { AuthStackParams } from "../../api/types/AuthStackParams";
-import LogoKakao from "../../assets/images/logo_kakao.svg";
-import LogoNaver from "../../assets/images/logo_naver.svg";
+// import LogoKakao from "../../assets/images/logo_kakao.svg";
+// import LogoNaver from "../../assets/images/logo_naver.svg";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderCenter } from "../../components/common/headerCenter";
 import { useLoginStore } from "../../store/loginStore";
 import { tokenStorage } from "../../utils/tokenStorage";
+import { Eye, EyeOff } from "lucide-react-native";
 
 interface LoginScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams, "Login"> {}
@@ -19,6 +20,7 @@ export function LoginScreen() {
   const navigation = useNavigation<LoginScreenNavigationProps>();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [seeOption, setSeeOption] = useState<boolean>(true);
   const { mutate: login } = useLogin();
   const { setLogin } = useLoginStore();
 
@@ -45,22 +47,32 @@ export function LoginScreen() {
     <SafeAreaView className="gap-20 m-5">
       <View />
       <HeaderCenter />
-      <View className="mx-10 gap-2">
+      <View className="mx-5 gap-2">
         <View className="gap-5">
           <TextInput
             placeholder="이메일을 입력해 주세요"
+            placeholderTextColor="#A1A1A1"
+            value={email}
             onChangeText={setEmail}
-            placeholderTextColor="#A1A1A1"
-            inputMode="email"
-            className="text-neutral-800 border-b border-neutral-200"
+            className="p-4 rounded-2xl text-neutral-800 bg-neutral-100"
           />
-          <TextInput
-            placeholder="비밀번호를 입력해 주세요"
-            onChangeText={setPassword}
-            placeholderTextColor="#A1A1A1"
-            secureTextEntry
-            className="text-neutral-800 border-b border-neutral-200"
-          />
+          <View className="relative gap-4">
+            <TextInput
+              placeholder="비밀번호를 입력해 주세요"
+              placeholderTextColor="#A1A1A1"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={seeOption}
+              className="p-4 rounded-2xl text-neutral-800 bg-neutral-100"
+            />
+
+            <TouchableOpacity
+              onPress={() => setSeeOption(!seeOption)}
+              className="absolute top-5 right-5"
+            >
+              {seeOption ? <Eye color="#525252" /> : <EyeOff color="#525252" />}
+            </TouchableOpacity>
+          </View>
         </View>
         <View className="mt-5 flex-row justify-end">
           {/* <TouchableOpacity onPress={() => {}}>
@@ -72,7 +84,7 @@ export function LoginScreen() {
         </View>
       </View>
       <FullButton name="로그인" disable={false} onPress={handleLogin} />
-      <View className="gap-10">
+      {/* <View className="gap-10">
         <Text className="font-semibold text-center text-neutral-600">
           SNS 계정으로 시작하기
         </Text>
@@ -84,7 +96,7 @@ export function LoginScreen() {
             <LogoNaver />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }
