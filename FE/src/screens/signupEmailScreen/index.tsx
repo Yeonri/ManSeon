@@ -22,6 +22,7 @@ export function SignupEmailScreen() {
   const [touchedEmail, setTouchedEmail] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
   const { refetch: checkEmail } = useGetCheckEmail(email);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handleEmail(text: string) {
     setTouchedEmail(true);
@@ -32,26 +33,32 @@ export function SignupEmailScreen() {
     setNext(text === newText && isValid);
   }
 
+  const start = Date.now();
+
   async function handleNext() {
+    setIsLoading(true);
     try {
       console.log("이메일 중복 확인 시작");
       const response = await checkEmail(email);
       console.log("응답 전체: ", response);
-      console.log(
-        "이메일 중복 여부 확인(true가 가입 가능): ",
-        response.isSuccess
-      );
-      if (response.isSuccess === true) {
+      const isSuccess = response.data.success;
+      console.log("이메일 중복 여부 확인(true가 가입 가능): ");
+      if (isSuccess === true) {
+        console.log("정상 시간:", Date.now() - start, "ms");
+
         navigation.navigate("Password", {
           name: name,
           phone: phone,
           email: email,
         });
       } else {
+        console.log("중복 시간:", Date.now() - start, "ms");
         Alert.alert("이메일 중복", "이미 사용 중인 이메일입니다.");
       }
     } catch (e: unknown) {
       handleError(e);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -83,7 +90,11 @@ export function SignupEmailScreen() {
             <View />
           )}
         </View>
-        <FullButton name="다음" disable={!next} onPress={handleNext} />
+        <FullButton
+          name={isLoading ? "확인 중..." : "다음"}
+          disable={!next || isLoading}
+          onPress={handleNext}
+        />
       </View>
     </SafeAreaView>
   );

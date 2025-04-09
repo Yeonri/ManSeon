@@ -22,6 +22,7 @@ export function SignupPhoneNumScreen() {
   const [touchedPhoneNum, setTouchedPhoneNum] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
   const { refetch: checkPhoneNum } = useGetCheckPhoneNum(phoneNum);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handlePhoneNum(text: string) {
     setTouchedPhoneNum(true);
@@ -36,6 +37,7 @@ export function SignupPhoneNumScreen() {
   }
 
   async function handleNext() {
+    setIsLoading(true);
     try {
       console.log("핸드폰 중복 확인 시작");
       const response = await checkPhoneNum(phoneNum);
@@ -51,6 +53,8 @@ export function SignupPhoneNumScreen() {
       }
     } catch (e: unknown) {
       handleError(e);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -82,7 +86,11 @@ export function SignupPhoneNumScreen() {
             <View />
           )}
         </View>
-        <FullButton name="다음" disable={!next} onPress={handleNext} />
+        <FullButton
+          name={isLoading ? "확인 중..." : "다음"}
+          disable={!next || isLoading}
+          onPress={handleNext}
+        />
       </View>
     </SafeAreaView>
   );

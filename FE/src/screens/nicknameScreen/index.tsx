@@ -22,6 +22,7 @@ export function NicknameScreen() {
   const [next, setNext] = useState(false);
   const { mutate: signup } = useSignup();
   const { refetch: checkNickname } = useGetCheckNickname(nickname);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   console.log("입력 정보:", name, email, phone, password);
 
@@ -34,6 +35,7 @@ export function NicknameScreen() {
   }
 
   async function handleNext() {
+    setIsLoading(true);
     try {
       const response = await checkNickname();
       console.log("응답 전체:", response);
@@ -68,6 +70,8 @@ export function NicknameScreen() {
       } else {
         Alert.alert("오류", "닉네임 확인 중 문제가 발생했습니다.");
       }
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -97,7 +101,11 @@ export function NicknameScreen() {
             <View />
           )}
         </View>
-        <FullButton name="다음" disable={!next} onPress={handleNext} />
+        <FullButton
+          name={isLoading ? "확인 중..." : "다음"}
+          disable={!next || isLoading}
+          onPress={handleNext}
+        />
       </View>
     </SafeAreaView>
   );
