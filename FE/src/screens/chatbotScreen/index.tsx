@@ -49,7 +49,7 @@ export function ChatbotScreen() {
 
     try {
       const response = await fetch(
-        "http://10.0.2.2:8000/api/fishing/recommendation",
+        "http://54.180.227.168:20002/api/fishing/recommendation",
         {
           method: "POST",
           headers: {
