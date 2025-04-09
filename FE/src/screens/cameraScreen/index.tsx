@@ -19,12 +19,12 @@ import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
+import imageMap from "../../utils/imageMap";
 import {
   classifyFishImage,
   DetectionResult,
 } from "../../utils/nativeClassifier";
 import { TranslateFishName } from "../../utils/translateFishName";
-import imageMap from "../../utils/imageMap";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -57,59 +57,60 @@ export function CameraScreen() {
 
   // 이미지 경로 처리 개선
   const handlePhotoTaken = async (newPhoto: PhotoFile) => {
-    try {
-      setPhoto(newPhoto);
+    setPhoto(newPhoto);
+    setTimeout(async () => {
+      try {
+        // 로딩 상태 표시
+        setIsLoading(true);
 
-      // 로딩 상태 표시
-      setIsLoading(true);
+        // 네이티브 모듈 호출
+        const detectionResults = await classifyFishImage(newPhoto.path);
 
-      // 네이티브 모듈 호출
-      const detectionResults = await classifyFishImage(newPhoto.path);
+        // 로딩 상태 해제
+        setIsLoading(false);
 
-      // 로딩 상태 해제
-      setIsLoading(false);
+        if (Array.isArray(detectionResults) && detectionResults.length > 0) {
+          // 결과 처리 및 UI 업데이트
+          console.log(`탐지 성공: ${detectionResults.length}개 객체`);
+          console.log(detectionResults);
 
-      if (Array.isArray(detectionResults) && detectionResults.length > 0) {
-        // 결과 처리 및 UI 업데이트
-        console.log(`탐지 성공: ${detectionResults.length}개 객체`);
-        console.log(detectionResults);
+          // 탐지 결과 저장
+          setDetectedResults(detectionResults);
 
-        // 탐지 결과 저장
-        setDetectedResults(detectionResults);
+          // 가장 높은 신뢰도의 결과를 기본 선택으로 설정
+          const topResult = detectionResults[0];
+          setDetectedClassName(topResult.className);
+          setDetectedScore(topResult.score);
 
-        // 가장 높은 신뢰도의 결과를 기본 선택으로 설정
-        const topResult = detectionResults[0];
-        setDetectedClassName(topResult.className);
-        setDetectedScore(topResult.score);
+          // 사용자가 선택할 수 있도록 다음 버튼 활성화
+          setNext(false);
 
-        // 사용자가 선택할 수 있도록 다음 버튼 활성화
-        setNext(false);
+          // 기본 선택된 물고기 이름 설정
+          setSelectedFishName(topResult.className);
 
-        // 기본 선택된 물고기 이름 설정
-        setSelectedFishName(topResult.className);
+          // 결과가 있을 경우 바텀시트 열기
+          openBottomSheet();
+        } else {
+          console.log("🕳️ 탐지된 객체 없음");
+          // 사용자에게 알림 표시
+          Alert.alert(
+            "객체 감지 실패",
+            "이미지에서 인식 가능한 물고기를 찾지 못했습니다. 다른 각도나 조명에서 다시 시도해보세요.",
+            [{ text: "확인", onPress: () => setPhoto(null) }]
+          );
+        }
+      } catch (e: unknown) {
+        setIsLoading(false);
+        console.error("❌ 사진 처리 중 오류 발생", e);
 
-        // 결과가 있을 경우 바텀시트 열기
-        openBottomSheet();
-      } else {
-        console.log("🕳️ 탐지된 객체 없음");
-        // 사용자에게 알림 표시
+        // 오류 메시지 표시
         Alert.alert(
-          "객체 감지 실패",
-          "이미지에서 인식 가능한 물고기를 찾지 못했습니다. 다른 각도나 조명에서 다시 시도해보세요.",
+          "처리 오류",
+          "이미지 처리 중 오류가 발생했습니다. 다시 시도해주세요.",
           [{ text: "확인", onPress: () => setPhoto(null) }]
         );
       }
-    } catch (e: unknown) {
-      setIsLoading(false);
-      console.error("❌ 사진 처리 중 오류 발생", e);
-
-      // 오류 메시지 표시
-      Alert.alert(
-        "처리 오류",
-        "이미지 처리 중 오류가 발생했습니다. 다시 시도해주세요.",
-        [{ text: "확인", onPress: () => setPhoto(null) }]
-      );
-    }
+    });
   };
 
   if (hasCameraPermission === null) {
