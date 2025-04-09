@@ -88,4 +88,8 @@ public class Users {
     private String role;
 
     private boolean deleted;
+
+    public Users(Long userId) {
+        this.userId=userId;
+    }
 }

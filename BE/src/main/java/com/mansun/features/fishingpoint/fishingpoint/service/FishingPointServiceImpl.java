@@ -59,7 +59,6 @@ public class FishingPointServiceImpl implements FishingPointService {
                         .lng(fp.getLng())
                         .build()
         ).collect(Collectors.toList());
-
     }
 
     @Override
