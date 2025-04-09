@@ -1,12 +1,19 @@
+import { useState } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import fishesMocks from "../../../mocks/fishesMocks.json";
-import { useState } from "react";
 
 interface ProbabilityProps {
   onSelectedFishName: (name: string) => void;
+  onNext: (next: boolean) => void;
+  processedUri: string | null;
 }
 
-export function Probability({ onSelectedFishName }: ProbabilityProps) {
+export function Probability({
+  onSelectedFishName,
+  onNext,
+  processedUri,
+}: ProbabilityProps) {
+  console.log("processedUri:", processedUri);
   const sortedData = [...fishesMocks].sort(
     (a, b) => b.probability - a.probability
   );
@@ -15,6 +22,7 @@ export function Probability({ onSelectedFishName }: ProbabilityProps) {
   function handleSelect(index: number) {
     setSelected(index);
     onSelectedFishName(sortedData[index].fishName);
+    onNext(false);
   }
 
   return (

@@ -49,20 +49,30 @@ export function FishingListScreen() {
                 onPress={() =>
                   handleDetailClick(formatDate(section.title), fish.fishId)
                 }
-                className="w-[30%] p-2 bg-blue-100 rounded-lg"
+                className="w-[30%] p-2 rounded-lg"
               >
                 <Image
                   source={{ uri: fish.fishImg }}
                   className="w-full h-28 rounded-lg"
                 />
-                <Text className="font-bold text-lg">{fish.fishType}</Text>
-                <Text>({fish.size}cm)</Text>
+                {/* <Image
+                  source={fish.fishImg?{ uri: fish.fishImg }:require("../../assets/images/기본이미지파일")}
+                  className="w-full h-28 rounded-lg"
+                /> */}
+                <Text className="font-bold text-lg text-neutral-800">
+                  {fish.fishType}
+                </Text>
+                <Text className="text-neutral-600">({fish.size}cm)</Text>
               </TouchableOpacity>
             ))}
           </View>
         )}
         renderSectionHeader={({ section: { title } }) => (
-          <Text className="text-2xl font-bold my-3">{formatDate(title)}</Text>
+          <>
+            <Text className="text-xl font-bold my-3 text-neutral-600">
+              {formatDate(title)}
+            </Text>
+          </>
         )}
       />
     </SafeAreaView>
