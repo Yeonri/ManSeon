@@ -22,7 +22,7 @@ public class AllPointResDto {
     String sunset;
     double temperature_max;
     double temperature_min;
-    List<ForecastResDto> weather_forecast;
-    List<TideDayResDto> tide_info;
-    List<WaveResDto> wave_info;
+//    List<ForecastResDto> weather_forecast;
+//    List<TideDayResDto> tide_info;
+//    List<WaveResDto> wave_info;
 }

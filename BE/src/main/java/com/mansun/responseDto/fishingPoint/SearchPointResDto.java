@@ -12,4 +12,6 @@ public class SearchPointResDto {
     Long pointId;
 
     String pointName;
+    float lat;
+    float lng;
 }

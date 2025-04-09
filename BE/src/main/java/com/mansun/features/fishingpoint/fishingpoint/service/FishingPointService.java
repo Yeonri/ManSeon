@@ -16,7 +16,7 @@ public interface FishingPointService {
     List<AllPointResDto> findAllPointList(CustomUserDetails customUserDetails);
     OnePointResDto findOnePoint(Long pointId);
     OnePointDetailInfoResDto findOnePointDetailInfo(CustomUserDetails customUserDetails, Long pointId);
-    SearchPointResDto searchFishingPointList(
+    List<SearchPointResDto> searchFishingPointList(
             CustomUserDetails customUserDetails,
             String pointName
     );
