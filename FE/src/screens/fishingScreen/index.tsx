@@ -22,7 +22,9 @@ export function FishingScreen({ route }: FishingScreenProps) {
           />
         </View>
         <View className="gap-2">
-          <Text className="font-semibold text-lg">물고기 정보</Text>
+          <Text className="font-semibold text-lg text-neutral-600">
+            물고기 정보
+          </Text>
           <View className="flex-row gap-3">
             <SelectTag
               name={fishingRecordMocks[fishId - 1].fishType}
@@ -35,17 +37,19 @@ export function FishingScreen({ route }: FishingScreenProps) {
           </View>
         </View>
         <View className="gap-2">
-          <Text className="font-semibold text-lg">환경 정보</Text>
+          <Text className="font-semibold text-lg text-neutral-600">
+            환경 정보
+          </Text>
           <View className="bg-neutral-100 rounded-lg p-5">
-            <View className="flex-row gap-3">
-              <Text className="text-neutral-500">시간</Text>
-              <Text className="text-neutral-500">
+            <View className="flex-row gap-2">
+              <Text className="text-neutral-600">시간</Text>
+              <Text className="text-neutral-400">
                 {fishingRecordMocks[fishId - 1].createAt}
               </Text>
             </View>
-            <View className="flex-row gap-3">
-              <Text className="text-neutral-500">물때</Text>
-              <Text className="text-neutral-500">
+            <View className="flex-row gap-2">
+              <Text className="text-neutral-600">물때</Text>
+              <Text className="text-neutral-400">
                 {fishingRecordMocks[fishId - 1].season}물 (서해{" "}
                 {fishingRecordMocks[fishId - 1].season - 1}물)
               </Text>
@@ -53,24 +57,28 @@ export function FishingScreen({ route }: FishingScreenProps) {
           </View>
         </View>
         <View className="gap-2">
-          <Text className="font-semibold text-lg">위치 정보</Text>
+          <Text className="font-semibold text-lg text-neutral-600">
+            위치 정보
+          </Text>
           <View className="bg-neutral-100 rounded-lg p-5">
-            <View className="flex-row gap-3">
-              <Text className="text-neutral-500">위도</Text>
-              <Text className="text-neutral-500">
+            <View className="flex-row gap-2">
+              <Text className="text-neutral-600">위도</Text>
+              <Text className="text-neutral-400">
                 {fishingRecordMocks[fishId - 1].lat}
               </Text>
             </View>
-            <View className="flex-row gap-3">
-              <Text className="text-neutral-500">경도</Text>
-              <Text className="text-neutral-500">
+            <View className="flex-row gap-2">
+              <Text className="text-neutral-600">경도</Text>
+              <Text className="text-neutral-400">
                 {fishingRecordMocks[fishId - 1].lng}
               </Text>
             </View>
           </View>
         </View>
         <View className="gap-2">
-          <Text className="font-semibold text-lg">미끼 정보</Text>
+          <Text className="font-semibold text-lg text-neutral-600">
+            미끼 정보
+          </Text>
           <View className="flex-row gap-3">
             <SelectTag
               name="지렁이"
@@ -91,7 +99,9 @@ export function FishingScreen({ route }: FishingScreenProps) {
           </View>
         </View>
         <View className="gap-2">
-          <Text className="font-semibold text-lg">낚시 방법</Text>
+          <Text className="font-semibold text-lg text-neutral-600">
+            낚시 방법
+          </Text>
           <View className="flex-row gap-3">
             <SelectTag
               name="낚싯대"
