@@ -9,12 +9,15 @@ import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { AddComment } from "../../components/community/addComment";
-import { CommentList } from "../../components/community/commentList";
+// import { CommentList } from "../../components/community/commentList";
 import { DeleteAlert } from "../../utils/deleteAlert";
 import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
 import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
 import DefaultProfile from "../../assets/images/profile_default.svg";
 import { Loading } from "../../components/common/loading";
+import { FormatTime } from "../../utils/formatTime";
+import { useUserStore } from "../../store/userStore";
+import { CommentList } from "../../components/community/commentList";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -27,7 +30,10 @@ export function PostScreen({ route }: PostScreenProps) {
   const navigation = useNavigation<PostScreenNavigationProps>();
   const { data: postDetail } = useGetPostDetail(postId);
   const { mutate: deletePost } = useDeletePost();
-  // console.log("상세 게시글:", postDetail);
+  const user = useUserStore((state) => state.user);
+  const isOwner = user?.id === postDetail?.userId;
+  console.log("상세 게시글:", postDetail);
+  // console.log("유저 정보:", user);
 
   function handleDelete() {
     DeleteAlert("게시글", () => {
@@ -83,27 +89,32 @@ export function PostScreen({ route }: PostScreenProps) {
           <View className="flex-row items-center gap-2">
             {/* 작성 시간 */}
             <Text className="text-neutral-400 text-sm">
-              {/* {FormatTime(postDetail.createdAt)} */}
-              n시간 전
+              {FormatTime(postDetail.createdAt)}
             </Text>
             {/* 수정 */}
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("EditPost", {
-                  postId: postId,
-                  title: postDetail.title,
-                  content: postDetail.content,
-                  postImg: postDetail.postImg,
-                })
-              }
-              className="h-6"
-            >
-              <Pencil color={"#A1A1A1"} size={20} />
-            </TouchableOpacity>
-            {/* 삭제 */}
-            <TouchableOpacity onPress={handleDelete} className="h-6">
-              <Trash2 color={"#A1A1A1"} size={20} />
-            </TouchableOpacity>
+            {isOwner ? (
+              <>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("EditPost", {
+                      postId: postId,
+                      title: postDetail.title,
+                      content: postDetail.content,
+                      postImg: postDetail.postImg,
+                    })
+                  }
+                  className="h-6"
+                >
+                  <Pencil color={"#A1A1A1"} size={20} />
+                </TouchableOpacity>
+                {/* 삭제 */}
+                <TouchableOpacity onPress={handleDelete} className="h-6">
+                  <Trash2 color={"#A1A1A1"} size={20} />
+                </TouchableOpacity>
+              </>
+            ) : (
+              <></>
+            )}
           </View>
         </View>
         <View className="my-3 gap-3">
@@ -133,7 +144,7 @@ export function PostScreen({ route }: PostScreenProps) {
         </View>
         {/* 댓글 추가 */}
         <View className="my-4">
-          <AddComment />
+          <AddComment postId={postDetail.boardId} />
         </View>
         {/* 댓글 목록 */}
         <CommentList comments={postDetail.commentList} />

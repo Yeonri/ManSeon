@@ -91,7 +91,7 @@ export function PostList() {
                     overflow: "hidden",
                   }}
                 >
-                  <DefaultImage width={96} height={96} />
+                  <DefaultImage width={84} height={84} />
                 </View>
               )}
             </View>

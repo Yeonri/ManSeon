@@ -32,7 +32,7 @@ export function SignupNameScreen() {
 
   function handleNext() {
     if (name) {
-      navigation.navigate("PhoneNum", { username: name });
+      navigation.navigate("PhoneNum", { name: name });
     }
   }
 

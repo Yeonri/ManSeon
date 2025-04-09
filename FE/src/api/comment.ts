@@ -12,14 +12,9 @@ export async function addComment(postId: number, content: string) {
 }
 
 // 댓글 수정
-export async function editComment(
-  postId: number,
-  commentId: number,
-  content: string
-) {
+export async function editComment(commentId: number, content: string) {
   try {
     const response = await authClient.put("/comment", {
-      postId,
       commentId,
       content,
     });

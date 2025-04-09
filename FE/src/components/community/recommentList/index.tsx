@@ -9,23 +9,32 @@ import {
 } from "react-native";
 import { Recomment } from "../../../api/types/Recomment";
 import IconArrow from "../../../assets/images/icon_arrow.svg";
-import IconDelete from "../../../assets/images/icon_delete.svg";
-import IconEdit from "../../../assets/images/icon_edit.svg";
 import TagFollow from "../../../assets/images/tag_follow.svg";
 import { DeleteAlert } from "../../../utils/deleteAlert";
 import { FormatTime } from "../../../utils/formatTime";
+import DefaultProfile from "../../../assets/images/image_default.svg";
+import { Pencil, Trash2 } from "lucide-react-native";
+import { useUserStore } from "../../../store/userStore";
+import {
+  useDeleteRecomment,
+  useEditRecomment,
+} from "../../../api/quries/useRecomment";
 
 export function RecommentList({ recomments }: { recomments: Recomment[] }) {
-  const [editRecommentId, setEditRecommentId] = useState<number | null>(null);
-  const [recommendContent, setRecommentContent] = useState("");
+  const userId = useUserStore((state) => state.user);
+  const [editRecommentId, setEditRecommentId] = useState<number>(0);
+  const [recommentContent, setRecommentContent] = useState("");
+  const { mutate: editRecomment } = useEditRecomment();
+  const { mutate: deleteRecomment } = useDeleteRecomment();
 
-  function handleRecomment(id: number, content: string) {
+  function handleEdit(id: number, content: string) {
     setEditRecommentId(id);
     setRecommentContent(content);
   }
 
-  function handleEditCancel() {
-    setEditRecommentId(null);
+  function cancelEdit() {
+    setRecommentContent("");
+    setEditRecommentId(0);
   }
 
   return (
@@ -39,10 +48,22 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
                 <IconArrow />
                 <View className="flex-row items-center gap-2">
                   <TouchableOpacity className="flex-row items-center gap-2">
-                    <Image
-                      source={{ uri: item.profileImg }}
-                      className="w-10 h-10 rounded-full"
-                    />
+                    {item.profileImg ? (
+                      <Image
+                        source={{ uri: item.profileImg }}
+                        className="w-8 h-8 mr-2 rounded-full"
+                      />
+                    ) : (
+                      <View
+                        style={{
+                          borderRadius: 16,
+                          overflow: "hidden",
+                          marginRight: 8,
+                        }}
+                      >
+                        <DefaultProfile width={32} height={32} />
+                      </View>
+                    )}
                     <Text className="font-semibold">{item.nickname}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity>
@@ -51,30 +72,39 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
                 </View>
               </View>
               <View className="flex-row items-center gap-1">
-                <TouchableOpacity
-                  onPress={() =>
-                    handleRecomment(item.recommentId, item.recommentContent)
-                  }
-                  className="h-6"
-                >
-                  <IconEdit />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => DeleteAlert("답글")}
-                  className="h-6"
-                >
-                  <IconDelete />
-                </TouchableOpacity>
+                {item.userId === userId?.id && (
+                  <>
+                    <TouchableOpacity
+                      onPress={() =>
+                        handleEdit(item.recommentId, item.recommentContent)
+                      }
+                      className="h-6"
+                    >
+                      <Pencil color={"#A1A1A1"} size={20} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        DeleteAlert("답글", () =>
+                          deleteRecomment(item.recommentId)
+                        )
+                      }
+                      className="h-6"
+                    >
+                      <Trash2 color={"#A1A1A1"} size={20} />
+                    </TouchableOpacity>
+                  </>
+                )}
                 <Text className="text-neutral-400 text-sm">
-                  {FormatTime(item.createAt)}
+                  {FormatTime(item.createdAt)}
                 </Text>
               </View>
             </View>
+
             {editRecommentId === item.recommentId ? (
               <View className="border border-stone-200 rounded-lg ml-7 mt-1">
                 <View className="flex-row items-center mx-3 mt-1">
                   <TextInput
-                    value={recommendContent}
+                    value={recommentContent}
                     onChangeText={setRecommentContent}
                     placeholder="댓글을 입력해주세요"
                     textAlignVertical="center"
@@ -83,7 +113,7 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
                 </View>
                 <View className="flex-row items-center justify-end m-3 gap-3">
                   <TouchableOpacity
-                    onPress={handleEditCancel}
+                    onPress={cancelEdit}
                     className="px-5 py-1 bg-blue-50 rounded-xl self-end"
                   >
                     <Text className="text-blue-500 font-semibold text-sm">
@@ -91,7 +121,15 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
                     </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
-                    onPress={() => {}}
+                    onPress={() =>
+                      editRecomment(
+                        {
+                          recommentId: editRecommentId,
+                          content: recommentContent,
+                        },
+                        { onSuccess: cancelEdit }
+                      )
+                    }
                     className="px-5 py-1 bg-blue-500 rounded-xl self-end"
                   >
                     <Text className="text-white font-semibold text-sm">

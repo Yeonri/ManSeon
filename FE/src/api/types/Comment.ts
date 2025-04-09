@@ -2,12 +2,13 @@ import { Recomment } from "./Recomment";
 
 export type Comment = {
   commentId: number;
-  postId: number;
+  boardId: number;
   userId: number;
+  username: string;
   nickname: string;
   profileImg: string;
   commentContent: string;
-  createAt: string;
+  createdAt: string;
   RecommentNum: number;
-  RecommentList: Recomment[];
+  recomment: Recomment[];
 };

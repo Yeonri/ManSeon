@@ -17,6 +17,7 @@ export function useGetPosts() {
     refetchOnMount: true,
   });
 }
+
 // 친구 게시글 가져오기
 export function useGetFriendsPosts(userId: number) {
   return useQuery({
@@ -43,12 +44,12 @@ export function useAddPost() {
     mutationFn: ({
       title,
       content,
-      postImage,
+      postImg,
     }: {
       title: string;
       content: string;
-      postImage: string;
-    }) => addPost(title, content, postImage),
+      postImg: string;
+    }) => addPost(title, content, postImg),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
   });
 }

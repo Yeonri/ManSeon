@@ -2,9 +2,8 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useSignup } from "../../api/quries/useSignup";
 import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
@@ -17,7 +16,7 @@ interface SignupPasswordScreenNavigationProps
 export function SignupPasswordScreen() {
   const navigation = useNavigation<SignupPasswordScreenNavigationProps>();
   const route = useRoute<RouteProp<SignupStackParams, "Password">>();
-  const { username, phone, email } = route.params;
+  const { name, phone, email } = route.params;
   const [password, setPassword] = useState<string>("");
   const [touchedPassword, setTouchedPassword] = useState<boolean>(false);
   const [validPassword, setValidPassword] = useState<boolean>(false);
@@ -27,7 +26,6 @@ export function SignupPasswordScreen() {
     useState<boolean>(false);
   const [validCheckPassword, setValidCheckPassword] = useState<boolean>(false);
   const [seeOption2, setSeeOption2] = useState<boolean>(true);
-  const { mutate: signup } = useSignup();
 
   function handlePassword(text: string) {
     setTouchedPassword(true);
@@ -46,18 +44,13 @@ export function SignupPasswordScreen() {
     );
   }
 
-  function handleSignup() {
-    signup(
-      { email, password, username, phoneNum: phone },
-      {
-        onSuccess: () => {
-          navigation.navigate("Nickname", { email: email });
-        },
-        onError: () => {
-          Alert.alert("회원가입 실패", "잠시 후 다시 시도해주세요.");
-        },
-      }
-    );
+  function handleNext() {
+    navigation.navigate("Nickname", {
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+    });
   }
 
   return (
@@ -132,7 +125,7 @@ export function SignupPasswordScreen() {
         <FullButton
           name="다음"
           disable={!validCheckPassword}
-          onPress={handleSignup}
+          onPress={handleNext}
         />
       </View>
     </SafeAreaView>
