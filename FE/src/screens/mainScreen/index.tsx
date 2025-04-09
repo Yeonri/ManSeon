@@ -1,4 +1,4 @@
-// import Geolocation from "react-native-geolocation-service";
+import Geolocation from "react-native-geolocation-service";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
@@ -11,16 +11,16 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { MainStackParams } from "../../api/types/MainStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
-// import { PermissionCheck } from "../../components/common/permissionCheck";
+import { PermissionCheck } from "../../components/common/permissionCheck";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
 import { ChatbotButton } from "../../components/main/chatbotButton";
 import { FishingPointCard } from "../../components/main/fishingPointCard";
 import moonList from "../../data/moonList";
-// import { useLocationPermission } from "../../hooks/useLocationPermission";
+import { useLocationPermission } from "../../hooks/useLocationPermission";
 import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
-// import { useLocationStore } from "../../store/locationStore";
+import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
 
 dayjs.extend(utc);
@@ -30,7 +30,7 @@ interface MainScreenNavigationProps
   extends NativeStackNavigationProp<MainStackParams> {}
 
 export function MainScreen() {
-  // const hasLocationPermission = useLocationPermission();
+  const hasLocationPermission = useLocationPermission();
 
   const [keyword, setKeyword] = useState("");
 
@@ -42,25 +42,25 @@ export function MainScreen() {
   console.log("유저정보 확인하기:", user);
 
   const setUser = useUserStore((state) => state.setUser);
-  // const setLocation = useLocationStore((state) => state.setLocation);
+  const setLocation = useLocationStore((state) => state.setLocation);
 
   // 위치 정보 가져오기
-  // useEffect(() => {
-  //   if (hasLocationPermission) {
-  //     Geolocation.getCurrentPosition(
-  //       (position) => {
-  //         // console.log(
-  //         //   "위도, 경도:",
-  //         //   position.coords.latitude,
-  //         //   position.coords.longitude
-  //         // );
-  //         setLocation(position.coords.latitude, position.coords.longitude);
-  //       },
-  //       (error) => console.log("Error getting location:", error),
-  //       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-  //     );
-  //   }
-  // }, [hasLocationPermission, setLocation]);
+  useEffect(() => {
+    if (hasLocationPermission) {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          // console.log(
+          //   "위도, 경도:",
+          //   position.coords.latitude,
+          //   position.coords.longitude
+          // );
+          setLocation(position.coords.latitude, position.coords.longitude);
+        },
+        (error) => console.log("Error getting location:", error),
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
+  }, [hasLocationPermission, setLocation]);
 
   useEffect(() => {
     if (user) {
@@ -68,9 +68,9 @@ export function MainScreen() {
     }
   }, [user, setUser]);
 
-  // if (hasLocationPermission === null) {
-  //   return <PermissionCheck name="위치" />;
-  // }
+  if (hasLocationPermission === null) {
+    return <PermissionCheck name="위치" />;
+  }
 
   if (!user) return null;
 

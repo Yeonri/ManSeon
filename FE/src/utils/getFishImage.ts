@@ -40,13 +40,13 @@ export function getFishImage(className: string): any | undefined {
       return require("../assets/images/fish/bigfin_reef_squid.png");
     case "scorpionfish":
       return require("../assets/images/fish/scorpionfish.png");
-    case "marbled_rockfish":
+    case "Marbled_rockfish":
       return require("../assets/images/fish/marbled_rockfish.png");
-    case "japanese_jack_mackerel":
+    case "Japanese_jack_mackerel":
       return require("../assets/images/fish/japanese_jack_mackerel.png");
-    case "japanese_amberjack":
+    case "Japanese_amberjack":
       return require("../assets/images/fish/japanese_amberjack.png");
-    case "japanese_seabass":
+    case "Japanese_seabass":
       return require("../assets/images/fish/japanese_seabass.png");
     default:
       return undefined;
