@@ -1,3 +1,5 @@
+import { CHATBOT_API } from "@env";
+import axios from "axios";
 import { Send } from "lucide-react-native";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -48,27 +50,25 @@ export function ChatbotScreen() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(
-        "http://10.0.2.2:8000/api/fishing/recommendation",
+      const response = await axios.post(
+        CHATBOT_API,
         {
-          method: "POST",
+          question: inputText,
+          user_lat: latitude,
+          user_lon: longitude,
+          user_time: new Date().toISOString(),
+        },
+        {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            question: inputText,
-            user_lat: latitude,
-            user_lon: longitude,
-            user_time: new Date().toISOString(),
-          }),
         }
       );
 
-      const data = await response.json();
-
+      // axios는 json 자동 파싱되므로 .data로 접근
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: data.answer,
+        text: response.data.answer,
         isUser: false,
       };
 
