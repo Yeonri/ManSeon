@@ -29,7 +29,7 @@ export function PostEditScreen({ route, navigation }: PostEditScreenProps) {
   const { mutate: editPost } = useEditPost();
 
   function handleEdit() {
-    // console.log("게시글 편집 시작");
+    console.log("게시글 편집 시작");
     return editPost(
       {
         boardId: postId,
@@ -39,11 +39,11 @@ export function PostEditScreen({ route, navigation }: PostEditScreenProps) {
       },
       {
         onSuccess: () => {
-          // console.log("게시글 편집 성공");
+          console.log("게시글 편집 성공");
           navigation.navigate("Post", { postId });
         },
         onError: () => {
-          // console.log("게시글 편집 실패");
+          console.log("게시글 편집 실패");
           Alert.alert("게시글 편집 실패", "잠시 후 다시 시도해주세요.");
         },
       }

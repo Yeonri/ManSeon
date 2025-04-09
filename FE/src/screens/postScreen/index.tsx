@@ -28,12 +28,16 @@ interface PostScreenNavigationProps
 export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
-  const { data: postDetail } = useGetPostDetail(postId);
+  const { data: response } = useGetPostDetail(postId);
+  console.log("응답 전체", response);
+
+  const postDetail = response?.data ?? [];
+  console.log("상세 게시글:", postDetail);
+
   const { mutate: deletePost } = useDeletePost();
   const user = useUserStore((state) => state.user);
   const isOwner = user?.id === postDetail?.userId;
-  console.log("상세 게시글:", postDetail);
-  // console.log("유저 정보:", user);
+  console.log("유저 정보:", user);
 
   function handleDelete() {
     DeleteAlert("게시글", () => {

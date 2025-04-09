@@ -14,8 +14,11 @@ interface CommunityScreenNavigationProps
 
 export function PostList() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
-  const { data: posts, refetch } = useGetPosts();
-  // console.log("전체 게시글 :", posts);
+  const { data: response, refetch } = useGetPosts();
+  console.log("응답 전체 :", response);
+
+  const posts = response?.data ?? [];
+  console.log("전체 게시글:", posts);
 
   function handlePostClick(postId: number) {
     navigation.navigate("Post", { postId });

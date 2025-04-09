@@ -4,7 +4,7 @@ import authClient from "./authClient";
 // 전체 게시글 가져오기
 export async function getPosts() {
   try {
-    const response = await authClient.get("/board/all");
+    const response = await authClient.get("/boards");
     return response.data;
   } catch (e: unknown) {
     handleError(e);
@@ -24,9 +24,7 @@ export async function getFriendsPosts(userId: number) {
 // 상세 게시글 가져오기
 export async function getPostDetail(boardId: number) {
   try {
-    const response = await authClient.get(
-      `/board/all/detail?board_id=${boardId}`
-    );
+    const response = await authClient.get(`/boards/${boardId}`);
     return response.data;
   } catch (e: unknown) {
     handleError(e);
@@ -36,7 +34,7 @@ export async function getPostDetail(boardId: number) {
 // 게시글 작성
 export async function addPost(title: string, content: string, postImg: string) {
   try {
-    const response = await authClient.post("/board", {
+    const response = await authClient.post("/boards", {
       title,
       content,
       postImg,
@@ -54,8 +52,7 @@ export async function editPost(
   postImage: string
 ) {
   try {
-    const response = await authClient.put("/board", {
-      boardId,
+    const response = await authClient.put(`/boards/${boardId}`, {
       title,
       content,
       postImage,
@@ -68,9 +65,7 @@ export async function editPost(
 // 게시글 삭제
 export async function deletePost(boardId: number) {
   try {
-    const response = await authClient.delete("/board", {
-      data: { boardId },
-    });
+    const response = await authClient.delete(`/boards/${boardId}`);
     return response.data;
   } catch (e: unknown) {
     handleError(e);
