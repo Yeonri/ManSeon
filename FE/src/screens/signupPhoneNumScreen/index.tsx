@@ -3,12 +3,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useGetCheckPhoneNum } from "../../api/quries/useCheck";
 import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
 import { ProgressBar } from "../../components/signup/progressBar";
-import { useGetCheckPhoneNum } from "../../api/quries/useCheck";
 import { handleError } from "../../utils/handleError";
 
 interface SignupPhoneNumScreenNavigationProps
@@ -17,7 +17,7 @@ interface SignupPhoneNumScreenNavigationProps
 export function SignupPhoneNumScreen() {
   const navigation = useNavigation<SignupPhoneNumScreenNavigationProps>();
   const route = useRoute<RouteProp<SignupStackParams, "PhoneNum">>();
-  const { username } = route.params;
+  const { name } = route.params;
   const [phoneNum, setPhoneNum] = useState<string>("");
   const [touchedPhoneNum, setTouchedPhoneNum] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
@@ -38,9 +38,9 @@ export function SignupPhoneNumScreen() {
   async function handleNext() {
     try {
       const { data } = await checkPhoneNum();
-      // console.log("핸드폰 번호 중복 여부 확인(true가 가입 가능): ", data);
+      // console.log("핸드폰 번호 중복 여부 확인(true가 가입 가능): ", data);S
       if (data?.ableToUse === true) {
-        navigation.navigate("Email", { username: username, phone: phoneNum });
+        navigation.navigate("Email", { name: name, phone: phoneNum });
       } else {
         Alert.alert("핸드폰 번호 중복", "이미 사용 중인 핸드폰 번호입니다.");
       }

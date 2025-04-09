@@ -3,12 +3,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useGetCheckEmail } from "../../api/quries/useCheck";
 import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
 import { ProgressBar } from "../../components/signup/progressBar";
-import { useGetCheckEmail } from "../../api/quries/useCheck";
 import { handleError } from "../../utils/handleError";
 
 interface SignupEmailScreenNavigationProps
@@ -17,7 +17,7 @@ interface SignupEmailScreenNavigationProps
 export function SignupEmailScreen() {
   const navigation = useNavigation<SignupEmailScreenNavigationProps>();
   const route = useRoute<RouteProp<SignupStackParams, "Email">>();
-  const { username, phone } = route.params;
+  const { name, phone } = route.params;
   const [email, setEmail] = useState<string>("");
   const [touchedEmail, setTouchedEmail] = useState<boolean>(false);
   const [next, setNext] = useState<boolean>(false);
@@ -38,7 +38,7 @@ export function SignupEmailScreen() {
       // console.log("이메일 중복 여부 확인(true가 가입 가능): ", data);
       if (data?.ableToUse === true) {
         navigation.navigate("Password", {
-          username: username,
+          name: name,
           phone: phone,
           email: email,
         });

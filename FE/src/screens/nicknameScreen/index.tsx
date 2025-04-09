@@ -3,12 +3,12 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useUploadNickname } from "../../api/quries/useUploadNickname";
+import { useGetCheckNickname } from "../../api/quries/useCheck";
+import { useSignup } from "../../api/quries/useSignup";
 import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
-import { useGetCheckNickname } from "../../api/quries/useCheck";
 
 interface SignupNameScreenNavigationProps
   extends NativeStackNavigationProp<SignupStackParams> {}
@@ -16,12 +16,14 @@ interface SignupNameScreenNavigationProps
 export function NicknameScreen() {
   const navigation = useNavigation<SignupNameScreenNavigationProps>();
   const route = useRoute<RouteProp<SignupStackParams, "Nickname">>();
-  const { email } = route.params;
+  const { name, email, phone, password } = route.params;
   const [nickname, setNickname] = useState<string>("");
   const [touchedNickname, setTouchedNickname] = useState<boolean>(false);
   const [next, setNext] = useState(false);
-  const { mutate: uploadNickname } = useUploadNickname();
+  const { mutate: signup } = useSignup();
   const { refetch: checkNickname } = useGetCheckNickname(nickname);
+
+  console.log("잘 받아옴??", name, email, phone, password);
 
   function handleNickname(text: string) {
     setTouchedNickname(true);
@@ -36,8 +38,8 @@ export function NicknameScreen() {
       const { data } = await checkNickname();
       // console.log("닉네임 중복 여부 확인(true가 가입 가능)", data);
       if (data?.ableToUse === true) {
-        uploadNickname(
-          { email, nickname },
+        signup(
+          { email, password, name, phoneNum: phone, nickname },
           {
             onSuccess: () => {
               Alert.alert("회원가입 성공", "로그인 후 이용해주세요.");
