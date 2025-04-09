@@ -16,16 +16,22 @@ import DefaultProfile from "../../../assets/images/image_default.svg";
 import { Pencil, Trash2 } from "lucide-react-native";
 import { useUserStore } from "../../../store/userStore";
 import {
-  useDeleteRecomment,
-  useEditRecomment,
-} from "../../../api/quries/useRecomment";
+  useDeleteComment,
+  useEditComment,
+} from "../../../api/quries/useComment";
 
-export function RecommentList({ recomments }: { recomments: Recomment[] }) {
+export function RecommentList({
+  recomments,
+  boardId,
+}: {
+  recomments: Recomment[];
+  boardId: number;
+}) {
   const userId = useUserStore((state) => state.user);
   const [editRecommentId, setEditRecommentId] = useState<number>(0);
   const [recommentContent, setRecommentContent] = useState("");
-  const { mutate: editRecomment } = useEditRecomment();
-  const { mutate: deleteRecomment } = useDeleteRecomment();
+  const { mutate: editRecomment } = useEditComment();
+  const { mutate: deleteRecomment } = useDeleteComment();
 
   function handleEdit(id: number, content: string) {
     setEditRecommentId(id);
@@ -85,7 +91,10 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
                     <TouchableOpacity
                       onPress={() =>
                         DeleteAlert("답글", () =>
-                          deleteRecomment(item.recommentId)
+                          deleteRecomment({
+                            boardId,
+                            commentId: item.recommentId,
+                          })
                         )
                       }
                       className="h-6"
@@ -124,7 +133,8 @@ export function RecommentList({ recomments }: { recomments: Recomment[] }) {
                     onPress={() =>
                       editRecomment(
                         {
-                          recommentId: editRecommentId,
+                          boardId: boardId,
+                          commentId: editRecommentId,
                           content: recommentContent,
                         },
                         { onSuccess: cancelEdit }

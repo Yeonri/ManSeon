@@ -28,7 +28,7 @@ export function PostAddScreen({ navigation }: PostAddScreenProps) {
   const { mutate: addPost } = useAddPost();
 
   function handleSave() {
-    console.log("게시글 추가 시작");
+    console.log("게시글 추가 요청");
     return addPost(
       {
         title: addTitle,

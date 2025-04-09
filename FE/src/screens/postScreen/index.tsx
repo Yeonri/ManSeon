@@ -9,7 +9,6 @@ import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { AddComment } from "../../components/community/addComment";
-// import { CommentList } from "../../components/community/commentList";
 import { DeleteAlert } from "../../utils/deleteAlert";
 import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
 import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
@@ -40,9 +39,11 @@ export function PostScreen({ route }: PostScreenProps) {
   console.log("유저 정보:", user);
 
   function handleDelete() {
+    console.log("게시글 삭제 요청");
     DeleteAlert("게시글", () => {
       deletePost(postId, {
         onSuccess: () => {
+          console.log("게시글 삭제 성공");
           navigation.goBack();
         },
       });
@@ -148,10 +149,10 @@ export function PostScreen({ route }: PostScreenProps) {
         </View>
         {/* 댓글 추가 */}
         <View className="my-4">
-          <AddComment postId={postDetail.boardId} />
+          <AddComment boardId={postDetail.boardId} />
         </View>
         {/* 댓글 목록 */}
-        <CommentList comments={postDetail.commentList} />
+        <CommentList boardId={postDetail.boardId} />
       </ScrollView>
     </SafeAreaView>
   );

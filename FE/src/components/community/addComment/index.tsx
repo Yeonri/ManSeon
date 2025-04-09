@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useAddComment } from "../../../api/quries/useComment";
 
-export function AddComment({ postId }: { postId: number }) {
+export function AddComment({ boardId }: { boardId: number }) {
   const [comment, setComment] = useState<string>("");
   const { mutate: addComment } = useAddComment();
 
@@ -18,7 +18,9 @@ export function AddComment({ postId }: { postId: number }) {
         />
       </View>
       <TouchableOpacity
-        onPress={() => addComment({ postId, content: comment })}
+        onPress={() =>
+          addComment({ boardId, parentId: null, content: comment })
+        }
         className="mx-3 mb-3 px-5 py-1 bg-blue-500 rounded-xl self-end"
       >
         <Text className="text-white font-semibold text-sm">저장</Text>

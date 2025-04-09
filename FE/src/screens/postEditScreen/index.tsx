@@ -29,7 +29,7 @@ export function PostEditScreen({ route, navigation }: PostEditScreenProps) {
   const { mutate: editPost } = useEditPost();
 
   function handleEdit() {
-    console.log("게시글 편집 시작");
+    console.log("게시글 편집 요청");
     return editPost(
       {
         boardId: postId,

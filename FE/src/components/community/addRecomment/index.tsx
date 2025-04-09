@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
-import { useAddRecomment } from "../../../api/quries/useRecomment";
+import { useAddComment } from "../../../api/quries/useComment";
 
 export function AddRecomment({
-  postId,
+  boardId,
   commentId,
 }: {
-  postId: number;
+  boardId: number;
   commentId: number;
 }) {
   const [content, setContent] = useState("");
-  const { mutate: addRecomment } = useAddRecomment();
+  const { mutate: addRecomment } = useAddComment();
 
   return (
     <View className="border border-stone-200 rounded-lg ml-7">
@@ -26,7 +26,7 @@ export function AddRecomment({
       <TouchableOpacity
         onPress={() =>
           addRecomment(
-            { postId, commentId, content },
+            { boardId, parentId: commentId, content },
             {
               onSuccess: () => setContent(""),
             }
