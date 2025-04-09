@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -25,7 +26,7 @@ public class Weather {
     @Column(name = "weather_date")
     private LocalDate weatherDate;
     @Column(name = "weather_time")
-    private LocalDateTime weatherTime;
+    private LocalTime weatherTime;
     private int pop;
     private int pty;
     private String pcp;

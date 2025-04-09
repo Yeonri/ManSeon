@@ -16,9 +16,6 @@ public class AllPointResDto {
     String pointName;
     float latitude;
     float longitude;
-    boolean isBookmarked;
-    boolean isMyPoint;
-    boolean isRecommeded;
     String water_depth;
     String seabed_type;
     String sunrise;
@@ -27,5 +24,5 @@ public class AllPointResDto {
     double temperature_min;
     List<ForecastResDto> weather_forecast;
     List<TideDayResDto> tide_info;
-    List<CaughtFishResDto> caught_fish_summary;
+    List<WaveResDto> wave_info;
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -23,11 +24,11 @@ public class SunMoonTimes {
     @Column(name = "locdate")
     private LocalDate locDate;
     @Column(name = "sunrise")
-    private LocalDateTime sunrise;
+    private LocalTime sunrise;
     @Column(name = "sunset")
-    private LocalDateTime sunset;
+    private LocalTime sunset;
     @Column(name = "moonrise")
-    private LocalDateTime moonrise;
+    private LocalTime moonrise;
     @Column(name = "moonset")
-    private LocalDateTime moonset;
+    private LocalTime moonset;
 }
