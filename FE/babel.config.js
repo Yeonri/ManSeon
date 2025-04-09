@@ -6,7 +6,7 @@ module.exports = {
       {
         moduleName: "@env",
         path: ".env",
-        allowlist: ["CHATBOT_API"],
+        allowlist: ["CHATBOT_API", "API_BASE"],
       },
     ],
     "react-native-reanimated/plugin",
