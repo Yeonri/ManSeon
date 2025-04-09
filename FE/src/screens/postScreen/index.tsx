@@ -154,10 +154,10 @@ export function PostScreen({ route }: PostScreenProps) {
         </View>
         {/* 댓글 추가 */}
         <View className="my-4">
-          <AddComment boardId={postDetail.boardId} />
+          <AddComment boardId={postId} />
         </View>
         {/* 댓글 목록 */}
-        <CommentList boardId={postDetail.boardId} />
+        <CommentList boardId={postId} />
       </ScrollView>
     </SafeAreaView>
   );

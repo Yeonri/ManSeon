@@ -14,10 +14,11 @@ export async function getComments(boardId: number) {
 // 댓글 작성
 export async function addComment(
   boardId: number,
-  parentId: number | null,
-  content: string
+  content: string,
+  parentId: number | null
 ) {
   try {
+    // console.log("댓글 작성:", { boardId, content, parentId });
     const response = await authClient.post(`/boards/${boardId}/comments`, {
       content,
       parentId,

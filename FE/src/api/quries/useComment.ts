@@ -29,7 +29,7 @@ export function useAddComment() {
       boardId: number;
       content: string;
       parentId: number | null;
-    }) => addComment(boardId, parentId, content),
+    }) => addComment(boardId, content, parentId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["comments"] }),
   });
 }

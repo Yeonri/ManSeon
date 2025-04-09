@@ -18,9 +18,7 @@ export function AddComment({ boardId }: { boardId: number }) {
         />
       </View>
       <TouchableOpacity
-        onPress={() =>
-          addComment({ boardId, parentId: null, content: comment })
-        }
+        onPress={() => addComment({ boardId, parentId: 0, content: comment })}
         className="mx-3 mb-3 px-5 py-1 bg-blue-500 rounded-xl self-end"
       >
         <Text className="text-white font-semibold text-sm">저장</Text>
