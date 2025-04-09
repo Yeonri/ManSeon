@@ -49,22 +49,24 @@ export async function editPost(
   boardId: number,
   title: string,
   content: string,
-  postImage: string
+  postImg: string
 ) {
   try {
-    const response = await authClient.put(`/boards/${boardId}`, {
+    const response = await authClient.patch(`/boards/${boardId}`, {
       title,
       content,
-      postImage,
+      postImg,
     });
     return response.data;
   } catch (e: unknown) {
     handleError(e);
   }
 }
+
 // 게시글 삭제
 export async function deletePost(boardId: number) {
   try {
+    console.log("삭제 시도:", boardId);
     const response = await authClient.delete(`/boards/${boardId}`);
     return response.data;
   } catch (e: unknown) {
