@@ -23,7 +23,7 @@ export function NicknameScreen() {
   const { mutate: signup } = useSignup();
   const { refetch: checkNickname } = useGetCheckNickname(nickname);
 
-  console.log("잘 받아옴??", name, email, phone, password);
+  console.log("입력 정보:", name, email, phone, password);
 
   function handleNickname(text: string) {
     setTouchedNickname(true);
@@ -35,9 +35,13 @@ export function NicknameScreen() {
 
   async function handleNext() {
     try {
-      const { data } = await checkNickname();
-      // console.log("닉네임 중복 여부 확인(true가 가입 가능)", data);
-      if (data?.ableToUse === true) {
+      const response = await checkNickname();
+      console.log("응답 전체:", response);
+      console.log(
+        "닉네임 중복 여부 확인(true가 가입 가능)",
+        response.isSuccess
+      );
+      if (response.isSuccess === true) {
         signup(
           { email, password, name, phoneNum: phone, nickname },
           {

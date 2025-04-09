@@ -37,9 +37,14 @@ export function SignupPhoneNumScreen() {
 
   async function handleNext() {
     try {
-      const { data } = await checkPhoneNum();
-      // console.log("핸드폰 번호 중복 여부 확인(true가 가입 가능): ", data);S
-      if (data?.ableToUse === true) {
+      console.log("핸드폰 중복 확인 시작");
+      const response = await checkPhoneNum(phoneNum);
+      console.log("응답 전체: ", response);
+      console.log(
+        "핸드폰 번호 중복 여부 확인(true가 가입 가능): ",
+        response.isSuccess
+      );
+      if (response.isSuccess === true) {
         navigation.navigate("Email", { name: name, phone: phoneNum });
       } else {
         Alert.alert("핸드폰 번호 중복", "이미 사용 중인 핸드폰 번호입니다.");

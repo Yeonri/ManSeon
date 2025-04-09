@@ -30,7 +30,7 @@ export async function checkEmail(email: string) {
 // 핸드폰 중복 여부 확인 (true여야 가입 가능)
 export async function checkPhoneNum(phoneNum: string) {
   const response = await client.get(
-    `/users/verify/phone_num?phone_num=${phoneNum}`
+    `/users/duplicate/phoneNum?phoneNum=${phoneNum}`
   );
   return response.data;
 }

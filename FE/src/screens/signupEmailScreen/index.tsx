@@ -34,9 +34,14 @@ export function SignupEmailScreen() {
 
   async function handleNext() {
     try {
-      const { data } = await checkEmail();
-      // console.log("이메일 중복 여부 확인(true가 가입 가능): ", data);
-      if (data?.ableToUse === true) {
+      console.log("이메일 중복 확인 시작");
+      const response = await checkEmail(email);
+      console.log("응답 전체: ", response);
+      console.log(
+        "이메일 중복 여부 확인(true가 가입 가능): ",
+        response.isSuccess
+      );
+      if (response.isSuccess === true) {
         navigation.navigate("Password", {
           name: name,
           phone: phone,
