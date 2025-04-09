@@ -9,15 +9,6 @@ export async function signup(data: Signup): Promise<MessageResponse> {
   return response.data;
 }
 
-// 닉네임 설정
-export async function uploadNickname(email: string, nickname: string) {
-  const response = await client.post("/users/nickname/set", {
-    email,
-    nickname,
-  });
-  return response.data;
-}
-
 // 로그인
 export async function login(email: string, password: string): Promise<Auth> {
   const formData = new FormData();
@@ -32,7 +23,7 @@ export async function login(email: string, password: string): Promise<Auth> {
 
 // 이메일 중복 여부 확인 (true여야 가입 가능)
 export async function checkEmail(email: string) {
-  const response = await client.get(`/users/verify/email?email=${email}`);
+  const response = await client.get(`/users/duplicate/email?email=${email}`);
   return response.data;
 }
 
@@ -47,7 +38,7 @@ export async function checkPhoneNum(phoneNum: string) {
 // 닉네임 중복 여부 확인 (true여야 가입 가능)
 export async function checkNickname(nickname: string) {
   const response = await client.get(
-    `/users/nickname/duplicate?nickname=${nickname}`
+    `/users/duplicate/nickname?nickname=${nickname}`
   );
   return response.data;
 }

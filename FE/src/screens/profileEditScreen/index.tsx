@@ -3,7 +3,7 @@ import { PencilLine } from "lucide-react-native";
 import { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { updateUserInfo } from "../../api/quries/useUserupdate";
+import { updateUserInfo } from "../../api/quries/useUserUpdate";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { useUserStore } from "../../store/userStore";
