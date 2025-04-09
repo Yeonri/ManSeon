@@ -14,9 +14,9 @@ export function UserInitializer({ children }: Props) {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const user = await getMyInfo();
-        console.log("유저 정보 불러오기 성공:", user);
-        setUser(user);
+        const response = await getMyInfo();
+        console.log("유저 정보 불러오기 성공:", response);
+        setUser(response);
       } catch (error) {
         console.log("유저 정보 불러오기 실패:", error);
       } finally {

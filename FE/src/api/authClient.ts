@@ -36,7 +36,7 @@ async function refreshToken(): Promise<AxiosResponse> {
 }
 
 authClient.interceptors.request.use(async (config) => {
-  const token = await AsyncStorage.getItem("access_token");
+  const token = await AsyncStorage.getItem("accessToken");
   if (token) {
     if (config.headers && typeof config.headers === "object") {
       (config.headers as Record<string, string>).authorization = token;
@@ -49,7 +49,7 @@ authClient.interceptors.response.use(
   (response) => {
     const newToken = response.headers.authorization;
     if (newToken) {
-      AsyncStorage.setItem("access_token", newToken);
+      AsyncStorage.setItem("accessToken", newToken);
     }
     return response;
   },
@@ -79,12 +79,12 @@ authClient.interceptors.response.use(
       try {
         const res = await refreshToken();
         const newToken: string = res.headers.authorization;
-        await AsyncStorage.setItem("access_token", newToken);
+        await AsyncStorage.setItem("accessToken", newToken);
         authClient.defaults.headers.common.authorization = newToken;
         onRefreshed(newToken);
         return authClient(originalRequest);
       } catch (err) {
-        await AsyncStorage.removeItem("access_token");
+        await AsyncStorage.removeItem("accessToken");
         Alert.alert("세션 만료", "다시 로그인해주세요.");
         return Promise.reject(err);
       } finally {
