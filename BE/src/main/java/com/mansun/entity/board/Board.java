@@ -16,32 +16,19 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
+@Table(indexes = @Index(name = "isDelete", columnList = "deleted"))
 @Schema(title = "전체 게시판", description = "전체 게시판의 정보를 담은 Entity")
 public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(description = "게시물 아이디", requiredMode = Schema.RequiredMode.REQUIRED)
     private Long boardId;
-
-    //게시글 생성을 위한 생성자
-    public Board(CustomUserDetails customUserDetails, CreateBoardReqDto req) {
-        Users user=new Users(customUserDetails);
-        this.setUser(user);
-        this.setTitle(req.getTitle());
-        this.setContent(req.getContent());
-        this.setCreatedAt(LocalDateTime.now());
-        this.setDeleted(false);
-    }
-
     //연관 관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Users user;
-
     @OneToMany(mappedBy = "board")
     private List<Comment> comment;
-
     //Column
     @Schema(description = "게시물 제목")
     @Column(nullable = false)
@@ -59,5 +46,14 @@ public class Board {
     @Schema(description = "각 게시물의 댓글 수")
     private int commentNum;
     @Builder.Default
-    private boolean deleted=false;
+    private boolean deleted = false;
+    //게시글 생성을 위한 생성자
+    public Board(CustomUserDetails customUserDetails, CreateBoardReqDto req) {
+        Users user = new Users(customUserDetails);
+        this.setUser(user);
+        this.setTitle(req.getTitle());
+        this.setContent(req.getContent());
+        this.setCreatedAt(LocalDateTime.now());
+        this.setDeleted(false);
+    }
 }

@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 public class SeaTemperature {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pk;
 
     @ManyToOne(fetch = FetchType.LAZY)

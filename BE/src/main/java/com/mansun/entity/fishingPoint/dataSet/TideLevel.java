@@ -12,7 +12,7 @@ public class TideLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "obs_code")
     private Long pk;
-//    연관관계
+    //    연관관계
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "obs_code")
     private Observatory obsCode;

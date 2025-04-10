@@ -1,15 +1,13 @@
 package com.mansun.entity.fishingPoint.dataSet;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class Wave{
+public class Wave {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wave_id")
