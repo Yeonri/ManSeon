@@ -1,13 +1,40 @@
+import { handleError } from "../../utils/handleError";
 import authClient from "../authClient";
 
 export async function updateUserInfo(data: {
-  name?: string;
-  phoneNum?: string;
   nickname?: string;
-  profileImg?: string;
+  phoneNum?: string;
+  password?: string;
+  profileImg?: {
+    uri: string;
+    name: string;
+    type: string;
+  } | null;
 }) {
-  console.log("보내는 데이터: ", data);
-  const response = await authClient.patch("/users", data);
-  console.log("응답 데이터: ", response.data);
-  return response.data;
+  try {
+    const formData = new FormData();
+
+    const dto = {
+      nickname: data.nickname,
+      phoneNum: data.phoneNum,
+      password: data.password ?? "",
+    };
+
+    formData.append("dto", JSON.stringify(dto));
+
+    if (data.profileImg) {
+      const fileName = data.profileImg.name.split("/").pop()!;
+      const fileType = fileName.split(".").pop();
+      formData.append("profileImg", {
+        uri: data.profileImg,
+        name: fileName,
+        type: `image/${fileType}`,
+      } as any);
+    }
+
+    const response = await authClient.patch("/users", formData);
+    return response.data;
+  } catch (e: unknown) {
+    handleError(e);
+  }
 }

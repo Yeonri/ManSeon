@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { PencilLine } from "lucide-react-native";
 import { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { launchImageLibrary } from "react-native-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateUserInfo } from "../../api/quries/useUserUpdate";
 import { HalfButton } from "../../components/common/halfButton";
@@ -23,13 +24,44 @@ export function ProfileEditScreen() {
   const [phone, setPhone] = useState(user?.phoneNum);
   // const [password, setPassword] = useState("");
 
+  const [profileImage, setProfileImage] = useState<{
+    uri: string;
+    name: string;
+    type: string;
+  } | null>(null);
+
+  const handleSelectImage = () => {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+      },
+      (response) => {
+        if (
+          response.didCancel ||
+          !response.assets ||
+          response.assets.length === 0
+        )
+          return;
+
+        const asset = response.assets[0];
+        if (asset.uri && asset.fileName && asset.type) {
+          setProfileImage({
+            uri: asset.uri,
+            name: asset.fileName,
+            type: asset.type,
+          });
+        }
+      }
+    );
+  };
+
   const handleSave = async () => {
     try {
       await updateUserInfo({
-        name: name,
         phoneNum: phone,
         nickname: nickname,
-        // password: password.length > 0 ? password : undefined,
+        password: "",
+        profileImg: profileImage,
       });
       navigation.goBack();
     } catch (error) {
@@ -44,19 +76,25 @@ export function ProfileEditScreen() {
       </SafeAreaView>
     );
   }
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1">
       <HeaderBeforeLogo />
       <View className="bg-blue-50 flex-1 mx-5 my-5 rounded-2xl items-center">
-        <Image
-          source={
-            user.profileImg
-              ? { uri: user.profileImg }
-              : require("../../assets/images/mansun.png")
-          }
-          className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
-          resizeMode="contain"
-        />
+        <TouchableOpacity onPress={handleSelectImage}>
+          <Image
+            source={
+              profileImage
+                ? { uri: profileImage.uri }
+                : user.profileImg
+                  ? { uri: user.profileImg }
+                  : require("../../assets/images/mansun.png")
+            }
+            className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
+            resizeMode="cover"
+          />
+        </TouchableOpacity>
+
         <View className="flex-row items-center">
           {editingNickname ? (
             <TextInput

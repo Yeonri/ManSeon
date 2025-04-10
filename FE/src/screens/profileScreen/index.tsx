@@ -28,7 +28,7 @@ export function ProfileScreen() {
       <HeaderBeforeLogo />
       <ScrollView className="mb-5">
         <View className="items-center mt-6 mb-6">
-          {user.profile_img === null ? (
+          {user.profileImg === null ? (
             <Image
               source={require("../../assets/images/mansun.png")}
               className="w-24 h-24 rounded-full mr-4 bg-white"
@@ -37,7 +37,7 @@ export function ProfileScreen() {
           ) : (
             <Image
               source={{
-                uri: user.profile_img,
+                uri: user.profileImg,
               }}
               className="w-24 h-24 rounded-full mr-4 bg-white"
               resizeMode="center"
@@ -67,7 +67,7 @@ export function ProfileScreen() {
                 팔로잉
               </Text>
               <Text className="text-lg font-bold text-blue-600">
-                {user.following_cnt}명
+                {user.followingCount}명
               </Text>
             </View>
             <View className="w-px h-10 bg-neutral-400 self-center" />
@@ -76,7 +76,7 @@ export function ProfileScreen() {
                 팔로워
               </Text>
               <Text className="text-lg font-bold text-blue-600">
-                {user.follower_cnt}명
+                {user.followerCount}명
               </Text>
             </View>
           </View>
