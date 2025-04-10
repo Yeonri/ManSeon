@@ -13,7 +13,6 @@ export type MoreStackParams = {
     description: string;
     image: ImageSourcePropType;
     collection_info: {
-      location_name: string;
       latitude: number;
       longitude: number;
       caught_at: string;

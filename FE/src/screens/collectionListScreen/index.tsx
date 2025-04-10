@@ -77,7 +77,7 @@ export function CollectionListScreen() {
   }
 
   return (
-    <SafeAreaView edges={["top"]} className="flex-1">
+    <SafeAreaView className="flex-1">
       <HeaderBeforeTitle name="낚시 도감" />
 
       <View className="px-5 mt-4 mb-5 items-end">

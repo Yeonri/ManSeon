@@ -4,13 +4,12 @@ import { PieChart as RawPieChart } from "react-native-chart-kit";
 const PieChart = RawPieChart as any;
 
 interface FishItem {
-  id: number;
   name: string;
-  cnt: number;
+  count: number;
 }
 
 interface FishingDonutChartProps {
-  fishingList: FishItem[];
+  fishingList: FishItem[] | undefined;
   totalCount: number;
 }
 
@@ -20,17 +19,21 @@ export function FishingDonutChart({
   fishingList,
   totalCount,
 }: FishingDonutChartProps) {
-  const sortedList = [...fishingList].sort((a, b) => b.cnt - a.cnt);
+  if (!fishingList || fishingList.length === 0) {
+    return <Text>데이터가 없습니다.</Text>;
+  }
+
+  const sortedList = [...fishingList].sort((a, b) => b.count - a.count);
 
   const top4 = sortedList.slice(0, 5);
 
   const others = sortedList.slice(4);
-  const othersTotal = others.reduce((sum, item) => sum + item.cnt, 0);
+  const othersTotal = others.reduce((sum, item) => sum + item.count, 0);
 
   const data = [
     ...top4.map((fish, index) => ({
       name: fish.name,
-      population: fish.cnt,
+      population: fish.count,
       color: COLORS[index % COLORS.length],
     })),
   ];

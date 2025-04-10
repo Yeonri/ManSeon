@@ -22,7 +22,10 @@ import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 // import { useLocationStore } from "../../store/locationStore";
 import { useMyFishes } from "../../api/quries/useMyFishes";
+import { FishingDonutChart } from "../../components/main/fishingDonutChart";
+import { FishingResult } from "../../components/main/fishingResult";
 import { useUserStore } from "../../store/userStore";
+import { countFishingData } from "../../utils/countFisingData";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -42,8 +45,10 @@ export function MainScreen() {
   const { data: user } = useGetMyInfo();
   console.log("유저정보 확인하기:", user);
 
-  const { data: fish } = useMyFishes();
-  console.log("물고기 받아오기", fish);
+  const { data: fishList } = useMyFishes();
+  console.log("물고기 받아오기", fishList);
+
+  const countingresult = countFishingData(fishList);
 
   const setUser = useUserStore((state) => state.setUser);
   // const setLocation = useLocationStore((state) => state.setLocation);
@@ -167,16 +172,16 @@ export function MainScreen() {
               </View>
             ) : (
               <View className="flex-row">
-                {/* <FishingDonutChart
-                  fishingList={user.fishing_list}
-                  totalCount={user.fishing_total}
+                <FishingDonutChart
+                  fishingList={countingresult.fishing_list}
+                  totalCount={countingresult.fishing_total}
                 />
-    */}
+
                 <View className="justify-center">
-                  {/* <FishingResult
-                    fishingResultList={user.fishing_list}
-                    totalCount={user.fishing_total}
-                  /> */}
+                  <FishingResult
+                    fishingResultList={countingresult.fishing_list}
+                    totalCount={countingresult.fishing_total}
+                  />
                 </View>
               </View>
             )}
