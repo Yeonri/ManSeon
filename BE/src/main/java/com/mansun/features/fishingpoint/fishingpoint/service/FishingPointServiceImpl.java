@@ -115,7 +115,7 @@ public class FishingPointServiceImpl implements FishingPointService {
         Map<Long, LocalTime> sunsetMap = new HashMap<>();
 //        오늘의 일출,일몰 정보를 가져올 repository
         List<SunMoonTimes> sunMoonTimesList =
-                sunMoonTimesRepository.findByLocDateOrderByFishingPointAsc(LocalDate.now()).orElseThrow();
+                sunMoonTimesRepository.findByLocDateOrderByFishingPointAsc(today).orElseThrow();
 
 //        각 포인트별로 SunriseMap과 SunSetMap에 저장
         for (SunMoonTimes sm : sunMoonTimesList) {
@@ -128,7 +128,7 @@ public class FishingPointServiceImpl implements FishingPointService {
         List<Weather> TodayTemperatureList =
                 weatherRepository
                         .findByWeatherDateOrderByFishingPoint(
-                                LocalDate.now()
+                                today
                         ).orElseThrow();
         Map<Long, TemperatureResDto> dayTemperature = new HashMap<>();
         for (Weather w : TodayTemperatureList) {
@@ -153,8 +153,8 @@ public class FishingPointServiceImpl implements FishingPointService {
 
             // (7) 최종 DTO
             return AllPointResDto.builder()
-                    .pointId(pointId)
-                    .pointName(fp.getPointName())
+                    .point_id(pointId)
+                    .point_name(fp.getPointName())
                     .latitude(fp.getLat())
                     .longitude(fp.getLng())
                     .water_depth(fp.getDepthRange())
@@ -192,11 +192,11 @@ public class FishingPointServiceImpl implements FishingPointService {
                 .distinct()
                 .toList();
 
-        // 2) 3일 범위
-        LocalDateTime startDateTime = LocalDate.of(2025, 3, 25).atStartOfDay();
-        LocalDateTime endDateTime = LocalDate.of(2025, 3, 25).atTime(LocalTime.MAX);
+        // 2) 조위와 파고 조회를 위한 1일 범위
+        LocalDateTime startDateTime = LocalDate.now().atStartOfDay();
+        LocalDateTime endDateTime = LocalDate.now().atTime(LocalTime.MAX);
 
-        // 3) TideLevel 3일치 조회 -> Map(obsCode -> List<TideLevel>)
+        // 3) TideLevel 1일치 조회 -> Map(obsCode -> List<TideLevel>)
         List<TideLevel> tideLevels = tideLevelRepository.findByObsCode_ObsCodeInAndTphTimeBetween(
                 obsCodes, startDateTime, endDateTime
         );
@@ -204,7 +204,7 @@ public class FishingPointServiceImpl implements FishingPointService {
         Map<String, List<TideLevel>> tideLevelMap = tideLevels.stream()
                 .collect(Collectors.groupingBy(t -> t.getObsCode().getObsCode()));
 
-        // 4) Wave 3일치 조회 -> Map("lzone문자열" -> List<Wave>)
+        // 4) Wave 1일치 조회 -> Map("lzone문자열" -> List<Wave>)
         List<Wave> waveList = waveHeightRepository.findByMarineZone_LzoneInAndDateTimeBetween(
                 lzones, startDateTime, endDateTime
         );
@@ -222,7 +222,7 @@ public class FishingPointServiceImpl implements FishingPointService {
         QWeather qWeather = QWeather.weather;
         QFishingPoint qFishingPoint = QFishingPoint.fishingPoint;
 
-        LocalDate startDate = LocalDate.of(2025, 3, 25);
+        LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(3);
 
         // pointId 리스트
@@ -257,7 +257,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                         .build())
                 .toList();
 
-        // (5) 3일치 TideLevel -> 날짜별 최고/최저 조
+        // (5) 1일치 TideLevel -> 날짜별 최고/최저 조
         List<TideLevel> tideForFp = (obsCode == null)
                 ? Collections.emptyList()
                 : tideLevelMap.getOrDefault(obsCode, Collections.emptyList());
@@ -301,7 +301,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
-        // (6) Wave 3일치
+        // (6) Wave 1일치
         List<Wave> waveForFp = (lzoneStr == null)
                 ? Collections.emptyList()
                 : waveMap.getOrDefault(lzoneStr, Collections.emptyList());
@@ -322,7 +322,7 @@ public class FishingPointServiceImpl implements FishingPointService {
                 .point_name(fp.getPointName())
                 // 3일치 Weather
                 .weather_forecast(forecastResDtoList)
-                // 조위: 3일치 날짜별 High/Low
+                // 조위: 1일치 날짜별 High/Low
                 .tide_info(tideDayResList)
                 // 파고 리스트
                 .wave_info(waveResDtoList)

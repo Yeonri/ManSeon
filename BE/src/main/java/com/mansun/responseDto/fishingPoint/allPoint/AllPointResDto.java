@@ -11,9 +11,9 @@ import java.util.List;
 @Builder
 @Getter
 public class AllPointResDto {
-    Long pointId;
+    Long point_id;
     //    Column
-    String pointName;
+    String point_name;
     float latitude;
     float longitude;
     String water_depth;
