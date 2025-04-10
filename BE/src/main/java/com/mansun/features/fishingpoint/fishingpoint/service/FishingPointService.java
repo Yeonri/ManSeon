@@ -6,11 +6,14 @@ import com.mansun.responseDto.fishingPoint.allPoint.AllPointResDto;
 import com.mansun.responseDto.fishingPoint.OnePointDetailInfoResDto;
 import com.mansun.responseDto.fishingPoint.OnePointResDto;
 import com.mansun.responseDto.fishingPoint.SearchPointResDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public interface FishingPointService {
     void createAllPoint(CreateFishingPointReqDto req);
     List<AllPointResDto> findAllPointList(CustomUserDetails customUserDetails);

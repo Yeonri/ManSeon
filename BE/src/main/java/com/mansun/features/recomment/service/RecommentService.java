@@ -6,8 +6,13 @@ import com.mansun.requestDto.recomment.CreateRecommentReqDto;
 import com.mansun.requestDto.recomment.DeleteRecommentReqDto;
 import com.mansun.requestDto.recomment.UpdateRecommentReqDto;
 import com.mansun.responseDto.recomment.UpdateRecommentResDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
+@Transactional
 public interface RecommentService  {
     void createRecomment(CustomUserDetails customUserDetails, CreateRecommentReqDto req);
 

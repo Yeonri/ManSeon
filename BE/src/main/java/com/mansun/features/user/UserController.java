@@ -8,9 +8,11 @@ import com.mansun.requestDto.user.UpdateUserReqDto;
 import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
-import com.mansun.responseDto.user.AbleToUseResDto;
-import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
-import com.mansun.responseDto.user.getmyinfo.GetMyInfoResDto;
+
+import com.mansun.responseDto.inquiry.AbleToUseResDto;
+import com.mansun.requestDto.inquiry.user.GetTheOtherOneInfoResDto;
+import com.mansun.requestDto.inquiry.user.getmyinfo.GetMyInfoResDto;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -49,7 +51,8 @@ public class UserController {
 
     @Operation(summary = "닉네임 설정")
     @PostMapping("/nickname/set")
-    public ResponseEntity<MessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {
+    public ResponseEntity<MessageResDto> setNickname(
+            @Valid @RequestBody SetNicknameReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
         //만약 오류가 난다면 service 안에서 예외처리 반환 예정
         userService.setNickname(req);

@@ -55,5 +55,6 @@ public class FollowController {
     ) {
         followingService.deleteFollow(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("팔로우를 취소했습니다."));
+
     }
 }

@@ -11,17 +11,18 @@ import com.mansun.entity.follow.QFollowing;
 import com.mansun.features.badge.repository.UserBadgeRepository;
 import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.features.fish.repository.FishRepository;
-import com.mansun.features.follow.repository.FollowerRepositoy;
-import com.mansun.features.follow.repository.FollowingRepository;
 import com.mansun.features.user.repository.UserRepository;
+import com.mansun.responseDto.inquiry.AbleToUseResDto;
+import com.mansun.requestDto.inquiry.user.GetTheOtherOneInfoResDto;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
 import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
-import com.mansun.responseDto.user.*;
-import com.mansun.responseDto.user.getmyinfo.GetMyInfoResDto;
-import com.mansun.responseDto.user.getmyinfo.PostResDto;
+
+import com.mansun.requestDto.inquiry.user.getmyinfo.GetMyInfoResDto;
+import com.mansun.requestDto.inquiry.user.getmyinfo.PostResDto;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +50,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private final UserBadgeRepository userBadgeRepository;
-    private final FollowerRepositoy followerRepositoy;
-    private final FollowingRepository followingRepository;
     private final FishRepository fishRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;

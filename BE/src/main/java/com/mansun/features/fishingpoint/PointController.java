@@ -10,6 +10,7 @@ import com.mansun.responseDto.fishingPoint.*;
 import com.mansun.responseDto.fishingPoint.allPoint.AllPointResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,7 +31,7 @@ public class PointController {
     @PostMapping("/list/all")
     public ResponseEntity<MessageResDto> createAllPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody CreateFishingPointReqDto req) {
+            @Valid @RequestBody CreateFishingPointReqDto req) {
         fishingPointService.createAllPoint(req);
         return ResponseEntity.ok(new MessageResDto("전체 낚시 포인트에 추가되었습니다"));
     }
@@ -62,7 +63,7 @@ public class PointController {
     @PostMapping("/list/my")
     public ResponseEntity<MessageResDto> createUserPoint(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody CreateUserPointReqDto req) {
+            @Valid @RequestBody CreateUserPointReqDto req) {
         userPointService.createUserPoint(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("내 포인트가 추가되었습니다."));
     }
