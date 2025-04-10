@@ -3,7 +3,7 @@ import { User } from "../../../api/types/User";
 
 type ProfileCardUser = Pick<
   User,
-  "name" | "profile_img" | "following_cnt" | "follower_cnt" | "nickname"
+  "username" | "profileImg" | "followerCount" | "followingCount" | "nickname"
 >;
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 export function ProfileCard({ user }: Props) {
   return (
     <View className="bg-blue-800 rounded-2xl px-5 py-6 mb-3 mx-4 flex-row items-center">
-      {user.profile_img === null ? (
+      {user.profileImg === null ? (
         <Image
           source={require("../../../assets/images/mansun.png")}
           className="w-24 h-24 rounded-full mr-4 bg-white"
@@ -22,7 +22,7 @@ export function ProfileCard({ user }: Props) {
       ) : (
         <Image
           source={{
-            uri: user.profile_img,
+            uri: user.profileImg,
           }}
           className="w-24 h-24 rounded-full mr-4 bg-white"
           resizeMode="center"
@@ -32,11 +32,11 @@ export function ProfileCard({ user }: Props) {
       <View>
         <View className="flex-row items-center gap-1">
           <Text className="text-white text-xl font-bold">
-            {user.nickname ? user.nickname : user.name}
+            {user.nickname ? user.nickname : user.username}
           </Text>
         </View>
         <Text className="text-white text-base mt-1">
-          팔로잉 {user.following_cnt}명 / 팔로워 {user.follower_cnt}명
+          팔로잉 {user.followingCount}명 / 팔로워 {user.followerCount}명
         </Text>
       </View>
     </View>

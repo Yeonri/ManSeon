@@ -5,11 +5,10 @@ interface BadgeListProps {
   badgeIds: number[];
   user: {
     fishing_total: number;
-    posts: any[];
-    following_cnt: number;
-    follower_cnt: number;
-    profile_img: string;
-    collection_cnt: number;
+    followingCount: number;
+    followerCount: number;
+    profileImg: string;
+    fishCollections: { [key: number]: number[] };
   };
 }
 

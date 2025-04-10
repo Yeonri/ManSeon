@@ -16,19 +16,18 @@ export function ProfileEditScreen() {
   // const [isSecure2, setIsSecure2] = useState(true);
 
   const [editingNickname, setEditingNickname] = useState(false);
-  const [nickname, setNickname] = useState(user?.nickname || user?.name);
+  const [nickname, setNickname] = useState(user?.nickname);
 
   const [email, setEmail] = useState(user?.email);
-  const [name, setName] = useState(user?.name);
-  const [phone, setPhone] = useState(user?.phone_number);
+  const [name, setName] = useState(user?.username);
+  const [phone, setPhone] = useState(user?.phoneNum);
   // const [password, setPassword] = useState("");
 
   const handleSave = async () => {
     try {
       await updateUserInfo({
-        email: email,
         name: name,
-        phone_number: phone,
+        phoneNum: phone,
         nickname: nickname,
         // password: password.length > 0 ? password : undefined,
       });
@@ -51,8 +50,8 @@ export function ProfileEditScreen() {
       <View className="bg-blue-50 flex-1 mx-5 my-5 rounded-2xl items-center">
         <Image
           source={
-            user.profile_img
-              ? { uri: user.profile_img }
+            user.profileImg
+              ? { uri: user.profileImg }
               : require("../../assets/images/mansun.png")
           }
           className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
@@ -132,7 +131,7 @@ export function ProfileEditScreen() {
             </View>
           </View> */}
         </View>
-        <View className="flex-row justify-between w-full px-10 mt-20">
+        <View className="flex-row justify-between w-full mt-12 px-5">
           <HalfButton
             title="취소"
             type="line"

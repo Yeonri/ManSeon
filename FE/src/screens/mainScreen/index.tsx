@@ -83,7 +83,11 @@ export function MainScreen() {
     setShowModal(true);
   };
 
-  const progress = (user.data.fishCollections.length / 24) * 100;
+  const collectionCount = Object.values(
+    user.fishCollections as Record<string, any[]>
+  ).filter((arr) => arr.length > 0).length;
+
+  const progress = (collectionCount / 24) * 100;
 
   const posts = PostData;
 
@@ -94,18 +98,16 @@ export function MainScreen() {
         {/* 물때 관련 */}
         <View className="flex-row justify-between items-center mr-10">
           <View>
-            <View className="flex-row gap-3 items-end mt-5">
-              <Text>오늘의 물때</Text>
-              <Image source={moon!.img} className="h-5 w-5" />
-            </View>
-            <View className="flex-row items-center mt-2 gap-2">
+            <View className="flex-row items-baseline mt-2 gap-2">
               <Text className="font-bold text-2xl">
-                {month}.{day}
+                {month}월 {day}일
               </Text>
               {/*음력 날짜는 수정 예정*/}
-              <Text>
+              {/* <Text>
                 (음력 {month}.{day})
-              </Text>
+              </Text> */}
+              <Text>오늘의 물때</Text>
+              <Image source={moon!.img} className="h-8 w-8" />
             </View>
           </View>
         </View>
@@ -116,7 +118,7 @@ export function MainScreen() {
           <View className="flex-row justify-between items-center">
             <View className="flex-row items-baseline gap-1 ml-1">
               <Text className="text-white font-bold ml-3 mt-3 text-xl">
-                {user.data.nickname ? user.data.nickname : user.data.username}
+                {user.nickname ? user.nickname : user.username}
               </Text>
               <Text className="text-white">
                 님 오늘의 도착지를 확인해 보세요!
@@ -191,7 +193,7 @@ export function MainScreen() {
 
             <View className="flex-row justify-end mx-5 items-baseline">
               <Text className="text-blue-500 font-bold text-4xl">
-                {user.data.fishCollections.length - 1}
+                {collectionCount}
               </Text>
               <Text className="text-neutral-400 font-bold text-xl"> / 24</Text>
             </View>
