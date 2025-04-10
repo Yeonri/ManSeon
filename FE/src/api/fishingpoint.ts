@@ -5,3 +5,18 @@ export const getFishingPoints = async () => {
   console.log(response.data);
   return response.data;
 };
+
+export const getFishingPointDetail = async (pointId: number) => {
+  const response = await authClient.get(
+    `/fishing_point/list/detail?point_id=${pointId}`
+  );
+  console.log(response.data);
+  return response.data;
+};
+
+export const searchFishingPoints = async (keyword: string) => {
+  const response = await authClient.get(
+    `/api/fishing_point/search?point_name=${keyword}`
+  );
+  return response.data;
+};

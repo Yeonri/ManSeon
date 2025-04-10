@@ -1,4 +1,4 @@
-import { Bookmark, X } from "lucide-react-native";
+import { X } from "lucide-react-native";
 import { forwardRef, Ref } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Modalize } from "react-native-modalize";
@@ -33,9 +33,8 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
           {/* 포인트명 및 북마크 */}
           <View className="flex-row justify-between mb-2">
             <View className="flex-row gap-2 items-center">
-              <Bookmark />
               <Text className="text-xl font-bold text-neutral-800">
-                {point.pointName}
+                {point.point_name}
               </Text>
             </View>
             <TouchableOpacity
@@ -49,7 +48,7 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
           </View>
 
           {/* 수심 및 저질 */}
-          <View className="flex-row gap-3 ml-9">
+          <View className="flex-row gap-3">
             <Text className="mb-3">수심: {point.water_depth}m</Text>
             <Text>저질: {point.seabed_type}</Text>
           </View>
@@ -120,26 +119,6 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
             </Text>
             <TideChart data={point.tide_info} />
           </View>
-
-          {/* 해당 포인트에서 내가 잡은 물고기 정보 */}
-          {/* <View className="mt-3">
-            <Text className="text-neutral-800 font-semibold text-xl mb-3">
-              이 근처에서 잡힌 물고기
-            </Text>
-            <View className="bg-blue-50 p-3">
-              <FishingFishList data={point.my_caught_fish} />
-            </View>
-          </View> */}
-
-          {/* 해당 포인트 전체에서 잡은 물고기 정보 */}
-          {/* <View className="mt-3">
-            <Text className="text-neutral-800 font-semibold text-xl mb-3">
-              이 포인트에서 내가 잡은 물고기
-            </Text>
-            <View className="bg-blue-50 p-3">
-              <FishingFishList data={point.caught_fish_summary} />
-            </View>
-          </View> */}
         </ScrollView>
       </Modalize>
     );

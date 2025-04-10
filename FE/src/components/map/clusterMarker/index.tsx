@@ -49,7 +49,7 @@ export function ClusterMarkers({
         const point = item.properties.point;
         return (
           <Marker
-            key={`marker-${point.pointId}`}
+            key={`marker-${point.point_id}`}
             coordinate={{
               latitude: point.latitude,
               longitude: point.longitude,

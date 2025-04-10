@@ -1,16 +1,20 @@
+// src/components/common/searchResult.tsx
 import { MapPin } from "lucide-react-native";
 import { FlatList, Text, View } from "react-native";
-import searchResultMocks from "../../../mocks/searchResultMocks.json";
 
-interface searchResultItem {
-  id: number;
-  name: string;
-  latitude: number;
-  longitude: number;
+interface SearchResultItem {
+  pointId: number;
+  pointName: string;
+  lat: number;
+  lng: number;
 }
 
-export function SearchResult() {
-  const renderItem = ({ item }: { item: searchResultItem }) => {
+interface SearchResultProps {
+  results: SearchResultItem[];
+}
+
+export function SearchResult({ results }: SearchResultProps) {
+  const renderItem = ({ item }: { item: SearchResultItem }) => {
     return (
       <View className="mb-3">
         <View className="flex-row items-center">
@@ -18,12 +22,12 @@ export function SearchResult() {
             <MapPin />
           </View>
           <Text className="font-semibold text-xl text-neutral-600">
-            {item.name}
+            {item.pointName}
           </Text>
         </View>
 
         <Text>
-          N {item.latitude} / E {item.longitude}
+          N {item.lat} / E {item.lng}
         </Text>
       </View>
     );
@@ -31,9 +35,9 @@ export function SearchResult() {
 
   return (
     <FlatList
-      data={searchResultMocks}
+      data={results}
       renderItem={renderItem}
-      keyExtractor={(item) => String(item.id)}
+      keyExtractor={(item) => String(item.pointId)}
     />
   );
 }
