@@ -21,7 +21,11 @@ interface FishingStats {
 }
 
 export function countFishingData(fishingData: FishCatchRaw[]): FishingStats {
-  if (!fishingData || fishingData.length === 0) return [];
+  if (!fishingData || fishingData.length === 0)
+    return {
+      fishing_total: 0,
+      fishing_list: [],
+    };
 
   // 물고기별로 낚은 횟수 세기
   const fishCount = fishingData.reduce(
