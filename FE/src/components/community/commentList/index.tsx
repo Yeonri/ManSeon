@@ -35,16 +35,25 @@ export function CommentList({ boardId }: { boardId: number }) {
   const { mutate: editComment } = useEditComment();
   const { mutate: deleteComment } = useDeleteComment();
 
+  const [isToggleOpen, setIsToggleOpen] = useState<number | null>(null);
+
+  // 댓글 편집(편집 중인 댓글 id, 편집중인 내용, 편집 상태(T/F))
   function handleEdit(id: number, content: string) {
     setEditCommentId(id);
     setCommentContent(content);
     setEdit(true);
   }
 
+  // 편집 취소
   function cancelEdit() {
     setCommentContent("");
     setEditCommentId(0);
     setEdit(false);
+  }
+
+  // 답글 토글
+  function toggleRecomment() {
+    setIsToggleOpen((prev) => (prev === commentId ? null : commentId));
   }
 
   return (

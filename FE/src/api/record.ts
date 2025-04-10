@@ -12,15 +12,31 @@ export async function addRecord(
   method: 0 | 1 | 2
 ) {
   try {
-    const response = await authClient.post(`물고기 post url`, {
+    const formData = new FormData();
+
+    const data = {
       fishType,
-      fishImg,
       latitude,
       longitude,
       scale,
       bait,
       method,
-    });
+    };
+    formData.append("data", JSON.stringify(data));
+
+    if (fishImg) {
+      const fileName = fishImg.split("/").pop()!;
+      const fileType = fileName.split(".").pop();
+
+      formData.append("image", {
+        uri: fishImg,
+        name: fileName,
+        type: `image/${fileType}`,
+      } as any);
+    }
+
+    const response = await authClient.post(`물고기 post url`, formData);
+
     return response.data;
   } catch (e: unknown) {
     handleError(e);

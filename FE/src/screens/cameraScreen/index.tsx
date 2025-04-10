@@ -19,7 +19,6 @@ import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
-import imageMap from "../../utils/imageMap";
 import {
   classifyFishImage,
   DetectionResult,
