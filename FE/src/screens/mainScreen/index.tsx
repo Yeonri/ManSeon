@@ -98,18 +98,16 @@ export function MainScreen() {
         {/* 물때 관련 */}
         <View className="flex-row justify-between items-center mr-10">
           <View>
-            <View className="flex-row gap-3 items-end mt-5">
-              <Text>오늘의 물때</Text>
-              <Image source={moon!.img} className="h-5 w-5" />
-            </View>
-            <View className="flex-row items-center mt-2 gap-2">
+            <View className="flex-row items-baseline mt-2 gap-2">
               <Text className="font-bold text-2xl">
-                {month}.{day}
+                {month}월 {day}일
               </Text>
               {/*음력 날짜는 수정 예정*/}
-              <Text>
+              {/* <Text>
                 (음력 {month}.{day})
-              </Text>
+              </Text> */}
+              <Text>오늘의 물때</Text>
+              <Image source={moon!.img} className="h-8 w-8" />
             </View>
           </View>
         </View>

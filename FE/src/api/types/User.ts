@@ -4,7 +4,7 @@ export type User = {
   username: string;
   nickname: string;
   phoneNum: string;
-  fishCollections: [];
+  fishCollections: { [key: number]: number[] };
   profileImg: string;
   followingCount: number;
   followerCount: number;
