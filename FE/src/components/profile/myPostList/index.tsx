@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ChevronRight } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
-import { useMyPosts } from "../../../api/quries/useMypost";
+import { useGetMyPost } from "../../../api/quries/usePost";
 import { MoreStackParams } from "../../../api/types/MoreStackParams";
 import { PostCard } from "../postCard";
 
@@ -11,7 +11,7 @@ interface MoreScreenNavigationProps
 
 export function MyPostList() {
   const navigation = useNavigation<MoreScreenNavigationProps>();
-  const { data: posts = [] } = useMyPosts();
+  const { data: posts = [] } = useGetMyPost();
 
   console.log("게시글 확인:", posts);
 
@@ -29,7 +29,7 @@ export function MyPostList() {
 
       <View className="px-4">
         {posts.slice(0, 3).map((post) => (
-          <PostCard key={post.postId} post={post} />
+          <PostCard key={post.boardId} post={post} />
         ))}
       </View>
     </View>

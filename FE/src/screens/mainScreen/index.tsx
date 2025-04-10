@@ -10,6 +10,7 @@ import Geolocation from "react-native-geolocation-service";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useMyFishes } from "../../api/quries/useMyFishes";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
+import { useGetLatestPost } from "../../api/quries/usePost";
 import { MainStackParams } from "../../api/types/MainStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { PermissionCheck } from "../../components/common/permissionCheck";
@@ -21,7 +22,6 @@ import { FishingPointCard } from "../../components/main/fishingPointCard";
 import { FishingResult } from "../../components/main/fishingResult";
 import moonList from "../../data/moonList";
 import { useLocationPermission } from "../../hooks/useLocationPermission";
-import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
@@ -47,6 +47,9 @@ export function MainScreen() {
 
   const { data: fishList } = useMyFishes();
   console.log("물고기 받아오기", fishList);
+
+  const { data: latestPost } = useGetLatestPost();
+  console.log("최신 게시글 받아오기", latestPost);
 
   const countingresult = countFishingData(fishList);
 
@@ -97,8 +100,6 @@ export function MainScreen() {
   ).filter((arr) => arr.length > 0).length;
 
   const progress = (collectionCount / 24) * 100;
-
-  const posts = PostData;
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1">
@@ -250,7 +251,7 @@ export function MainScreen() {
         </View>
 
         {/* 커뮤니티 */}
-        <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-10">
+        {/* <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-10">
           <View className="flex-row justify-between">
             <Text className="text-neutral-600 font-bold text-xl">커뮤니티</Text>
 
@@ -266,16 +267,16 @@ export function MainScreen() {
           </View>
           <ScrollView horizontal className="mt-2">
             <View className="flex-row gap-x-3 px-1">
-              {posts.slice(0, 10).map((post) => (
+              {latestPost.slice(0, 10).map((board) => (
                 <Image
-                  key={post.postId}
-                  source={{ uri: post.postImg }}
+                  key={board.boardId}
+                  source={{ uri: board.postImg }}
                   className="w-24 h-24 rounded-md"
                 />
               ))}
             </View>
           </ScrollView>
-        </View>
+        </View> */}
       </ScrollView>
 
       <SearchModal

@@ -110,7 +110,7 @@ export async function deletePost(boardId: number) {
 }
 
 // 내 게시글 가져오기
-export async function fetchMyPosts() {
+export async function getMyPosts() {
   const res = await authClient.get("/boards/me");
   console.log("내 게시글 목록", res.data);
   return res.data.data;
