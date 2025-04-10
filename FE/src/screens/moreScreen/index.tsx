@@ -27,7 +27,7 @@ export function MoreScreen() {
   }, [user, setUser]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView className="flex-1" edges={["top"]}>
       <HeaderLogo />
       <ScrollView className="gap-y-2 px-3 pt-4">
         <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
@@ -138,14 +138,14 @@ export function MoreScreen() {
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Suggestions")}
-          className="bg-neutral-100 rounded-xl px-4 py-3 mx-3 mt-4 flex-row items-center"
+          className="bg-neutral-100 rounded-xl px-4 py-3 mx-3 mt-4 flex-row items-center mb-10"
         >
           <Image
             source={require("../../assets/images/icon_suggestion.png")}
             className="w-14 h-14 mr-4"
             resizeMode="contain"
           />
-          <View>
+          <View className="mb-10">
             <Text className="font-bold text-base text-black mb-1">
               문의사항
             </Text>
