@@ -22,4 +22,5 @@ export type MoreStackParams = {
   Suggestions: undefined;
   Profile: undefined;
   ProfileEdit: undefined;
+  Friends: undefined;
 };

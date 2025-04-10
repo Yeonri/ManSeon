@@ -62,23 +62,29 @@ export function ProfileScreen() {
               </Text> */}
             </View>
             <View className="w-px h-10 bg-neutral-400 self-center" />
-            <View className="items-center mx-4">
+            <TouchableOpacity
+              className="items-center mx-4"
+              onPress={() => navigation.navigate("Friends")}
+            >
               <Text className="text-lg font-semibold text-neutral-500">
                 팔로잉
               </Text>
               <Text className="text-lg font-bold text-blue-600">
                 {user.followingCount}명
               </Text>
-            </View>
+            </TouchableOpacity>
             <View className="w-px h-10 bg-neutral-400 self-center" />
-            <View className="items-center mx-4">
+            <TouchableOpacity
+              className="items-center mx-4"
+              onPress={() => navigation.navigate("Friends")}
+            >
               <Text className="text-lg font-semibold text-neutral-500">
                 팔로워
               </Text>
               <Text className="text-lg font-bold text-blue-600">
                 {user.followerCount}명
               </Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </View>
 

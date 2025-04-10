@@ -10,4 +10,6 @@ export type CommunityStackParams = {
     content: string;
     postImg: string;
   };
+  Profile: undefined;
+  UserProfile: { userId: number };
 } & ParamListBase;
