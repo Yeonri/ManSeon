@@ -24,7 +24,7 @@ export function NicknameScreen() {
   const { refetch: checkNickname } = useGetCheckNickname(nickname);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  console.log("입력 정보:", name, email, phone, password);
+  // console.log("입력 정보:", name, email, phone, password);
 
   function handleNickname(text: string) {
     setTouchedNickname(true);

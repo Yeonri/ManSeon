@@ -1,13 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import { PencilLine } from "lucide-react-native";
 import { useState } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { launchImageLibrary } from "react-native-image-picker";
+import {
+  Alert,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { updateUserInfo } from "../../api/quries/useUserUpdate";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
+import { safeUpdateUserInfo } from "../../components/more/profileEdit";
 import { useUserStore } from "../../store/userStore";
+import { selectImage } from "../../utils/selectImage";
 
 export function ProfileEditScreen() {
   const navigation = useNavigation();
@@ -22,6 +29,7 @@ export function ProfileEditScreen() {
   const [email, setEmail] = useState(user?.email);
   const [name, setName] = useState(user?.username);
   const [phone, setPhone] = useState(user?.phoneNum);
+  const [profileImg, setProfileImg] = useState(user?.profileImg || "");
   // const [password, setPassword] = useState("");
 
   const [profileImage, setProfileImage] = useState<{
@@ -55,19 +63,41 @@ export function ProfileEditScreen() {
     );
   };
 
-  const handleSave = async () => {
-    try {
-      await updateUserInfo({
-        phoneNum: phone,
-        nickname: nickname,
-        password: "",
-        profileImg: profileImage,
-      });
+  async function handleSave() {
+    const { success, error } = await safeUpdateUserInfo({
+      name,
+      phoneNum: phone,
+      nickname,
+      profileImg,
+    });
+
+    if (success) {
       navigation.goBack();
-    } catch (error) {
+    } else {
       console.error("유저 정보 수정 실패", error);
+      Alert.alert("오류", "유저 정보 수정 중 문제가 발생했습니다.");
     }
-  };
+  }
+
+  // 이미지 삭제
+  function handleImageDelete() {
+    Alert.alert("사진 삭제", "사진을 삭제하시겠습니까?", [
+      { text: "취소", style: "cancel" },
+      {
+        text: "삭제",
+        style: "destructive",
+        onPress: () => setProfileImg(""),
+      },
+    ]);
+  }
+
+  // 이미지 선택
+  function handleImageSelect() {
+    if (!editingNickname) return;
+    selectImage((uri) => {
+      setProfileImg(uri);
+    });
+  }
 
   if (!user) {
     return (
@@ -81,20 +111,19 @@ export function ProfileEditScreen() {
     <SafeAreaView edges={["top"]} className="flex-1">
       <HeaderBeforeLogo />
       <View className="bg-blue-50 flex-1 mx-5 my-5 rounded-2xl items-center">
-        <TouchableOpacity onPress={handleSelectImage}>
+        <TouchableOpacity
+          onPress={profileImg ? handleImageDelete : handleImageSelect}
+        >
           <Image
             source={
-              profileImage
-                ? { uri: profileImage.uri }
-                : user.profileImg
-                  ? { uri: user.profileImg }
-                  : require("../../assets/images/mansun.png")
+              profileImg
+                ? { uri: profileImg }
+                : require("../../assets/images/mansun.png")
             }
             className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
-            resizeMode="cover"
+            resizeMode={profileImg ? "cover" : "contain"}
           />
         </TouchableOpacity>
-
         <View className="flex-row items-center">
           {editingNickname ? (
             <TextInput
@@ -140,34 +169,6 @@ export function ProfileEditScreen() {
               className="border-b-2 border-b-neutral-300 py-3 w-full"
             />
           </View>
-          {/* <View className="flex w-full px-7 mb-3">
-            <Text className="font-bold text-neutral-800">비밀번호</Text>
-            <View className="w-full flex-row items-center border-b-2 border-b-neutral-300">
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                className="flex-1 py-2"
-                secureTextEntry={isSecure1}
-              />
-              <TouchableOpacity onPress={() => setIsSecure1(!isSecure1)}>
-                {isSecure1 ? <IconEyeOpen /> : <IconEyeClose />}
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View className="flex w-full px-7 mb-3">
-            <Text className="font-bold text-neutral-800">비밀번호 확인</Text>
-            <View className="w-full flex-row items-center border-b-2 border-b-neutral-300">
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                className="flex-1 py-2"
-                secureTextEntry={isSecure2}
-              />
-              <TouchableOpacity onPress={() => setIsSecure2(!isSecure1)}>
-                {isSecure2 ? <IconEyeOpen /> : <IconEyeClose />}
-              </TouchableOpacity>
-            </View>
-          </View> */}
         </View>
         <View className="flex-row justify-between w-full mt-12 px-5">
           <HalfButton

@@ -13,8 +13,11 @@ interface CommunityScreenNavigationProps
 export function FollowingPost() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
   const userId = useUserStore((state) => state.user!.id);
-  const { data: friendsPosts, refetch } = useGetFriendsPosts(userId);
-  // console.log("친구 게시글: ", friendsPosts);
+  const { data: response, refetch } = useGetFriendsPosts(userId);
+  console.log("응답 전체:", response);
+
+  const friendsPosts = response?.data ?? [];
+  console.log("친구 게시글: ", friendsPosts);
 
   function handlePostClick(postId: number) {
     navigation.navigate("Post", { postId });

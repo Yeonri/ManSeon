@@ -1,7 +1,7 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-native",
+    "jsx": "react-jsx",
     "types": [
       "react",
       "react-native",
@@ -10,7 +10,7 @@
       "react-native-modalize",
       "axios",
       "@react-native-async-storage/async-storage",
-      "@tanstack/react-query",
+      "@tanstack/react-query"
     ]
   }
 }

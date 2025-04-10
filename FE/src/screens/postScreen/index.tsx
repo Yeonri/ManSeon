@@ -9,13 +9,12 @@ import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { AddComment } from "../../components/community/addComment";
-// import { CommentList } from "../../components/community/commentList";
 import { DeleteAlert } from "../../utils/deleteAlert";
 import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
 import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
-import DefaultProfile from "../../assets/images/profile_default.svg";
+import DefaultImage from "../../assets/images/image_default.svg";
 import { Loading } from "../../components/common/loading";
-import { FormatTime } from "../../utils/formatTime";
+// import { FormatTime } from "../../utils/formatTime";
 import { useUserStore } from "../../store/userStore";
 import { CommentList } from "../../components/community/commentList";
 
@@ -28,18 +27,27 @@ interface PostScreenNavigationProps
 export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
-  const { data: postDetail } = useGetPostDetail(postId);
+  const { data: response } = useGetPostDetail(postId);
+  console.log("응답 전체", response);
+
+  const postDetail = response?.data ?? [];
+  console.log("상세 게시글:", postDetail);
+
   const { mutate: deletePost } = useDeletePost();
   const user = useUserStore((state) => state.user);
   const isOwner = user?.id === postDetail?.userId;
-  console.log("상세 게시글:", postDetail);
-  // console.log("유저 정보:", user);
+  console.log("유저 정보:", user);
 
   function handleDelete() {
+    console.log("게시글 삭제 요청");
     DeleteAlert("게시글", () => {
       deletePost(postId, {
         onSuccess: () => {
-          navigation.goBack();
+          console.log("게시글 삭제 성공");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Community" }],
+          });
         },
       });
     });
@@ -74,7 +82,7 @@ export function PostScreen({ route }: PostScreenProps) {
                     marginRight: 8,
                   }}
                 >
-                  <DefaultProfile width={32} height={32} />
+                  <DefaultImage width={32} height={32} />
                 </View>
               )}
               <Text className=" text-neutral-600 font-semibold">
@@ -88,12 +96,13 @@ export function PostScreen({ route }: PostScreenProps) {
           </View>
           <View className="flex-row items-center gap-2">
             {/* 작성 시간 */}
-            <Text className="text-neutral-400 text-sm">
+            {/* <Text className="text-neutral-400 text-sm">
               {FormatTime(postDetail.createdAt)}
-            </Text>
+            </Text> */}
             {/* 수정 */}
             {isOwner ? (
-              <>
+              <View className="flex-row items-center">
+                {/* 수정 */}
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("EditPost", {
@@ -103,15 +112,16 @@ export function PostScreen({ route }: PostScreenProps) {
                       postImg: postDetail.postImg,
                     })
                   }
-                  className="h-6"
+                  className="p-2"
                 >
                   <Pencil color={"#A1A1A1"} size={20} />
                 </TouchableOpacity>
+
                 {/* 삭제 */}
-                <TouchableOpacity onPress={handleDelete} className="h-6">
+                <TouchableOpacity onPress={handleDelete} className="p-2">
                   <Trash2 color={"#A1A1A1"} size={20} />
                 </TouchableOpacity>
-              </>
+              </View>
             ) : (
               <></>
             )}
@@ -144,10 +154,10 @@ export function PostScreen({ route }: PostScreenProps) {
         </View>
         {/* 댓글 추가 */}
         <View className="my-4">
-          <AddComment postId={postDetail.boardId} />
+          <AddComment boardId={postId} />
         </View>
         {/* 댓글 목록 */}
-        <CommentList comments={postDetail.commentList} />
+        <CommentList boardId={postId} />
       </ScrollView>
     </SafeAreaView>
   );

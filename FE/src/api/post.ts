@@ -4,7 +4,7 @@ import authClient from "./authClient";
 // 전체 게시글 가져오기
 export async function getPosts() {
   try {
-    const response = await authClient.get("/board/all");
+    const response = await authClient.get("/boards");
     return response.data;
   } catch (e: unknown) {
     handleError(e);
@@ -24,9 +24,7 @@ export async function getFriendsPosts(userId: number) {
 // 상세 게시글 가져오기
 export async function getPostDetail(boardId: number) {
   try {
-    const response = await authClient.get(
-      `/board/all/detail?board_id=${boardId}`
-    );
+    const response = await authClient.get(`/boards/${boardId}`);
     return response.data;
   } catch (e: unknown) {
     handleError(e);
@@ -36,41 +34,75 @@ export async function getPostDetail(boardId: number) {
 // 게시글 작성
 export async function addPost(title: string, content: string, postImg: string) {
   try {
-    const response = await authClient.post("/board", {
+    const formData = new FormData();
+
+    const data = {
       title,
       content,
-      postImg,
-    });
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    if (postImg) {
+      const fileName = postImg.split("/").pop()!;
+      const fileType = fileName.split(".").pop();
+
+      formData.append("image", {
+        uri: postImg,
+        name: fileName,
+        type: `image/${fileType}`,
+      } as any); // RN의 FormData에서 파일은 `as any` 필요
+    }
+
+    const response = await authClient.post("/boards", formData);
+
     return response.data;
   } catch (e: unknown) {
     handleError(e);
   }
 }
+
 // 게시글 수정
 export async function editPost(
   boardId: number,
   title: string,
   content: string,
-  postImage: string
+  postImg: string
 ) {
   try {
-    const response = await authClient.put("/board", {
-      boardId,
+    const formData = new FormData();
+
+    const data = {
       title,
       content,
-      postImage,
-    });
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    if (postImg) {
+      const fileName = postImg.split("/").pop()!;
+      const fileType = fileName.split(".").pop();
+
+      formData.append("image", {
+        uri: postImg,
+        name: fileName,
+        type: `image/${fileType}`,
+      } as any); // RN의 FormData에서 파일은 `as any` 필요
+    }
+
+    const response = await authClient.post(`/boards/${boardId}`, formData);
+
     return response.data;
   } catch (e: unknown) {
     handleError(e);
   }
 }
+
 // 게시글 삭제
 export async function deletePost(boardId: number) {
   try {
-    const response = await authClient.delete("/board", {
-      data: { boardId },
-    });
+    console.log("삭제 시도:", boardId);
+    const response = await authClient.delete(`/boards/${boardId}`);
     return response.data;
   } catch (e: unknown) {
     handleError(e);

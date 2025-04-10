@@ -56,7 +56,7 @@ export function SignupPasswordScreen() {
   return (
     <SafeAreaView>
       <HeaderBefore />
-      <View className="mx-10 gap-24">
+      <View className="mx-10 gap-14">
         <View>
           <View className="mt-10 mb-10 gap-1">
             <Text className="font-bold text-4xl text-blue-500">비밀번호를</Text>

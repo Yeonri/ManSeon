@@ -19,12 +19,12 @@ import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
-import imageMap from "../../utils/imageMap";
 import {
   classifyFishImage,
   DetectionResult,
 } from "../../utils/nativeClassifier";
 import { TranslateFishName } from "../../utils/translateFishName";
+import { getFishImage } from "../../utils/getFishImage";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();
@@ -56,7 +56,7 @@ export function CameraScreen() {
   };
 
   // 이미지 경로 처리 개선
-  const handlePhotoTaken = async (newPhoto: PhotoFile) => {
+  async function handlePhotoTaken(newPhoto: PhotoFile) {
     setPhoto(newPhoto);
     setTimeout(async () => {
       try {
@@ -74,8 +74,21 @@ export function CameraScreen() {
           console.log(`탐지 성공: ${detectionResults.length}개 객체`);
           console.log(detectionResults);
 
+          // 물고기 필터링(동일한 className의 물고기는 가장 신뢰도가 높은 것만 남김)
+          const filteredResults = new Map<string, DetectionResult>();
+          detectionResults.forEach((result) => {
+            const existing = filteredResults.get(result.className);
+            if (!existing || result.score > existing.score) {
+              filteredResults.set(result.className, result);
+            }
+          });
+
+          const uniqueResults = Array.from(filteredResults.values()).sort(
+            (a, b) => b.score - a.score
+          );
+
           // 탐지 결과 저장
-          setDetectedResults(detectionResults);
+          setDetectedResults(uniqueResults);
 
           // 가장 높은 신뢰도의 결과를 기본 선택으로 설정
           const topResult = detectionResults[0];
@@ -111,7 +124,7 @@ export function CameraScreen() {
         );
       }
     });
-  };
+  }
 
   if (hasCameraPermission === null) {
     return <PermissionCheck name="카메라" />;
@@ -145,12 +158,12 @@ export function CameraScreen() {
             className="flex-1 resize-contain"
           />
 
-          {isLoading && (
+          {/* {isLoading && (
             <View className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <ActivityIndicator size="large" color="#FFFFFF" />
               <Text className="text-white mt-2">물고기 분석 중...</Text>
             </View>
-          )}
+          )} */}
         </View>
       ) : (
         <CameraView onPhotoTaken={handlePhotoTaken} />
@@ -178,13 +191,13 @@ export function CameraScreen() {
                     }}
                     className={`p-4 rounded-xl mb-5 ${
                       selectedFishName === item.className
-                        ? "bg-blue-500 border-4 border-blue-500"
+                        ? "bg-blue-100 border-4 border-blue-500"
                         : "bg-blue-100"
                     }`}
                   >
                     <View className="flex-row px-5 justify-between items-center">
                       <Image
-                        source={imageMap[`${item.className}.png`]}
+                        source={getFishImage(item.className)}
                         style={{
                           width: imageWidth,
                           height: imageHeight,
@@ -192,22 +205,10 @@ export function CameraScreen() {
                         }}
                       />
                       <View className="justify-center items-center gap-1">
-                        <Text
-                          className={`text-4xl font-bold ${
-                            selectedFishName === item.className
-                              ? "text-white"
-                              : "text-neutral-800"
-                          }`}
-                        >
+                        <Text className="text-4xl font-bold text-neutral-800">
                           {TranslateFishName(item.className)}
                         </Text>
-                        <Text
-                          className={`text-2xl ${
-                            selectedFishName === item.className
-                              ? "text-white"
-                              : "text-neutral-600"
-                          }`}
-                        >
+                        <Text className="text-2xl text-neutral-600">
                           {(item.score * 100).toFixed(1)}%
                         </Text>
                       </View>

@@ -52,6 +52,7 @@ export function LoginScreen() {
           <TextInput
             placeholder="이메일을 입력해 주세요"
             placeholderTextColor="#A1A1A1"
+            inputMode="email"
             value={email}
             onChangeText={setEmail}
             className="p-4 rounded-2xl text-neutral-800 bg-neutral-100"

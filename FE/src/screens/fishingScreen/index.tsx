@@ -2,14 +2,27 @@ import { Image, ScrollView, Text, View } from "react-native";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FishingStackParams } from "../../api/types/FishingStackParams";
-import fishingRecordMocks from "../../mocks/fishingRecordMocks.json";
 import { SelectTag } from "../../components/common/selectTag";
+import { useGetRecordDetail } from "../../api/quries/useRecord";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback } from "react";
 
 interface FishingScreenProps
   extends NativeStackScreenProps<FishingStackParams, "Fishing"> {}
 
 export function FishingScreen({ route }: FishingScreenProps) {
   const { title, fishId } = route.params;
+  const { data: response, refetch } = useGetRecordDetail();
+  console.log("응답 전체 :", response);
+
+  const record = response?.data ?? [];
+  console.log("전체 게시글:", record);
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch])
+  );
 
   return (
     <ScrollView className="flex-1">
@@ -17,7 +30,7 @@ export function FishingScreen({ route }: FishingScreenProps) {
       <View className="gap-7 mx-5">
         <View className="items-center">
           <Image
-            source={{ uri: fishingRecordMocks[fishId - 1].fishImg }}
+            source={{ uri: record.fishImg }}
             className="w-full h-[250px] rounded-xl"
           />
         </View>
@@ -26,14 +39,8 @@ export function FishingScreen({ route }: FishingScreenProps) {
             물고기 정보
           </Text>
           <View className="flex-row gap-3">
-            <SelectTag
-              name={fishingRecordMocks[fishId - 1].fishType}
-              fill={true}
-            />
-            <SelectTag
-              name={`${fishingRecordMocks[fishId - 1].size}cm`}
-              fill={false}
-            />
+            <SelectTag name={record.fishType} fill={true} />
+            <SelectTag name={`${record.size}cm`} fill={false} />
           </View>
         </View>
         <View className="gap-2">
@@ -43,15 +50,12 @@ export function FishingScreen({ route }: FishingScreenProps) {
           <View className="bg-neutral-100 rounded-lg p-5">
             <View className="flex-row gap-2">
               <Text className="text-neutral-600">시간</Text>
-              <Text className="text-neutral-400">
-                {fishingRecordMocks[fishId - 1].createAt}
-              </Text>
+              <Text className="text-neutral-400">{record.createAt}</Text>
             </View>
             <View className="flex-row gap-2">
               <Text className="text-neutral-600">물때</Text>
               <Text className="text-neutral-400">
-                {fishingRecordMocks[fishId - 1].season}물 (서해{" "}
-                {fishingRecordMocks[fishId - 1].season - 1}물)
+                {record.season}물 (서해 {record.season - 1}물)
               </Text>
             </View>
           </View>
@@ -63,15 +67,11 @@ export function FishingScreen({ route }: FishingScreenProps) {
           <View className="bg-neutral-100 rounded-lg p-5">
             <View className="flex-row gap-2">
               <Text className="text-neutral-600">위도</Text>
-              <Text className="text-neutral-400">
-                {fishingRecordMocks[fishId - 1].lat}
-              </Text>
+              <Text className="text-neutral-400">{record.lat}</Text>
             </View>
             <View className="flex-row gap-2">
               <Text className="text-neutral-600">경도</Text>
-              <Text className="text-neutral-400">
-                {fishingRecordMocks[fishId - 1].lng}
-              </Text>
+              <Text className="text-neutral-400">{record.lng}</Text>
             </View>
           </View>
         </View>
@@ -80,22 +80,10 @@ export function FishingScreen({ route }: FishingScreenProps) {
             미끼 정보
           </Text>
           <View className="flex-row gap-3">
-            <SelectTag
-              name="지렁이"
-              fill={fishingRecordMocks[fishId - 1].bait === "지렁이"}
-            />
-            <SelectTag
-              name="새우"
-              fill={fishingRecordMocks[fishId - 1].bait === "새우"}
-            />
-            <SelectTag
-              name="게"
-              fill={fishingRecordMocks[fishId - 1].bait === "게"}
-            />
-            <SelectTag
-              name="루어"
-              fill={fishingRecordMocks[fishId - 1].bait === "루어"}
-            />
+            <SelectTag name="지렁이" fill={record === "지렁이"} />
+            <SelectTag name="새우" fill={record === "새우"} />
+            <SelectTag name="게" fill={record === "게"} />
+            <SelectTag name="루어" fill={record === "루어"} />
           </View>
         </View>
         <View className="gap-2">
@@ -103,18 +91,9 @@ export function FishingScreen({ route }: FishingScreenProps) {
             낚시 방법
           </Text>
           <View className="flex-row gap-3">
-            <SelectTag
-              name="낚싯대"
-              fill={fishingRecordMocks[fishId - 1].equipment === "낚싯대"}
-            />
-            <SelectTag
-              name="맨손"
-              fill={fishingRecordMocks[fishId - 1].equipment === "맨손"}
-            />
-            <SelectTag
-              name="뜰채"
-              fill={fishingRecordMocks[fishId - 1].equipment === "뜰채"}
-            />
+            <SelectTag name="낚싯대" fill={record.equipment === "낚싯대"} />
+            <SelectTag name="맨손" fill={record.equipment === "맨손"} />
+            <SelectTag name="뜰채" fill={record.equipment === "뜰채"} />
           </View>
         </View>
       </View>

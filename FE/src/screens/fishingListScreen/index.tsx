@@ -1,12 +1,13 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { Image, SectionList, Text, TouchableOpacity, View } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FishingStackParams } from "../../api/types/FishingStackParams";
-import fishingListRecordMocks from "../../mocks/fishingRecordListMocks.json";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
+import { useGetRecords } from "../../api/quries/useRecord";
+import { useCallback } from "react";
 
 interface FishingListScreenNavigationProps
   extends NativeStackNavigationProp<FishingStackParams, "FishingList"> {}
@@ -22,6 +23,11 @@ function groupItems<T>(items: T[], count: number): T[][] {
 
 export function FishingListScreen() {
   const navigation = useNavigation<FishingListScreenNavigationProps>();
+  const { data: response, refetch } = useGetRecords();
+  console.log("응답 전체 :", response);
+
+  const records = response?.data ?? [];
+  console.log("전체 게시글:", records);
 
   function handleDetailClick(title: string, fishId: number) {
     navigation.navigate("Fishing", { title, fishId });
@@ -31,10 +37,16 @@ export function FishingListScreen() {
     return format(date, "yyyy.MM.dd (EEE)", { locale: ko });
   }
 
-  const formattedSections = fishingListRecordMocks.map((section) => ({
+  const formattedSections = records.map((section) => ({
     title: section.title,
     data: groupItems(section.data, 3),
   }));
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [refetch])
+  );
 
   return (
     <SafeAreaView className="mx-5">

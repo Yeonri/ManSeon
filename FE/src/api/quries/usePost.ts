@@ -64,13 +64,13 @@ export function useEditPost() {
       boardId,
       title,
       content,
-      postImage,
+      postImg,
     }: {
       boardId: number;
       title: string;
       content: string;
-      postImage: string;
-    }) => editPost(boardId, title, content, postImage),
+      postImg: string;
+    }) => editPost(boardId, title, content, postImg),
     onSuccess: (boardId: number) =>
       queryClient.invalidateQueries({ queryKey: ["post", boardId] }),
   });
