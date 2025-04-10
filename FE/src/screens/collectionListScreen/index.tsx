@@ -1,13 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useMemo, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useMyFishes } from "../../api/quries/useMyFishes";
 import type { MoreStackParams } from "../../api/types/MoreStackParams";
 import CollectionCard from "../../components/collection/collectionCard";
 import Dropdown from "../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
-import processedFishData from "../../utils/processedFishData";
+import fishBaseData from "../../data/fish";
+import { fishImageMap } from "../../utils/fishImageMap";
+import { mergeCollectedFishData } from "../../utils/mergeFishes";
 
 const sortOptions = ["가나다순", "잡은 물고기순", "최신순"];
 
@@ -17,8 +20,17 @@ export function CollectionListScreen() {
   const navigation =
     useNavigation<NativeStackNavigationProp<MoreStackParams>>();
 
+  // 내 물고기 데이터 가져오기
+  const { data: collectedData, isLoading } = useMyFishes();
+
+  // 병합된 도감 리스트
+  const mergedFishList = useMemo(() => {
+    if (!collectedData) return fishBaseData;
+    return mergeCollectedFishData(fishBaseData, collectedData);
+  }, [collectedData]);
+
   const sortedData = useMemo(() => {
-    const copyData = [...processedFishData];
+    const copyData = [...mergedFishList];
 
     if (selectedSort === "가나다순") {
       return copyData.sort((a, b) => a.name.localeCompare(b.name));
@@ -49,7 +61,20 @@ export function CollectionListScreen() {
     }
 
     return copyData;
-  }, [selectedSort]);
+  }, [selectedSort, mergedFishList]);
+
+  console.log("정렬 데이터", sortedData);
+
+  if (isLoading) {
+    return (
+      <SafeAreaView
+        edges={["top"]}
+        className="flex-1 justify-center items-center"
+      >
+        <Text>도감 정보를 불러오는 중입니다.</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView edges={["top"]} className="flex-1">
@@ -62,7 +87,6 @@ export function CollectionListScreen() {
           onSelect={setSelectedSort}
         />
       </View>
-
       <FlatList
         data={sortedData}
         keyExtractor={(item) => item.id.toString()}
@@ -74,13 +98,13 @@ export function CollectionListScreen() {
           <CollectionCard
             id={item.id}
             name={item.name}
-            image={item.image}
+            image={fishImageMap[item.image]}
             isCollected={item.is_collected}
             onPress={() => {
               navigation.navigate("CollectionDetail", {
                 name: item.name,
                 description: item.description,
-                image: item.image,
+                image: fishImageMap[item.image],
                 collection_info: item.collection_info,
               });
             }}

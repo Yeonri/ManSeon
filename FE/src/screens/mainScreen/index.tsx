@@ -21,6 +21,7 @@ import moonList from "../../data/moonList";
 import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 // import { useLocationStore } from "../../store/locationStore";
+import { useMyFishes } from "../../api/quries/useMyFishes";
 import { useUserStore } from "../../store/userStore";
 
 dayjs.extend(utc);
@@ -40,6 +41,9 @@ export function MainScreen() {
 
   const { data: user } = useGetMyInfo();
   console.log("유저정보 확인하기:", user);
+
+  const { data: fish } = useMyFishes();
+  console.log("물고기 받아오기", fish);
 
   const setUser = useUserStore((state) => state.setUser);
   // const setLocation = useLocationStore((state) => state.setLocation);

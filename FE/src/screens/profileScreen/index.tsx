@@ -4,6 +4,7 @@ import { ChevronRight, PencilLine } from "lucide-react-native";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
+import { useMyPosts } from "../../api/quries/useMypost";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
@@ -16,6 +17,7 @@ export function ProfileScreen() {
   const navigation = useNavigation<MoreScreenNavigationProps>();
 
   const { data: user } = useGetMyInfo();
+  const { data: posts } = useMyPosts();
 
   const collectionCount = Object.values(
     user.fishCollections as Record<string, any[]>
@@ -57,9 +59,9 @@ export function ProfileScreen() {
           <View className="flex-row justify-center mt-4 gap-4">
             <View className="items-center mx-4">
               <Text className="text-lg font-semibold">게시글</Text>
-              {/* <Text className="text-lg font-bold text-blue-600">
-                {user.posts.length}개
-              </Text> */}
+              <Text className="text-lg font-bold text-blue-600">
+                {posts?.length ?? 0}개
+              </Text>
             </View>
             <View className="w-px h-10 bg-neutral-400 self-center" />
             <TouchableOpacity
