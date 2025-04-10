@@ -1,12 +1,20 @@
 import { useNavigation } from "@react-navigation/native";
 import { PencilLine } from "lucide-react-native";
 import { useState } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { updateUserInfo } from "../../api/quries/useUserUpdate";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { useUserStore } from "../../store/userStore";
+import { selectImage } from "../../utils/selectImage";
 
 export function ProfileEditScreen() {
   const navigation = useNavigation();
@@ -21,22 +29,44 @@ export function ProfileEditScreen() {
   const [email, setEmail] = useState(user?.email);
   const [name, setName] = useState(user?.name);
   const [phone, setPhone] = useState(user?.phone_number);
+  const [profileImg, setProfileImg] = useState(user?.profile_img || "");
   // const [password, setPassword] = useState("");
 
-  const handleSave = async () => {
+  async function handleSave() {
     try {
       await updateUserInfo({
         email: email,
         name: name,
         phone_number: phone,
         nickname: nickname,
+        profile_img: profileImg,
         // password: password.length > 0 ? password : undefined,
       });
       navigation.goBack();
     } catch (error) {
       console.error("유저 정보 수정 실패", error);
     }
-  };
+  }
+
+  // 이미지 삭제
+  function handleImageDelete() {
+    Alert.alert("사진 삭제", "사진을 삭제하시겠습니까?", [
+      { text: "취소", style: "cancel" },
+      {
+        text: "삭제",
+        style: "destructive",
+        onPress: () => setProfileImg(""),
+      },
+    ]);
+  }
+
+  // 이미지 선택
+  function handleImageSelect() {
+    if (!editingNickname) return;
+    selectImage((uri) => {
+      setProfileImg(uri);
+    });
+  }
 
   if (!user) {
     return (
@@ -45,19 +75,24 @@ export function ProfileEditScreen() {
       </SafeAreaView>
     );
   }
+
   return (
     <SafeAreaView edges={["top"]} className="flex-1">
       <HeaderBeforeLogo />
       <View className="bg-blue-50 flex-1 mx-5 my-5 rounded-2xl items-center">
-        <Image
-          source={
-            user.profile_img
-              ? { uri: user.profile_img }
-              : require("../../assets/images/mansun.png")
-          }
-          className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
-          resizeMode="contain"
-        />
+        <TouchableOpacity
+          onPress={profileImg ? handleImageDelete : handleImageSelect}
+        >
+          <Image
+            source={
+              profileImg
+                ? { uri: profileImg }
+                : require("../../assets/images/mansun.png")
+            }
+            className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
         <View className="flex-row items-center">
           {editingNickname ? (
             <TextInput
