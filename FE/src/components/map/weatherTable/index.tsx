@@ -99,24 +99,34 @@ export function WeatherTable({ data }: Props) {
         </View>
 
         {/* 풍속 */}
-        <View className="flex-row items-center bg-blue-100 py-2 px-2">
+        {/* <View className="flex-row items-center bg-blue-100 py-2 px-2">
           <Text className="w-16 font-medium text-center ">풍속</Text>
           {data.map((item, idx) => (
             <Text key={idx} className="w-16 text-center">
               {item.wind_speed}
             </Text>
           ))}
-        </View>
+        </View> */}
 
         {/* 파고 */}
-        <View className="flex-row items-center px-2 py-2">
+        {/* <View className="flex-row items-center px-2 py-2">
           <Text className="w-16 font-medium text-center">파고</Text>
           {data.map((item, idx) => (
             <Text key={idx} className="w-16 text-center">
               {item.wave_height}
             </Text>
           ))}
-        </View>
+        </View> */}
+
+        {/* 습도 */}
+        {/* <View className="flex-row items-center px-2 py-2">
+          <Text className="w-16 font-medium text-center">습도</Text>
+          {data.map((item, idx) => (
+            <Text key={idx} className="w-16 text-center">
+              {item.humidity}
+            </Text>
+          ))}
+        </View> */}
       </View>
     </ScrollView>
   );

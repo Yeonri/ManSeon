@@ -1,18 +1,21 @@
 import { Text, TouchableOpacity, View } from "react-native";
 
 interface FishingResultItem {
-  id: number;
   name: string;
-  cnt: number;
+  count: number;
 }
 
 interface FishingResultProps {
-  fishingResultList: FishingResultItem[];
+  fishingResultList: FishingResultItem[] | undefined;
   totalCount: number;
 }
 
 export function FishingResult({ fishingResultList }: FishingResultProps) {
-  const sortedList = [...fishingResultList].sort((a, b) => b.cnt - a.cnt);
+  if (!fishingResultList || fishingResultList.length === 0) {
+    return <Text>데이터가 없습니다.</Text>;
+  }
+
+  const sortedList = [...fishingResultList].sort((a, b) => b.count - a.count);
   const top3 = sortedList.slice(0, 4);
 
   return (
@@ -29,7 +32,7 @@ export function FishingResult({ fishingResultList }: FishingResultProps) {
           <Text className="text-blue-500 font-medium text-lg">
             {top3[0].name}
           </Text>
-          <Text className="text-blue-500"> {top3[0].cnt}마리</Text>
+          <Text className="text-blue-500"> {top3[0].count}마리</Text>
         </View>
       </View>
 
@@ -45,7 +48,7 @@ export function FishingResult({ fishingResultList }: FishingResultProps) {
           <Text className="text-neutral-600 font-medium text-lg">
             {top3[1].name}
           </Text>
-          <Text className="text-neutral-400"> {top3[1].cnt}마리</Text>
+          <Text className="text-neutral-400"> {top3[1].count}마리</Text>
         </View>
       </View>
 
@@ -61,7 +64,7 @@ export function FishingResult({ fishingResultList }: FishingResultProps) {
           <Text className="text-neutral-600 font-medium text-lg">
             {top3[2].name}
           </Text>
-          <Text className="text-neutral-400"> {top3[2].cnt}마리</Text>
+          <Text className="text-neutral-400"> {top3[2].count}마리</Text>
         </View>
       </View>
     </View>

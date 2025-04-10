@@ -58,7 +58,7 @@ export function MyPostsScreen() {
         </View>
         <FlatList<ProfilePost>
           data={sortedData as ProfilePost[]}
-          keyExtractor={(item) => item.postId.toString()}
+          keyExtractor={(item) => item.boardId.toString()}
           renderItem={({ item }) => <PostCard post={item} />}
         />
       </View>

@@ -4,6 +4,8 @@ import {
   deletePost,
   editPost,
   getFriendsPosts,
+  getLatestPosts,
+  getMyPosts,
   getPostDetail,
   getPosts,
 } from "../post";
@@ -82,5 +84,23 @@ export function useDeletePost() {
   return useMutation({
     mutationFn: (boardId: number) => deletePost(boardId),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["posts"] }),
+  });
+}
+
+// 최근 게시글 확인
+export function useGetLatestPost() {
+  return useQuery({
+    queryKey: ["latestPosts"],
+    queryFn: () => getLatestPosts(),
+    refetchOnMount: true,
+  });
+}
+
+// 내 게시글 확인
+export function useGetMyPost() {
+  return useQuery({
+    queryKey: ["myPosts"],
+    queryFn: () => getMyPosts(),
+    refetchOnMount: true,
   });
 }

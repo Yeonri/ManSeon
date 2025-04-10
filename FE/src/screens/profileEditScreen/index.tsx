@@ -12,9 +12,9 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
+import { safeUpdateUserInfo } from "../../components/more/profileEdit";
 import { useUserStore } from "../../store/userStore";
 import { selectImage } from "../../utils/selectImage";
-import { safeUpdateUserInfo } from "../../components/more/profileEdit";
 
 export function ProfileEditScreen() {
   const navigation = useNavigation();
@@ -31,6 +31,37 @@ export function ProfileEditScreen() {
   const [phone, setPhone] = useState(user?.phoneNum);
   const [profileImg, setProfileImg] = useState(user?.profileImg || "");
   // const [password, setPassword] = useState("");
+
+  const [profileImage, setProfileImage] = useState<{
+    uri: string;
+    name: string;
+    type: string;
+  } | null>(null);
+
+  const handleSelectImage = () => {
+    launchImageLibrary(
+      {
+        mediaType: "photo",
+      },
+      (response) => {
+        if (
+          response.didCancel ||
+          !response.assets ||
+          response.assets.length === 0
+        )
+          return;
+
+        const asset = response.assets[0];
+        if (asset.uri && asset.fileName && asset.type) {
+          setProfileImage({
+            uri: asset.uri,
+            name: asset.fileName,
+            type: asset.type,
+          });
+        }
+      }
+    );
+  };
 
   async function handleSave() {
     const { success, error } = await safeUpdateUserInfo({

@@ -1,10 +1,9 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { useState } from "react";
+// import { useState } from "react";
 import { Image, ScrollView, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import type { MoreStackParams } from "../../api/types/MoreStackParams";
-import CollectionMapModal from "../../components/collection/collectionMapModal";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 
 type CollectionDetailRouteProp = RouteProp<MoreStackParams, "CollectionDetail">;
@@ -12,11 +11,10 @@ type CollectionDetailRouteProp = RouteProp<MoreStackParams, "CollectionDetail">;
 export function CollectionScreen() {
   const { params } = useRoute<CollectionDetailRouteProp>();
   const { name, description, image, collection_info } = params;
-  const [selectedMarker, setSelectedMarker] = useState<{
-    latitude: number;
-    longitude: number;
-    location_name: string;
-  } | null>(null);
+  // const [selectedMarker, setSelectedMarker] = useState<{
+  //   latitude: number;
+  //   longitude: number;
+  // } | null>(null);
 
   return (
     <SafeAreaView className="flex-1">
@@ -54,25 +52,23 @@ export function CollectionScreen() {
                       latitude: info.latitude,
                       longitude: info.longitude,
                     }}
-                    onPress={() =>
-                      setSelectedMarker({
-                        latitude: info.latitude,
-                        longitude: info.longitude,
-                        location_name: info.location_name,
-                      })
-                    }
+                    // onPress={() =>
+                    //   setSelectedMarker({
+                    //     latitude: info.latitude,
+                    //     longitude: info.longitude,
+                    //   })
+                    // }
                   />
                 ))}
               </MapView>
-              {selectedMarker && (
+              {/* {selectedMarker && (
                 <CollectionMapModal
                   visible={true}
                   onClose={() => setSelectedMarker(null)}
                   latitude={selectedMarker.latitude}
                   longitude={selectedMarker.longitude}
-                  location_name={selectedMarker.location_name}
                 />
-              )}
+              )} */}
             </View>
           )}
         </ScrollView>

@@ -1,13 +1,13 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import { useGetPosts } from "../../../api/quries/usePost";
+import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import DefaultImage from "../../../assets/images/image_default.svg";
 // import { Heart, MessageSquareMore } from "lucide-react-native";
-import { FormatTime } from "../../../utils/formatTime";
-import { useCallback } from "react";
 import { IMAGE_API } from "@env";
+import { useCallback } from "react";
+import { FormatTime } from "../../../utils/formatTime";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}

@@ -1,5 +1,6 @@
 import { X } from "lucide-react-native";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { useFishingPointsSearch } from "../../../api/quries/useFishingpointSearch";
 import { SearchInput } from "../searchInput";
 import { SearchResult } from "../searchResult";
 
@@ -18,6 +19,8 @@ export function SearchModal({
   onSearch,
   onClose,
 }: SearchModalProps) {
+  const { data: searchResults = [], isLoading } =
+    useFishingPointsSearch(keyword);
   return (
     <Modal visible={visible} transparent>
       <View className="flex-1 bg-black/60 justify-center items-center px-4">
@@ -43,7 +46,12 @@ export function SearchModal({
             />
           </View>
 
-          <SearchResult />
+          {/* 검색 결과 */}
+          {isLoading ? (
+            <Text>검색 중...</Text>
+          ) : (
+            <SearchResult results={searchResults} />
+          )}
         </View>
       </View>
     </Modal>

@@ -7,7 +7,6 @@ interface CollectionMapModalProps {
   onClose: () => void;
   latitude: number;
   longitude: number;
-  location_name: string;
 }
 
 function CollectionMapModal({
@@ -15,7 +14,6 @@ function CollectionMapModal({
   onClose,
   latitude,
   longitude,
-  location_name,
 }: CollectionMapModalProps) {
   if (!visible) return null;
 
@@ -49,9 +47,6 @@ function CollectionMapModal({
         </View>
 
         <View className="border border-neutral-300 rounded-lg p-3">
-          <Text className="text-sm font-semibold text-neutral-700 mb-1">
-            {location_name}
-          </Text>
           <Text className="text-xs text-neutral-500">
             ({latitude}, {longitude})
           </Text>
