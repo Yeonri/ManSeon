@@ -26,9 +26,8 @@ export function ProfileEditScreen() {
   const handleSave = async () => {
     try {
       await updateUserInfo({
-        email: email,
         name: name,
-        phone_number: phone,
+        phoneNum: phone,
         nickname: nickname,
         // password: password.length > 0 ? password : undefined,
       });
@@ -132,7 +131,7 @@ export function ProfileEditScreen() {
             </View>
           </View> */}
         </View>
-        <View className="flex-row justify-between w-full px-10 mt-20">
+        <View className="flex-row justify-between w-full mt-12 px-5">
           <HalfButton
             title="취소"
             type="line"
