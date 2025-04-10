@@ -1,4 +1,3 @@
-// import Geolocation from "react-native-geolocation-service";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import dayjs from "dayjs";
@@ -7,23 +6,24 @@ import utc from "dayjs/plugin/utc";
 import { ChevronRight } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import Geolocation from "react-native-geolocation-service";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useMyFishes } from "../../api/quries/useMyFishes";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { MainStackParams } from "../../api/types/MainStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
-// import { PermissionCheck } from "../../components/common/permissionCheck";
+import { PermissionCheck } from "../../components/common/permissionCheck";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
 import { ChatbotButton } from "../../components/main/chatbotButton";
+import { FishingDonutChart } from "../../components/main/fishingDonutChart";
 import { FishingPointCard } from "../../components/main/fishingPointCard";
+import { FishingResult } from "../../components/main/fishingResult";
 import moonList from "../../data/moonList";
-// import { useLocationPermission } from "../../hooks/useLocationPermission";
+import { useLocationPermission } from "../../hooks/useLocationPermission";
 import PostData from "../../mocks/postsMocks.json";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
-// import { useLocationStore } from "../../store/locationStore";
-import { useMyFishes } from "../../api/quries/useMyFishes";
-import { FishingDonutChart } from "../../components/main/fishingDonutChart";
-import { FishingResult } from "../../components/main/fishingResult";
+import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
 import { countFishingData } from "../../utils/countFisingData";
 
@@ -34,7 +34,7 @@ interface MainScreenNavigationProps
   extends NativeStackNavigationProp<MainStackParams> {}
 
 export function MainScreen() {
-  // const hasLocationPermission = useLocationPermission();
+  const hasLocationPermission = useLocationPermission();
 
   const [keyword, setKeyword] = useState("");
 
@@ -51,25 +51,25 @@ export function MainScreen() {
   const countingresult = countFishingData(fishList);
 
   const setUser = useUserStore((state) => state.setUser);
-  // const setLocation = useLocationStore((state) => state.setLocation);
+  const setLocation = useLocationStore((state) => state.setLocation);
 
   // 위치 정보 가져오기
-  // useEffect(() => {
-  //   if (hasLocationPermission) {
-  //     Geolocation.getCurrentPosition(
-  //       (position) => {
-  //         // console.log(
-  //         //   "위도, 경도:",
-  //         //   position.coords.latitude,
-  //         //   position.coords.longitude
-  //         // );
-  //         setLocation(position.coords.latitude, position.coords.longitude);
-  //       },
-  //       (error) => console.log("Error getting location:", error),
-  //       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-  //     );
-  //   }
-  // }, [hasLocationPermission, setLocation]);
+  useEffect(() => {
+    if (hasLocationPermission) {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          // console.log(
+          //   "위도, 경도:",
+          //   position.coords.latitude,
+          //   position.coords.longitude
+          // );
+          setLocation(position.coords.latitude, position.coords.longitude);
+        },
+        (error) => console.log("Error getting location:", error),
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+      );
+    }
+  }, [hasLocationPermission, setLocation]);
 
   useEffect(() => {
     if (user) {
@@ -77,9 +77,9 @@ export function MainScreen() {
     }
   }, [user, setUser]);
 
-  // if (hasLocationPermission === null) {
-  //   return <PermissionCheck name="위치" />;
-  // }
+  if (hasLocationPermission === null) {
+    return <PermissionCheck name="위치" />;
+  }
 
   if (!user) return null;
 
