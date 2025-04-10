@@ -4,9 +4,10 @@ import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
 import { useGetPosts } from "../../../api/quries/usePost";
 import DefaultImage from "../../../assets/images/image_default.svg";
-import { Heart, MessageSquareMore } from "lucide-react-native";
-// import { FormatTime } from "../../../utils/formatTime";
+// import { Heart, MessageSquareMore } from "lucide-react-native";
+import { FormatTime } from "../../../utils/formatTime";
 import { useCallback } from "react";
+import { IMAGE_API } from "@env";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -15,6 +16,7 @@ export function PostList() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
   const { data: response, refetch } = useGetPosts();
   // console.log("응답 전체 :", response);
+  console.log(IMAGE_API);
 
   const posts = response?.data ?? [];
   console.log("전체 게시글:", posts);
@@ -66,31 +68,31 @@ export function PostList() {
                     {item.nickname}
                   </Text>
                   {/* 작성 시간 */}
-                  {/* <Text className="text-neutral-600">
+                  <Text className="text-neutral-600">
                     {FormatTime(item.createdAt)}
-                  </Text> */}
+                  </Text>
                 </View>
-                <View className="flex-row gap-3">
-                  {/* 댓글 수 */}
-                  <View className="flex-row gap-1 items-center">
+                {/* <View className="flex-row gap-3"> */}
+                {/* 댓글 수 */}
+                {/* <View className="flex-row gap-1 items-center">
                     <MessageSquareMore
                       fill={"#FFFFFF"}
                       color={"#525252"}
                       size={18}
                     />
                     <Text>{item.commentNum}</Text>
-                  </View>
-                  {/* 좋아요 수 */}
-                  <View className="flex-row gap-1 items-center">
+                  </View> */}
+                {/* 좋아요 수 */}
+                {/* <View className="flex-row gap-1 items-center">
                     <Heart fill={"#FFFFFF"} color={"#525252"} size={18} />
                     <Text>{item.like}</Text>
-                  </View>
-                </View>
+                  </View> */}
+                {/* </View> */}
               </View>
               {/* 게시글 이미지, 이미지가 없는 경우 기본 이미지 */}
               {item.postImg ? (
                 <Image
-                  source={{ uri: item.postImg }}
+                  source={{ uri: `${IMAGE_API}/${item.thumbImg}` }}
                   className="w-24 h-24 rounded-md"
                 />
               ) : (

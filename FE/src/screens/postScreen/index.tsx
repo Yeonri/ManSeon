@@ -17,6 +17,8 @@ import { Loading } from "../../components/common/loading";
 // import { FormatTime } from "../../utils/formatTime";
 import { useUserStore } from "../../store/userStore";
 import { CommentList } from "../../components/community/commentList";
+import { useEffect } from "react";
+import { IMAGE_API } from "@env";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -27,7 +29,7 @@ interface PostScreenNavigationProps
 export function PostScreen({ route }: PostScreenProps) {
   const { postId } = route.params;
   const navigation = useNavigation<PostScreenNavigationProps>();
-  const { data: response } = useGetPostDetail(postId);
+  const { data: response, refetch } = useGetPostDetail(postId);
   console.log("응답 전체", response);
 
   const postDetail = response?.data ?? [];
@@ -52,6 +54,15 @@ export function PostScreen({ route }: PostScreenProps) {
       });
     });
   }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      console.log("🔄 PostScreen 포커스됨 → 게시글 다시 불러오기");
+      refetch();
+    });
+
+    return unsubscribe;
+  }, [navigation, refetch]);
 
   if (!postDetail) {
     return <Loading />;
@@ -131,7 +142,7 @@ export function PostScreen({ route }: PostScreenProps) {
           {/* 게시글 사진 */}
           {postDetail.postImg ? (
             <Image
-              source={{ uri: postDetail.postImg }}
+              source={{ uri: `${IMAGE_API}/${postDetail.postImg}` }}
               className="w-full h-96 rounded-lg"
             />
           ) : null}

@@ -4,7 +4,7 @@ const fishNameMap: Record<string, string> = {
   crab: "게",
   cutlassfish: "갈치",
   filefish: "쥐치",
-  olive_flounder: "넙치",
+  olive_flounder: "광어",
   korean_rockfish: "우럭",
   mackerel: "고등어",
   marbled_sole: "줄가자미",

@@ -3,42 +3,64 @@ import authClient from "./authClient";
 
 // 잡은 물고기 기록
 export async function addRecord(
-  fishType: string,
-  fishImg: string,
-  latitude: string,
-  longitude: string,
-  scale: string,
-  bait: 0 | 1 | 2 | 3,
-  method: 0 | 1 | 2
+  fishName: string,
+  lat: number,
+  lng: number,
+  size: number,
+  bait: string,
+  equipment: string,
+  fishImg: any
 ) {
   try {
+    console.log("addRecord 호출됨", {
+      fishName,
+      lat,
+      lng,
+      size,
+      bait,
+      equipment,
+      fishImg,
+    });
     const formData = new FormData();
 
     const data = {
-      fishType,
-      latitude,
-      longitude,
-      scale,
+      fishName,
+      lat,
+      lng,
+      size,
       bait,
-      method,
+      equipment,
     };
     formData.append("data", JSON.stringify(data));
 
     if (fishImg) {
-      const fileName = fishImg.split("/").pop()!;
-      const fileType = fileName.split(".").pop();
+      const fileName = fishImg.split("/").pop() ?? "image.jpg";
+      const extMatch = /\.(\w+)$/.exec(fileName);
+      const fileType = extMatch ? extMatch[1].toLowerCase() : "jpg";
 
-      formData.append("image", {
-        uri: fishImg,
-        name: fileName,
-        type: `image/${fileType}`,
-      } as any);
+      console.log("첨부 이미지 있음", fileName);
+
+      const imageResponse = await fetch(fishImg);
+      const imageBlob = await imageResponse.blob();
+
+      const blobWithMeta = imageBlob as Blob & { name?: string; type?: string };
+      blobWithMeta.name = fileName;
+      blobWithMeta.type = `image/${fileType}`;
+
+      formData.append("image", blobWithMeta as any);
+
+      console.log("formData에 이미지 blob 추가 완료");
     }
 
-    const response = await authClient.post(`물고기 post url`, formData);
+    const response = await authClient.post(`/fishes`, formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+      transformRequest: (formData) => formData,
+    });
 
+    console.log("서버 응답 받음", response.data);
     return response.data;
   } catch (e: unknown) {
+    console.log("addRecord 에러 발생", e);
     handleError(e);
   }
 }

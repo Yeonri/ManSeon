@@ -21,7 +21,7 @@ import { SelectTag } from "../../components/common/selectTag";
 import { SelectNumber } from "../../components/cameraRecord/selectNumber";
 // import { Toggle } from "../../components/cameraRecord/toggle";
 import { HalfButton } from "../../components/common/halfButton";
-import { useAddRecord } from "../../api/quries/useRecord";
+// import { useAddRecord } from "../../api/quries/useRecord";
 
 type Bait = "지렁이" | "새우" | "게" | "루어";
 type Method = "낚싯대" | "맨손" | "뜰채";
@@ -39,7 +39,7 @@ export function RecordScreen() {
     longitude: number;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const { mutate: addRecord } = useAddRecord();
+  // const { mutate: addRecord } = useAddRecord();
 
   function handleSave() {
     if (!location) {
@@ -50,39 +50,58 @@ export function RecordScreen() {
       Alert.alert("입력 누락", "미끼와 낚시 방법을 모두 선택해주세요.");
       return;
     }
-
-    const baitMap = { 지렁이: 0, 새우: 1, 게: 2, 루어: 3 } as const;
-    const methodMap = { 낚싯대: 0, 맨손: 1, 뜰채: 2 } as const;
-
-    const bait = baitMap[selectedBait] as 0 | 1 | 2 | 3;
-    const method = methodMap[selectedMethod] as 0 | 1 | 2;
-
-    const payload = {
-      fishType: fishName,
-      fishImg: photoUri,
-      latitude: location.latitude.toString(),
-      longitude: location.longitude.toString(),
-      scale: selectedValue.toString(),
-      bait,
-      method,
-    };
-
-    addRecord(payload, {
-      onSuccess: () => {
-        console.log("낚시 기록 추가 성공");
-        navigation.navigate("BottomTabs", {
-          screen: "home",
-          params: {
-            screen: "Fishing",
+    Alert.alert(
+      "작성 완료",
+      "낚시 기록이 저장되었습니다!",
+      [
+        {
+          text: "확인",
+          onPress: () => {
+            navigation.navigate("BottomTabs", {
+              screen: "home",
+              params: {
+                screen: "Fishing",
+              },
+            });
           },
-        });
-      },
-      onError: () => {
-        console.log("낚시 기록 추가 실패");
-        Alert.alert("낚시 기록 추가 실패", "잠시 후 다시 시도해주세요.");
-      },
-    });
+        },
+      ],
+      { cancelable: false }
+    );
   }
+
+  // const baitMap = { 지렁이: 0, 새우: 1, 게: 2, 루어: 3 } as const;
+  // const methodMap = { 낚싯대: 0, 맨손: 1, 뜰채: 2 } as const;
+
+  // const bait = baitMap[selectedBait] as 0 | 1 | 2 | 3;
+  // const method = methodMap[selectedMethod] as 0 | 1 | 2;
+
+  // const payload = {
+  //   fishName: fishName,
+  //   lat: location.latitude,
+  //   lng: location.longitude,
+  //   size: selectedValue,
+  //   bait: selectedBait,
+  //   equipment: selectedMethod,
+  //   fishImg: photoUri,
+  // };
+
+  // addRecord(payload, {
+  //   onSuccess: () => {
+  //     console.log("낚시 기록 추가 성공");
+  //     navigation.navigate("BottomTabs", {
+  //       screen: "home",
+  //       params: {
+  //         screen: "Fishing",
+  //       },
+  //     });
+  //   },
+  // onError: () => {
+  // console.log("낚시 기록 추가 실패");
+  // Alert.alert("낚시 기록 추가 실패", "잠시 후 다시 시도해주세요.");
+  // },
+  // });
+  // }
 
   const requestLocation = async () => {
     const hasPermission = await PermissionsAndroid.check(

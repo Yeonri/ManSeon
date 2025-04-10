@@ -1,29 +1,28 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { addRecord, getRecordDetail, getRecords } from "../record";
 
-// 잡은 물고기 기록
+// 잡은 물고기 등록
 export function useAddRecord() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({
-      fishType,
-      fishImg,
-      latitude,
-      longitude,
-      scale,
+      fishName,
+      lat,
+      lng,
+      size,
       bait,
-      method,
+      equipment,
+      fishImg,
     }: {
-      fishType: string;
-      fishImg: string;
-      latitude: string;
-      longitude: string;
-      scale: string;
-      bait: 0 | 1 | 2 | 3;
-      method: 0 | 1 | 2;
-    }) =>
-      addRecord(fishType, fishImg, latitude, longitude, scale, bait, method),
+      fishName: string;
+      lat: number;
+      lng: number;
+      size: number;
+      bait: string;
+      equipment: string;
+      fishImg: any;
+    }) => addRecord(fishName, lat, lng, size, bait, equipment, fishImg),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["records"] }),
   });
 }
