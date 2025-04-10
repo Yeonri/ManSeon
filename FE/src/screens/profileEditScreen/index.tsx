@@ -90,7 +90,7 @@ export function ProfileEditScreen() {
                 : require("../../assets/images/mansun.png")
             }
             className="w-24 h-24 my-6 rounded-full mt-16 bg-white"
-            resizeMode="contain"
+            resizeMode={profileImg ? "cover" : "contain"}
           />
         </TouchableOpacity>
         <View className="flex-row items-center">
