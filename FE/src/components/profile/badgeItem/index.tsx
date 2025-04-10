@@ -5,30 +5,32 @@ interface BadgeItemProps {
   id: number;
 
   user: {
-    fishing_total: number;
-    posts: any[];
-    following_cnt: number;
-    follower_cnt: number;
-    profile_img: string;
-    collection_cnt: number;
+    followingCount: number;
+    followerCount: number;
+    profileImg: string;
+    fishCollections: { [key: number]: number[] };
   };
 }
 
 export function BadgeItem({ id, user }: BadgeItemProps) {
+  const collectionCount = Object.values(
+    user.fishCollections as Record<string, any[]>
+  ).filter((arr) => arr.length > 0).length;
+
   const isUnlocked = (() => {
     switch (id) {
       case 1:
-        return user.fishing_total >= 1;
-      case 2:
-        return user.posts.length >= 1;
+        return collectionCount >= 1;
+      // case 2:
+      //   return user.posts.length >= 1;
       case 3:
-        return user.following_cnt >= 1 || user.follower_cnt >= 1;
+        return user.followingCount >= 1 || user.followerCount >= 1;
       case 6:
-        return user.fishing_total >= 10;
+        return collectionCount >= 10;
       case 7:
-        return user.profile_img !== null;
+        return user.profileImg !== null;
       case 9:
-        return user.collection_cnt === 24;
+        return collectionCount === 24;
       default:
         return false;
     }
