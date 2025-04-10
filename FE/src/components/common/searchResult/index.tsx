@@ -1,4 +1,3 @@
-// src/components/common/searchResult.tsx
 import { MapPin } from "lucide-react-native";
 import { FlatList, Text, View } from "react-native";
 
@@ -14,6 +13,11 @@ interface SearchResultProps {
 }
 
 export function SearchResult({ results }: SearchResultProps) {
+  if (!results || results.length === 0) {
+    return <Text>검색 결과가 없습니다.</Text>;
+  }
+
+  console.log("검색결과 :", results);
   const renderItem = ({ item }: { item: SearchResultItem }) => {
     return (
       <View className="mb-3">
@@ -26,7 +30,7 @@ export function SearchResult({ results }: SearchResultProps) {
           </Text>
         </View>
 
-        <Text>
+        <Text className="ml-10 mt-2">
           N {item.lat} / E {item.lng}
         </Text>
       </View>

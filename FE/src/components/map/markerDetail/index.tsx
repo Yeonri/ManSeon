@@ -20,6 +20,8 @@ export const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
   ({ point }, ref: Ref<Modalize>) => {
     if (!point) return null;
 
+    console.log(point);
+
     const dayMap = ["일", "월", "화", "수", "목", "금", "토"];
 
     const nowKST = dayjs().tz("Asia/Seoul");

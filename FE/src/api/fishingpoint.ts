@@ -16,7 +16,8 @@ export const getFishingPointDetail = async (pointId: number) => {
 
 export const searchFishingPoints = async (keyword: string) => {
   const response = await authClient.get(
-    `/api/fishing_point/search?point_name=${keyword}`
+    `/fishing_point/search?point_name=${keyword}`
   );
+  console.log("검색결과", response.data);
   return response.data;
 };

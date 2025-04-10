@@ -8,7 +8,6 @@ import { useMyPosts } from "../../api/quries/useMypost";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
-import { MyPostList } from "../../components/profile/myPostList";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams, "More"> {}
@@ -56,7 +55,7 @@ export function ProfileScreen() {
             <PencilLine color="#737373" width={24} />
           </TouchableOpacity>
 
-          <View className="flex-row justify-center mt-4 gap-4">
+          {/* <View className="flex-row justify-center mt-4 gap-4">
             <View className="items-center mx-4">
               <Text className="text-lg font-semibold">게시글</Text>
               <Text className="text-lg font-bold text-blue-600">
@@ -87,7 +86,7 @@ export function ProfileScreen() {
                 {user.followerCount}명
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
 
         <TouchableOpacity onPress={() => navigation.navigate("CollectionList")}>
@@ -118,9 +117,9 @@ export function ProfileScreen() {
 
         <BadgeList badgeIds={[1, 2, 3, 4, 5, 6, 7, 8, 9]} user={user} />
 
-        <View className="mb-10">
+        {/* <View className="mb-10">
           <MyPostList />
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );
