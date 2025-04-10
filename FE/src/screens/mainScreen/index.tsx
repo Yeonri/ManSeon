@@ -83,7 +83,11 @@ export function MainScreen() {
     setShowModal(true);
   };
 
-  const progress = (user.data.fishCollections.length / 24) * 100;
+  const collectionCount = Object.values(
+    user.fishCollections as Record<string, any[]>
+  ).filter((arr) => arr.length > 0).length;
+
+  const progress = (collectionCount / 24) * 100;
 
   const posts = PostData;
 
@@ -116,7 +120,7 @@ export function MainScreen() {
           <View className="flex-row justify-between items-center">
             <View className="flex-row items-baseline gap-1 ml-1">
               <Text className="text-white font-bold ml-3 mt-3 text-xl">
-                {user.data.nickname ? user.data.nickname : user.data.username}
+                {user.nickname ? user.nickname : user.username}
               </Text>
               <Text className="text-white">
                 님 오늘의 도착지를 확인해 보세요!
@@ -191,7 +195,7 @@ export function MainScreen() {
 
             <View className="flex-row justify-end mx-5 items-baseline">
               <Text className="text-blue-500 font-bold text-4xl">
-                {user.data.fishCollections.length - 1}
+                {collectionCount}
               </Text>
               <Text className="text-neutral-400 font-bold text-xl"> / 24</Text>
             </View>
