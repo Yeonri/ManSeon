@@ -10,11 +10,11 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { updateUserInfo } from "../../api/quries/useUserUpdate";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { useUserStore } from "../../store/userStore";
 import { selectImage } from "../../utils/selectImage";
+import { safeUpdateUserInfo } from "../../components/more/profileEdit";
 
 export function ProfileEditScreen() {
   const navigation = useNavigation();
@@ -33,17 +33,18 @@ export function ProfileEditScreen() {
   // const [password, setPassword] = useState("");
 
   async function handleSave() {
-    try {
-      await updateUserInfo({
-        name: name,
-        phoneNum: phone,
-        nickname: nickname,
-        profileImg: profileImg,
-        // password: password.length > 0 ? password : undefined,
-      });
+    const { success, error } = await safeUpdateUserInfo({
+      name,
+      phoneNum: phone,
+      nickname,
+      profileImg,
+    });
+
+    if (success) {
       navigation.goBack();
-    } catch (error) {
+    } else {
       console.error("유저 정보 수정 실패", error);
+      Alert.alert("오류", "유저 정보 수정 중 문제가 발생했습니다.");
     }
   }
 
@@ -137,34 +138,6 @@ export function ProfileEditScreen() {
               className="border-b-2 border-b-neutral-300 py-3 w-full"
             />
           </View>
-          {/* <View className="flex w-full px-7 mb-3">
-            <Text className="font-bold text-neutral-800">비밀번호</Text>
-            <View className="w-full flex-row items-center border-b-2 border-b-neutral-300">
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                className="flex-1 py-2"
-                secureTextEntry={isSecure1}
-              />
-              <TouchableOpacity onPress={() => setIsSecure1(!isSecure1)}>
-                {isSecure1 ? <IconEyeOpen /> : <IconEyeClose />}
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View className="flex w-full px-7 mb-3">
-            <Text className="font-bold text-neutral-800">비밀번호 확인</Text>
-            <View className="w-full flex-row items-center border-b-2 border-b-neutral-300">
-              <TextInput
-                value={password}
-                onChangeText={setPassword}
-                className="flex-1 py-2"
-                secureTextEntry={isSecure2}
-              />
-              <TouchableOpacity onPress={() => setIsSecure2(!isSecure1)}>
-                {isSecure2 ? <IconEyeOpen /> : <IconEyeClose />}
-              </TouchableOpacity>
-            </View>
-          </View> */}
         </View>
         <View className="flex-row justify-between w-full mt-12 px-5">
           <HalfButton
