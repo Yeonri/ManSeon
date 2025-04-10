@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfiguration {
 
-    // Bearer 방식 설정
+//    Bearer 방식 설정
 //    @Bean
 //    public OpenAPI bearerOpenAPI() {
 //        SecurityScheme bearerScheme = new SecurityScheme()

@@ -19,8 +19,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import com.mansun.common.auth.jwt.JwtUtil;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -78,7 +76,7 @@ public class SecurityConfig {
         http.csrf((auth) -> auth.disable());
 
         //Form 로그인 방식 disable
-        http.formLogin(auth-> auth.disable());
+        http.formLogin(auth -> auth.disable());
 
         //http basic 인증 방식 disable
         http.httpBasic((auth) -> auth.disable());
@@ -106,7 +104,7 @@ public class SecurityConfig {
 //        때문에 해당 경로는 /api/users에 있지 않다. 
 //        로그인만을 위한 문이 있다고 이해하는 게 가장 빠르다
 //        또한 email이란 input name으로 읽어오게 설정했다.
-        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil,refreshRepository){{
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository) {{
             setFilterProcessesUrl("/api/users/login");
             setUsernameParameter("email");
         }}, UsernamePasswordAuthenticationFilter.class);

@@ -16,14 +16,10 @@ import java.io.IOException;
 
 @RequiredArgsConstructor
 public class CustomLogoutFilter extends GenericFilterBean {
-
     private final JwtUtil jwtUtil;
     private final RefreshRepository refreshRepository;
-
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
         doFilter((HttpServletRequest) request, (HttpServletResponse) response, chain);
     }
 

@@ -12,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
@@ -20,18 +21,17 @@ import org.springframework.web.client.RestTemplate;
 public class OAuthController {
     //    http://kauth.kakao.com/oauth/authorize?client_id=4df41bec6f36ccdec491270265b88e43&redirect_uri=http://localhost:8080/auth/callback&response_type=code
 //    이 시점의 시작점이 바로 인가 코드 받아오기다
-    private String clientId = "4df41bec6f36ccdec491270265b88e43";
-    private String redirectUri = "http://localhost:8080/oauth/callback";
+    private final String clientId = "4df41bec6f36ccdec491270265b88e43";
+    private final String redirectUri = "http://localhost:8080/oauth/callback";
     private String clientSecret;
 //    private String accessToken=null;
 
     //이 메소드는 Kakao 로그인의 첫 시도를 위해 카카오 로그인을 위한 URl을 Client로 내려주ㅜㄴ다
     @GetMapping("/oauth2/authorization/kakao")
     public String callback() {
-        StringBuilder url = new StringBuilder("http://kauth.kakao.com/oauth/authorize");
-        url.append("?client_id=" + clientId)
-                .append("&redirect_uri=" + redirectUri)
-                .append("&response_type=" + "code");
+        String url = "http://kauth.kakao.com/oauth/authorize" + "?client_id=" + clientId +
+                "&redirect_uri=" + redirectUri +
+                "&response_type=" + "code";
 
         System.out.println(url);
         return null;//"redirect:"+url.toString();
