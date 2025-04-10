@@ -141,12 +141,17 @@ export function MainScreen() {
 
         {/* 통계 및 수집 내용 관련 */}
         <View className="border border-neutral-200 rounded-2xl gap-2 p-3 mb-5">
-          {/* <View>
+          <View>
             <Text className="text-neutral-600 font-bold text-xl">
               내가 잡은 물고기
             </Text>
-            {user.fishing_total === 0 ? (
-              <View className="flex-row justify-center">
+            {collectionCount === 0 ? (
+              <View className="flex-row justify-center mt-3">
+                <Image
+                  source={require("../../assets/images/chatbot2.png")}
+                  className="h-44 w-44 -ml-5"
+                  resizeMode="contain"
+                />
                 <View className="text-center justify-center">
                   <Text className="text-center font-semibold text-2xl">
                     아직 잡은
@@ -155,29 +160,23 @@ export function MainScreen() {
                     물고기가 없어요!
                   </Text>
                 </View>
-                <Image
-                  source={require("../../assets/images/mansun.png")}
-                  className="h-44 w-44"
-                  resizeMode="contain"
-                />
               </View>
             ) : (
               <View className="flex-row">
-
-                <FishingDonutChart
+                {/* <FishingDonutChart
                   fishingList={user.fishing_list}
                   totalCount={user.fishing_total}
                 />
-   
+    */}
                 <View className="justify-center">
-                  <FishingResult
+                  {/* <FishingResult
                     fishingResultList={user.fishing_list}
                     totalCount={user.fishing_total}
-                  />
+                  /> */}
                 </View>
               </View>
             )}
-          </View> */}
+          </View>
 
           <View className="w-[90%] h-px bg-neutral-100 self-center my-2" />
 
