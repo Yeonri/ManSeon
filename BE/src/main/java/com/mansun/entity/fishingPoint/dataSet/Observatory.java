@@ -24,7 +24,7 @@ public class Observatory {
     @OneToMany(mappedBy = "obsCode")
     private List<SeaTemperature> seaTemperature;
 
-//    Column
+    //    Column
     @Column(name = "obs_lat")
     private float obsLat;
     @Column(name = "obs_lng")

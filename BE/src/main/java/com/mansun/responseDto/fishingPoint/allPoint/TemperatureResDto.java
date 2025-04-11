@@ -1,13 +1,14 @@
 package com.mansun.responseDto.fishingPoint.allPoint;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
 @Builder
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class TemperatureResDto {
-    private double max;
-    private double min;
+    private double max=Integer.MIN_VALUE;
+    private double min=Integer.MAX_VALUE;
+
 }

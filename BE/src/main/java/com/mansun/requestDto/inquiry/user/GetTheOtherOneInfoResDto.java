@@ -1,4 +1,4 @@
-package com.mansun.responseDto.user;
+package com.mansun.requestDto.inquiry.user;
 
 import com.mansun.entity.badge.UserBadge;
 import com.mansun.entity.board.Board;

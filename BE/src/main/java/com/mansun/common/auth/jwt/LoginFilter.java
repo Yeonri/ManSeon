@@ -8,7 +8,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -47,8 +46,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String email = customUserDetails.getUsername(); // username은 email로 사용됨
         String userId = String.valueOf(customUserDetails.getUserId());
 
-        String accessToken = jwtUtil.createJwt("access", email, userId,  7L * 24 * 60 * 60 * 1000);
-        String refreshToken = jwtUtil.createJwt("refresh", email, userId,  7L * 24 * 60 * 60 * 1000);
+        String accessToken = jwtUtil.createJwt("access", email, userId, 7L * 24 * 60 * 60 * 1000);
+        String refreshToken = jwtUtil.createJwt("refresh", email, userId, 7L * 24 * 60 * 60 * 1000);
 
         // DB에 refreshToken 저장
         addRefreshEntity(email, refreshToken, 86400000L);
@@ -114,14 +113,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     private void addRefreshEntity(String email, String refresh, Long expiredMs) {
-
         Date date = new Date(System.currentTimeMillis() + expiredMs);
-
-        RefreshEntity refreshEntity = new RefreshEntity();
-        refreshEntity.setEmail(email);
-        refreshEntity.setRefresh(refresh);
-        refreshEntity.setExpiration(date.toString());
-
+        RefreshEntity refreshEntity = RefreshEntity.createWithTTL(email, refresh);
         refreshRepository.save(refreshEntity);
     }
 }

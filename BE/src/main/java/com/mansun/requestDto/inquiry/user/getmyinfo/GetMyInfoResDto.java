@@ -1,13 +1,9 @@
-package com.mansun.responseDto.user.getmyinfo;
+package com.mansun.requestDto.inquiry.user.getmyinfo;
 
 import com.mansun.entity.badge.UserBadge;
-import com.mansun.entity.board.Board;
 import com.mansun.entity.fish.Fish;
-import com.mansun.entity.fishingPoint.FishingPoint;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 

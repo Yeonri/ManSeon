@@ -57,9 +57,9 @@ public class ReissueController {
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
-        Boolean isExist=refreshRepository.existsByRefresh(refresh);
-        if(!isExist){
-            return new ResponseEntity<>("invalid refresh token",HttpStatus.BAD_REQUEST);
+        Boolean isExist = refreshRepository.existsByRefresh(refresh);
+        if (!isExist) {
+            return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
         String email = jwtUtil.getEmail(refresh);
@@ -71,14 +71,15 @@ public class ReissueController {
         String newRefresh = jwtUtil.createJwt("refresh", email, String.valueOf(userId), 86400000L);
 
         refreshRepository.deleteByRefresh(refresh);
-        addRefreshEntity(email,newRefresh,86400000L);
+        addRefreshEntity(email, newRefresh, 86400000L);
 
         //response
-        response.setHeader("Authorization", "Bearer "+newAccess);
-        response.addCookie(createCookie("refresh",newRefresh));
+        response.setHeader("Authorization", "Bearer " + newAccess);
+        response.addCookie(createCookie("refresh", newRefresh));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     private Cookie createCookie(String key, String value) {
         Cookie cookie = new Cookie(key, value);
         cookie.setMaxAge(24 * 60 * 60);
@@ -90,13 +91,12 @@ public class ReissueController {
     }
 
     private void addRefreshEntity(String email, String refresh, Long expiredMs) {
-
         Date date = new Date(System.currentTimeMillis() + expiredMs);
 
-        RefreshEntity refreshEntity = new RefreshEntity();
-        refreshEntity.setEmail(email);
-        refreshEntity.setRefresh(refresh);
-        refreshEntity.setExpiration(date.toString());
+        RefreshEntity refreshEntity = RefreshEntity.createWithTTL(
+                email,
+                refresh
+        );
 
         refreshRepository.save(refreshEntity);
     }

@@ -58,7 +58,6 @@ dependencies {
 
 	//스프링 시큐리티
 	implementation "org.springframework.boot:spring-boot-starter-security"
-
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
 	//Querydsl 추가
@@ -69,12 +68,15 @@ dependencies {
 
 	// Spring data redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
+	
+//	dotEnv 환경 변수 설정
 	implementation "io.github.cdimascio:java-dotenv:5.2.2"
-
+//	Lombok 설정
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
+//	스프링 부트 Dev Tools 설정
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	MySQL 설정
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

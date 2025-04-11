@@ -12,6 +12,7 @@ import com.mansun.responseDto.fishingPoint.OnePointDetailInfoResDto;
 import com.mansun.responseDto.fishingPoint.OnePointResDto;
 import com.mansun.responseDto.fishingPoint.SearchPointResDto;
 import com.mansun.responseDto.fishingPoint.allPoint.*;
+import com.mansun.responseDto.fishingPoint.forecastOnePointResDto;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -43,17 +44,21 @@ public class FishingPointServiceImpl implements FishingPointService {
 
     //포인트 명에 따른 검색 기능
     @Override
-    public SearchPointResDto searchFishingPointList(
+    public List<SearchPointResDto> searchFishingPointList(
             CustomUserDetails customUserDetails,
             String pointName
     ) {
-        FishingPoint fishingPoint =
-                fishingPointRepository.findFishingPointsByPointNameContaining(pointName);
-        return SearchPointResDto
-                .builder()
-                .pointId(fishingPoint.getPointId())
-                .pointName(fishingPoint.getPointName())
-                .build();
+        List<FishingPoint> fishingPoint =
+                fishingPointRepository.findFishingPointsByPointNameContainingOrderByPointName(pointName).orElseThrow();
+        return fishingPoint.stream().map(
+                fp-> SearchPointResDto
+                        .builder()
+                        .pointId(fp.getPointId())
+                        .pointName(fp.getPointName())
+                        .lat(fp.getLat())
+                        .lng(fp.getLng())
+                        .build()
+        ).collect(Collectors.toList());
     }
 
     @Override
@@ -87,49 +92,143 @@ public class FishingPointServiceImpl implements FishingPointService {
         }
     }
 
+    public List<FishingPoint> getAllPointResDtoList() {
+        return fishingPointRepository.findAll();
+    }
+
+    public SunMoonTimes getSunMoonTimes() {
+        return sunMoonTimesRepository.findByLocDateAndFishingPoint_PointId(LocalDate.now(), 1L);
+    }
+
     //전체 포인트 리스트
     public List<AllPointResDto> findAllPointList(CustomUserDetails customUserDetails) {
         // 1) FishingPoint 전체 조회
-        List<FishingPoint> fishingPointList = fishingPointRepository.findAll();
-        SunMoonTimes sunMoon = sunMoonTimesRepository.findByLocDateAndFishingPoint_PointId(LocalDate.now(), 1L);
-        // ---------------------------------
-        // [A] 오늘자 SunMoonTimes & Weather
-        // ---------------------------------
+        List<FishingPoint> fishingPointList = getAllPointResDtoList();
+
+        // 오늘 날짜
         LocalDate today = LocalDate.now();
 
-        // pointId 모으기
-        List<Long> pointIds = fishingPointList.stream()
-                .map(FishingPoint::getPointId)
+
+//        포인트 별로 시간을 저장할 일출 Map
+        Map<Long, LocalTime> sunriseMap = new HashMap<>();
+//        포인트 별로 시간을 저장할 일몰 Map
+        Map<Long, LocalTime> sunsetMap = new HashMap<>();
+//        오늘의 일출,일몰 정보를 가져올 repository
+        List<SunMoonTimes> sunMoonTimesList =
+                sunMoonTimesRepository.findByLocDateOrderByFishingPointAsc(today).orElseThrow();
+
+//        각 포인트별로 SunriseMap과 SunSetMap에 저장
+        for (SunMoonTimes sm : sunMoonTimesList) {
+            sunriseMap.put(sm.getFishingPoint().getPointId(), sm.getSunrise());
+            sunsetMap.put(sm.getFishingPoint().getPointId(), sm.getSunset());
+        }
+
+        //포인트별 오늘의 최저,최고 기온
+        //        이거 지금 3/25의 전체를 가져오는 것 pointId,
+        List<Weather> TodayTemperatureList =
+                weatherRepository
+                        .findByWeatherDateOrderByFishingPoint(
+                                today
+                        ).orElseThrow();
+        Map<Long, TemperatureResDto> dayTemperature = new HashMap<>();
+        for (Weather w : TodayTemperatureList) {
+            dayTemperature.put(w.getFishingPoint().getPointId(), new TemperatureResDto());
+        }
+
+        for (Weather w : TodayTemperatureList) {
+            TemperatureResDto temp =
+                    dayTemperature.get(w.getFishingPoint().getPointId());
+            if (temp.getMax() < w.getTmp()) {
+                temp.setMax(w.getTmp());
+            }
+            if (temp.getMin() > w.getTmp()) {
+                temp.setMin(w.getTmp());
+            }
+            dayTemperature.replace(w.getFishingPoint().getPointId(), temp);
+        }
+        return fishingPointList.stream().map(fp -> {
+            // (1) 기본 식별자 / 지역 정보
+            Long pointId = fp.getPointId();
+            TemperatureResDto temperatureResDto = dayTemperature.get(fp.getPointId());
+
+            // (7) 최종 DTO
+            return AllPointResDto.builder()
+                    .point_id(pointId)
+                    .point_name(fp.getPointName())
+                    .latitude(fp.getLat())
+                    .longitude(fp.getLng())
+                    .water_depth(fp.getDepthRange())
+                    .seabed_type(fp.getPrimaryMaterial())
+
+                    // sunrise, sunset
+                    .sunrise(sunriseMap.get(fp.getPointId()).getMinute() + ":" + sunriseMap.get(fp.getPointId()).getSecond())
+                    .sunset(sunsetMap.get(fp.getPointId()).getMinute() + ":" + sunsetMap.get(fp.getPointId()).getSecond())
+
+                    // 오늘자 최고/최저 기온
+                    .temperature_max(temperatureResDto == null ? 0 : temperatureResDto.getMax())
+                    .temperature_min(temperatureResDto == null ? 0 : temperatureResDto.getMin())
+                    .build();
+        }).collect(Collectors.toList());
+    }
+
+//    각 포인트 별 조위와 3일치의 예보 정보를 가져오는 Method
+    public forecastOnePointResDto forecastOnePointInfo(
+            CustomUserDetails customUserDetails, Long pointId
+    ) {
+        // 1) FishingPoint 전체 조회
+        List<FishingPoint> fishingPointList = getAllPointResDtoList();
+
+//        각 FishingPoint를 순회하면서 Observatory Code(PK) 리스트
+        List<String> obsCodes = fishingPointList.stream()
+                .map(fp -> fp.getObsCode() == null ? null : fp.getObsCode().getObsCode())
+                .filter(Objects::nonNull)
+                .distinct()
                 .toList();
 
-        // SunMoonTimes (오늘) : Map<pointId, SunMoonTimes>
-        Map<Long, SunMoonTimes> sunMoonMap = sunMoonTimesRepository
-                .findByLocDateAndFishingPoint_PointIdIn(today, pointIds)
-                .stream()
-                .collect(Collectors.toMap(
-                        s -> s.getFishingPoint().getPointId(),
-                        s -> s
-                ));
+//        Wave를 불러오기 위해 필요한 Marinezone Lzone(PK) 코드 리스트
+        List<Integer> lzones = fishingPointList.stream()
+                .map(fp -> fp.getMarineZone() == null ? null : fp.getMarineZone().getLzone())
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
 
-        // 오늘자 Weather 요약 : Map<pointId, Weather>
-        Map<Long, Weather> weatherMap = weatherRepository
-                .findFirstByWeatherDateAndFishingPoint_PointIdInOrderByTmxDesc(today, pointIds)
-                .stream()
-                .collect(Collectors.toMap(
-                        w -> w.getFishingPoint().getPointId(),
-                        w -> w,
-                        (w1, w2) -> w1
-                ));
+        // 2) 조위와 파고 조회를 위한 1일 범위
+        LocalDateTime startDateTime = LocalDate.now().atStartOfDay();
+        LocalDateTime endDateTime = LocalDate.now().atTime(LocalTime.MAX);
 
-        // ---------------------------------
-        // [B] 3일치 Weather (예보)
-        // ---------------------------------
+        // 3) TideLevel 1일치 조회 -> Map(obsCode -> List<TideLevel>)
+        List<TideLevel> tideLevels = tideLevelRepository.findByObsCode_ObsCodeInAndTphTimeBetween(
+                obsCodes, startDateTime, endDateTime
+        );
+//        Lzone이 String인 관계로 TideLevelMap의 Key는 String으로 된다, 이때의 List<TideLevel>을 지정
+        Map<String, List<TideLevel>> tideLevelMap = tideLevels.stream()
+                .collect(Collectors.groupingBy(t -> t.getObsCode().getObsCode()));
+
+        // 4) Wave 1일치 조회 -> Map("lzone문자열" -> List<Wave>)
+        List<Wave> waveList = waveHeightRepository.findByMarineZone_LzoneInAndDateTimeBetween(
+                lzones, startDateTime, endDateTime
+        );
+        Map<String, List<Wave>> waveMap = waveList.stream()
+                .collect(Collectors.groupingBy(w -> w.getMarineZone().getLzone().toString()));
+
+
+        FishingPoint fp = fishingPointRepository.findById(pointId).orElseThrow();
+// (1) 기본 식별자 / 지역 정보
+        String obsCode = (fp.getObsCode() != null) ? fp.getObsCode().getObsCode() : null;
+        String lzoneStr = (fp.getMarineZone() != null)
+                ? fp.getMarineZone().getLzone().toString()
+                : null;
+//        날씨 조회하는 QueryDSL 문
         QWeather qWeather = QWeather.weather;
         QFishingPoint qFishingPoint = QFishingPoint.fishingPoint;
 
         LocalDate startDate = LocalDate.now();
         LocalDate endDate = startDate.plusDays(3);
 
+        // pointId 리스트
+        List<Long> pointIds = fishingPointList.stream()
+                .map(FishingPoint::getPointId)
+                .toList();
         // 한 번에 3일치 예보 조회
         List<Weather> weatherList = queryFactory
                 .selectFrom(qWeather)
@@ -138,172 +237,96 @@ public class FishingPointServiceImpl implements FishingPointService {
                         .and(qFishingPoint.pointId.in(pointIds)))
                 .orderBy(qWeather.weatherDate.asc(), qWeather.weatherTime.asc())
                 .fetch();
-
-        // 포인트별로 그룹핑 (pointId -> Weather List)
+        // 포인트별 그룹: pointId -> List<Weather>
         Map<Long, List<Weather>> forecastMap = weatherList.stream()
                 .collect(Collectors.groupingBy(w -> w.getFishingPoint().getPointId()));
 
-        // ---------------------------------
-        // [C] 3일치 TideLevel / Wave 로딩
-        // ---------------------------------
-        // 1) obsCode, lzone 한 번에 모으기
-        List<String> obsCodes = fishingPointList.stream()
-                .map(fp -> fp.getObsCode().getObsCode())
-                .filter(Objects::nonNull)
-                .distinct()
+        // (4) 3일치 Weather (예보)
+        List<Weather> forecastList = forecastMap.getOrDefault(pointId, Collections.emptyList());
+        List<ForecastResDto> forecastResDtoList = forecastList.stream()
+                .map(wi -> ForecastResDto.builder()
+
+                        .date(LocalDateTime.of(wi.getWeatherDate(),
+                                wi.getWeatherTime()).atOffset(ZoneOffset.UTC))
+                        .sky(wi.getSky())
+                        .temperature(wi.getTmp())
+                        .precipitation(wi.getPcp())
+                        .precipitation_prob(wi.getPop())
+                        .precipitation_type(wi.getPty())
+                        .humidity(wi.getReh())
+                        .build())
                 .toList();
 
-        List<Integer> lzones = fishingPointList.stream()
-                .map(fp -> fp.getMarineZone().getLzone())
+        // (5) 1일치 TideLevel -> 날짜별 최고/최저 조
+        List<TideLevel> tideForFp = (obsCode == null)
+                ? Collections.emptyList()
+                : tideLevelMap.getOrDefault(obsCode, Collections.emptyList());
+
+        Map<LocalDate, List<TideLevel>> tideByDate = tideForFp.stream()
+                .collect(Collectors.groupingBy(t -> t.getTphTime().toLocalDate()));
+
+        List<TideDayResDto> tideDayResList = tideByDate.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey()) // 날짜 오름차순
+                .map(entry -> {
+                    LocalDate date = entry.getKey();
+                    List<TideLevel> dailyList = entry.getValue();
+                    if (dailyList.isEmpty()) return null;
+
+                    // 하루 중 최고조
+                    TideLevel high = dailyList.stream()
+                            .max(Comparator.comparing(TideLevel::getTphLevel))
+                            .orElse(null);
+                    // 하루 중 최저조
+                    TideLevel low = dailyList.stream()
+                            .min(Comparator.comparing(TideLevel::getTphLevel))
+                            .orElse(null);
+
+                    if (high == null || low == null) {
+                        return null;
+                    }
+
+                    // 시각 포맷은 "HH:mm"
+                    DateTimeFormatter tideTimeFmt = DateTimeFormatter.ofPattern("HH:mm");
+                    TideSimpleDto highTideDto = new TideSimpleDto(
+                            high.getTphLevel(),
+                            high.getTphTime().format(tideTimeFmt)
+                    );
+                    TideSimpleDto lowTideDto = new TideSimpleDto(
+                            low.getTphLevel(),
+                            low.getTphTime().format(tideTimeFmt)
+                    );
+
+                    return new TideDayResDto(date, highTideDto, lowTideDto);
+                })
                 .filter(Objects::nonNull)
-                .distinct()
+                .collect(Collectors.toList());
+
+        // (6) Wave 1일치
+        List<Wave> waveForFp = (lzoneStr == null)
+                ? Collections.emptyList()
+                : waveMap.getOrDefault(lzoneStr, Collections.emptyList());
+
+        // Wave DTO 리스트
+        List<WaveResDto> waveResDtoList = waveForFp.stream()
+                .map(wv -> WaveResDto.builder()
+                        .wave_direction(convertWindDirection(wv.getWaveDirection()))
+                        .wave_height(wv.getWaveHeight())
+                        .wind_direction(convertWindDirection(wv.getWindDirection()))
+                        .wind_speed(wv.getWindSpeed())
+                        // 날짜/시간 포맷 (필요하다면)
+//                            .dateTime(wv.getDateTime().format(dateTimeFormatter))
+                        .build())
                 .toList();
-
-        // 2) 3일 범위 (오늘 00:00:00 ~ +3일 23:59:59)
-        LocalDateTime startDateTime = LocalDate.now().atStartOfDay();
-        LocalDateTime endDateTime = LocalDate.now().plusDays(3).atTime(LocalTime.MAX);
-
-        // 3) TideLevel 3일치 조회 -> Map(obsCode -> List<TideLevel>)
-        List<TideLevel> tideLevels = tideLevelRepository.findByObsCode_ObsCodeInAndTphTimeBetween(
-                obsCodes, startDateTime, endDateTime
-        );
-        Map<String, List<TideLevel>> tideLevelMap = tideLevels.stream()
-                .collect(Collectors.groupingBy(t -> t.getObsCode().getObsCode()));
-
-        // 4) Wave 3일치 조회 -> Map(lzone -> List<Wave>)
-        List<Wave> waveList = waveHeightRepository.findByMarineZone_LzoneInAndDateTimeBetween(
-                lzones, startDateTime, endDateTime
-        );
-        Map<String, List<Wave>> waveMap = waveList.stream()
-                .collect(Collectors.groupingBy(w -> w.getMarineZone().getLzone().toString()));
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
-        // ---------------------------------
-        // [D] 최종 DTO 변환
-        // ---------------------------------
-        return fishingPointList.stream().map(fp -> {
-            // 식별자
-            Long pointId = fp.getPointId();
-            String obsCode = fp.getObsCode() != null ? fp.getObsCode().getObsCode() : null;
-            String lzone = fp.getMarineZone() != null
-                    ? fp.getMarineZone().getLzone().toString()
-                    : null;
-
-            // (1) SunMoonTimes
-            SunMoonTimes sunMoonTimes = sunMoonMap.get(pointId);
-            SunMoonTimesResDto sunMoonDto = null;
-            if (sunMoonTimes != null) {
-                sunMoonDto = SunMoonTimesResDto.builder()
-                        .sunrise(sunMoonTimes.getSunrise().atOffset(ZoneOffset.UTC))
-                        .sunset(sunMoonTimes.getSunset().atOffset(ZoneOffset.UTC))
-                        .build();
-            }
-
-            // (2) 오늘 Weather 요약 (최고/최저)
-
-
-
-            // (3) 3일치 Weather 예보
-            List<Weather> forecastList = forecastMap.getOrDefault(pointId, Collections.emptyList());
-            List<ForecastResDto> forecastResDtoList = forecastList.stream()
-                    .map(wi -> ForecastResDto.builder()
-                            .date(LocalDateTime.of(wi.getWeatherDate(), wi.getWeatherTime().toLocalTime())
-                                    .atOffset(ZoneOffset.UTC))
-                            .sky(wi.getSky())
-                            .temperature(wi.getTmp())
-                            .precipitation(wi.getPcp())
-                            .precipitation_prob(wi.getPop())
-                            .precipitation_type(wi.getPty())
-                            .humidity(wi.getReh())
-                            .build())
-                    .toList();
-
-            // (4) TideLevel 3일치 -> 날짜별 최고/최저조
-            List<TideLevel> tideForFp = (obsCode == null)
-                    ? Collections.emptyList()
-                    : tideLevelMap.getOrDefault(obsCode, Collections.emptyList());
-
-            // 날짜별 그룹핑
-            Map<LocalDate, List<TideLevel>> tideByDate = tideForFp.stream()
-                    .collect(Collectors.groupingBy(t -> t.getTphTime().toLocalDate()));
-
-            // 날짜 순으로 High/Low 뽑기
-            List<TideDayResDto> tideDayResList = tideByDate.entrySet().stream()
-                    .sorted(Map.Entry.comparingByKey()) // 날짜 오름차순
-                    .map(entry -> {
-                        LocalDate date = entry.getKey();
-                        List<TideLevel> dailyList = entry.getValue();
-
-                        // 하루 중 최고조
-                        TideLevel high = dailyList.stream()
-                                .max(Comparator.comparing(TideLevel::getTphLevel))
-                                .orElse(null);
-
-                        // 하루 중 최저조
-                        TideLevel low = dailyList.stream()
-                                .min(Comparator.comparing(TideLevel::getTphLevel))
-                                .orElse(null);
-
-                        // 혹시 데이터가 없는 경우
-                        if (high == null || low == null) {
-                            return null; // 또는 제외
-                        }
-
-                        // 시각 포맷
-                        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("HH:mm");
-                        // DTO 변환
-                        TideSimpleDto highTideDto = new TideSimpleDto(
-                                high.getTphLevel(),
-                                high.getTphTime().format(fmt)
-                        );
-                        TideSimpleDto lowTideDto = new TideSimpleDto(
-                                low.getTphLevel(),
-                                low.getTphTime().format(fmt)
-                        );
-
-                        // 하루치 DTO
-                        return new TideDayResDto(date, highTideDto, lowTideDto);
-                    })
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
-
-            // (5) Wave 3일치 -> 원하는 로직대로 변환 (여기선 단순 리스트)
-            List<Wave> waveForFp = (lzone == null)
-                    ? Collections.emptyList()
-                    : waveMap.getOrDefault(lzone, Collections.emptyList());
-
-            // Wave도 날짜별로 묶고 싶다면 groupingBy(w -> w.getDateTime().toLocalDate()) 등을 쓰면 됨.
-            // 일단 여기선 단순히 "List<WaveResDto>"
-            List<WaveResDto> waveResDtoList = waveForFp.stream()
-                    .map(wv -> WaveResDto.builder()
-                            .wave_direction(convertWindDirection(wv.getWaveDirection()))
-                            .wave_height(wv.getWaveHeight())
-                            .wind_direction(convertWindDirection(wv.getWindDirection()))
-                            .wind_speed(wv.getWindSpeed())
-//                            .dateTime(wv.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
-                            .build())
-                    .toList();
-
-            // (6) 최종 DTO 빌드
-//            assert weatherTempInfo != null;
-            return AllPointResDto.builder()
-                    .pointId(pointId)
-                    .pointName(fp.getPointName())
-                    .latitude(fp.getLat())
-                    .longitude(fp.getLng())
-                    .water_depth(fp.getDepthRange())
-                    .seabed_type(fp.getPrimaryMaterial())
-                    .sunrise(sunMoonDto != null ? sunMoonDto.getSunrise().toLocalDateTime().format(formatter) : null)
-                    .sunset(sunMoonDto != null ? sunMoonDto.getSunset().toLocalTime().format(formatter) : null)
-//                    .temperature_max()
-//                    .temperature_min()
-                    .weather_forecast(forecastResDtoList)
-                    // 조위: 3일치 날짜별 High/Low
-                    .tide_info(tideDayResList)
-                    // Wave: 3일치
-//                    .wave_info(waveResDtoList)
-                    .build();
-        }).collect(Collectors.toList());
+        return forecastOnePointResDto.builder()
+                .point_id(pointId)
+                .point_name(fp.getPointName())
+                // 3일치 Weather
+                .weather_forecast(forecastResDtoList)
+                // 조위: 1일치 날짜별 High/Low
+                .tide_info(tideDayResList)
+                // 파고 리스트
+                .wave_info(waveResDtoList)
+                .build();
     }
 
     @Override

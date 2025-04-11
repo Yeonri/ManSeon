@@ -1,7 +1,6 @@
 package com.mansun.features.user.service;
 
 import com.mansun.common.auth.CustomUserDetails;
-import com.mansun.common.exception.NicknameAlreadyExistsException;
 import com.mansun.common.utils.NullAwareBeanUtils;
 import com.mansun.entity.QUsers;
 import com.mansun.entity.Users;
@@ -12,19 +11,18 @@ import com.mansun.entity.follow.QFollowing;
 import com.mansun.features.badge.repository.UserBadgeRepository;
 import com.mansun.features.board.repository.BoardRepository;
 import com.mansun.features.fish.repository.FishRepository;
-import com.mansun.features.follow.repository.FollowerRepositoy;
-import com.mansun.features.follow.repository.FollowingRepository;
 import com.mansun.features.user.repository.UserRepository;
+import com.mansun.responseDto.inquiry.AbleToUseResDto;
+import com.mansun.requestDto.inquiry.user.GetTheOtherOneInfoResDto;
 import com.mansun.requestDto.user.CreateUserReqDto;
 import com.mansun.requestDto.user.SetNicknameReqDto;
 import com.mansun.requestDto.user.UpdateUserReqDto;
 import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
-import com.mansun.responseDto.user.getmyinfo.GetMyInfoResDto;
-import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
-import com.mansun.responseDto.user.VerifyEmailResDto;
-import com.mansun.responseDto.user.VerifyPhoneNumResDto;
-import com.mansun.responseDto.user.getmyinfo.PostResDto;
+
+import com.mansun.requestDto.inquiry.user.getmyinfo.GetMyInfoResDto;
+import com.mansun.requestDto.inquiry.user.getmyinfo.PostResDto;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -52,8 +50,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
     private final UserBadgeRepository userBadgeRepository;
-    private final FollowerRepositoy followerRepositoy;
-    private final FollowingRepository followingRepository;
     private final FishRepository fishRepository;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -64,7 +60,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (userRepository.existsByEmailAndDeletedFalse(userParam.getEmail())) {
             throw new DuplicateKeyException("이미 해당 Email로 가입한 회원이 있습니다.");
         }        //이 시점부터는 중복 회원이 없다고 판명
-        if(userParam.getUsername()==null){
+        if (userParam.getUsername() == null) {
             throw new NoSuchElementException("이름이 없습니다.");
         }
         //비밀번호 인코딩을 위한 BCrypt Encoder ->  추가 변동 가능성 있음 Argon을 적용해볼까 하는 고민이 있음
@@ -132,11 +128,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setDeleted(true);
     }
 
-    public void findByNickname(String nickname) {
-        userRepository.findByNicknameAndDeletedFalse(nickname)
-                .ifPresent(user -> {
-                    throw new NicknameAlreadyExistsException("닉네임이 이미 존재합니다");
-                });
+    public AbleToUseResDto verifyNickname(String nickname) {
+        Optional<Users> user = userRepository.findByNicknameAndDeletedFalse(nickname);
+        if(user.isEmpty()){
+            return AbleToUseResDto.builder()
+                    .ableToUse(true)
+                    .build();
+        } else{
+            return AbleToUseResDto.builder()
+                    .ableToUse(false)
+                    .build();
+        }
     }
 
     @Override
@@ -157,7 +159,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .badges_cnt(userBadgeRepository.countAllByUser_UserIdAndDeletedFalse(customUserDetails.getUserId()))
                 .collection_cnt(fishRepository.countAllByUser_UserId(customUserDetails.getUserId()))
                 .posts(myBoardList.stream().map(
-                        b-> PostResDto.builder()
+                        b -> PostResDto.builder()
                                 .title(b.getTitle())
                                 .content(b.getContent())
                                 .commentNum(b.getCommentNum())
@@ -245,41 +247,41 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         ).collect(Collectors.toList());
     }
 
-    public VerifyEmailResDto verifyEmail(String email) {
+    public AbleToUseResDto verifyEmail(String email) {
         Optional<Users> user =
                 userRepository.findByEmail(email);
 
         if (user.isEmpty()) {
-            return VerifyEmailResDto.builder()
+            return AbleToUseResDto.builder()
                     .ableToUse(true)
                     .build();
         } else if (user.get().isDeleted()) {
             user.get().setDeleted(false);
-            return VerifyEmailResDto.builder()
+            return AbleToUseResDto.builder()
                     .ableToUse(true)
                     .build();
         } else {
-            return VerifyEmailResDto.builder()
+            return AbleToUseResDto.builder()
                     .ableToUse(false)
                     .build();
         }
     }
 
-    public VerifyPhoneNumResDto verifyPhoneNumResDto(String phoneNum) {
+    public AbleToUseResDto verifyPhoneNumResDto(String phoneNum) {
         Optional<Users> user =
                 userRepository.findByPhoneNum(phoneNum);
 
         if (user.isEmpty()) {
-            return VerifyPhoneNumResDto.builder()
+            return AbleToUseResDto.builder()
                     .ableToUse(true)
                     .build();
         } else if (user.get().isDeleted()) {
             user.get().setDeleted(false);
-            return VerifyPhoneNumResDto.builder()
+            return AbleToUseResDto.builder()
                     .ableToUse(true)
                     .build();
         } else {
-            return VerifyPhoneNumResDto.builder()
+            return AbleToUseResDto.builder()
                     .ableToUse(false)
                     .build();
         }

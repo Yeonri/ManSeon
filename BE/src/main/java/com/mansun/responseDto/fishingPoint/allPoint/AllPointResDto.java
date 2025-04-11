@@ -11,21 +11,18 @@ import java.util.List;
 @Builder
 @Getter
 public class AllPointResDto {
-    Long pointId;
+    Long point_id;
     //    Column
-    String pointName;
+    String point_name;
     float latitude;
     float longitude;
-    boolean isBookmarked;
-    boolean isMyPoint;
-    boolean isRecommeded;
     String water_depth;
     String seabed_type;
     String sunrise;
     String sunset;
     double temperature_max;
     double temperature_min;
-    List<ForecastResDto> weather_forecast;
-    List<TideDayResDto> tide_info;
-    List<CaughtFishResDto> caught_fish_summary;
+//    List<ForecastResDto> weather_forecast;
+//    List<TideDayResDto> tide_info;
+//    List<WaveResDto> wave_info;
 }

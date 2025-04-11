@@ -1,9 +1,11 @@
 package com.mansun.entity.fish;
 
-import com.mansun.entity.fish.Fish;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,7 +13,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
+@AllArgsConstructor
+@Table(indexes = @Index(name = "isDelete", columnList = "deleted"))
 @Schema(title = "전체 물고기 종류", description = "전체 어종이 담고 있어야 할 물고기 이름, 서식지, 특징")
 public class FishType {
     @Id
@@ -23,7 +26,7 @@ public class FishType {
     private List<Fish> type;
 
     //    Column
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false, unique = true)
     @Schema(description = "물고기 종 이름")
     private String fishName;
 
@@ -39,5 +42,5 @@ public class FishType {
     private String fishImg;
 
     @Builder.Default
-    private boolean deleted=false;
+    private boolean deleted = false;
 }

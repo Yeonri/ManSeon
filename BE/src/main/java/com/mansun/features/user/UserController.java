@@ -8,10 +8,11 @@ import com.mansun.requestDto.user.UpdateUserReqDto;
 import com.mansun.responseDto.MessageResDto;
 import com.mansun.responseDto.follow.GetMyFollowerResDto;
 import com.mansun.responseDto.follow.GetMyFollowingResDto;
-import com.mansun.responseDto.user.getmyinfo.GetMyInfoResDto;
-import com.mansun.responseDto.user.GetTheOtherOneInfoResDto;
-import com.mansun.responseDto.user.VerifyEmailResDto;
-import com.mansun.responseDto.user.VerifyPhoneNumResDto;
+
+import com.mansun.responseDto.inquiry.AbleToUseResDto;
+import com.mansun.requestDto.inquiry.user.GetTheOtherOneInfoResDto;
+import com.mansun.requestDto.inquiry.user.getmyinfo.GetMyInfoResDto;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +30,7 @@ import java.util.List;
 @Tag(name = "UserController", description = "사용자 정보의 CRUD를 담당하는 컨트롤러")
 public class UserController {
     private final UserServiceImpl userService;
+
     @Operation(summary = "회원가입")
     @PostMapping
     public ResponseEntity<MessageResDto> createUser(@RequestBody CreateUserReqDto req) {
@@ -49,7 +51,8 @@ public class UserController {
 
     @Operation(summary = "닉네임 설정")
     @PostMapping("/nickname/set")
-    public ResponseEntity<MessageResDto> setNickname(@RequestBody SetNicknameReqDto req) {
+    public ResponseEntity<MessageResDto> setNickname(
+            @Valid @RequestBody SetNicknameReqDto req) {
         //아무것도 추가하지 않고 헤더만 추가해서 간다.
         //만약 오류가 난다면 service 안에서 예외처리 반환 예정
         userService.setNickname(req);
@@ -81,9 +84,8 @@ public class UserController {
     //닉네임 중복 체크
     @Operation(summary = "닉네임 중복 확인")
     @GetMapping("/nickname/duplicate")
-    public ResponseEntity<MessageResDto> checkDuplicateNickname(@RequestParam("nickname") String nickname) {
-        userService.findByNickname(nickname);
-        return ResponseEntity.ok(new MessageResDto("사용가능한 닉네임입니다."));
+    public ResponseEntity<AbleToUseResDto> checkDuplicateNickname(@RequestParam("nickname") String nickname) {
+        return ResponseEntity.ok(userService.verifyNickname(nickname));
     }
 
     @Operation(summary = "내 정보 가져오기")
@@ -121,7 +123,7 @@ public class UserController {
 
     @Operation(summary = "회원가입 email unique 특성을 위한 검증")
     @GetMapping("/verify/email")
-    public ResponseEntity<VerifyEmailResDto> verifyEmail(
+    public ResponseEntity<AbleToUseResDto> verifyEmail(
             @RequestParam("email") String email
     ) {
         return ResponseEntity.ok(userService.verifyEmail(email));
@@ -129,10 +131,9 @@ public class UserController {
 
     @Operation(summary = "회원가입 phoneNum unique 특성을 위한 검증")
     @GetMapping("/verify/phone_num")
-    public ResponseEntity<VerifyPhoneNumResDto> verifyPhoneNum(
+    public ResponseEntity<AbleToUseResDto> verifyPhoneNum(
             @RequestParam("phone_num") String phoneNum
     ) {
         return ResponseEntity.ok(userService.verifyPhoneNumResDto(phoneNum));
     }
-
 }

@@ -11,5 +11,5 @@ public interface WaveHeightRepository extends JpaRepository<Wave,Long> {
     List<Wave> findByMarineZone_LzoneInAndDateTimeBetween(
             Collection<Integer> marineZone_lzone, LocalDateTime dateTime, LocalDateTime dateTime2
     );
-    List<Wave> findByMarineZone_LzoneIn(List<String> marineZone_lzone);
+    List<Wave> findByMarineZone_LzoneIn(Collection<Integer> marineZone_lzone);
 }

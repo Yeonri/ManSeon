@@ -10,6 +10,7 @@ import com.mansun.responseDto.fishingPoint.*;
 import com.mansun.responseDto.fishingPoint.allPoint.AllPointResDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -30,16 +31,24 @@ public class PointController {
     @PostMapping("/list/all")
     public ResponseEntity<MessageResDto> createAllPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody CreateFishingPointReqDto req) {
+            @Valid @RequestBody CreateFishingPointReqDto req) {
         fishingPointService.createAllPoint(req);
         return ResponseEntity.ok(new MessageResDto("전체 낚시 포인트에 추가되었습니다"));
     }
 
     @Operation(summary = "전체 리스트를 찾는 것")
     @GetMapping("/list/all")
-    public ResponseEntity<List<AllPointResDto>> getOneOfAllPointList(
+    public ResponseEntity<List<AllPointResDto>> getAllPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         return ResponseEntity.ok(fishingPointService.findAllPointList(customUserDetails));
+    }
+
+    @Operation(summary = "포인트의 날씨 정보와 조위 정보를 가져오는 것")
+    @GetMapping("/list/detail")
+    public ResponseEntity<forecastOnePointResDto> getOneOfAllPointList(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @RequestParam("point_id")Long pointId) {
+        return ResponseEntity.ok(fishingPointService.forecastOnePointInfo(customUserDetails,pointId));
     }
 
     @Operation(summary = "전체 리스트 중 하나의 포인트를 찾는 것")
@@ -54,7 +63,7 @@ public class PointController {
     @PostMapping("/list/my")
     public ResponseEntity<MessageResDto> createUserPoint(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @RequestBody CreateUserPointReqDto req) {
+            @Valid @RequestBody CreateUserPointReqDto req) {
         userPointService.createUserPoint(customUserDetails, req);
         return ResponseEntity.ok(new MessageResDto("내 포인트가 추가되었습니다."));
     }
@@ -78,7 +87,7 @@ public class PointController {
 
     @Operation(summary = "정확한 포인트 이름으로 포인트 검색하기")
     @GetMapping("/search")
-    public ResponseEntity<SearchPointResDto> searchFishingPointList(
+    public ResponseEntity<List<SearchPointResDto>> searchFishingPointList(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @RequestParam("point_name") String pointName) {
         return ResponseEntity.ok(fishingPointService.searchFishingPointList(customUserDetails, pointName));

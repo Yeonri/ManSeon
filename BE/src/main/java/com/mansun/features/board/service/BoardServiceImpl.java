@@ -16,8 +16,6 @@ import com.mansun.responseDto.board.allBoardListResDto;
 import com.mansun.responseDto.board.findboard.FindBoardCommentRecommentResDto;
 import com.mansun.responseDto.board.findboard.FindBoardCommentResDto;
 import com.mansun.responseDto.board.findboard.FindBoardResDto;
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -33,8 +31,6 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
-    private final EntityManager em;
-    private final JPAQueryFactory queryFactory;
     private final BoardRepository boardrepository;
 
     //게시글을 작성하는 함수

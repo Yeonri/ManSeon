@@ -6,10 +6,7 @@ import com.mansun.entity.fishingPoint.dataSet.SunMoonTimes;
 import com.mansun.entity.fishingPoint.dataSet.Weather;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -18,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@ToString
 public class FishingPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,4 +1,4 @@
-package com.mansun.responseDto.user.getmyinfo;
+package com.mansun.requestDto.inquiry.user.getmyinfo;
 
 import lombok.Builder;
 import lombok.Getter;
