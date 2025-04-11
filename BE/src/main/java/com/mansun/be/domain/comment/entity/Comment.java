@@ -3,7 +3,9 @@ package com.mansun.be.domain.comment.entity;
 import com.mansun.be.domain.board.entity.Board;
 import com.mansun.be.domain.user.entity.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,8 +14,6 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
 public class Comment {
 
     @Id
@@ -21,42 +21,42 @@ public class Comment {
     private Long commentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "board_id")
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    private Comment parent; // 부모 댓글 (없으면 null → 일반 댓글)
+    private Comment parent;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
-    private List<Comment> children = new ArrayList<>();
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> replies = new ArrayList<>();
+
+    private String content;
+
+    private boolean deleted = false;
 
     private LocalDateTime createdAt;
 
-    @Builder.Default
-    private boolean deleted = false;
+    private LocalDateTime updatedAt;
 
-    // 정적 생성자
     public static Comment create(Board board, User user, String content, Comment parent) {
-        return Comment.builder()
-                .board(board)
-                .user(user)
-                .content(content)
-                .parent(parent)
-                .createdAt(LocalDateTime.now())
-                .deleted(false)
-                .build();
+        Comment comment = new Comment();
+        comment.board = board;
+        comment.user = user;
+        comment.content = content;
+        comment.parent = parent;
+        comment.createdAt = LocalDateTime.now();
+        comment.updatedAt = LocalDateTime.now();
+        return comment;
     }
 
     public void update(String content) {
         this.content = content;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void softDelete() {

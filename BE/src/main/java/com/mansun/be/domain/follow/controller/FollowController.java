@@ -26,8 +26,8 @@ public class FollowController {
             HttpServletRequest request) {
 
         return followFacade.follow(userDetails, targetUserId, request);
-
     }
+
     @DeleteMapping("/{targetUserId}")
     public ResponseEntity<ApiResponse<Void>> unfollow(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -49,8 +49,4 @@ public class FollowController {
             HttpServletRequest request) {
         return followFacade.getFollowings(userDetails, request);
     }
-
-
-
-
 }

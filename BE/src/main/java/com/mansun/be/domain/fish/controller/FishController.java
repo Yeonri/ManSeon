@@ -8,9 +8,12 @@ import com.mansun.be.domain.fish.service.FishService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,21 +23,35 @@ import java.util.List;
 public class FishController {
 
     private final FishService fishService;
+    private final Logger log;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<Void>> createFish(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @Valid @RequestBody FishCreateRequest requestDto,
+            @RequestPart("data") @Valid FishCreateRequest dto,
+            @RequestPart(value = "image", required = false) MultipartFile image,
             HttpServletRequest request) {
 
-        return fishService.createFish(userDetails, requestDto, request);
+        log.info("컨트롤러에 도착했어");
+
+        return fishService.createFish(userDetails, dto, image, request);
     }
 
-    @GetMapping
+    @GetMapping("/me")
     public ResponseEntity<ApiResponse<List<FishResponse>>> getFishes(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             HttpServletRequest request) {
 
         return fishService.getMyFishes(userDetails, request);
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<ApiResponse<List<FishResponse>>> getFishesByUser(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @PathVariable Long userId,
+            HttpServletRequest request) {
+
+        return fishService.getFishesByUser(userDetails, userId, request);
+    }
+
 }

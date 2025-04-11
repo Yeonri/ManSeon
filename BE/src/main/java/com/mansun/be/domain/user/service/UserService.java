@@ -4,15 +4,15 @@ package com.mansun.be.domain.user.service;
 import com.mansun.be.common.auth.CustomUserDetails;
 import com.mansun.be.common.auth.jwt.JwtUtil;
 import com.mansun.be.common.auth.refresh.repository.RefreshRepository;
+import com.mansun.be.common.imageUtil.ImageSaveManager;
 import com.mansun.be.common.response.ApiResponse;
 import com.mansun.be.common.response.ApiResponseUtil;
+import com.mansun.be.domain.fish.dto.response.FishTypeCountResponse;
 import com.mansun.be.domain.user.dto.request.CreateUserRequest;
 import com.mansun.be.domain.user.dto.request.UpdateUserRequest;
 import com.mansun.be.domain.user.dto.response.GetMyInfoResponse;
 import com.mansun.be.domain.user.dto.response.GetUserInfoResponse;
 import com.mansun.be.domain.user.entity.User;
-import com.mansun.be.domain.user.exception.DuplicatedEmailException;
-import com.mansun.be.domain.user.exception.DuplicatedNicknameException;
 import com.mansun.be.domain.user.exception.UserAlreadyExistsException;
 import com.mansun.be.domain.user.repository.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -28,8 +28,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -75,12 +76,18 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new NoSuchElementException("해당 사용자를 찾을 수 없습니다."));
 
+        List<List<Long>> fishCollection = user.getFishCollectionByType();
+
         GetMyInfoResponse response = GetMyInfoResponse.builder()
                 .id(user.getUserId())
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .nickname(user.getNickname())
-                .phone(user.getPhoneNum())
+                .phoneNum(user.getPhoneNum())
+                .fishCollections(fishCollection)
+                .profileImg(user.getProfileImg())
+                .followingCount(user.getFollowingCount())
+                .followerCount(user.getFollowerCount())
                 .build();
 
         return ApiResponseUtil.success(response, "내 정보 조회 성공", HttpStatus.OK, request.getRequestURI());
@@ -94,9 +101,14 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUserIdAndDeletedFalse(userId)
                 .orElseThrow(() -> new NoSuchElementException("해당 사용자를 찾을 수 없습니다."));
 
+        List<FishTypeCountResponse> collection = user.getFishTypeCountList();
+
         GetUserInfoResponse response = GetUserInfoResponse.builder()
+                .id(userId)
                 .nickname(user.getNickname())
                 .profileImg(user.getProfileImg())
+                .collections(collection)
+                .collectionCount(collection.size())
                 .followerCount(user.getFollowerCount())
                 .followingCount(user.getFollowingCount())
                 .build();
@@ -109,16 +121,28 @@ public class UserService implements UserDetailsService {
     public ResponseEntity<ApiResponse<Void>> updateUser(
             CustomUserDetails userDetails,
             UpdateUserRequest dto,
+            MultipartFile image,
             HttpServletRequest request) {
 
         User user = userRepository.findById(userDetails.getUserId())
-                .orElseThrow(() -> new NoSuchElementException("해당 사용자를 찾을 수 없습니다.(토큰 오류)"));
+                .orElseThrow(() -> new NoSuchElementException("해당 사용자를 찾을 수 없습니다."));
 
         if (dto.getNickname() != null) user.setNickname(dto.getNickname());
-        if (dto.getProfileImg() != null) user.setProfileImg(dto.getProfileImg());
         if (dto.getPhoneNum() != null) user.setPhoneNum(dto.getPhoneNum());
         if (dto.getPassword() != null) user.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
 
+        // 프로필 이미지 업데이트
+
+        if ( image != null && image.isEmpty()) {
+            // 1. 저장
+            ImageSaveManager.processAndSaveImage(0, user.getUserId(), image);
+
+            // 2. URL 생성
+            String profileImgUrl = "/profile/" + user.getUserId() + ".jpg";
+
+            // 3. DB 저장
+            user.setProfileImg(profileImgUrl);
+        }
 
         return ApiResponseUtil.success(null, "회원 정보 수정 성공", HttpStatus.OK, request.getRequestURI());
     }
@@ -180,9 +204,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-
-
-
     //////// 중복 확인 관련 /////////
 
     // #1. 닉네임 중복 확인
@@ -191,7 +212,7 @@ public class UserService implements UserDetailsService {
             HttpServletRequest request) {
 
         if (userRepository.existsByNicknameAndDeletedFalse(nickname))
-            throw new DuplicatedNicknameException("이미 사용 중인 닉네임입니다.");
+            return ApiResponseUtil.failure("중복된 전화 닉네임입니다.", HttpStatus.NOT_FOUND, request.getRequestURI());
 
         return ApiResponseUtil.success(null, "사용 가능한 닉네임입니다.", HttpStatus.OK, request.getRequestURI());
     }
@@ -201,21 +222,23 @@ public class UserService implements UserDetailsService {
             String email,
             HttpServletRequest request) {
 
-        if (userRepository.existsByEmailAndDeletedFalse(email))
-            throw new DuplicatedEmailException("이미 사용 중인 이메일입니다.");
+        if (userRepository.existsByEmailAndDeletedFalse(email)) {
+            return ApiResponseUtil.failure("중복된 전화 이메일입니다.", HttpStatus.NOT_FOUND, request.getRequestURI());
+        }
 
         return ApiResponseUtil.success(null, "사용 가능한 이메일입니다.", HttpStatus.OK, request.getRequestURI());
     }
 
-
+    // #3. 전화 번호 중복 확인
     public ResponseEntity<ApiResponse<Void>> verifyPhoneNum(
             String phoneNum,
             HttpServletRequest request) {
-        if (userRepository.existsByEmailAndDeletedFalse(email))
-            throw new DuplicatedEmailException("이미 사용 중인 전화 번호입니다.");
 
-        return ApiResponseUtil.success(, "사용 가능한 이메일입니다.", HttpStatus.OK, request.getRequestURI());
+        if (userRepository.existsByPhoneNumAndDeletedFalse(phoneNum)) {
+            return ApiResponseUtil.failure("중복된 전화 번호입니다.", HttpStatus.NOT_FOUND, request.getRequestURI());
+        }
 
+        return ApiResponseUtil.success( null, "사용 가능한 전화 번호입니다.", HttpStatus.OK, request.getRequestURI());
 
     }
 }

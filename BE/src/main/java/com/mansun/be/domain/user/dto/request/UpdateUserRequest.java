@@ -6,7 +6,6 @@ import lombok.Data;
 public class UpdateUserRequest {
 
     private String nickname;
-    private String profileImg;
     private String phoneNum;
     private String password;
 

@@ -1,6 +1,5 @@
 package com.mansun.be.domain.board.entity;
 
-import com.mansun.be.common.auth.CustomUserDetails;
 import com.mansun.be.domain.board.dto.request.CreateBoardRequest;
 import com.mansun.be.domain.comment.entity.Comment;
 import com.mansun.be.domain.like.entity.Like;
@@ -9,22 +8,23 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@Builder
 @Entity
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(indexes = @Index(name = "isDelete",columnList = "deleted"))
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
+@Table(name = "board", indexes = {@Index(name = "idx_board_deleted", columnList = "deleted")})
 public class Board {
 
-    // =================== 기본 필드 =================== //
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_id")
     private Long boardId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
@@ -34,43 +34,54 @@ public class Board {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(nullable = false)
+    @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "post_img")
     private String postImg;
 
-    @OneToMany(mappedBy = "board")
-    private List<Like> likeList;
+    @Column(name = "thumb_img")
+    private String thumbImg;
 
+    @OneToMany(mappedBy = "board")
+    private List<Like> likeList = new ArrayList<>();
+
+    @Column(name = "like_count")
     private int likeCount;
 
     @OneToMany(mappedBy = "board")
-    private List<Comment> commentList;
+    private List<Comment> commentList = new ArrayList<>();
 
+    @Column(name = "comment_count")
     private int commentCount;
 
     @Builder.Default
-    private boolean deleted=false;
+    @Column(nullable = false)
+    private boolean deleted = false;
 
-    // ===================== 정적 생성 메서드 =====================
-    public static Board create(CreateBoardRequest request, User user) {
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public static Board create(CreateBoardRequest request, User user, String postImgUrl, String thumbImgUrl) {
         return Board.builder()
                 .user(user)
                 .title(request.getTitle())
                 .content(request.getContent())
-                .postImg(request.getPostImg())
+                .postImg(postImgUrl)
+                .thumbImg(thumbImgUrl)
                 .likeCount(0)
                 .commentCount(0)
                 .deleted(false)
-                .createdAt(LocalDateTime.now())
                 .build();
     }
 
-    // ===================== 도메인 행동 메서드 =====================
-    public void update(String title, String content, String postImg) {
+    public void update(String title, String content, String postImgUrl, String thumbImgUrl) {
         if (title != null) this.title = title;
         if (content != null) this.content = content;
-        if (postImg != null) this.postImg = postImg;
+        if (postImgUrl != null) this.postImg = postImgUrl;
+        if (thumbImgUrl != null) this.thumbImg = thumbImgUrl;
     }
 
     public void softDelete() {
@@ -92,6 +103,4 @@ public class Board {
     public void decreaseComment() {
         this.commentCount = Math.max(0, this.commentCount - 1);
     }
-
-
 }

@@ -2,11 +2,14 @@ package com.mansun.be.domain.follow.entity;
 
 import com.mansun.be.domain.user.entity.User;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Following {
@@ -20,15 +23,13 @@ public class Following {
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "following_user_id", nullable = false)
+    @JoinColumn(name ="following_user_id", nullable = false)
     private User followingUser;
 
-
-    // =================== 정적 생성자 =================== //
-    public static Following create(User me, User targetUser) {
-        return com.mansun.be.domain.follow.entity.Following.builder()
+    public static Following create(User me, User followingUser) {
+        return Following.builder()
                 .user(me)
-                .followingUser(targetUser)
+                .followingUser(followingUser)
                 .build();
     }
 }

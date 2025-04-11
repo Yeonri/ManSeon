@@ -5,7 +5,6 @@ import com.mansun.be.common.response.ApiResponseUtil;
 import com.mansun.be.domain.follow.dto.response.UserSummary;
 import com.mansun.be.domain.follow.entity.Following;
 import com.mansun.be.domain.follow.repository.FollowingRepository;
-
 import com.mansun.be.domain.user.entity.User;
 import com.mansun.be.domain.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;

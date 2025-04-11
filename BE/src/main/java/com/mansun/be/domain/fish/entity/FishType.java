@@ -20,12 +20,6 @@ public class FishType {
     @Column(nullable = false, length = 50)
     private String fishName; // 물고기 이름 (예: 광어)
 
-    @Column(nullable = false)
-    private String fishPlace; // 잡히는 지역
-
-    @Column(nullable = false)
-    private String character; // 특징
-
     @OneToMany(mappedBy = "fishType", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Fish> fishes = new ArrayList<>();
 }

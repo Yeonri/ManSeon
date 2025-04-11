@@ -37,6 +37,7 @@ public class Fish {
 
     private String equipment;
 
+    @Setter
     private String fishImg;
 
     private LocalDateTime createdAt;
@@ -54,11 +55,8 @@ public class Fish {
                 .size(dto.getSize())
                 .bait(dto.getBait())
                 .equipment(dto.getEquipment())
-                .fishImg(dto.getFishImg())
                 .createdAt(LocalDateTime.now())
                 .build();
 
     }
-
-
 }

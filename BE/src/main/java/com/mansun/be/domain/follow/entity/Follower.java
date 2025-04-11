@@ -26,7 +26,6 @@ public class Follower {
     @JoinColumn(name ="follower_user_id", nullable = false)
     private User follower;
 
-    // =================== 정적 생성자 =================== //
     public static Follower create(User me, User follower) {
         return Follower.builder()
                 .user(me)

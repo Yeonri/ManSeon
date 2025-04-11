@@ -5,7 +5,6 @@ import com.mansun.be.common.response.ApiResponseUtil;
 import com.mansun.be.domain.follow.dto.response.UserSummary;
 import com.mansun.be.domain.follow.entity.Follower;
 import com.mansun.be.domain.follow.repository.FollowerRepository;
-
 import com.mansun.be.domain.user.entity.User;
 import com.mansun.be.domain.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +33,7 @@ public class FollowerService {
                 .orElseThrow(() -> new NoSuchElementException("팔로우를 시도한 유저가 없습니다."));
 
         if (followerRepository.existsByUserAndFollower(target, follower)) {
-            return; // 중복 방지
+            return;
         }
 
         Follower f = Follower.create(target, follower);

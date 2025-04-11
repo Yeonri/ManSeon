@@ -12,10 +12,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final Logger log;
 
     // #1. 회원 가입
     @PostMapping
@@ -62,11 +65,14 @@ public class UserController {
     @PatchMapping
     public ResponseEntity<ApiResponse<Void>> updateUser(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestBody UpdateUserRequest dto,
-            HttpServletRequest request
-    ) {
-        return userService.updateUser(userDetails, dto, request);
+            @RequestPart("data") UpdateUserRequest dto,
+            @RequestPart(value = "image", required = false) MultipartFile image,
+            HttpServletRequest request) {
+
+        return userService.updateUser(userDetails, dto, image, request);
     }
+
+
 
     // #6. 회원정보 삭제(soft)
     @DeleteMapping
@@ -116,10 +122,5 @@ public class UserController {
 }
 
 
-
-
-
-
-}
 
 

@@ -1,36 +1,37 @@
 package com.mansun.be.domain.comment.dto.response;
 
 import com.mansun.be.domain.comment.entity.Comment;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
-@Builder
+@AllArgsConstructor
 public class CommentResponse {
+
     private Long commentId;
     private String content;
-    private String nickname;
-    private String profileImg;
-    private LocalDateTime createdAt;
+    private String authorNickname;
+    private String createdAt;
     private List<CommentResponse> replies;
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+
     public static CommentResponse from(Comment comment) {
-        return CommentResponse.builder()
-                .commentId(comment.getCommentId())
-                .content(comment.getContent())
-                .nickname(comment.getUser().getNickname())
-                .profileImg(comment.getUser().getProfileImg())
-                .createdAt(comment.getCreatedAt())
-                .replies(comment.getChildren().stream()
-                        .filter(c -> !c.isDeleted())
-                        .sorted(Comparator.comparing(Comment::getCreatedAt))
+        return new CommentResponse(
+                comment.getCommentId(),
+                comment.isDeleted() ? "(삭제된 댓글입니다)" : comment.getContent(),
+                comment.getUser().getNickname(),
+                comment.getCreatedAt().atOffset(ZoneOffset.UTC).format(formatter),
+                comment.getReplies().stream()
+                        .filter(reply -> !reply.isDeleted())
                         .map(CommentResponse::from)
-                        .collect(Collectors.toList()))
-                .build();
+                        .collect(Collectors.toList())
+        );
     }
 }

@@ -1,4 +1,5 @@
 package com.mansun.be.domain.comment.controller;
+
 import com.mansun.be.common.auth.CustomUserDetails;
 import com.mansun.be.common.response.ApiResponse;
 import com.mansun.be.domain.comment.dto.request.CreateCommentRequest;
@@ -55,5 +56,4 @@ public class CommentController {
             HttpServletRequest request) {
         return commentService.updateComment(boardId, commentId, userDetails, dto, request);
     }
-
 }

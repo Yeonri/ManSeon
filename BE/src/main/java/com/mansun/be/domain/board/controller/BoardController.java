@@ -6,15 +6,19 @@ import com.mansun.be.domain.board.dto.request.CreateBoardRequest;
 import com.mansun.be.domain.board.dto.request.UpdateBoardRequest;
 import com.mansun.be.domain.board.dto.response.BoardResponse;
 import com.mansun.be.domain.board.service.BoardService;
-import jakarta.persistence.EntityManager;
+import com.mansun.be.domain.follow.repository.FollowingRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/boards")
@@ -22,36 +26,48 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
+    private final FollowingRepository followingRepository;
+    private final Logger log;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<Void>> createBoard(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @Valid @RequestBody CreateBoardRequest dto,
+            @RequestPart("data") @Valid CreateBoardRequest dto,
+            @RequestPart(value = "image", required = false) MultipartFile image,
             HttpServletRequest request) {
 
-        return boardService.createBoard(dto, userDetails, request);
+        log.info("컨트롤러에 도착했어");
+
+        return boardService.createBoard(dto, image, userDetails, request);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<List<BoardResponse>>> getMyBoards(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            HttpServletRequest request) {
+        return boardService.getBoardsByUser(userDetails.getUserId(), request);
     }
 
     @GetMapping("/{boardId}")
-    public ResponseEntity<ApiResponse<BoardResponse>> getOneBoard(
-            @PathVariable Long boardId,
-            HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<BoardResponse>> getOneBoard(@PathVariable Long boardId,
+                                                                  HttpServletRequest request) {
         return boardService.getOneBoard(boardId, request);
     }
 
-    @PatchMapping("/{boardId}")
-    public ResponseEntity<ApiResponse<Void>> updateBoard(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long boardId,
-            @RequestBody UpdateBoardRequest dto,
-            HttpServletRequest request) {
-        return boardService.updateBoard(userDetails, boardId, dto, request);
+    @PatchMapping(value = "/{boardId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<Void>> updateBoard(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                         @PathVariable Long boardId,
+                                                         @RequestPart("data") UpdateBoardRequest dto,
+                                                         @RequestPart(value = "image", required = false) MultipartFile image,
+                                                         HttpServletRequest request) {
+
+        return boardService.updateBoard(userDetails, boardId, dto, image, request);
     }
+
     @DeleteMapping("/{boardId}")
-    public ResponseEntity<ApiResponse<Void>> deleteBoard(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long boardId,
-            HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<Void>> deleteBoard(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                         @PathVariable Long boardId,
+                                                         HttpServletRequest request) {
         return boardService.deleteBoard(userDetails, boardId, request);
     }
 
@@ -61,12 +77,25 @@ public class BoardController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse<List<BoardResponse>>> getBoardsByUser(
-            @PathVariable Long userId,
-            HttpServletRequest request) {
+    public ResponseEntity<ApiResponse<List<BoardResponse>>> getBoardsByUser(@PathVariable Long userId,
+                                                                            HttpServletRequest request) {
         return boardService.getBoardsByUser(userId, request);
     }
 
+    @GetMapping("/followings/latest")
+    public ResponseEntity<ApiResponse<List<BoardResponse>>> getLatestFromFollowings(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            HttpServletRequest request) {
+        List<Long> followingIds = followingRepository.findAllByUser_UserId(userDetails.getUserId())
+                .stream().map(f -> f.getFollowingUser().getUserId()).toList();
+        return boardService.getLatestFromFollowings(followingIds, request);
+    }
 
+    // 최신 보드 10개
+    @GetMapping("/latest")
+    public ResponseEntity<ApiResponse<List<BoardResponse>>> getLatestBoards(
+            HttpServletRequest request) {
+        return boardService.getLatestBoards(request);
+    }
 
 }

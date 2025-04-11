@@ -21,7 +21,10 @@ public class CreateUserRequest {
     private String phoneNum;
 
     @NotBlank
-    private String nickName;
+    private String nickname;
+
+    @NotBlank
+    private String profileImg;
 
 
 }

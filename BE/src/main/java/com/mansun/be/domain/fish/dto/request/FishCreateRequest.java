@@ -3,13 +3,14 @@ package com.mansun.be.domain.fish.dto.request;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 public class FishCreateRequest {
 
     @NotNull
-    private Integer fishTypeId; // FK로 연결될 물고기 종류 ID
+    private String fishName; // FK로 연결될 물고기 종류 ID
 
     @NotNull
     private Double lat; // 위도
@@ -23,5 +24,5 @@ public class FishCreateRequest {
 
     private String equipment; // 장비 종류
 
-    private String fishImg; // 이미지 URL (선택, 추후 업로드 방식에 따라 multipart로 분리 가능)
+    private MultipartFile image; // 이미지 URL (선택, 추후 업로드 방식에 따라 multipart로 분리 가능)
 }
