@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { CollectionListScreen } from "../../screens/collectionListScreen";
 import { CollectionScreen } from "../../screens/collectionScreen";
+import { FriendsScreen } from "../../screens/friendsScreen";
 import { MoreScreen } from "../../screens/moreScreen";
 import { MyPostsScreen } from "../../screens/myPostsScreen";
 import { ProfileEditScreen } from "../../screens/profileEditScreen";
@@ -28,6 +29,7 @@ export function MoreStackNavigator() {
       <Stack.Screen name="Suggestions" component={SuggestionsScreen} />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="ProfileEdit" component={ProfileEditScreen} />
+      <Stack.Screen name="Friends" component={FriendsScreen} />
     </Stack.Navigator>
   );
 }

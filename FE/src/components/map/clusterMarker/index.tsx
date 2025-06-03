@@ -39,7 +39,7 @@ export function ClusterMarkers({
                 });
               }}
             >
-              <View className="w-16 h-16 bg-blue-500/90 rounded-full justify-center items-center">
+              <View className="w-16 h-16 bg-red-500/70 rounded-full justify-center items-center">
                 <Text className="text-white font-bold">{pointCount}</Text>
               </View>
             </Marker>
@@ -49,7 +49,7 @@ export function ClusterMarkers({
         const point = item.properties.point;
         return (
           <Marker
-            key={`marker-${point.pointId}`}
+            key={`marker-${point.point_id}`}
             coordinate={{
               latitude: point.latitude,
               longitude: point.longitude,

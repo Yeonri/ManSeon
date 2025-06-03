@@ -4,10 +4,10 @@ import { ChevronRight, PencilLine } from "lucide-react-native";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
+import { useMyPosts } from "../../api/quries/useMypost";
 import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
-import { MyPostList } from "../../components/profile/myPostList";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams, "More"> {}
@@ -16,6 +16,7 @@ export function ProfileScreen() {
   const navigation = useNavigation<MoreScreenNavigationProps>();
 
   const { data: user } = useGetMyInfo();
+  const { data: posts } = useMyPosts();
 
   const collectionCount = Object.values(
     user.fishCollections as Record<string, any[]>
@@ -28,7 +29,7 @@ export function ProfileScreen() {
       <HeaderBeforeLogo />
       <ScrollView className="mb-5">
         <View className="items-center mt-6 mb-6">
-          {user.profile_img === null ? (
+          {user.profileImg === null ? (
             <Image
               source={require("../../assets/images/mansun.png")}
               className="w-24 h-24 rounded-full mr-4 bg-white"
@@ -37,7 +38,7 @@ export function ProfileScreen() {
           ) : (
             <Image
               source={{
-                uri: user.profile_img,
+                uri: user.profileImg,
               }}
               className="w-24 h-24 rounded-full mr-4 bg-white"
               resizeMode="center"
@@ -54,32 +55,38 @@ export function ProfileScreen() {
             <PencilLine color="#737373" width={24} />
           </TouchableOpacity>
 
-          <View className="flex-row justify-center mt-4 gap-4">
+          {/* <View className="flex-row justify-center mt-4 gap-4">
             <View className="items-center mx-4">
               <Text className="text-lg font-semibold">게시글</Text>
-              {/* <Text className="text-lg font-bold text-blue-600">
-                {user.posts.length}개
-              </Text> */}
+              <Text className="text-lg font-bold text-blue-600">
+                {posts?.length ?? 0}개
+              </Text>
             </View>
             <View className="w-px h-10 bg-neutral-400 self-center" />
-            <View className="items-center mx-4">
+            <TouchableOpacity
+              className="items-center mx-4"
+              onPress={() => navigation.navigate("Friends")}
+            >
               <Text className="text-lg font-semibold text-neutral-500">
                 팔로잉
               </Text>
               <Text className="text-lg font-bold text-blue-600">
-                {user.following_cnt}명
+                {user.followingCount}명
               </Text>
-            </View>
+            </TouchableOpacity>
             <View className="w-px h-10 bg-neutral-400 self-center" />
-            <View className="items-center mx-4">
+            <TouchableOpacity
+              className="items-center mx-4"
+              onPress={() => navigation.navigate("Friends")}
+            >
               <Text className="text-lg font-semibold text-neutral-500">
                 팔로워
               </Text>
               <Text className="text-lg font-bold text-blue-600">
-                {user.follower_cnt}명
+                {user.followerCount}명
               </Text>
-            </View>
-          </View>
+            </TouchableOpacity>
+          </View> */}
         </View>
 
         <TouchableOpacity onPress={() => navigation.navigate("CollectionList")}>
@@ -110,9 +117,9 @@ export function ProfileScreen() {
 
         <BadgeList badgeIds={[1, 2, 3, 4, 5, 6, 7, 8, 9]} user={user} />
 
-        <View className="mb-10">
+        {/* <View className="mb-10">
           <MyPostList />
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

@@ -29,21 +29,21 @@ export function PostEditScreen({ route, navigation }: PostEditScreenProps) {
   const { mutate: editPost } = useEditPost();
 
   function handleEdit() {
-    // console.log("게시글 편집 시작");
+    console.log("게시글 편집 요청");
     return editPost(
       {
         boardId: postId,
         title: editTitle,
         content: editContent,
-        postImage: editPostImage,
+        postImg: editPostImage,
       },
       {
         onSuccess: () => {
-          // console.log("게시글 편집 성공");
+          console.log("게시글 편집 성공");
           navigation.navigate("Post", { postId });
         },
-        onError: () => {
-          // console.log("게시글 편집 실패");
+        onError: (e: unknown) => {
+          console.log("게시글 편집 실패", e);
           Alert.alert("게시글 편집 실패", "잠시 후 다시 시도해주세요.");
         },
       }

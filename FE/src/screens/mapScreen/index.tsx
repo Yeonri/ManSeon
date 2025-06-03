@@ -1,21 +1,17 @@
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { View } from "react-native";
 import MapView, { Region } from "react-native-maps";
 import { Modalize } from "react-native-modalize";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { getFishingPointDetail } from "../../api/fishingpoint";
 import { useFishingPoints } from "../../api/quries/useFishingpoint";
 import { SearchInput } from "../../components/common/searchInput";
 import { SearchModal } from "../../components/common/searchModal";
 import { ClusterMarkers } from "../../components/map/clusterMarker";
-import { FilterButton } from "../../components/map/filterButton";
 import { MarkerDetail } from "../../components/map/markerDetail";
 import { useClustering } from "../../hooks/useClustering";
 
 export function MapScreen() {
-  const [activeFilter, setActiveFilter] = useState<
-    "all" | "myPoint" | "bookmark" | "recommended"
-  >("all");
-
   const { data: points = [] } = useFishingPoints();
 
   const [region, setRegion] = useState<Region>({
@@ -24,15 +20,6 @@ export function MapScreen() {
     latitudeDelta: 10.0,
     longitudeDelta: 7.5,
   });
-
-  const filterPoints = useMemo(() => {
-    return points.filter((point: any) => {
-      if (activeFilter === "myPoint") return point.isMyPoint;
-      if (activeFilter === "bookmark") return point.isBookmarked;
-      if (activeFilter === "recommended") return point.isRecommended;
-      return true;
-    });
-  }, [points, activeFilter]);
 
   const mapRef = useRef<MapView>(null);
   const modalRef = useRef<Modalize>(null);
@@ -44,11 +31,19 @@ export function MapScreen() {
   };
 
   const zoom = Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2);
-  const { clusters, supercluster } = useClustering(filterPoints, region, zoom);
+  const { clusters, supercluster } = useClustering(points, region, zoom);
 
   const [showModal, setShowModal] = useState(false);
 
   const [selectedPoint, setSelectedPoint] = useState<any>(null);
+
+  const handleMarkerPress = async (point: any) => {
+    const pointDetail = await getFishingPointDetail(point.point_id);
+
+    setSelectedPoint({ ...point, ...pointDetail });
+
+    modalRef.current?.open();
+  };
 
   return (
     <SafeAreaView className="flex-1">
@@ -58,28 +53,6 @@ export function MapScreen() {
           onChangeText={setKeyword}
           onSearchPress={handleSEarch}
         />
-        <View className="flex-row items-center">
-          <FilterButton
-            label="전체"
-            active={activeFilter === "all"}
-            onPress={() => setActiveFilter("all")}
-          />
-          <FilterButton
-            label="내 포인트"
-            active={activeFilter === "myPoint"}
-            onPress={() => setActiveFilter("myPoint")}
-          />
-          <FilterButton
-            label="북마크"
-            active={activeFilter === "bookmark"}
-            onPress={() => setActiveFilter("bookmark")}
-          />
-          <FilterButton
-            label="추천"
-            active={activeFilter === "recommended"}
-            onPress={() => setActiveFilter("recommended")}
-          />
-        </View>
       </View>
 
       <MapView
@@ -97,10 +70,7 @@ export function MapScreen() {
         <ClusterMarkers
           clusters={clusters}
           mapRef={mapRef}
-          onMarkerPress={(point) => {
-            setSelectedPoint(point);
-            modalRef.current?.open();
-          }}
+          onMarkerPress={handleMarkerPress}
           supercluster={supercluster}
         />
       </MapView>

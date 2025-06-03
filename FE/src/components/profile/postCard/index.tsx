@@ -1,8 +1,6 @@
 import dayjs from "dayjs";
 import { Image, Text, View } from "react-native";
 import type { Post } from "../../../api/types/Post";
-import IcomComment from "../../../assets/images/icon_comment.svg";
-import IconLike from "../../../assets/images/icon_like.svg";
 
 type ProfilePost = Pick<
   Post,
@@ -32,7 +30,7 @@ export function PostCard({ post }: PostCardProps) {
         <Text className="text-sm text-neutral-500-400 mt-1 mb-2">
           {dayjs(post.createdAt).format("YYYY년 MM월 DD일")}
         </Text>
-        <View className="flex-row space-x-4 gap-3">
+        {/* <View className="flex-row space-x-4 gap-3">
           <View className="flex-row items-center space-x-1 gap-1">
             <IcomComment />
             <Text className="text-base text-neutral-500">
@@ -43,11 +41,11 @@ export function PostCard({ post }: PostCardProps) {
             <IconLike />
             <Text className="text-base">{post.like}</Text>
           </View>
-        </View>
+        </View> */}
       </View>
 
       <Image
-        source={{ uri: post.postImg }}
+        source={{ uri: post.thumbImg }}
         className="w-24 h-24 rounded-xl"
         resizeMode="cover"
       />

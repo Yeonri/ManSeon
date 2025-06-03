@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Comment } from "../../../api/types/Comment";
 import TagFollow from "../../../assets/images/tag_follow.svg";
 import { DeleteAlert } from "../../../utils/deleteAlert";
 import { FormatTime } from "../../../utils/formatTime";
@@ -19,26 +18,42 @@ import { useUserStore } from "../../../store/userStore";
 import {
   useDeleteComment,
   useEditComment,
+  useGetComments,
 } from "../../../api/quries/useComment";
 
-export function CommentList({ comments }: { comments: Comment[] }) {
+export function CommentList({ boardId }: { boardId: number }) {
   const user = useUserStore((state) => state.user);
   const [edit, setEdit] = useState<boolean>(false);
   const [editCommentId, setEditCommentId] = useState<number>(0);
   const [commentContent, setCommentContent] = useState("");
+  const { data: response } = useGetComments(boardId);
+  console.log("응답 전체 :", response);
+
+  const comments = response?.data ?? [];
+  console.log("전체 댓글:", comments);
+
   const { mutate: editComment } = useEditComment();
   const { mutate: deleteComment } = useDeleteComment();
 
+  const [isToggleOpen, setIsToggleOpen] = useState<number | null>(null);
+
+  // 댓글 편집(편집 중인 댓글 id, 편집중인 내용, 편집 상태(T/F))
   function handleEdit(id: number, content: string) {
     setEditCommentId(id);
     setCommentContent(content);
     setEdit(true);
   }
 
+  // 편집 취소
   function cancelEdit() {
     setCommentContent("");
     setEditCommentId(0);
     setEdit(false);
+  }
+
+  // 답글 토글
+  function toggleRecomment() {
+    setIsToggleOpen((prev) => (prev === commentId ? null : commentId));
   }
 
   return (
@@ -90,7 +105,9 @@ export function CommentList({ comments }: { comments: Comment[] }) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() =>
-                      DeleteAlert("댓글", () => deleteComment(item.commentId))
+                      DeleteAlert("댓글", () =>
+                        deleteComment({ boardId, commentId: item.commentId })
+                      )
                     }
                     className="h-6"
                   >
@@ -130,7 +147,11 @@ export function CommentList({ comments }: { comments: Comment[] }) {
                 <TouchableOpacity
                   onPress={() =>
                     editComment(
-                      { commentId: editCommentId, content: commentContent },
+                      {
+                        boardId: boardId,
+                        commentId: editCommentId,
+                        content: commentContent,
+                      },
                       {
                         onSuccess: () => {
                           cancelEdit();
@@ -147,11 +168,12 @@ export function CommentList({ comments }: { comments: Comment[] }) {
           ) : (
             <Text className="ml-10">{item.commentContent}</Text>
           )}
+          {/* 답글 */}
           <View className="mt-2">
-            <RecommentList recomments={item.recomment} />
+            <RecommentList recomments={item.recomment} boardId={boardId} />
           </View>
           <View className="my-4">
-            <AddRecomment postId={item.boardId} commentId={item.commentId} />
+            <AddRecomment boardId={item.boardId} commentId={item.commentId} />
           </View>
         </View>
       )}

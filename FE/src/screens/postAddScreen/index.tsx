@@ -28,7 +28,7 @@ export function PostAddScreen({ navigation }: PostAddScreenProps) {
   const { mutate: addPost } = useAddPost();
 
   function handleSave() {
-    // console.log("게시글 추가 시작");
+    console.log("게시글 추가 요청");
     return addPost(
       {
         title: addTitle,
@@ -37,11 +37,11 @@ export function PostAddScreen({ navigation }: PostAddScreenProps) {
       },
       {
         onSuccess: () => {
-          // console.log("게시글 추가 성공");
+          console.log("게시글 추가 성공");
           navigation.navigate("Community");
         },
         onError: () => {
-          // console.log("게시글 추가 실패");
+          console.log("게시글 추가 실패");
           Alert.alert("게시글 추가 실패", "잠시 후 다시 시도해주세요.");
         },
       }

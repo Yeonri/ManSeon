@@ -7,11 +7,11 @@ import { useLogin } from "../../api/quries/useLogin";
 import { AuthStackParams } from "../../api/types/AuthStackParams";
 // import LogoKakao from "../../assets/images/logo_kakao.svg";
 // import LogoNaver from "../../assets/images/logo_naver.svg";
+import { Eye, EyeOff } from "lucide-react-native";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderCenter } from "../../components/common/headerCenter";
 import { useLoginStore } from "../../store/loginStore";
 import { tokenStorage } from "../../utils/tokenStorage";
-import { Eye, EyeOff } from "lucide-react-native";
 
 interface LoginScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams, "Login"> {}
@@ -52,6 +52,7 @@ export function LoginScreen() {
           <TextInput
             placeholder="이메일을 입력해 주세요"
             placeholderTextColor="#A1A1A1"
+            inputMode="email"
             value={email}
             onChangeText={setEmail}
             className="p-4 rounded-2xl text-neutral-800 bg-neutral-100"

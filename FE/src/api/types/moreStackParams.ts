@@ -13,7 +13,6 @@ export type MoreStackParams = {
     description: string;
     image: ImageSourcePropType;
     collection_info: {
-      location_name: string;
       latitude: number;
       longitude: number;
       caught_at: string;
@@ -22,4 +21,5 @@ export type MoreStackParams = {
   Suggestions: undefined;
   Profile: undefined;
   ProfileEdit: undefined;
+  Friends: undefined;
 };
