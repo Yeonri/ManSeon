@@ -8,7 +8,7 @@ module.exports = function (api) {
         {
           moduleName: "@env",
           path: ".env",
-          allowlist: ["CHATBOT_API", "API_BASE","IMAGE_API"],
+          allowlist: ["CHATBOT_API", "API_BASE", "IMAGE_API"],
         },
       ],
       "react-native-reanimated/plugin",

@@ -31,7 +31,7 @@ function subscribeTokenRefresh(cb: (token: string) => void) {
 }
 
 // 토큰 갱신 요청
-async function refreshingToken(): Promise<AxiosResponse|null> {
+async function refreshingToken(): Promise<AxiosResponse | null> {
   // 토큰 저장소에서 갱신해야하는 토큰을 꺼내서 보냄
   const refreshToken = await AsyncStorage.getItem("refreshToken");
   console.log("리프레시 토큰 요청 시도: ", refreshToken);
@@ -105,7 +105,7 @@ authClient.interceptors.response.use(
       try {
         // 응답에서 갱신된 accessToken과 refreshToken을 확인 후 토큰 저장소 갱신
         const response = await refreshingToken();
-        
+
         // response가 null인 경우
         if (!response) {
           await AsyncStorage.removeItem("accessToken");

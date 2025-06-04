@@ -17,7 +17,7 @@ import { PhotoFile } from "react-native-vision-camera";
 import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
-import { useCameraPermission } from "../../hooks/useCameraPermission";
+import usePermission from "../../hooks/usePermission";
 import { RootStackParams } from "../../types/RootStackParams";
 import { getFishImage } from "../../utils/getFishImage";
 import {
@@ -27,7 +27,7 @@ import {
 import { TranslateFishName } from "../../utils/translateFishName";
 
 export function CameraScreen() {
-  const hasCameraPermission = useCameraPermission();
+  const hasCameraPermission = usePermission("카메라", "vision-camera");
   const [photo, setPhoto] = useState<PhotoFile | null>(null);
   const [selectedFishName, setSelectedFishName] = useState<string | null>(null);
   const [next, setNext] = useState<boolean>(true);

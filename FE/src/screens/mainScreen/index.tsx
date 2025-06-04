@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Geolocation from "react-native-geolocation-service";
+import { PERMISSIONS } from "react-native-permissions";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useMyFishes } from "../../api/quries/useMyFishes";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
@@ -20,7 +21,7 @@ import { FishingDonutChart } from "../../components/main/fishingDonutChart";
 import { FishingPointCard } from "../../components/main/fishingPointCard";
 import { FishingResult } from "../../components/main/fishingResult";
 import moonList from "../../data/moonList";
-import { useLocationPermission } from "../../hooks/useLocationPermission";
+import usePermission from "../../hooks/usePermission";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
@@ -34,7 +35,7 @@ interface MainScreenNavigationProps
   extends NativeStackNavigationProp<MainStackParams> {}
 
 export function MainScreen() {
-  const hasLocationPermission = useLocationPermission();
+  const hasLocationPermission = usePermission("위치", PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
 
   const [keyword, setKeyword] = useState("");
 

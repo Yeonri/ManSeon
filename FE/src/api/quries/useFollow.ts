@@ -1,9 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
-    followUser,
-    getMyFollowerList,
-    getMyFollowingList,
-    unfollowUser,
+  followUser,
+  getMyFollowerList,
+  getMyFollowingList,
+  unfollowUser,
 } from "../follow";
 
 // 팔로우
