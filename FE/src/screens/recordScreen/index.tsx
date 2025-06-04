@@ -18,17 +18,17 @@ import Geolocation from "react-native-geolocation-service";
 import { SelectNumber } from "../../components/cameraRecord/selectNumber";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { SelectTag } from "../../components/common/selectTag";
-import { RootStackParams } from "../../types/RootStackParams";
 // import { Toggle } from "../../components/cameraRecord/toggle";
 import { HalfButton } from "../../components/common/halfButton";
+import { AppStackParams } from "../../navigation/types";
 // import { useAddRecord } from "../../api/quries/useRecord";
 
 type Bait = "지렁이" | "새우" | "게" | "루어";
 type Method = "낚싯대" | "맨손" | "뜰채";
 
 export function RecordScreen() {
-  const route = useRoute<RouteProp<RootStackParams, "Record">>();
-  const navigation = useNavigation<NavigationProp<RootStackParams>>();
+  const route = useRoute<RouteProp<AppStackParams, "Record">>();
+  const navigation = useNavigation<NavigationProp<AppStackParams>>();
   const { photoUri, fishName } = route.params;
   const [selectedValue, setSelectedValue] = useState(10);
   // const [visibility, setVisibility] = useState<"공개" | "비공개">("공개");
@@ -57,7 +57,7 @@ export function RecordScreen() {
         {
           text: "확인",
           onPress: () => {
-            navigation.navigate("BottomTabs", {
+            navigation.navigate("BottomTab", {
               screen: "home",
               params: {
                 screen: "Fishing",

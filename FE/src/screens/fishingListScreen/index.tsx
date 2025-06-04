@@ -7,7 +7,7 @@ import { Image, SectionList, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetRecords } from "../../api/quries/useRecord";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
-import { FishingStackParams } from "../../types/FishingStackParams";
+import { FishingStackParams } from "../../navigation/types";
 
 interface FishingListScreenNavigationProps
   extends NativeStackNavigationProp<FishingStackParams, "FishingList"> {}

@@ -4,12 +4,12 @@ import { useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useLogin } from "../../api/quries/useLogin";
-import { AuthStackParams } from "../../types/AuthStackParams";
 // import LogoKakao from "../../assets/images/logo_kakao.svg";
 // import LogoNaver from "../../assets/images/logo_naver.svg";
 import { Eye, EyeOff } from "lucide-react-native";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderCenter } from "../../components/common/headerCenter";
+import { AuthStackParams } from "../../navigation/types";
 import { useLoginStore } from "../../store/loginStore";
 import tokenStorage from "../../utils/tokenStorage";
 

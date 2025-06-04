@@ -18,8 +18,9 @@ import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import usePermission from "../../hooks/usePermission";
+import { AppStackParams } from "../../navigation/types";
 import { DetectionResult } from "../../types/DetectionResult";
-import { RootStackParams } from "../../types/RootStackParams";
+import getFishImage from "../../utils/getFishImage";
 import classifyFishImage from "../../utils/nativeClassifier";
 import translateFishName from "../../utils/translateFishName";
 
@@ -35,7 +36,7 @@ export function CameraScreen() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const sheetRef = useRef<Modalize>(null);
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<AppStackParams>>();
   const [detectedResults, setDetectedResults] = useState<DetectionResult[]>([]);
   const { width, height } = useWindowDimensions();
   const imageWidth = width * 0.3;

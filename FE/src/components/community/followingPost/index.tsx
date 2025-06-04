@@ -4,8 +4,8 @@ import { Handshake } from "lucide-react-native";
 import { useCallback } from "react";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { useGetFriendsPosts } from "../../../api/quries/usePost";
+import { CommunityStackParams } from "../../../navigation/types";
 import { useUserStore } from "../../../store/userStore";
-import { CommunityStackParams } from "../../../types/CommunityStackParams";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}

@@ -12,11 +12,11 @@ import TagFollow from "../../assets/images/tag_follow.svg";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { Loading } from "../../components/common/loading";
 import { AddComment } from "../../components/community/addComment";
-import { CommunityStackParams } from "../../types/CommunityStackParams";
 // import formatTime from "../../utils/formatTime";
 import { IMAGE_API } from "@env";
 import { useEffect } from "react";
 import { CommentList } from "../../components/community/commentList";
+import { CommunityStackParams } from "../../navigation/types";
 import { useUserStore } from "../../store/userStore";
 import deleteAlert from "../../utils/deleteAlert";
 

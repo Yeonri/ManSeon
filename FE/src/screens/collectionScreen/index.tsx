@@ -4,7 +4,7 @@ import { Image, ScrollView, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
-import type { MoreStackParams } from "../../types/MoreStackParams";
+import { MoreStackParams } from "../../navigation/types";
 
 type CollectionDetailRouteProp = RouteProp<MoreStackParams, "CollectionDetail">;
 

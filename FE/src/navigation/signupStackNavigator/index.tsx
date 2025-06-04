@@ -4,7 +4,7 @@ import { SignupEmailScreen } from "../../screens/signupEmailScreen";
 import { SignupNameScreen } from "../../screens/signupNameScreen";
 import { SignupPasswordScreen } from "../../screens/signupPasswordScreen";
 import { SignupPhoneNumScreen } from "../../screens/signupPhoneNumScreen";
-import { SignupStackParams } from "../../types/SignupStackParams";
+import { SignupStackParams } from "../types";
 
 const Stack = createNativeStackNavigator<SignupStackParams>();
 

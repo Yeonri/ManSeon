@@ -8,7 +8,7 @@ import CollectionCard from "../../components/collection/collectionCard";
 import Dropdown from "../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import fishBaseData from "../../data/fish";
-import type { MoreStackParams } from "../../types/MoreStackParams";
+import { MoreStackParams } from "../../navigation/types";
 import fishImageMap from "../../utils/fishImageMap";
 import mergeCollectedFishData from "../../utils/mergeCollectedFishData";
 

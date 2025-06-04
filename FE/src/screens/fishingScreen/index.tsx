@@ -5,7 +5,7 @@ import { Image, ScrollView, Text, View } from "react-native";
 import { useGetRecordDetail } from "../../api/quries/useRecord";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { SelectTag } from "../../components/common/selectTag";
-import { FishingStackParams } from "../../types/FishingStackParams";
+import { FishingStackParams } from "../../navigation/types";
 
 interface FishingScreenProps
   extends NativeStackScreenProps<FishingStackParams, "Fishing"> {}

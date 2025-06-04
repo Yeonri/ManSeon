@@ -11,29 +11,29 @@ import {
 import { TouchableOpacity } from "react-native";
 import { CameraScreen } from "../../screens/cameraScreen";
 import { MapScreen } from "../../screens/mapScreen";
-import { RootStackParams } from "../../types/RootStackParams";
 import { CommunityStackNavigator } from "../communityStackNavigator";
-import { MainStackNavigator } from "../mainStackNavigator";
+import { HomeStackNavigator } from "../mainStackNavigator";
 import { MoreStackNavigator } from "../moreStackNavigator";
+import { AppStackParams } from "../types";
 
 const Tab = createBottomTabNavigator();
 
 function CustomBottomTabButton() {
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParams>>();
+    useNavigation<NativeStackNavigationProp<AppStackParams>>();
 
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Camera")}
-      className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-blue-800 justify-center items-center"
+      className="absolute -top-6 left-1/2 -translate-x-1/2 w-20 h-20 rounded-full bg-blue-800 justify-center items-center"
     >
-      <Camera color="white" size={36} />
+      <Camera color="white" size={30} />
     </TouchableOpacity>
   );
 }
 
 function renderTabIcon(IconComponent: React.ElementType) {
-  return ({ color }: { color: string }) => <IconComponent color={color} />;
+  return ({ color }: { color: string }) => <IconComponent color={color} size={22}/>;
 }
 
 export function BottomTabNavigator() {
@@ -42,14 +42,14 @@ export function BottomTabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          height: 60,
+          height: 70,
           paddingTop: 5,
         },
       }}
     >
       <Tab.Screen
         name="home"
-        component={MainStackNavigator}
+        component={HomeStackNavigator}
         options={{
           title: "홈",
           tabBarIcon: renderTabIcon(House),

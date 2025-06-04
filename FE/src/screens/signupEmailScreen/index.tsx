@@ -8,7 +8,7 @@ import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
 import { ProgressBar } from "../../components/signup/progressBar";
-import { SignupStackParams } from "../../types/SignupStackParams";
+import { SignupStackParams } from "../../navigation/types";
 import handleError from "../../utils/handleError";
 
 interface SignupEmailScreenNavigationProps

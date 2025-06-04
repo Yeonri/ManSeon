@@ -13,8 +13,8 @@ import { useGetFriendsPosts, useGetPosts } from "../../api/quries/usePost";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { FollowingPost } from "../../components/community/followingPost";
 import { PostList } from "../../components/community/postList";
+import { CommunityStackParams } from "../../navigation/types";
 import { useUserStore } from "../../store/userStore";
-import { CommunityStackParams } from "../../types/CommunityStackParams";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}

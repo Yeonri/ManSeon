@@ -6,7 +6,7 @@ import { useUserById } from "../../api/quries/useUser";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
 import { UserPostList } from "../../components/profile/userPostList";
-import { CommunityStackParams } from "../../types/CommunityStackParams";
+import { CommunityStackParams } from "../../navigation/types";
 
 type UserProfileRoute = RouteProp<CommunityStackParams, "UserProfile">;
 

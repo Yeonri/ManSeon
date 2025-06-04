@@ -3,10 +3,10 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { useGetPosts } from "../../../api/quries/usePost";
 import DefaultImage from "../../../assets/images/image_default.svg";
-import { CommunityStackParams } from "../../../types/CommunityStackParams";
 // import { Heart, MessageSquareMore } from "lucide-react-native";
 import { IMAGE_API } from "@env";
 import { useCallback } from "react";
+import { CommunityStackParams } from "../../../navigation/types";
 import formatTime from "../../../utils/formatTime";
 
 interface CommunityScreenNavigationProps

@@ -9,32 +9,32 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import Geolocation from "react-native-geolocation-service";
 import { PERMISSIONS } from "react-native-permissions";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useMyFishes } from "../../api/quries/useMyFishes";
-import { useGetMyInfo } from "../../api/quries/useMyinfo";
-import { useGetLatestPost } from "../../api/quries/usePost";
-import { HeaderLogo } from "../../components/common/headerLogo";
-import { PermissionCheck } from "../../components/common/permissionCheck";
-import { SearchInput } from "../../components/common/searchInput";
-import { SearchModal } from "../../components/common/searchModal";
-import { ChatbotButton } from "../../components/main/chatbotButton";
-import { FishingDonutChart } from "../../components/main/fishingDonutChart";
-import { FishingPointCard } from "../../components/main/fishingPointCard";
-import { FishingResult } from "../../components/main/fishingResult";
-import moonList from "../../data/moonList";
-import usePermission from "../../hooks/usePermission";
-import todayFishingPoint from "../../mocks/todayFishingPoint.json";
-import { useLocationStore } from "../../store/locationStore";
-import { useUserStore } from "../../store/userStore";
-import { MainStackParams } from "../../types/MainStackParams";
-import countFishingData from "../../utils/countFishingData";
+import { useMyFishes } from "../../../api/quries/useMyFishes";
+import { useGetMyInfo } from "../../../api/quries/useMyinfo";
+import { useGetLatestPost } from "../../../api/quries/usePost";
+import { HeaderLogo } from "../../../components/common/headerLogo";
+import { PermissionCheck } from "../../../components/common/permissionCheck";
+import { SearchInput } from "../../../components/common/searchInput";
+import { SearchModal } from "../../../components/common/searchModal";
+import { ChatbotButton } from "../../../components/main/chatbotButton";
+import { FishingDonutChart } from "../../../components/main/fishingDonutChart";
+import { FishingPointCard } from "../../../components/main/fishingPointCard";
+import { FishingResult } from "../../../components/main/fishingResult";
+import moonList from "../../../data/moonList";
+import usePermission from "../../../hooks/usePermission";
+import todayFishingPoint from "../../../mocks/todayFishingPoint.json";
+import { HomeStackParams } from "../../../navigation/types";
+import { useLocationStore } from "../../../store/locationStore";
+import { useUserStore } from "../../../store/userStore";
+import countFishingData from "../../../utils/countFishingData";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-interface MainScreenNavigationProps
-  extends NativeStackNavigationProp<MainStackParams> {}
+interface HomeScreenNavigationProps
+  extends NativeStackNavigationProp<HomeStackParams> {}
 
-export function MainScreen() {
+export function HomeScreen() {
   const hasLocationPermission = usePermission(
     "위치",
     PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
@@ -44,7 +44,7 @@ export function MainScreen() {
 
   const [showModal, setShowModal] = useState(false);
 
-  const navigation = useNavigation<MainScreenNavigationProps>();
+  const navigation = useNavigation<HomeScreenNavigationProps>();
 
   const { data: user } = useGetMyInfo();
   console.log("유저정보 확인하기:", user);
@@ -88,7 +88,11 @@ export function MainScreen() {
     return <PermissionCheck name="위치" />;
   }
 
-  if (!user) return null;
+  if (!user) return (
+    <SafeAreaView edges={["top"]} className="flex-1">
+      <HeaderLogo />
+    </SafeAreaView>
+  );
 
   const nowKST = dayjs().tz("Asia/Seoul");
   const day = nowKST.date();
@@ -162,7 +166,7 @@ export function MainScreen() {
             {collectionCount === 0 ? (
               <View className="flex-row justify-center mt-3">
                 <Image
-                  source={require("../../assets/images/chatbot2.png")}
+                  source={require("../../../assets/images/chatbot2.png")}
                   className="h-44 w-44 -ml-5"
                   resizeMode="contain"
                 />

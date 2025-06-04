@@ -5,7 +5,7 @@ import { PostEditScreen } from "../../screens/postEditScreen";
 import { PostScreen } from "../../screens/postScreen";
 import { ProfileScreen } from "../../screens/profileScreen";
 import { UserProfileScreen } from "../../screens/userProfileScreen";
-import { CommunityStackParams } from "../../types/CommunityStackParams";
+import { CommunityStackParams } from "../types";
 
 const Stack = createNativeStackNavigator<CommunityStackParams>();
 

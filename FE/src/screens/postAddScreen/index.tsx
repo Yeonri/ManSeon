@@ -14,7 +14,7 @@ import { useAddPost } from "../../api/quries/usePost";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { UploadImage } from "../../components/community/uploadImage";
-import { CommunityStackParams } from "../../types/CommunityStackParams";
+import { CommunityStackParams } from "../../navigation/types";
 import selectImage from "../../utils/selectImage";
 
 interface PostAddScreenProps

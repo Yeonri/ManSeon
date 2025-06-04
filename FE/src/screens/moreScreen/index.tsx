@@ -7,8 +7,8 @@ import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { NoticeList } from "../../components/more/notice";
 import { ProfileCard } from "../../components/more/profile";
+import { MoreStackParams } from "../../navigation/types";
 import { useUserStore } from "../../store/userStore";
-import { MoreStackParams } from "../../types/MoreStackParams";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams> {}

@@ -10,8 +10,8 @@ import { ProhibitedScreen } from "../../screens/prohibitedScreen";
 import { RuleScreen } from "../../screens/ruleScreen";
 import { SuggestionsScreen } from "../../screens/suggestionsScreen";
 import { TutorialScreen } from "../../screens/tutorialScreen";
-import { MoreStackParams } from "../../types/MoreStackParams";
 import { FishingStackNavigator } from "../fishingStackNavigator";
+import { MoreStackParams } from "../types";
 
 const Stack = createNativeStackNavigator<MoreStackParams>();
 

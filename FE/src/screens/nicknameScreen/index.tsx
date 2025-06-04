@@ -8,7 +8,7 @@ import { useSignup } from "../../api/quries/useSignup";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
-import { SignupStackParams } from "../../types/SignupStackParams";
+import { SignupStackParams } from "../../navigation/types";
 
 interface SignupNameScreenNavigationProps
   extends NativeStackNavigationProp<SignupStackParams> {}

@@ -7,7 +7,7 @@ import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { useMyPosts } from "../../api/quries/useMypost";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
-import { MoreStackParams } from "../../types/MoreStackParams";
+import { MoreStackParams } from "../../navigation/types";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams, "More"> {}
