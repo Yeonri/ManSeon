@@ -3,14 +3,14 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ChevronRight } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useGetMyPost } from "../../../api/quries/usePost";
-import { MoreStackParams } from "../../../navigation/types";
+import { SettingStackParams } from "../../../navigation/types";
 import { PostCard } from "../postCard";
 
-interface MoreScreenNavigationProps
-  extends NativeStackNavigationProp<MoreStackParams, "More"> {}
+interface SettingScreenNavigationProps
+  extends NativeStackNavigationProp<SettingStackParams, "Setting"> {}
 
 export function MyPostList() {
-  const navigation = useNavigation<MoreScreenNavigationProps>();
+  const navigation = useNavigation<SettingScreenNavigationProps>();
   const { data: posts = [] } = useGetMyPost();
 
   console.log("게시글 확인:", posts);

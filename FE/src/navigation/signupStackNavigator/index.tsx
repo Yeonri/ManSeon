@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NicknameScreen } from "../../screens/nicknameScreen";
-import { SignupEmailScreen } from "../../screens/signupEmailScreen";
-import { SignupNameScreen } from "../../screens/signupNameScreen";
-import { SignupPasswordScreen } from "../../screens/signupPasswordScreen";
-import { SignupPhoneNumScreen } from "../../screens/signupPhoneNumScreen";
+import { NicknameScreen } from "../../screens/auth/nicknameScreen";
+import { SignupEmailScreen } from "../../screens/auth/signupEmailScreen";
+import { SignupNameScreen } from "../../screens/auth/signupNameScreen";
+import { SignupPasswordScreen } from "../../screens/auth/signupPasswordScreen";
+import { SignupPhoneNumScreen } from "../../screens/auth/signupPhoneNumScreen";
 import { SignupStackParams } from "../types";
 
 const Stack = createNativeStackNavigator<SignupStackParams>();

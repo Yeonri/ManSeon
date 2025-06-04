@@ -16,7 +16,7 @@ export type SignupStackParams = {
 
 export type AppStackParams = {
   BottomTab: {
-    screen: "home" | "map" | "camera" | "community" | "more";
+    screen: "home" | "map" | "camera" | "community" | "setting";
     params?: any;
   };
 
@@ -66,8 +66,8 @@ export type FishingStackParams = {
 } & ParamListBase;
 
 
-export type MoreStackParams = {
-  More: undefined;
+export type SettingStackParams = {
+  Setting: undefined;
   Tutorial: undefined;
   Prohibited: undefined;
   Rule: undefined;

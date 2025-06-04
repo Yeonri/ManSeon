@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CameraScreen } from "../../screens/cameraScreen";
-import { ChatbotScreen } from "../../screens/chatbotScreen";
-import { RecordScreen } from "../../screens/recordScreen";
+import { CameraScreen } from "../../screens/camera/cameraScreen";
+import { RecordScreen } from "../../screens/camera/recordScreen";
+import { ChatbotScreen } from "../../screens/chat/chatbotScreen";
 import { BottomTabNavigator } from "../bottomTabNavigator";
 import { AppStackParams } from "../types";
 
