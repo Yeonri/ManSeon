@@ -1,22 +1,14 @@
 import { NativeModules, Platform } from "react-native";
+import { DetectionResult } from "../types/DetectionResult";
 
 const { ImageClassifier } = NativeModules;
-
-export interface DetectionResult {
-  className: string;
-  score: number;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
 
 /**
  * 이미지 경로를 받아 객체 탐지 수행
  * @param imagePath 이미지 파일 경로 (file:// 접두사 포함 또는 미포함)
  * @returns 탐지된 객체 배열
  */
-export async function classifyFishImage(
+async function classifyFishImage(
   imagePath: string
 ): Promise<DetectionResult[]> {
   try {
@@ -45,3 +37,5 @@ export async function classifyFishImage(
     throw error;
   }
 }
+
+export default classifyFishImage;

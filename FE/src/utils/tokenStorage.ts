@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const ACCESS_TOKEN_KEY = "accessToken";
 const REFRESH_TOKEN_KEY = "refreshToken";
 
-export const tokenStorage = {
+const tokenStorage = {
   async save(accessToken: string, refreshToken: string) {
     await AsyncStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     await AsyncStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
@@ -19,3 +19,5 @@ export const tokenStorage = {
     return await AsyncStorage.getItem(REFRESH_TOKEN_KEY);
   },
 };
+
+export default tokenStorage;

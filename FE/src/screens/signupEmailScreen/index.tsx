@@ -9,7 +9,7 @@ import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
 import { ProgressBar } from "../../components/signup/progressBar";
 import { SignupStackParams } from "../../types/SignupStackParams";
-import { handleError } from "../../utils/handleError";
+import handleError from "../../utils/handleError";
 
 interface SignupEmailScreenNavigationProps
   extends NativeStackNavigationProp<SignupStackParams> {}

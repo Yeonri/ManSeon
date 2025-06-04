@@ -25,6 +25,8 @@ const fishNameMap: Record<string, string> = {
   Japanese_seabass: "농어",
 };
 
-export function TranslateFishName(eng: string): string {
+function translateFishName(eng: string): string {
   return fishNameMap[eng] || "알 수 없음";
 }
+
+export default translateFishName;

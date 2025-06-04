@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import {
-    check,
-    Permission,
-    PermissionStatus,
-    request,
-    RESULTS,
+  check,
+  Permission,
+  PermissionStatus,
+  request,
+  RESULTS,
 } from "react-native-permissions";
 import { Camera } from "react-native-vision-camera";
-import { PermissionAlert } from "../utils/permissionAlert";
+import { PermissionAlert } from "../utils/PermissionAlert";
 
 type PermissionType = Permission | "vision-camera";
 
@@ -15,7 +15,7 @@ type PermissionType = Permission | "vision-camera";
 function isAuthorized(status: PermissionStatus | string): boolean {
   return (
     status === RESULTS.GRANTED ||
-    // 카메라 권한 (vision-camera) 
+    // 카메라 권한 (vision-camera)
     status === "granted" ||
     status === "authorized"
   );

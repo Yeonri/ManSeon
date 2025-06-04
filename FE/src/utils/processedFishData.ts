@@ -1,11 +1,15 @@
 import collection from "../mocks/collectionMocks.json";
-import imageMap from "./imageMap";
+import getFishImage from "./getFishImage";
 
 const processedFishData = collection.map((fish) => {
-  const filename = fish.image.split("/").pop();
+  const filename = fish.image
+    .split("/")
+    .pop()
+    ?.toLowerCase()
+    .replace(".png", "");
   return {
     ...fish,
-    image: imageMap[filename as string],
+    image: filename ? getFishImage(filename) : undefined,
   };
 });
 

@@ -1,7 +1,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { ko } from "date-fns/locale";
 
-export function FormatTime(time: string) {
+function formatTime(time: string) {
   const formatted = formatDistanceToNow(new Date(time), {
     addSuffix: true,
     locale: ko,
@@ -13,3 +13,5 @@ export function FormatTime(time: string) {
 
   return formatted;
 }
+
+export default formatTime

@@ -1,4 +1,4 @@
-export const windArrowImageMap = {
+const windArrowImageMap = {
   북: require("../../assets/images/windArrow/arrow_1.png"),
   북동: require("../../assets/images/windArrow/arrow_2.png"),
   동: require("../../assets/images/windArrow/arrow_3.png"),
@@ -8,3 +8,5 @@ export const windArrowImageMap = {
   서: require("../../assets/images/windArrow/arrow_7.png"),
   북서: require("../../assets/images/windArrow/arrow_8.png"),
 };
+
+export default windArrowImageMap

@@ -18,13 +18,10 @@ import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import usePermission from "../../hooks/usePermission";
+import { DetectionResult } from "../../types/DetectionResult";
 import { RootStackParams } from "../../types/RootStackParams";
-import { getFishImage } from "../../utils/getFishImage";
-import {
-  classifyFishImage,
-  DetectionResult,
-} from "../../utils/nativeClassifier";
-import { TranslateFishName } from "../../utils/translateFishName";
+import classifyFishImage from "../../utils/nativeClassifier";
+import translateFishName from "../../utils/translateFishName";
 
 export function CameraScreen() {
   const hasCameraPermission = usePermission("카메라", "vision-camera");
@@ -50,7 +47,7 @@ export function CameraScreen() {
     if (photo?.path && selectedFishName) {
       navigation.navigate("Record", {
         photoUri: photo.path,
-        fishName: TranslateFishName(selectedFishName),
+        fishName: translateFishName(selectedFishName),
       });
     }
   };
@@ -206,7 +203,7 @@ export function CameraScreen() {
                       />
                       <View className="justify-center items-center gap-1">
                         <Text className="text-4xl font-bold text-neutral-800">
-                          {TranslateFishName(item.className)}
+                          {translateFishName(item.className)}
                         </Text>
                         <Text className="text-2xl text-neutral-600">
                           {(item.score * 100).toFixed(1)}%

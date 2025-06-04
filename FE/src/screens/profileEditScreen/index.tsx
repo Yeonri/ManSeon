@@ -9,12 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { launchImageLibrary } from "react-native-image-picker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { HalfButton } from "../../components/common/halfButton";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { safeUpdateUserInfo } from "../../components/more/profileEdit";
 import { useUserStore } from "../../store/userStore";
-import { selectImage } from "../../utils/selectImage";
+import selectImage from "../../utils/selectImage";
 
 export function ProfileEditScreen() {
   const navigation = useNavigation();

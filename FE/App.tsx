@@ -8,7 +8,7 @@ import { UserInitializer } from "./src/components/common/userInitializer";
 import { AppNavigator } from "./src/navigation/appNavigator";
 import { AuthStackNavigator } from "./src/navigation/authStackNavigator";
 import { useLoginStore } from "./src/store/loginStore";
-import { tokenStorage } from "./src/utils/tokenStorage";
+import tokenStorage from "./src/utils/tokenStorage";
 
 const queryClient = new QueryClient();
 

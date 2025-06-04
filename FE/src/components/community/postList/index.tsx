@@ -7,7 +7,7 @@ import { CommunityStackParams } from "../../../types/CommunityStackParams";
 // import { Heart, MessageSquareMore } from "lucide-react-native";
 import { IMAGE_API } from "@env";
 import { useCallback } from "react";
-import { FormatTime } from "../../../utils/formatTime";
+import formatTime from "../../../utils/formatTime";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}
@@ -69,7 +69,7 @@ export function PostList() {
                   </Text>
                   {/* 작성 시간 */}
                   <Text className="text-neutral-600">
-                    {FormatTime(item.createdAt)}
+                    {formatTime(item.createdAt)}
                   </Text>
                 </View>
                 {/* <View className="flex-row gap-3"> */}

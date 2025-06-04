@@ -1,4 +1,4 @@
-export const badgeImages: Record<number, any> = {
+export const badgeImageMap: Record<number, any> = {
   1: require("../../assets/images/badge/badge_1.png"),
   2: require("../../assets/images/badge/badge_2.png"),
   3: require("../../assets/images/badge/badge_3.png"),
@@ -10,7 +10,7 @@ export const badgeImages: Record<number, any> = {
   9: require("../../assets/images/badge/badge_9.png"),
 };
 
-export const badgeLockImages: Record<number, any> = {
+export const badgeLockImageMap: Record<number, any> = {
   1: require("../../assets/images/badge/badge_1_lock.png"),
   2: require("../../assets/images/badge/badge_2_lock.png"),
   3: require("../../assets/images/badge/badge_3_lock.png"),

@@ -17,8 +17,8 @@ import DefaultProfile from "../../../assets/images/image_default.svg";
 import TagFollow from "../../../assets/images/tag_follow.svg";
 import { useUserStore } from "../../../store/userStore";
 import { Recomment } from "../../../types/Recomment";
-import { DeleteAlert } from "../../../utils/deleteAlert";
-import { FormatTime } from "../../../utils/formatTime";
+import deleteAlert from "../../../utils/deleteAlert";
+import formatTime from "../../../utils/formatTime";
 
 export function RecommentList({
   recomments,
@@ -90,7 +90,7 @@ export function RecommentList({
                     </TouchableOpacity>
                     <TouchableOpacity
                       onPress={() =>
-                        DeleteAlert("답글", () =>
+                        deleteAlert("답글", () =>
                           deleteRecomment({
                             boardId,
                             commentId: item.recommentId,
@@ -104,7 +104,7 @@ export function RecommentList({
                   </>
                 )}
                 <Text className="text-neutral-400 text-sm">
-                  {FormatTime(item.createdAt)}
+                  {formatTime(item.createdAt)}
                 </Text>
               </View>
             </View>

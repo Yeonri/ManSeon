@@ -1,4 +1,4 @@
-export const fishImageMap: Record<string, any> = {
+const fishImageMap: Record<string, any> = {
   "../assets/images/fish/black_sea_bream.png": require("../../assets/images/fish/black_sea_bream.png"),
   "../assets/images/fish/cod.png": require("../../assets/images/fish/cod.png"),
   "../assets/images/fish/crab.png": require("../../assets/images/fish/crab.png"),
@@ -24,3 +24,5 @@ export const fishImageMap: Record<string, any> = {
   "../assets/images/fish/japanese_amberjack.png": require("../../assets/images/fish/japanese_amberjack.png"),
   "../assets/images/fish/japanese_seabass.png": require("../../assets/images/fish/japanese_seabass.png"),
 };
+
+export default fishImageMap

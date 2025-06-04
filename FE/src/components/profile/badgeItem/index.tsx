@@ -1,5 +1,5 @@
 import { Image, View } from "react-native";
-import { badgeImages, badgeLockImages } from "../../../utils/badgeImage";
+import { badgeImageMap, badgeLockImageMap } from "../../../utils/badgeImageMap";
 
 interface BadgeItemProps {
   id: number;
@@ -35,7 +35,7 @@ export function BadgeItem({ id, user }: BadgeItemProps) {
         return false;
     }
   })();
-  const badgeImage = isUnlocked ? badgeImages[id] : badgeLockImages[id];
+  const badgeImage = isUnlocked ? badgeImageMap[id] : badgeLockImageMap[id];
 
   return (
     <View className="w-28 h-28 items-center justify-center rounded-2xl">

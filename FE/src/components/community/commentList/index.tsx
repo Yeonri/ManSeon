@@ -1,3 +1,4 @@
+import { Pencil, Trash2 } from "lucide-react-native";
 import { useState } from "react";
 import {
   FlatList,
@@ -7,19 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import TagFollow from "../../../assets/images/tag_follow.svg";
-import { DeleteAlert } from "../../../utils/deleteAlert";
-import { FormatTime } from "../../../utils/formatTime";
-import { AddRecomment } from "../addRecomment";
-import { RecommentList } from "../recommentList";
-import DefaultProfile from "../../../assets/images/image_default.svg";
-import { Pencil, Trash2 } from "lucide-react-native";
-import { useUserStore } from "../../../store/userStore";
 import {
   useDeleteComment,
   useEditComment,
   useGetComments,
 } from "../../../api/quries/useComment";
+import DefaultProfile from "../../../assets/images/image_default.svg";
+import TagFollow from "../../../assets/images/tag_follow.svg";
+import { useUserStore } from "../../../store/userStore";
+import deleteAlert from "../../../utils/deleteAlert";
+import formatTime from "../../../utils/formatTime";
+import { AddRecomment } from "../addRecomment";
+import { RecommentList } from "../recommentList";
 
 export function CommentList({ boardId }: { boardId: number }) {
   const user = useUserStore((state) => state.user);
@@ -105,7 +105,7 @@ export function CommentList({ boardId }: { boardId: number }) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() =>
-                      DeleteAlert("댓글", () =>
+                      deleteAlert("댓글", () =>
                         deleteComment({ boardId, commentId: item.commentId })
                       )
                     }
@@ -119,7 +119,7 @@ export function CommentList({ boardId }: { boardId: number }) {
               )}
               {/* 작성시간 */}
               <Text className="text-neutral-400 text-sm">
-                {FormatTime(item.createdAt)}
+                {formatTime(item.createdAt)}
               </Text>
             </View>
           </View>

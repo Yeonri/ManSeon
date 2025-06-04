@@ -26,7 +26,7 @@ import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
 import { MainStackParams } from "../../types/MainStackParams";
-import { countFishingData } from "../../utils/countFisingData";
+import countFishingData from "../../utils/countFishingData";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -35,7 +35,10 @@ interface MainScreenNavigationProps
   extends NativeStackNavigationProp<MainStackParams> {}
 
 export function MainScreen() {
-  const hasLocationPermission = usePermission("위치", PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+  const hasLocationPermission = usePermission(
+    "위치",
+    PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+  );
 
   const [keyword, setKeyword] = useState("");
 

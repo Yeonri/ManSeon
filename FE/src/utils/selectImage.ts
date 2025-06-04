@@ -1,6 +1,6 @@
 import { launchImageLibrary } from "react-native-image-picker";
 
-export function selectImage(onSelect: (uri: string) => void) {
+function selectImage(onSelect: (uri: string) => void) {
   launchImageLibrary({ mediaType: "photo" }, (res) => {
     if (res.didCancel) {
       console.log("이미지 선택 취소");
@@ -14,3 +14,5 @@ export function selectImage(onSelect: (uri: string) => void) {
     }
   });
 }
+
+export default selectImage;

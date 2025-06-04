@@ -23,7 +23,7 @@ type CollectedFish = {
   createdAt: string;
 };
 
-export function mergeCollectedFishData(
+function mergeCollectedFishData(
   baseList: Fish[],
   collected: CollectedFish[]
 ): Fish[] {
@@ -56,3 +56,5 @@ export function mergeCollectedFishData(
     }
   });
 }
+
+export default mergeCollectedFishData

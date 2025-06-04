@@ -15,7 +15,7 @@ import { FullButton } from "../../components/common/fullButton";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { UploadImage } from "../../components/community/uploadImage";
 import { CommunityStackParams } from "../../types/CommunityStackParams";
-import { selectImage } from "../../utils/selectImage";
+import selectImage from "../../utils/selectImage";
 
 interface PostEditScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "EditPost"> {}

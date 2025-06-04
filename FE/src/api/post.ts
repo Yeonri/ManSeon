@@ -1,4 +1,4 @@
-import { handleError } from "../utils/handleError";
+import handleError from "../utils/handleError";
 import authClient from "./client/authClient";
 
 // 전체 게시글 가져오기

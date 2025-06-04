@@ -1,5 +1,5 @@
-export function getFishImage(className: string): any | undefined {
-  switch (className) {
+function getFishImage(className: string): any | undefined {
+  switch (className.toLowerCase()) {
     case "black_sea_bream":
       return require("../assets/images/fish/black_sea_bream.png");
     case "cod":
@@ -40,15 +40,17 @@ export function getFishImage(className: string): any | undefined {
       return require("../assets/images/fish/bigfin_reef_squid.png");
     case "scorpionfish":
       return require("../assets/images/fish/scorpionfish.png");
-    case "Marbled_rockfish":
+    case "marbled_rockfish":
       return require("../assets/images/fish/marbled_rockfish.png");
-    case "Japanese_jack_mackerel":
+    case "japanese_jack_mackerel":
       return require("../assets/images/fish/japanese_jack_mackerel.png");
-    case "Japanese_amberjack":
+    case "japanese_amberjack":
       return require("../assets/images/fish/japanese_amberjack.png");
-    case "Japanese_seabass":
+    case "japanese_seabass":
       return require("../assets/images/fish/japanese_seabass.png");
     default:
       return undefined;
   }
 }
+
+export default getFishImage;

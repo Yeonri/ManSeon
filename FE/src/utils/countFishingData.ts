@@ -20,7 +20,7 @@ interface FishingStats {
   fishing_list: FishingList[];
 }
 
-export function countFishingData(fishingData: FishCatchRaw[]): FishingStats {
+function countFishingData(fishingData: FishCatchRaw[]): FishingStats {
   if (!fishingData || fishingData.length === 0)
     return {
       fishing_total: 0,
@@ -53,3 +53,5 @@ export function countFishingData(fishingData: FishCatchRaw[]): FishingStats {
     fishing_list,
   };
 }
+
+export default countFishingData

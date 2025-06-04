@@ -13,12 +13,12 @@ import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { Loading } from "../../components/common/loading";
 import { AddComment } from "../../components/community/addComment";
 import { CommunityStackParams } from "../../types/CommunityStackParams";
-import { DeleteAlert } from "../../utils/deleteAlert";
-// import { FormatTime } from "../../utils/formatTime";
+// import formatTime from "../../utils/formatTime";
 import { IMAGE_API } from "@env";
 import { useEffect } from "react";
 import { CommentList } from "../../components/community/commentList";
 import { useUserStore } from "../../store/userStore";
+import deleteAlert from "../../utils/deleteAlert";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}
@@ -42,7 +42,7 @@ export function PostScreen({ route }: PostScreenProps) {
 
   function handleDelete() {
     console.log("게시글 삭제 요청");
-    DeleteAlert("게시글", () => {
+    deleteAlert("게시글", () => {
       deletePost(postId, {
         onSuccess: () => {
           console.log("게시글 삭제 성공");
@@ -108,7 +108,7 @@ export function PostScreen({ route }: PostScreenProps) {
           <View className="flex-row items-center gap-2">
             {/* 작성 시간 */}
             {/* <Text className="text-neutral-400 text-sm">
-              {FormatTime(postDetail.createdAt)}
+              {formatTime(postDetail.createdAt)}
             </Text> */}
             {/* 수정 */}
             {isOwner ? (

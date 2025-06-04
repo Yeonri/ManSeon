@@ -11,7 +11,7 @@ import { Eye, EyeOff } from "lucide-react-native";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderCenter } from "../../components/common/headerCenter";
 import { useLoginStore } from "../../store/loginStore";
-import { tokenStorage } from "../../utils/tokenStorage";
+import tokenStorage from "../../utils/tokenStorage";
 
 interface LoginScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams, "Login"> {}
