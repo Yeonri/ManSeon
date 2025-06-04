@@ -1,4 +1,4 @@
-import authClient from "./authClient";
+import authClient from "./client/authClient";
 
 // 전체 낚시 포인트 조회
 export const getFishingPoints = async () => {

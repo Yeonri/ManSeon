@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import authClient from "../authClient";
+import authClient from "../client/authClient";
 
 export const useMyFollower = () => {
   return useQuery({

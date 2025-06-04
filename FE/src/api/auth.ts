@@ -1,4 +1,4 @@
-import client from "./client";
+import client from "./client/client";
 import { Auth } from "./types/Auth";
 import { MessageResponse } from "./types/MessageResponse";
 import { Signup } from "./types/Signup";

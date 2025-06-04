@@ -1,5 +1,5 @@
 import { handleError } from "../../utils/handleError";
-import authClient from "../authClient";
+import authClient from "../client/authClient";
 
 export async function updateUserInfo(data: {
   nickname?: string;

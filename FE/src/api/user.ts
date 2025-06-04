@@ -1,4 +1,4 @@
-import authClient from "./authClient";
+import authClient from "./client/authClient";
 import { ApiResponse } from "./types/ApiResponse";
 import { User } from "./types/User";
 

@@ -1,5 +1,5 @@
 import { handleError } from "../utils/handleError";
-import authClient from "./authClient";
+import authClient from "./client/authClient";
 
 // 댓글 가져오기
 export async function getComments(boardId: number) {

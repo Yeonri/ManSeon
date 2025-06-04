@@ -1,5 +1,5 @@
 import { handleError } from "../utils/handleError";
-import authClient from "./authClient";
+import authClient from "./client/authClient";
 
 // 잡은 물고기 기록
 export async function addRecord(

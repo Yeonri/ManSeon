@@ -1,5 +1,5 @@
-import authClient from "../api/authClient";
 import { handleError } from "../utils/handleError";
+import authClient from "./client/authClient";
 
 // 팔로우
 export async function followUser(userId: number) {
