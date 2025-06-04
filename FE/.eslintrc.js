@@ -1,16 +1,14 @@
 module.exports = {
   root: true,
+  env: {
+    es6: true,
+    node: true,
+    "jest/globals": true,
+  },
   extends: ["@react-native", "plugin:prettier/recommended"],
-  plugins: ["prettier"],
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "prettier"],
   rules: {
-    "@typescript-eslint/type-annotation-spacing": [
-      "error",
-      {
-        before: false,
-        after: true,
-        overrides: { arrow: { before: true, after: true } },
-      },
-    ],
-    "arrow-spacing": ["error", { before: true, after: true }],
+    "prettier/prettier": "error",
   },
 };
