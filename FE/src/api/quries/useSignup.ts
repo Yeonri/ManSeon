@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
+import { Signup } from "../../types/Signup";
 import { signup } from "../auth";
-import { Signup } from "../types/Signup";
 
 export function useSignup() {
   return useMutation({

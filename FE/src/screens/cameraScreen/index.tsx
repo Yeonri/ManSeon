@@ -14,17 +14,17 @@ import {
 } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { PhotoFile } from "react-native-vision-camera";
-import { RootStackParams } from "../../api/types/RootStackParams";
 import { CameraView } from "../../components/cameraRecord/cameraView";
 import { FullButton } from "../../components/common/fullButton";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { useCameraPermission } from "../../hooks/useCameraPermission";
+import { RootStackParams } from "../../types/RootStackParams";
+import { getFishImage } from "../../utils/getFishImage";
 import {
   classifyFishImage,
   DetectionResult,
 } from "../../utils/nativeClassifier";
 import { TranslateFishName } from "../../utils/translateFishName";
-import { getFishImage } from "../../utils/getFishImage";
 
 export function CameraScreen() {
   const hasCameraPermission = useCameraPermission();

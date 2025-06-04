@@ -1,7 +1,7 @@
+import { Auth } from "../types/Auth";
+import { MessageResponse } from "../types/MessageResponse";
+import { Signup } from "../types/Signup";
 import client from "./client/client";
-import { Auth } from "./types/Auth";
-import { MessageResponse } from "./types/MessageResponse";
-import { Signup } from "./types/Signup";
 
 // 회원가입
 export async function signup(data: Signup): Promise<MessageResponse> {

@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { Auth } from "../api/types/Auth";
 import { subscribeWithSelector } from "zustand/middleware";
+import { Auth } from "../types/Auth";
 
 interface LoginState {
   isLoggedIn: boolean;

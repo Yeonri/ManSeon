@@ -1,3 +1,5 @@
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { useState } from "react";
 import {
   Alert,
   Image,
@@ -8,14 +10,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useAddPost } from "../../api/quries/usePost";
+import { FullButton } from "../../components/common/fullButton";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { UploadImage } from "../../components/community/uploadImage";
-import { FullButton } from "../../components/common/fullButton";
+import { CommunityStackParams } from "../../types/CommunityStackParams";
 import { selectImage } from "../../utils/selectImage";
-import { useState } from "react";
-import { useAddPost } from "../../api/quries/usePost";
-import { CommunityStackParams } from "../../api/types/CommunityStackParams";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 interface PostAddScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "AddPost"> {}

@@ -2,10 +2,10 @@ import { useMemo, useState } from "react";
 import { FlatList, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useMyPosts } from "../../api/quries/useMypost";
-import type { Post } from "../../api/types/Post";
 import Dropdown from "../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { PostCard } from "../../components/profile/postCard";
+import type { Post } from "../../types/post";
 
 type ProfilePost = Pick<
   Post,

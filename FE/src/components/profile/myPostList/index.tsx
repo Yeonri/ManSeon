@@ -3,7 +3,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ChevronRight } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import { useGetMyPost } from "../../../api/quries/usePost";
-import { MoreStackParams } from "../../../api/types/MoreStackParams";
+import { MoreStackParams } from "../../../types/MoreStackParams";
 import { PostCard } from "../postCard";
 
 interface MoreScreenNavigationProps

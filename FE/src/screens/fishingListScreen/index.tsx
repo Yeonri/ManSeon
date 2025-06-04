@@ -1,13 +1,13 @@
-import { SafeAreaView } from "react-native-safe-area-context";
-import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
-import { Image, SectionList, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FishingStackParams } from "../../api/types/FishingStackParams";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import { useGetRecords } from "../../api/quries/useRecord";
 import { useCallback } from "react";
+import { Image, SectionList, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useGetRecords } from "../../api/quries/useRecord";
+import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
+import { FishingStackParams } from "../../types/FishingStackParams";
 
 interface FishingListScreenNavigationProps
   extends NativeStackNavigationProp<FishingStackParams, "FishingList"> {}

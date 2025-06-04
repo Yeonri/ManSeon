@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { FishingStackParams } from "../../api/types/FishingStackParams";
 import { FishingListScreen } from "../../screens/fishingListScreen";
 import { FishingScreen } from "../../screens/fishingScreen";
+import { FishingStackParams } from "../../types/FishingStackParams";
 
 const Stack = createNativeStackNavigator<FishingStackParams>();
 

@@ -5,10 +5,10 @@ import { Alert, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetCheckNickname } from "../../api/quries/useCheck";
 import { useSignup } from "../../api/quries/useSignup";
-import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
+import { SignupStackParams } from "../../types/SignupStackParams";
 
 interface SignupNameScreenNavigationProps
   extends NativeStackNavigationProp<SignupStackParams> {}

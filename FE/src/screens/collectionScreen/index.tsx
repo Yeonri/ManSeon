@@ -3,8 +3,8 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { Image, ScrollView, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { SafeAreaView } from "react-native-safe-area-context";
-import type { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
+import type { MoreStackParams } from "../../types/MoreStackParams";
 
 type CollectionDetailRouteProp = RouteProp<MoreStackParams, "CollectionDetail">;
 

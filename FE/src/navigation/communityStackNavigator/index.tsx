@@ -1,11 +1,11 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import { CommunityScreen } from "../../screens/communityScreen";
 import { PostAddScreen } from "../../screens/postAddScreen";
 import { PostEditScreen } from "../../screens/postEditScreen";
 import { PostScreen } from "../../screens/postScreen";
 import { ProfileScreen } from "../../screens/profileScreen";
 import { UserProfileScreen } from "../../screens/userProfileScreen";
+import { CommunityStackParams } from "../../types/CommunityStackParams";
 
 const Stack = createNativeStackNavigator<CommunityStackParams>();
 

@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
-import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { NoticeList } from "../../components/more/notice";
 import { ProfileCard } from "../../components/more/profile";
 import { useUserStore } from "../../store/userStore";
+import { MoreStackParams } from "../../types/MoreStackParams";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams> {}

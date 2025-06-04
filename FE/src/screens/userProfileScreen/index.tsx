@@ -3,10 +3,10 @@ import { ChevronRight } from "lucide-react-native";
 import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserById } from "../../api/quries/useUser";
-import { CommunityStackParams } from "../../api/types/CommunityStackParams";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
 import { UserPostList } from "../../components/profile/userPostList";
+import { CommunityStackParams } from "../../types/CommunityStackParams";
 
 type UserProfileRoute = RouteProp<CommunityStackParams, "UserProfile">;
 

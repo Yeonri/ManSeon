@@ -9,9 +9,9 @@ import {
   MessagesSquare,
 } from "lucide-react-native";
 import { TouchableOpacity } from "react-native";
-import { RootStackParams } from "../../api/types/RootStackParams";
 import { CameraScreen } from "../../screens/cameraScreen";
 import { MapScreen } from "../../screens/mapScreen";
+import { RootStackParams } from "../../types/RootStackParams";
 import { CommunityStackNavigator } from "../communityStackNavigator";
 import { MainStackNavigator } from "../mainStackNavigator";
 import { MoreStackNavigator } from "../moreStackNavigator";

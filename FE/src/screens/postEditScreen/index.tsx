@@ -10,11 +10,11 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CommunityStackParams } from "../../api/types/CommunityStackParams";
+import { useEditPost } from "../../api/quries/usePost";
+import { FullButton } from "../../components/common/fullButton";
 import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
 import { UploadImage } from "../../components/community/uploadImage";
-import { FullButton } from "../../components/common/fullButton";
-import { useEditPost } from "../../api/quries/usePost";
+import { CommunityStackParams } from "../../types/CommunityStackParams";
 import { selectImage } from "../../utils/selectImage";
 
 interface PostEditScreenProps

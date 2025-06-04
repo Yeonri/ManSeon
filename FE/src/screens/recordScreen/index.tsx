@@ -1,4 +1,11 @@
 import {
+  NavigationProp,
+  RouteProp,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import {
   Alert,
   Image,
   PermissionsAndroid,
@@ -7,18 +14,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import {
-  NavigationProp,
-  RouteProp,
-  useNavigation,
-  useRoute,
-} from "@react-navigation/native";
-import { RootStackParams } from "../../api/types/RootStackParams";
-import { HeaderLogo } from "../../components/common/headerLogo";
 import Geolocation from "react-native-geolocation-service";
-import { useEffect, useState } from "react";
-import { SelectTag } from "../../components/common/selectTag";
 import { SelectNumber } from "../../components/cameraRecord/selectNumber";
+import { HeaderLogo } from "../../components/common/headerLogo";
+import { SelectTag } from "../../components/common/selectTag";
+import { RootStackParams } from "../../types/RootStackParams";
 // import { Toggle } from "../../components/cameraRecord/toggle";
 import { HalfButton } from "../../components/common/halfButton";
 // import { useAddRecord } from "../../api/quries/useRecord";

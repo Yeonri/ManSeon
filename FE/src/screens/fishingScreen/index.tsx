@@ -1,11 +1,11 @@
-import { Image, ScrollView, Text, View } from "react-native";
-import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { FishingStackParams } from "../../api/types/FishingStackParams";
-import { SelectTag } from "../../components/common/selectTag";
-import { useGetRecordDetail } from "../../api/quries/useRecord";
 import { useFocusEffect } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useCallback } from "react";
+import { Image, ScrollView, Text, View } from "react-native";
+import { useGetRecordDetail } from "../../api/quries/useRecord";
+import { HeaderBeforeTitle } from "../../components/common/headerBeforeTitle";
+import { SelectTag } from "../../components/common/selectTag";
+import { FishingStackParams } from "../../types/FishingStackParams";
 
 interface FishingScreenProps
   extends NativeStackScreenProps<FishingStackParams, "Fishing"> {}

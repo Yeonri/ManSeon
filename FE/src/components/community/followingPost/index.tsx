@@ -1,11 +1,11 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { CommunityStackParams } from "../../../api/types/CommunityStackParams";
-import { useUserStore } from "../../../store/userStore";
-import { useGetFriendsPosts } from "../../../api/quries/usePost";
 import { Handshake } from "lucide-react-native";
 import { useCallback } from "react";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import { useGetFriendsPosts } from "../../../api/quries/usePost";
+import { useUserStore } from "../../../store/userStore";
+import { CommunityStackParams } from "../../../types/CommunityStackParams";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}

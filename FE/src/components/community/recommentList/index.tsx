@@ -1,3 +1,4 @@
+import { Pencil, Trash2 } from "lucide-react-native";
 import { useState } from "react";
 import {
   FlatList,
@@ -7,18 +8,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Recomment } from "../../../api/types/Recomment";
-import IconArrow from "../../../assets/images/icon_arrow.svg";
-import TagFollow from "../../../assets/images/tag_follow.svg";
-import { DeleteAlert } from "../../../utils/deleteAlert";
-import { FormatTime } from "../../../utils/formatTime";
-import DefaultProfile from "../../../assets/images/image_default.svg";
-import { Pencil, Trash2 } from "lucide-react-native";
-import { useUserStore } from "../../../store/userStore";
 import {
   useDeleteComment,
   useEditComment,
 } from "../../../api/quries/useComment";
+import IconArrow from "../../../assets/images/icon_arrow.svg";
+import DefaultProfile from "../../../assets/images/image_default.svg";
+import TagFollow from "../../../assets/images/tag_follow.svg";
+import { useUserStore } from "../../../store/userStore";
+import { Recomment } from "../../../types/Recomment";
+import { DeleteAlert } from "../../../utils/deleteAlert";
+import { FormatTime } from "../../../utils/formatTime";
 
 export function RecommentList({
   recomments,

@@ -1,6 +1,6 @@
+import { ApiResponse } from "../types/ApiResponse";
+import { User } from "../types/User";
 import authClient from "./client/authClient";
-import { ApiResponse } from "./types/ApiResponse";
-import { User } from "./types/User";
 
 // 다른 유저의 정보 불러오기
 export const fetchUserById = async (userId: number) => {

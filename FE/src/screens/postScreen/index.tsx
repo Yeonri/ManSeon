@@ -3,22 +3,22 @@ import {
   NativeStackNavigationProp,
   NativeStackScreenProps,
 } from "@react-navigation/native-stack";
+import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CommunityStackParams } from "../../api/types/CommunityStackParams";
-import TagFollow from "../../assets/images/tag_follow.svg";
-import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
-import { AddComment } from "../../components/community/addComment";
-import { DeleteAlert } from "../../utils/deleteAlert";
-import { Heart, MessageSquareMore, Pencil, Trash2 } from "lucide-react-native";
 import { useDeletePost, useGetPostDetail } from "../../api/quries/usePost";
 import DefaultImage from "../../assets/images/image_default.svg";
+import TagFollow from "../../assets/images/tag_follow.svg";
+import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { Loading } from "../../components/common/loading";
+import { AddComment } from "../../components/community/addComment";
+import { CommunityStackParams } from "../../types/CommunityStackParams";
+import { DeleteAlert } from "../../utils/deleteAlert";
 // import { FormatTime } from "../../utils/formatTime";
-import { useUserStore } from "../../store/userStore";
-import { CommentList } from "../../components/community/commentList";
-import { useEffect } from "react";
 import { IMAGE_API } from "@env";
+import { useEffect } from "react";
+import { CommentList } from "../../components/community/commentList";
+import { useUserStore } from "../../store/userStore";
 
 interface PostScreenProps
   extends NativeStackScreenProps<CommunityStackParams, "Post"> {}

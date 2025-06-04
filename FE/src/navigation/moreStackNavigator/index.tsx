@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { CollectionListScreen } from "../../screens/collectionListScreen";
 import { CollectionScreen } from "../../screens/collectionScreen";
 import { FriendsScreen } from "../../screens/friendsScreen";
@@ -11,6 +10,7 @@ import { ProhibitedScreen } from "../../screens/prohibitedScreen";
 import { RuleScreen } from "../../screens/ruleScreen";
 import { SuggestionsScreen } from "../../screens/suggestionsScreen";
 import { TutorialScreen } from "../../screens/tutorialScreen";
+import { MoreStackParams } from "../../types/MoreStackParams";
 import { FishingStackNavigator } from "../fishingStackNavigator";
 
 const Stack = createNativeStackNavigator<MoreStackParams>();

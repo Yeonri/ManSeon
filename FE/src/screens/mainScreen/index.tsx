@@ -11,7 +11,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useMyFishes } from "../../api/quries/useMyFishes";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { useGetLatestPost } from "../../api/quries/usePost";
-import { MainStackParams } from "../../api/types/MainStackParams";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { PermissionCheck } from "../../components/common/permissionCheck";
 import { SearchInput } from "../../components/common/searchInput";
@@ -25,6 +24,7 @@ import { useLocationPermission } from "../../hooks/useLocationPermission";
 import todayFishingPoint from "../../mocks/todayFishingPoint.json";
 import { useLocationStore } from "../../store/locationStore";
 import { useUserStore } from "../../store/userStore";
+import { MainStackParams } from "../../types/MainStackParams";
 import { countFishingData } from "../../utils/countFisingData";
 
 dayjs.extend(utc);

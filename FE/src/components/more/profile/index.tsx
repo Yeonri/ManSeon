@@ -1,5 +1,5 @@
 import { Image, Text, View } from "react-native";
-import { User } from "../../../api/types/User";
+import { User } from "../../../types/User";
 
 type ProfileCardUser = Pick<
   User,

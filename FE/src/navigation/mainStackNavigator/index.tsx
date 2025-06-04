@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { MainStackParams } from "../../api/types/MainStackParams";
 import { CollectionListScreen } from "../../screens/collectionListScreen";
 import { CollectionScreen } from "../../screens/collectionScreen";
 import { CommunityScreen } from "../../screens/communityScreen";
@@ -7,6 +6,7 @@ import { MainScreen } from "../../screens/mainScreen";
 import { MapScreen } from "../../screens/mapScreen";
 import { PostScreen } from "../../screens/postScreen";
 import { ProfileScreen } from "../../screens/profileScreen";
+import { MainStackParams } from "../../types/MainStackParams";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
 

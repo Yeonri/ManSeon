@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useState } from "react";
 import {
   RefreshControl,
   ScrollView,
@@ -8,13 +9,12 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CommunityStackParams } from "../../api/types/CommunityStackParams";
+import { useGetFriendsPosts, useGetPosts } from "../../api/quries/usePost";
 import { HeaderLogo } from "../../components/common/headerLogo";
 import { FollowingPost } from "../../components/community/followingPost";
 import { PostList } from "../../components/community/postList";
 import { useUserStore } from "../../store/userStore";
-import { useGetFriendsPosts, useGetPosts } from "../../api/quries/usePost";
-import { useState } from "react";
+import { CommunityStackParams } from "../../types/CommunityStackParams";
 
 interface CommunityScreenNavigationProps
   extends NativeStackNavigationProp<CommunityStackParams, "Community"> {}

@@ -2,8 +2,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { CameraScreen } from "../../screens/cameraScreen";
 import { ChatbotScreen } from "../../screens/chatbotScreen";
 import { RecordScreen } from "../../screens/recordScreen";
+import { RootStackParams } from "../../types/RootStackParams";
 import { BottomTabNavigator } from "../bottomTabNavigator";
-import { RootStackParams } from "../../api/types/RootStackParams";
 
 export function AppNavigator() {
   const Stack = createNativeStackNavigator<RootStackParams>();

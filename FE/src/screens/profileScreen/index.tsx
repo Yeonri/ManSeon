@@ -5,9 +5,9 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetMyInfo } from "../../api/quries/useMyinfo";
 import { useMyPosts } from "../../api/quries/useMypost";
-import { MoreStackParams } from "../../api/types/MoreStackParams";
 import { HeaderBeforeLogo } from "../../components/common/headerBeforeLogo";
 import { BadgeList } from "../../components/profile/badgeList";
+import { MoreStackParams } from "../../types/MoreStackParams";
 
 interface MoreScreenNavigationProps
   extends NativeStackNavigationProp<MoreStackParams, "More"> {}

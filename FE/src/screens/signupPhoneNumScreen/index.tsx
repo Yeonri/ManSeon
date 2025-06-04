@@ -4,11 +4,11 @@ import { useState } from "react";
 import { Alert, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetCheckPhoneNum } from "../../api/quries/useCheck";
-import { SignupStackParams } from "../../api/types/SignupStackParams";
 import { ErrorMessage } from "../../components/common/errorMessage";
 import { FullButton } from "../../components/common/fullButton";
 import { HeaderBefore } from "../../components/common/headerBefore";
 import { ProgressBar } from "../../components/signup/progressBar";
+import { SignupStackParams } from "../../types/SignupStackParams";
 import { handleError } from "../../utils/handleError";
 
 interface SignupPhoneNumScreenNavigationProps
