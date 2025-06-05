@@ -10,7 +10,6 @@ import { FullButton } from "../../../components/common/fullButton";
 import { HeaderBefore } from "../../../components/common/headerBefore";
 import { SignupStackParams } from "../../../navigation/types";
 
-
 interface SignupNameScreenNavigationProps
   extends NativeStackNavigationProp<SignupStackParams> {}
 

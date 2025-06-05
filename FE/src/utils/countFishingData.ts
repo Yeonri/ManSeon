@@ -54,4 +54,4 @@ function countFishingData(fishingData: FishCatchRaw[]): FishingStats {
   };
 }
 
-export default countFishingData
+export default countFishingData;

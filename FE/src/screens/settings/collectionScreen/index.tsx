@@ -6,7 +6,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { HeaderBeforeTitle } from "../../../components/common/headerBeforeTitle";
 import { SettingStackParams } from "../../../navigation/types";
 
-type CollectionDetailRouteProp = RouteProp<SettingStackParams, "CollectionDetail">;
+type CollectionDetailRouteProp = RouteProp<
+  SettingStackParams,
+  "CollectionDetail"
+>;
 
 export function CollectionScreen() {
   const { params } = useRoute<CollectionDetailRouteProp>();

@@ -20,9 +20,9 @@ import { PermissionCheck } from "../../../components/common/permissionCheck";
 import usePermission from "../../../hooks/usePermission";
 import { AppStackParams } from "../../../navigation/types";
 import { DetectionResult } from "../../../types/DetectionResult";
-import getFishImage from "../../../utils/getFishImage";
 import classifyFishImage from "../../../utils/nativeClassifier";
 import translateFishName from "../../../utils/translateFishName";
+import { getFishImage } from "../../../utils/getImages";
 
 export function CameraScreen() {
   const hasCameraPermission = usePermission("카메라", "vision-camera");
@@ -35,8 +35,7 @@ export function CameraScreen() {
   const [detectedScore, setDetectedScore] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const sheetRef = useRef<Modalize>(null);
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParams>>();
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParams>>();
   const [detectedResults, setDetectedResults] = useState<DetectionResult[]>([]);
   const { width, height } = useWindowDimensions();
   const imageWidth = width * 0.3;

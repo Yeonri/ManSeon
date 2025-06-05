@@ -19,8 +19,7 @@ import { AppStackParams } from "../types";
 const Tab = createBottomTabNavigator();
 
 function CustomBottomTabButton() {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppStackParams>>();
+  const navigation = useNavigation<NativeStackNavigationProp<AppStackParams>>();
 
   return (
     <TouchableOpacity
@@ -33,7 +32,9 @@ function CustomBottomTabButton() {
 }
 
 function renderTabIcon(IconComponent: React.ElementType) {
-  return ({ color }: { color: string }) => <IconComponent color={color} size={22}/>;
+  return ({ color }: { color: string }) => (
+    <IconComponent color={color} size={22} />
+  );
 }
 
 export function BottomTabNavigator() {

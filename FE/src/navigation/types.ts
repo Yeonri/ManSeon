@@ -65,7 +65,6 @@ export type FishingStackParams = {
   Fishing: { title: string; fishId: number };
 } & ParamListBase;
 
-
 export type SettingStackParams = {
   Setting: undefined;
   Tutorial: undefined;

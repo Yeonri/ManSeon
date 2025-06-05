@@ -14,4 +14,4 @@ function formatTime(time: string) {
   return formatted;
 }
 
-export default formatTime
+export default formatTime;

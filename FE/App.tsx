@@ -63,7 +63,7 @@ export default function App(): React.JSX.Element {
         {/* <NavigationContainer theme={mainTheme}>{content}</NavigationContainer> */}
         <NavigationContainer theme={mainTheme}>
           <AppNavigator />
-          </NavigationContainer>
+        </NavigationContainer>
       </QueryClientProvider>
     </GestureHandlerRootView>
   );

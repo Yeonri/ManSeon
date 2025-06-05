@@ -1,5 +1,5 @@
 import collection from "../mocks/collectionMocks.json";
-import getFishImage from "./getFishImage";
+import { getFishImage } from "./getImages";
 
 const processedFishData = collection.map((fish) => {
   const filename = fish.image

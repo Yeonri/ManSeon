@@ -57,4 +57,4 @@ function mergeCollectedFishData(
   });
 }
 
-export default mergeCollectedFishData
+export default mergeCollectedFishData;

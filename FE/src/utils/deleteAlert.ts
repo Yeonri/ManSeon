@@ -11,4 +11,4 @@ function deleteAlert(name: string, onConfirm: () => void) {
   ]);
 }
 
-export default deleteAlert
+export default deleteAlert;

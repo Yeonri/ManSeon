@@ -88,11 +88,12 @@ export function HomeScreen() {
     return <PermissionCheck name="위치" />;
   }
 
-  if (!user) return (
-    <SafeAreaView edges={["top"]} className="flex-1">
-      <HeaderLogo />
-    </SafeAreaView>
-  );
+  if (!user)
+    return (
+      <SafeAreaView edges={["top"]} className="flex-1">
+        <HeaderLogo />
+      </SafeAreaView>
+    );
 
   const nowKST = dayjs().tz("Asia/Seoul");
   const day = nowKST.date();

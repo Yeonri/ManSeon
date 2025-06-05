@@ -1,4 +1,6 @@
-function getFishImage(className: string): any | undefined {
+import { weatherImageMap, windArrowImageMap } from "./imageMaps";
+
+export function getFishImage(className: string): any | undefined {
   switch (className.toLowerCase()) {
     case "black_sea_bream":
       return require("../assets/images/fish/black_sea_bream.png");
@@ -53,4 +55,26 @@ function getFishImage(className: string): any | undefined {
   }
 }
 
-export default getFishImage;
+export const getWeatherImageKey = (
+  sky: number,
+  precipitationType: number
+): keyof typeof weatherImageMap => {
+  if (precipitationType !== 0) {
+    if ([1, 4, 5, 6].includes(precipitationType)) return "rain";
+    if ([2, 3, 7].includes(precipitationType)) return "snow";
+  }
+
+  if (sky === 1) return "sunny";
+  if (sky === 3) return "cloudy";
+  if (sky === 4) return "cloudy2";
+
+  return "sunny";
+};
+
+export const getWindArrowImageKey = (
+  dir: string
+): keyof typeof windArrowImageMap => {
+  return (
+    dir in windArrowImageMap ? dir : "북"
+  ) as keyof typeof windArrowImageMap;
+};

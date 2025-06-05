@@ -1,7 +1,9 @@
 import { Image, ScrollView, Text, View } from "react-native";
-import getWeatherImageKey from "../../../utils/getWeatherImageKey";
-import getWindArrowImageKey from "../../../utils/getWindArrowImageKey";
 import { weatherImageMap, windArrowImageMap } from "../../../utils/imageMaps";
+import {
+  getWeatherImageKey,
+  getWindArrowImageKey,
+} from "../../../utils/getImages";
 
 interface WeatherForecast {
   date: string;
