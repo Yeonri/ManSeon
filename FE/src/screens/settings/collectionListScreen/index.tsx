@@ -9,8 +9,8 @@ import Dropdown from "../../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../../components/common/headerBeforeTitle";
 import fishBaseData from "../../../data/fish";
 import { SettingStackParams } from "../../../navigation/types";
-import fishImageMap from "../../../utils/fishImageMap";
 import mergeCollectedFishData from "../../../utils/mergeCollectedFishData";
+import { fishImageMap } from "../../../utils/imageMaps";
 
 const sortOptions = ["가나다순", "잡은 물고기순", "최신순"];
 

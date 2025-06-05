@@ -1,4 +1,4 @@
-import weatherImageMap from "./weatherImageMap";
+import { weatherImageMap } from "./imageMaps";
 
 const getWeatherImageKey = (
   sky: number,
@@ -16,4 +16,4 @@ const getWeatherImageKey = (
   return "sunny"; // 매칭되지 않을 경우 sunny 반환(임시)
 };
 
-export default getWeatherImageKey
+export default getWeatherImageKey;

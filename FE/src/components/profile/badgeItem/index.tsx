@@ -1,5 +1,5 @@
 import { Image, View } from "react-native";
-import { badgeImageMap, badgeLockImageMap } from "../../../utils/badgeImageMap";
+import { badgeImageMap, badgeLockImageMap } from "../../../utils/imageMaps";
 
 interface BadgeItemProps {
   id: number;
