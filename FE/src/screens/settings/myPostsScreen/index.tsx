@@ -5,7 +5,7 @@ import { useMyPosts } from "../../../api/quries/useMypost";
 import Dropdown from "../../../components/common/dropdown";
 import { HeaderBeforeTitle } from "../../../components/common/headerBeforeTitle";
 import { PostCard } from "../../../components/profile/postCard";
-import type { Post } from "../../../types/post";
+import type { Post } from "../../../types/Post";
 
 type ProfilePost = Pick<
   Post,

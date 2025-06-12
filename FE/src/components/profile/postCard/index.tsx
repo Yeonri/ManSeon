@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import { Image, Text, View } from "react-native";
-import type { Post } from "../../../types/post";
+import type { Post } from "../../../types/Post";
 
 type ProfilePost = Pick<
   Post,
