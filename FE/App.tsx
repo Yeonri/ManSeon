@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import SplashScreen from "react-native-splash-screen";
 import "./global.css";
-import { AppNavigator } from "./src/navigation/appNavigator";
 import { useLoginStore } from "./src/store/loginStore";
 import tokenStorage from "./src/utils/tokenStorage";
+import { LoginScreen } from "./src/screens/auth/loginScreen";
 
 const queryClient = new QueryClient();
 
@@ -62,7 +62,7 @@ export default function App(): React.JSX.Element {
       <QueryClientProvider client={queryClient}>
         {/* <NavigationContainer theme={mainTheme}>{content}</NavigationContainer> */}
         <NavigationContainer theme={mainTheme}>
-          <AppNavigator />
+          <LoginScreen />
         </NavigationContainer>
       </QueryClientProvider>
     </GestureHandlerRootView>

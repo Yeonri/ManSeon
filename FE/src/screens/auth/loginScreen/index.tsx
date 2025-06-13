@@ -3,101 +3,120 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useLogin } from "../../../api/quries/useLogin";
-// import LogoKakao from "../../assets/images/logo_kakao.svg";
-// import LogoNaver from "../../assets/images/logo_naver.svg";
+import LogoKakao from "../../../assets/images/logo_kakao.svg";
+import LogoNaver from "../../../assets/images/logo_naver.svg";
 import { Eye, EyeOff } from "lucide-react-native";
 import { FullButton } from "../../../components/common/fullButton";
 import { HeaderCenter } from "../../../components/common/headerCenter";
 import { AuthStackParams } from "../../../navigation/types";
-import { useLoginStore } from "../../../store/loginStore";
-import tokenStorage from "../../../utils/tokenStorage";
+import { useEmailLogin, useKakaologin } from "../../../api/queries/auth";
+import { login } from "@react-native-seoul/kakao-login";
 
 interface LoginScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams, "Login"> {}
 
 export function LoginScreen() {
   const navigation = useNavigation<LoginScreenNavigationProps>();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [seeOption, setSeeOption] = useState<boolean>(true);
-  const { mutate: login } = useLogin();
-  const { setLogin } = useLoginStore();
+  const [option, setOption] = useState<boolean>(true);
 
+  const { mutate: emailLogin } = useEmailLogin();
+  const { mutate: kakaoLogin } = useKakaologin();
+
+  // 이메일 로그인
   function handleLogin() {
     if (!email || !password) {
       Alert.alert("입력 오류", "이메일과 비밀번호 모두 입력해주세요.");
       return;
     }
-    login(
-      { email, password },
-      {
-        onSuccess: async (auth) => {
-          await tokenStorage.save(auth.accessToken, auth.refreshToken);
-          setLogin(auth);
-        },
-        onError: () => {
-          Alert.alert("로그인 실패", "로그인 정보를 다시 확인해주세요.");
-        },
-      }
-    );
+
+    emailLogin({ email, password });
+  }
+
+  // 카카오 로그인
+  async function handleKakaoLogin() {
+    try {
+      const token = await login();
+      console.log("카카오 accessToken: ", token.accessToken);
+
+      await kakaoLogin(token.accessToken);
+      console.log("카카오 로그인: ", token.accessToken);
+    } catch (error) {
+      console.log("카카오 로그인 오류: ", error);
+    }
+  }
+
+  // 네이버 로그인
+  function handleNaverLogin() {
+    console.log("네이버 로그인");
   }
 
   return (
-    <SafeAreaView className="gap-20 m-5">
-      <View />
+    <SafeAreaView className="mx-10 py-20 gap-20">
+      {/* 헤더 */}
       <HeaderCenter />
-      <View className="mx-5 gap-2">
-        <View className="gap-5">
-          <TextInput
-            placeholder="이메일을 입력해 주세요"
-            placeholderTextColor="#A1A1A1"
-            inputMode="email"
-            value={email}
-            onChangeText={setEmail}
-            className="p-4 rounded-2xl text-neutral-800 bg-neutral-100"
-          />
-          <View className="relative gap-4">
-            <TextInput
-              placeholder="비밀번호를 입력해 주세요"
-              placeholderTextColor="#A1A1A1"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry={seeOption}
-              className="p-4 rounded-2xl text-neutral-800 bg-neutral-100"
-            />
 
-            <TouchableOpacity
-              onPress={() => setSeeOption(!seeOption)}
-              className="absolute top-5 right-5"
-            >
-              {seeOption ? <Eye color="#525252" /> : <EyeOff color="#525252" />}
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View className="mt-5 flex-row justify-end">
-          {/* <TouchableOpacity onPress={() => {}}>
-            <Text className="text-neutral-600">비밀번호 찾기</Text>
-          </TouchableOpacity> */}
+      {/* 로그인 */}
+      <View className="gap-3">
+        <TextInput
+          placeholder="이메일을 입력해 주세요"
+          placeholderTextColor="#A3A3A3"
+          inputMode="email"
+          value={email}
+          onChangeText={setEmail}
+          className="px-5 py-3 bg-neutral-100 rounded-xl text-sm text-neutral-800"
+        />
+        <View className="relative gap-4">
+          <TextInput
+            placeholder="비밀번호를 입력해 주세요"
+            placeholderTextColor="#A3A3A3"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={option}
+            className="px-5 py-3 bg-neutral-100 rounded-xl text-sm text-neutral-800"
+          />
+
+          <TouchableOpacity
+            onPress={() => setOption(!option)}
+            className="absolute top-4 right-5"
+          >
+            {option ? (
+              <Eye color="#A3A3A3" size={20} />
+            ) : (
+              <EyeOff color="#A3A3A3" size={20} />
+            )}
+          </TouchableOpacity>
+          <View className="p-2" />
+
+          {/* 로그인 버튼 */}
+          <FullButton name="로그인" disable={false} onPress={handleLogin} />
+
+          {/* 회원가입 */}
           <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-            <Text className="font-semibold text-neutral-600">회원가입</Text>
+            <Text className="p-1 text-center text-sm text-blue-500">
+              회원가입
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
-      <FullButton name="로그인" disable={false} onPress={handleLogin} />
-      {/* <View className="gap-10">
-        <Text className="font-semibold text-center text-neutral-600">
-          SNS 계정으로 시작하기
+
+      {/* 간편 로그인 */}
+      <View className="gap-10">
+        <View className="w-full h-[1px] bg-neutral-200" />
+        <Text className="text-center text-sm font-semibold text-neutral-800">
+          간편 로그인
         </Text>
         <View className="flex-row gap-5 justify-center">
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={handleKakaoLogin}>
             <LogoKakao />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={handleNaverLogin}>
             <LogoNaver />
           </TouchableOpacity>
         </View>
-      </View> */}
+      </View>
     </SafeAreaView>
   );
 }

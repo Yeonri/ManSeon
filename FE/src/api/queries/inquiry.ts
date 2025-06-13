@@ -57,7 +57,7 @@ export function useEditInquiry() {
 }
 
 // [유저] 문의사항 삭제
-export async function useDeleteInquiry() {
+export function useDeleteInquiry() {
   useApiMutation({
     mutationFn: (inquiryId: number) => deleteInquiry(inquiryId),
     keysToInvalidate: [["inquiry"]],

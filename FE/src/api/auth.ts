@@ -1,7 +1,7 @@
 import authClient from "./client/authClient";
 import client from "./client/client";
 
-// 자체 회원가입
+// 회원가입
 export async function signup(
   email: string,
   password: string,
@@ -21,8 +21,20 @@ export async function signup(
   }
 }
 
+// 이메일 로그인
+export async function emailLogin(email: string, password: string) {
+  try {
+    const response = await client.post(``, { email, password });
+    console.log("로그인 성공: ", response.data);
+    return response.data;
+  } catch (error: unknown) {
+    console.error("로그인 실패: ", error);
+    return null;
+  }
+}
+
 // 카카오 로그인
-export async function kakaologin(accessToken: string) {
+export async function kakaoLogin(accessToken: string) {
   try {
     const response = await client.post(``, { accessToken });
     console.log("카카오 로그인 성공: ", response.data);
@@ -65,18 +77,6 @@ export async function checkNicknameDuplication(nickname: string) {
     return response.data;
   } catch (error: unknown) {
     console.error("닉네임 중복 확인 실패: ", error);
-    return null;
-  }
-}
-
-// 로그인
-export async function login(email: string, password: string) {
-  try {
-    const response = await client.post(``, { email, password });
-    console.log("로그인 성공: ", response.data);
-    return response.data;
-  } catch (error: unknown) {
-    console.error("로그인 실패: ", error);
     return null;
   }
 }

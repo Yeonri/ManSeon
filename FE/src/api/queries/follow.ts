@@ -33,7 +33,7 @@ export function useGetOtherFollowings(userId: string) {
 }
 
 // 다른 유저 팔로워 전체 조회
-export async function useGetOtherFollowers(userId: string) {
+export function useGetOtherFollowers(userId: string) {
   useQuery({
     queryKey: ["otherFollowings", userId],
     queryFn: () => getOtherFollowers(userId),
@@ -41,14 +41,14 @@ export async function useGetOtherFollowers(userId: string) {
 }
 
 // 팔로잉 추가
-export async function useAddFollowing(userId: string) {
+export function useAddFollowing(userId: string) {
   useMutation({
     mutationFn: () => addFollowing(userId),
   });
 }
 
 // 팔로잉 삭제
-export async function useDeleteFollowing(userId: string) {
+export function useDeleteFollowing(userId: string) {
   useMutation({
     mutationFn: () => deleteFollowing(userId),
   });

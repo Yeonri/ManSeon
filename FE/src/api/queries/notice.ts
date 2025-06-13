@@ -54,7 +54,7 @@ export function useEditNotice() {
 }
 
 // [관리자] 공지사항 삭제
-export async function useDeleteNotice() {
+export function useDeleteNotice() {
   useApiMutation({
     mutationFn: (noticeId: number) => deleteNotice(noticeId),
     keysToInvalidate: [["notice"]],

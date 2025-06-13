@@ -1,15 +1,27 @@
 import { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import {
   check,
+  openSettings,
   Permission,
   PermissionStatus,
   request,
   RESULTS,
 } from "react-native-permissions";
 import { Camera } from "react-native-vision-camera";
-import { PermissionAlert } from "../utils/PermissionAlert";
 
 type PermissionType = Permission | "vision-camera";
+
+function permissionAlert(name: string) {
+  Alert.alert(
+    `${name} 권한이 필요합니다.`,
+    "설정에서 위치 권한을 허용해주세요.",
+    [
+      { text: "취소", style: "cancel" },
+      { text: "설정으로 이동", onPress: () => openSettings() },
+    ]
+  );
+}
 
 // 권한이 부여되었는지 확인하는 함수
 function isAuthorized(status: PermissionStatus | string): boolean {
@@ -46,7 +58,7 @@ function usePermission(name: string, permissionType: PermissionType) {
           // 권한 거절 시 설정창 이동을 유도
           if (!isAuthorized(requestedStatus)) {
             console.log(`[${name} 권한] 거절됨 => 설정으로 이동`);
-            PermissionAlert(name);
+            permissionAlert(name);
             setHasPermission(false);
             return;
           }
@@ -70,7 +82,7 @@ function usePermission(name: string, permissionType: PermissionType) {
           // BLOCKED면 설정창 이동을 유도
           if (!isAuthorized(requestedStatus)) {
             console.log(`[${name} 권한] 거절됨 => 설정으로 이동`);
-            PermissionAlert(name);
+            permissionAlert(name);
             setHasPermission(false);
             return;
           }

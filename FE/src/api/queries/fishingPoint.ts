@@ -8,7 +8,7 @@ import {
 } from "../fishingPoint";
 
 // 낚시 포인트 전체 조회
-export async function useGetFishingPoints() {
+export function useGetFishingPoints() {
   useQuery({
     queryKey: ["fishingPoints"],
     queryFn: getFishingPoints,
@@ -24,7 +24,7 @@ export function useGetFishingPointDetail(fishingPointId: number) {
 }
 
 // 낚시 포인트 검색 결과 조회
-export async function useGetFishingPointSearch(keyword: string) {
+export function useGetFishingPointSearch(keyword: string) {
   useQuery({
     queryKey: ["fishingPointSearch", keyword],
     queryFn: () => getFishingPointSearch(keyword),

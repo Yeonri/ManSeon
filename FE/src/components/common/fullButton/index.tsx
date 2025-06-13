@@ -9,10 +9,10 @@ interface FullButtonProps {
 export function FullButton({ name, disable, onPress }: FullButtonProps) {
   return (
     <View
-      className={`mx-5 p-4 rounded-2xl ${disable ? "bg-neutral-500" : "bg-blue-500"}`}
+      className={`p-4 rounded-xl ${disable ? "bg-neutral-500" : "bg-blue-500"}`}
     >
       <TouchableOpacity disabled={disable} onPress={onPress}>
-        <Text className="text-white text-center">{name}</Text>
+        <Text className="text-center text-white text-sm">{name}</Text>
       </TouchableOpacity>
     </View>
   );
