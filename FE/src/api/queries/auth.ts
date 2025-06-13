@@ -1,12 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useApiMutation } from "../../hooks/useApiMutation";
 import {
-  changeNickname,
-  changePassword,
-  changePhoneNumber,
-  changeProfileImage,
   checkEmailDuplication,
   checkNicknameDuplication,
+  editNickname,
+  editPassword,
+  editPhoneNumber,
+  editProfileImage,
   getMyInformtaion,
   getOtherInformtaion,
   kakaologin,
@@ -97,9 +97,9 @@ export async function useLogin() {
 }
 
 // 프로필 이미지 변경
-export async function useChangeProfileImage() {
+export async function useEditProfileImage() {
   return useApiMutation({
-    mutationFn: (profileImage: string) => changeProfileImage(profileImage),
+    mutationFn: (profileImage: string) => editProfileImage(profileImage),
     keysToInvalidate: [],
     successMessage: "프로필 이미지가 성공적으로 변경되었습니다.",
     errorMessage: "프로필 이미지 변경 실패",
@@ -107,9 +107,9 @@ export async function useChangeProfileImage() {
 }
 
 // 닉네임 변경
-export async function useChangeNickname() {
+export async function useEditNickname() {
   return useApiMutation({
-    mutationFn: (nickname: string) => changeNickname(nickname),
+    mutationFn: (nickname: string) => editNickname(nickname),
     keysToInvalidate: [],
     successMessage: "닉네임이 성공적으로 변경되었습니다.",
     errorMessage: "닉네임 변경 실패",
@@ -117,9 +117,9 @@ export async function useChangeNickname() {
 }
 
 // 핸드폰 번호 변경
-export async function useChangePhoneNumber() {
+export async function useEditPhoneNumber() {
   return useApiMutation({
-    mutationFn: (phoneNumber: string) => changePhoneNumber(phoneNumber),
+    mutationFn: (phoneNumber: string) => editPhoneNumber(phoneNumber),
     keysToInvalidate: [],
     successMessage: "핸드폰 번호가가 성공적으로 변경되었습니다.",
     errorMessage: "핸드폰 번호 변경 실패",
@@ -127,9 +127,9 @@ export async function useChangePhoneNumber() {
 }
 
 // 비밀번호 변경
-export async function useChangePassword() {
+export async function useEditPassword() {
   return useApiMutation({
-    mutationFn: (password: string) => changePassword(password),
+    mutationFn: (password: string) => editPassword(password),
     keysToInvalidate: [],
     successMessage: "비밀번호가 성공적으로 변경되었습니다.",
     errorMessage: "비밀번호 변경 실패",

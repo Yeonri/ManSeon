@@ -82,7 +82,7 @@ export async function login(email: string, password: string) {
 }
 
 // 프로필 이미지 변경
-export async function changeProfileImage(profileImage: string) {
+export async function editProfileImage(profileImage: string) {
   try {
     const response = await authClient.patch(`/users/me/profile-Img`, {
       profileImage,
@@ -96,7 +96,7 @@ export async function changeProfileImage(profileImage: string) {
 }
 
 // 닉네임 변경
-export async function changeNickname(nickname: string) {
+export async function editNickname(nickname: string) {
   try {
     const response = await client.patch(``, { nickname });
     console.log("닉네임 변경 성공: ", response.data);
@@ -108,7 +108,7 @@ export async function changeNickname(nickname: string) {
 }
 
 // 핸드폰 번호 변경
-export async function changePhoneNumber(phoneNumber: string) {
+export async function editPhoneNumber(phoneNumber: string) {
   try {
     const response = await authClient.patch(`/users/me/phone`, { phoneNumber });
     console.log("핸드폰 번호 변경 성공: ", response.data);
@@ -120,7 +120,7 @@ export async function changePhoneNumber(phoneNumber: string) {
 }
 
 // 비밀번호 변경
-export async function changePassword(password: string) {
+export async function editPassword(password: string) {
   try {
     const response = await authClient.patch(`/users/me/password`, { password });
     console.log("비밀번호 변경 성공: ", response.data);

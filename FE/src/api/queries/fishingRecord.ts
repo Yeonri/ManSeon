@@ -9,7 +9,7 @@ import {
 
 // 낚시 기록 전체 조회
 export function useGetFishingRecords() {
-  useQuery({
+  return useQuery({
     queryKey: ["fishingRecords"],
     queryFn: getFishingRecords,
   });
@@ -17,7 +17,7 @@ export function useGetFishingRecords() {
 
 // 낚시 기록 상세 조회
 export function useGetFishingRecordDetail(recordId: number) {
-  useQuery({
+  return useQuery({
     queryKey: ["fishingRecord", recordId],
     queryFn: () => getFishingRecordDetail(recordId),
   });
@@ -25,7 +25,7 @@ export function useGetFishingRecordDetail(recordId: number) {
 
 // 낚시 기록 추가
 export function useAddFishingRecord() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: ({
       fishName,
       fishImage,
@@ -66,7 +66,7 @@ export function useAddFishingRecord() {
 
 // 낚시 기록 삭제
 export function useDeleteFishingRecord() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: (recordId: number) => deleteFishingRecord(recordId),
     keysToInvalidate: [["fishingRecords"]],
     successMessage: "낚시 기록이 성공적으로 삭제되었습니다.",
