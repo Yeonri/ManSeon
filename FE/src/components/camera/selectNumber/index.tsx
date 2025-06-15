@@ -7,7 +7,7 @@ interface Props {
   onChange?: (val: number) => void;
 }
 
-export function SelectNumber({ initial = 10, onChange }: Props) {
+function SelectNumber({ initial = 10, onChange }: Props) {
   const min = 1;
   const max = 99;
 
@@ -65,3 +65,5 @@ export function SelectNumber({ initial = 10, onChange }: Props) {
     </View>
   );
 }
+
+export default SelectNumber;

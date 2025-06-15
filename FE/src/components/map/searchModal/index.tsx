@@ -1,8 +1,8 @@
 import { X } from "lucide-react-native";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 import { useFishingPointsSearch } from "../../../api/quries/useFishingpointSearch";
-import { SearchInput } from "../searchInput";
-import { SearchResult } from "../searchResult";
+import SearchInput from "../searchInput";
+import SearchResult from "../searchResult";
 
 interface SearchModalProps {
   visible: boolean;
@@ -12,7 +12,7 @@ interface SearchModalProps {
   onClose: () => void;
 }
 
-export function SearchModal({
+function SearchModal({
   visible,
   keyword,
   onChangeText,
@@ -57,3 +57,5 @@ export function SearchModal({
     </Modal>
   );
 }
+
+export default SearchModal;

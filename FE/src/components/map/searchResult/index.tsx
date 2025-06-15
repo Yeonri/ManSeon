@@ -12,7 +12,7 @@ interface SearchResultProps {
   results: SearchResultItem[];
 }
 
-export function SearchResult({ results }: SearchResultProps) {
+function SearchResult({ results }: SearchResultProps) {
   if (!results || results.length === 0) {
     return <Text>검색 결과가 없습니다.</Text>;
   }
@@ -45,3 +45,5 @@ export function SearchResult({ results }: SearchResultProps) {
     />
   );
 }
+
+export default SearchResult;

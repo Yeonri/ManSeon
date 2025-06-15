@@ -1,11 +1,13 @@
 import { CircleAlert } from "lucide-react-native";
 import { Text, View } from "react-native";
 
-export function ErrorMessage({ content }: { content: string }) {
+function ErrorMessage({ content }: { content: string }) {
   return (
-    <View className="m-2 px-2 flex-row gap-1 items-center">
-      <CircleAlert color="#EC6344" size={16} />
-      <Text className="text-sm text-error">{content}</Text>
+    <View className="m-2 flex-row gap-1 items-center">
+      <CircleAlert color="#EC6344" size={12} />
+      <Text className="text-xs text-error">{content}</Text>
     </View>
   );
 }
+
+export default ErrorMessage;

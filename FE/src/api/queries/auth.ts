@@ -5,7 +5,7 @@ import {
   checkNicknameDuplication,
   editNickname,
   editPassword,
-  editPhoneNumber,
+  editPhone,
   editProfileImage,
   emailLogin,
   getMyInformtaion,
@@ -40,8 +40,17 @@ export function useEmailLogin() {
   const setLogin = useLoginStore((state) => state.setLogin);
 
   return useApiMutation({
-    mutationFn: ({ email, password }: { email: string; password: string }) =>
-      emailLogin(email, password),
+    mutationFn: ({
+      email,
+      phone,
+      nickname,
+      password,
+    }: {
+      email: string;
+      phone: string;
+      nickname: string;
+      password: string;
+    }) => emailLogin(email, phone, nickname, password),
     keysToInvalidate: [],
     successMessage: "로그인 성공",
     errorMessage: "로그인 실패",
@@ -127,9 +136,9 @@ export function useEditNickname() {
 }
 
 // 핸드폰 번호 변경
-export function useEditPhoneNumber() {
+export function useEditPhone() {
   return useApiMutation({
-    mutationFn: (phoneNumber: string) => editPhoneNumber(phoneNumber),
+    mutationFn: (phone: string) => editPhone(phone),
     keysToInvalidate: [],
     successMessage: "핸드폰 번호가가 성공적으로 변경되었습니다.",
     errorMessage: "핸드폰 번호 변경 실패",

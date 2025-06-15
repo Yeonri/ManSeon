@@ -1,13 +1,13 @@
 import { useRef } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { Camera, useCameraDevice, PhotoFile } from "react-native-vision-camera";
-import { Loading } from "../../common/loading";
+import Loading from "../../common/loading";
 
 interface CameraViewProps {
   onPhotoTaken: (photo: PhotoFile) => void;
 }
 
-export function CameraView({ onPhotoTaken }: CameraViewProps) {
+function CameraView({ onPhotoTaken }: CameraViewProps) {
   const camera = useRef<Camera>(null);
   const device = useCameraDevice("back");
 
@@ -39,3 +39,5 @@ export function CameraView({ onPhotoTaken }: CameraViewProps) {
     </View>
   );
 }
+
+export default CameraView;

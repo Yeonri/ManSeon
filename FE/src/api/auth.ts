@@ -22,9 +22,19 @@ export async function signup(
 }
 
 // 이메일 로그인
-export async function emailLogin(email: string, password: string) {
+export async function emailLogin(
+  email: string,
+  phone: string,
+  nickname: string,
+  password: string
+) {
   try {
-    const response = await client.post(``, { email, password });
+    const response = await client.post(``, {
+      email,
+      phone,
+      nickname,
+      password,
+    });
     console.log("로그인 성공: ", response.data);
     return response.data;
   } catch (error: unknown) {
@@ -108,9 +118,9 @@ export async function editNickname(nickname: string) {
 }
 
 // 핸드폰 번호 변경
-export async function editPhoneNumber(phoneNumber: string) {
+export async function editPhone(phone: string) {
   try {
-    const response = await authClient.patch(`/users/me/phone`, { phoneNumber });
+    const response = await authClient.patch(`/users/me/phone`, { phone });
     console.log("핸드폰 번호 변경 성공: ", response.data);
     return response.data;
   } catch (error: unknown) {

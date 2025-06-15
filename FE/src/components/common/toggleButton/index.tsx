@@ -7,7 +7,7 @@ interface ToggleButtonProps {
   onSelect: (value: string) => void;
 }
 
-export function ToggleButton({
+function ToggleButton({
   option1,
   option2,
   selected,
@@ -38,3 +38,5 @@ export function ToggleButton({
     </View>
   );
 }
+
+export default ToggleButton;

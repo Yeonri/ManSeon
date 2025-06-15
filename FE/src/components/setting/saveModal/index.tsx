@@ -1,12 +1,11 @@
-import React from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 
-type SaveModalProps = {
+interface SaveModalProps {
   visible: boolean;
   onClose: () => void;
-};
+}
 
-export function SaveModal(props: SaveModalProps) {
+function SaveModal(props: SaveModalProps) {
   const { visible, onClose } = props;
 
   return (
@@ -33,3 +32,5 @@ export function SaveModal(props: SaveModalProps) {
     </Modal>
   );
 }
+
+export default SaveModal;

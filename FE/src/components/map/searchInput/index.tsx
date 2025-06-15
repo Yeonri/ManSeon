@@ -8,7 +8,7 @@ interface SearchInputProps {
   placeholder?: string;
 }
 
-export function SearchInput({
+function SearchInput({
   value,
   onChangeText,
   onSearchPress,
@@ -28,3 +28,5 @@ export function SearchInput({
     </View>
   );
 }
+
+export default SearchInput;

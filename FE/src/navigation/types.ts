@@ -6,14 +6,6 @@ export type AuthStackParams = {
   Signup: undefined;
 };
 
-export type SignupStackParams = {
-  Name: undefined;
-  PhoneNum: { name: string };
-  Email: { name: string; phone: string };
-  Password: { name: string; phone: string; email: string };
-  Nickname: { name: string; phone: string; email: string; password: string };
-};
-
 export type AppStackParams = {
   BottomTab: {
     screen: "home" | "map" | "camera" | "community" | "setting";
