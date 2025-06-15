@@ -24,11 +24,13 @@ export function useSignup() {
       email,
       password,
       nickname,
+      phone,
     }: {
       email: string;
       password: string;
       nickname: string;
-    }) => signup(email, password, nickname),
+      phone: string;
+    }) => signup(email, password, nickname, phone),
     keysToInvalidate: [],
     successMessage: "회원가입 성공",
     errorMessage: "회원가입 실패",
@@ -40,17 +42,8 @@ export function useEmailLogin() {
   const setLogin = useLoginStore((state) => state.setLogin);
 
   return useApiMutation({
-    mutationFn: ({
-      email,
-      phone,
-      nickname,
-      password,
-    }: {
-      email: string;
-      phone: string;
-      nickname: string;
-      password: string;
-    }) => emailLogin(email, phone, nickname, password),
+    mutationFn: ({ email, password }: { email: string; password: string }) =>
+      emailLogin(email, password),
     keysToInvalidate: [],
     successMessage: "로그인 성공",
     errorMessage: "로그인 실패",
@@ -102,16 +95,20 @@ export function useWithdrawal() {
 }
 
 // 이메일 중복 확인
-export function useCheckEmailDuplication() {
-  return useMutation({
-    mutationFn: (email: string) => checkEmailDuplication(email),
+export function useCheckEmailDuplication(email: string) {
+  return useQuery({
+    queryKey: ["emailDuplication", email],
+    queryFn: () => checkEmailDuplication(email),
+    enabled: false,
   });
 }
 
 // 닉네임 중복 확인
-export function useCheckNicknameDuplication() {
-  return useMutation({
-    mutationFn: (nickname: string) => checkNicknameDuplication(nickname),
+export function useCheckNicknameDuplication(nickname: string) {
+  return useQuery({
+    queryKey: ["nicknameDuplication", nickname],
+    queryFn: () => checkNicknameDuplication(nickname),
+    enabled: false,
   });
 }
 

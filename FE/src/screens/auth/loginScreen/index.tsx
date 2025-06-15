@@ -6,11 +6,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import LogoKakao from "../../../assets/images/logo_kakao.svg";
 import LogoNaver from "../../../assets/images/logo_naver.svg";
 import { Eye, EyeOff } from "lucide-react-native";
-import { FullButton } from "../../../components/common/fullButton";
-import { HeaderCenter } from "../../../components/common/headerCenter";
 import { AuthStackParams } from "../../../navigation/types";
 import { useEmailLogin, useKakaologin } from "../../../api/queries/auth";
 import { login } from "@react-native-seoul/kakao-login";
+import Header from "../../../components/common/header";
+import CustomButton from "../../../components/common/customButton";
 
 interface LoginScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams, "Login"> {}
@@ -56,7 +56,7 @@ export function LoginScreen() {
   return (
     <SafeAreaView className="mx-10 py-20 gap-20">
       {/* 헤더 */}
-      <HeaderCenter />
+      <Header logo={true} before={false} />
 
       {/* 로그인 */}
       <View className="gap-3">
@@ -66,7 +66,7 @@ export function LoginScreen() {
           inputMode="email"
           value={email}
           onChangeText={setEmail}
-          className="px-5 py-3 bg-neutral-100 rounded-xl text-sm text-neutral-800"
+          className="px-5 py-3 bg-neutral-50 rounded-xl text-sm text-neutral-800"
         />
         <View className="relative gap-4">
           <TextInput
@@ -75,7 +75,7 @@ export function LoginScreen() {
             value={password}
             onChangeText={setPassword}
             secureTextEntry={option}
-            className="px-5 py-3 bg-neutral-100 rounded-xl text-sm text-neutral-800"
+            className="px-5 py-3 bg-neutral-50 rounded-xl text-sm text-neutral-800"
           />
 
           <TouchableOpacity
@@ -88,17 +88,27 @@ export function LoginScreen() {
               <EyeOff color="#A3A3A3" size={20} />
             )}
           </TouchableOpacity>
-          <View className="p-2" />
+          <View className="p-1" />
 
-          {/* 로그인 버튼 */}
-          <FullButton name="로그인" disable={false} onPress={handleLogin} />
+          <View className="gap-3">
+            {/* 로그인 버튼 */}
+            <CustomButton
+              title="로그인"
+              fill={true}
+              full={true}
+              disable={false}
+              onPress={handleLogin}
+            />
 
-          {/* 회원가입 */}
-          <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-            <Text className="p-1 text-center text-sm text-blue-500">
-              회원가입
-            </Text>
-          </TouchableOpacity>
+            {/* 회원가입 버튼 */}
+            <CustomButton
+              title="회원가입"
+              fill={false}
+              full={true}
+              disable={false}
+              onPress={() => navigation.navigate("Signup")}
+            />
+          </View>
         </View>
       </View>
 

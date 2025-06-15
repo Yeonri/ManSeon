@@ -6,7 +6,7 @@ export type AuthStackParams = {
   Signup: undefined;
 };
 
-export type AppStackParams = {
+export type RootStackParams = {
   BottomTab: {
     screen: "home" | "map" | "camera" | "community" | "setting";
     params?: any;

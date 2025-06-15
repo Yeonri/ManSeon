@@ -7,6 +7,7 @@ import "./global.css";
 import { Screen } from "./src/screens";
 import { useLoginStore } from "./src/store/loginStore";
 import tokenStorage from "./src/utils/tokenStorage";
+import { AuthStackNavigator } from "./src/navigation/authStackNavigator";
 
 const queryClient = new QueryClient();
 
@@ -62,7 +63,7 @@ export default function App(): React.JSX.Element {
       <QueryClientProvider client={queryClient}>
         {/* <NavigationContainer theme={mainTheme}>{content}</NavigationContainer> */}
         <NavigationContainer theme={mainTheme}>
-          <Screen />
+          <AuthStackNavigator />
         </NavigationContainer>
       </QueryClientProvider>
     </GestureHandlerRootView>

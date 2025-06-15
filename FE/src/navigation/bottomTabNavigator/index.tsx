@@ -14,12 +14,13 @@ import { MapScreen } from "../../screens/map/mapScreen";
 import { SettingScreen } from "../../screens/settings/settingScreen";
 import { CommunityStackNavigator } from "../communityStackNavigator";
 import { HomeStackNavigator } from "../mainStackNavigator";
-import { AppStackParams } from "../types";
+import { RootStackParams } from "../types";
 
 const Tab = createBottomTabNavigator();
 
 function CustomBottomTabButton() {
-  const navigation = useNavigation<NativeStackNavigationProp<AppStackParams>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   return (
     <TouchableOpacity

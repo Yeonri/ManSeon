@@ -19,7 +19,7 @@ function Header({ title, logo, before }: HeaderProps) {
     <View className="mx-5 h-16 flex-row items-center">
       {before && (
         <TouchableOpacity onPress={handleBack} className="z-10">
-          <ChevronLeft color="#737373" size={30} />
+          <ChevronLeft color="#737373" size={25} />
         </TouchableOpacity>
       )}
       {logo && (

@@ -3,10 +3,10 @@ import { CameraScreen } from "../../screens/camera/cameraScreen";
 import { RecordScreen } from "../../screens/camera/recordScreen";
 import { ChatbotScreen } from "../../screens/chat/chatbotScreen";
 import { BottomTabNavigator } from "../bottomTabNavigator";
-import { AppStackParams } from "../types";
+import { RootStackParams } from "../types";
 
-export function AppNavigator() {
-  const Stack = createNativeStackNavigator<AppStackParams>();
+export function RootNavigator() {
+  const Stack = createNativeStackNavigator<RootStackParams>();
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>

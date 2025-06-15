@@ -5,13 +5,15 @@ import client from "./client/client";
 export async function signup(
   email: string,
   password: string,
-  nickname: string
+  nickname: string,
+  phone: string
 ) {
   try {
     const response = await client.post(``, {
       email,
       password,
       nickname,
+      phone,
     });
     console.log("자체 회원가입 성공: ", response.data);
     return response.data;
@@ -22,17 +24,10 @@ export async function signup(
 }
 
 // 이메일 로그인
-export async function emailLogin(
-  email: string,
-  phone: string,
-  nickname: string,
-  password: string
-) {
+export async function emailLogin(email: string, password: string) {
   try {
     const response = await client.post(``, {
       email,
-      phone,
-      nickname,
       password,
     });
     console.log("로그인 성공: ", response.data);
