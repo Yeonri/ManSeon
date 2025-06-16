@@ -26,7 +26,7 @@ export function useGetNoticeDetail(noticeId: number) {
 
 // [관리자] 공지사항 추가
 export function useAddNotice() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: ({ title, content }: { title: string; content: string }) =>
       addNotice(title, content),
     keysToInvalidate: [["notice"]],
@@ -37,7 +37,7 @@ export function useAddNotice() {
 
 // [관리자] 공지사항 변경
 export function useEditNotice() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: ({
       noticeId,
       title,
@@ -55,7 +55,7 @@ export function useEditNotice() {
 
 // [관리자] 공지사항 삭제
 export function useDeleteNotice() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: (noticeId: number) => deleteNotice(noticeId),
     keysToInvalidate: [["notice"]],
     successMessage: "공지사항이 성공적으로 삭제되었습니다.",

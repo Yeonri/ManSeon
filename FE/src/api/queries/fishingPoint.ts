@@ -9,7 +9,7 @@ import {
 
 // 낚시 포인트 전체 조회
 export function useGetFishingPoints() {
-  useQuery({
+  return useQuery({
     queryKey: ["fishingPoints"],
     queryFn: getFishingPoints,
   });
@@ -17,7 +17,7 @@ export function useGetFishingPoints() {
 
 // 낚시 포인트 상세 조회
 export function useGetFishingPointDetail(fishingPointId: number) {
-  useQuery({
+  return useQuery({
     queryKey: ["fishingPointDetail", fishingPointId],
     queryFn: () => getFishingPointDetail(fishingPointId),
   });
@@ -25,7 +25,7 @@ export function useGetFishingPointDetail(fishingPointId: number) {
 
 // 낚시 포인트 검색 결과 조회
 export function useGetFishingPointSearch(keyword: string) {
-  useQuery({
+  return useQuery({
     queryKey: ["fishingPointSearch", keyword],
     queryFn: () => getFishingPointSearch(keyword),
   });
@@ -33,7 +33,7 @@ export function useGetFishingPointSearch(keyword: string) {
 
 // 추천 포인트 조회
 export function useGetFishingPointRecommend() {
-  useQuery({
+  return useQuery({
     queryKey: ["fishingPointRecommend"],
     queryFn: getFishingPointRecommend,
   });
@@ -41,7 +41,7 @@ export function useGetFishingPointRecommend() {
 
 // 내가 잡은 물고기 조회
 export function useGetMyFishes() {
-  useQuery({
+  return useQuery({
     queryKey: ["myFishes"],
     queryFn: getMyFishes,
   });

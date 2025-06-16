@@ -13,7 +13,7 @@ import { useApiMutation } from "../../hooks/useApiMutation";
 
 // 문의사항 전체 조회
 export function useGetInquiry() {
-  useQuery({
+  return useQuery({
     queryKey: ["inquiry"],
     queryFn: getInquiry,
   });
@@ -21,7 +21,7 @@ export function useGetInquiry() {
 
 // 문의사항 상세 조회
 export function useGetInquiryDetail(inquiryId: number) {
-  useQuery({
+  return useQuery({
     queryKey: ["inquiryDetail", inquiryId],
     queryFn: () => getInquiryDetail(inquiryId),
   });
@@ -29,7 +29,7 @@ export function useGetInquiryDetail(inquiryId: number) {
 
 // [유저] 문의사항 추가
 export function useAddInquiry() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: ({ title, content }: { title: string; content: string }) =>
       addInquiry(title, content),
     keysToInvalidate: [["inquiry"]],
@@ -40,7 +40,7 @@ export function useAddInquiry() {
 
 // [유저] 문의사항 변경
 export function useEditInquiry() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: ({
       inquiryId,
       title,
@@ -58,7 +58,7 @@ export function useEditInquiry() {
 
 // [유저] 문의사항 삭제
 export function useDeleteInquiry() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: (inquiryId: number) => deleteInquiry(inquiryId),
     keysToInvalidate: [["inquiry"]],
     successMessage: "문의사항이 성공적으로 삭제되었습니다.",
@@ -68,7 +68,7 @@ export function useDeleteInquiry() {
 
 // [관리자] 문의사항 답변 추가
 export function useAddInquiryAnswer() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: ({
       inquiryId,
       title,
@@ -104,7 +104,7 @@ export function useEditInquiryAnswer() {
 
 // [관리자] 문의사항 삭제
 export function useDeleteInquiryAnswer() {
-  useApiMutation({
+  return useApiMutation({
     mutationFn: (inquiryId: number) => deleteInquiryAnswer(inquiryId),
     keysToInvalidate: [["inquiry"]],
     successMessage: "문의사항 답변이 성공적으로 삭제되었습니다.",

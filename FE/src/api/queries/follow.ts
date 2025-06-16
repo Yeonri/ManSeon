@@ -10,7 +10,7 @@ import {
 
 // 내 팔로잉 전체 조회
 export function useGetMyFollowings() {
-  useQuery({
+  return useQuery({
     queryKey: ["myFollowings"],
     queryFn: getMyFollowings,
   });
@@ -18,7 +18,7 @@ export function useGetMyFollowings() {
 
 // 내 팔로워 전체 조회
 export function useGetMyFollowers() {
-  useQuery({
+  return useQuery({
     queryKey: ["myFollowers"],
     queryFn: getMyFollowers,
   });
@@ -26,7 +26,7 @@ export function useGetMyFollowers() {
 
 // 다른 유저 팔로잉 전체 조회
 export function useGetOtherFollowings(userId: string) {
-  useQuery({
+  return useQuery({
     queryKey: ["otherFollowings", userId],
     queryFn: () => getOtherFollowings(userId),
   });
@@ -34,7 +34,7 @@ export function useGetOtherFollowings(userId: string) {
 
 // 다른 유저 팔로워 전체 조회
 export function useGetOtherFollowers(userId: string) {
-  useQuery({
+  return useQuery({
     queryKey: ["otherFollowings", userId],
     queryFn: () => getOtherFollowers(userId),
   });
@@ -42,14 +42,14 @@ export function useGetOtherFollowers(userId: string) {
 
 // 팔로잉 추가
 export function useAddFollowing(userId: string) {
-  useMutation({
+  return useMutation({
     mutationFn: () => addFollowing(userId),
   });
 }
 
 // 팔로잉 삭제
 export function useDeleteFollowing(userId: string) {
-  useMutation({
+  return useMutation({
     mutationFn: () => deleteFollowing(userId),
   });
 }
