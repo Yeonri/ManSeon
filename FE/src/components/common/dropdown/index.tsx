@@ -42,7 +42,7 @@ function Dropdown({ options, selected, onSelect }: DropdownProps) {
               <Text
                 className={`text-base ${
                   selected === option
-                    ? "text-blue-600 font-bold"
+                    ? "text-blue-500 font-bold"
                     : "text-neutral-800"
                 }`}
               >

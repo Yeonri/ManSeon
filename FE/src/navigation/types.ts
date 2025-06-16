@@ -13,15 +13,13 @@ export type RootStackParams = {
   };
 
   Camera: undefined;
-  Record: { photoUri: string; fishName: string };
-  Chatbot: undefined;
+  AddRecord: { photoUri: string; fishName: string };
 };
 
 export type HomeStackParams = {
   Home: undefined;
   Map: undefined;
-  Community: undefined;
-  CollectionList: undefined;
+  Collection: undefined;
   CollectionDetail: {
     name: string;
     description: string;
@@ -33,14 +31,15 @@ export type HomeStackParams = {
       caught_at: string;
     }[];
   };
-  Profile: undefined;
+  Mypage: undefined;
+  Community: undefined;
+  PostDetail: { postId: number };
   Chatbot: undefined;
-  Post: { postId: number };
 };
 
 export type CommunityStackParams = {
   Community: undefined;
-  Post: { postId: number };
+  PostDetail: { postId: number };
   AddPost: undefined;
   EditPost: {
     postId: number;
@@ -48,23 +47,24 @@ export type CommunityStackParams = {
     content: string;
     postImg: string;
   };
-  Profile: undefined;
-  UserProfile: { userId: number };
+  MyPage: undefined;
+  UserPage: { userId: number };
 } & ParamListBase;
 
-export type FishingStackParams = {
-  FishingList: undefined;
-  Fishing: { title: string; fishId: number };
+export type RecordStackParams = {
+  Record: undefined;
+  RecordDetail: { title: string; fishId: number };
+  AddRecord: undefined;
 } & ParamListBase;
 
-export type SettingStackParams = {
-  Setting: undefined;
-  Tutorial: undefined;
-  Prohibited: undefined;
-  Rule: undefined;
-  MyPosts: undefined;
-  Fishings: undefined;
-  CollectionList: undefined;
+export type SettingsStackParams = {
+  Settings: undefined;
+  Mypage: undefined;
+  MyInformation: undefined;
+  UserPage: undefined;
+  Friends: undefined;
+  MyPost: undefined;
+  Collection: undefined;
   CollectionDetail: {
     name: string;
     description: string;
@@ -75,8 +75,10 @@ export type SettingStackParams = {
       caught_at: string;
     }[];
   };
-  Suggestions: undefined;
-  Profile: undefined;
-  ProfileEdit: undefined;
-  Friends: undefined;
+
+  Prohibited: undefined;
+  FishingRule: undefined;
+  Notice: undefined;
+  Inquiry: undefined;
+  Tutorial: undefined;
 };

@@ -28,7 +28,7 @@ function Header({ title, logo, before }: HeaderProps) {
         </Text>
       )}
       {title && (
-        <Text className="absolute left-0 right-0 text-center font-bold text-xl color-blue-600">
+        <Text className="absolute left-0 right-0 text-center font-bold text-xl color-blue-500">
           {title}
         </Text>
       )}

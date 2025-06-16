@@ -9,12 +9,12 @@ import {
   MessagesSquare,
 } from "lucide-react-native";
 import { TouchableOpacity } from "react-native";
-import { CameraScreen } from "../../screens/camera/cameraScreen";
-import { MapScreen } from "../../screens/map/mapScreen";
-import { SettingScreen } from "../../screens/settings/settingScreen";
 import { CommunityStackNavigator } from "../communityStackNavigator";
-import { HomeStackNavigator } from "../mainStackNavigator";
+import { HomeStackNavigator } from "../homeStackNavigator";
 import { RootStackParams } from "../types";
+import MapScreen from "../../screens/map/mapScreen";
+import CameraScreen from "../../screens/camera/cameraScreen";
+import SettingsScreen from "../../screens/settings/settingsScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -84,7 +84,7 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         name="setting"
-        component={SettingScreen}
+        component={SettingsScreen}
         options={{
           title: "더 보기",
           tabBarIcon: renderTabIcon(CircleEllipsis),
