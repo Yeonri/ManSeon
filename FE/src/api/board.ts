@@ -1,5 +1,17 @@
 import authClient from "./client/authClient";
 
+// 팔로잉 게시글 조회
+export async function getFollowingBoard() {
+  try {
+    const response = await authClient.get(``);
+    console.log("팔로잉 게시글 조회 성공: ", response.data);
+    return response.data;
+  } catch (error: unknown) {
+    console.error("팔로잉 게시글 조회 실패: ", error);
+    return null;
+  }
+}
+
 // 게시글 전체 조회
 export async function getBoards() {
   try {

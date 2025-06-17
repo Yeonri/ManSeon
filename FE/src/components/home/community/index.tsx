@@ -12,15 +12,15 @@ export default function Community() {
   const navigation = useNavigation<CommunityNavigationProps>();
 
   // 임시 데이터
-  const latestPost = [
+  const latestBoards = [
     {
       boardId: "1",
-      postImg:
+      boardImg:
         "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
     },
     {
       boardId: "2",
-      postImg:
+      boardImg:
         "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
     },
   ];
@@ -43,10 +43,10 @@ export default function Community() {
 
       <ScrollView horizontal className="mt-2">
         <View className="flex-row gap-x-3 px-1">
-          {latestPost.slice(0, 10).map((board) => (
+          {latestBoards.slice(0, 10).map((board) => (
             <Image
               key={board.boardId}
-              source={{ uri: board.postImg }}
+              source={{ uri: board.boardImg }}
               className="w-24 h-24 rounded-md"
             />
           ))}

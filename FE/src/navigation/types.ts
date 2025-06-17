@@ -33,21 +33,15 @@ export type HomeStackParams = {
   };
   Mypage: undefined;
   Community: undefined;
-  PostDetail: { postId: number };
+  BoardDetail: { boardId: number };
   Chatbot: undefined;
 };
 
 export type CommunityStackParams = {
   Community: undefined;
-  PostDetail: { postId: number };
-  AddPost: undefined;
-  EditPost: {
-    postId: number;
-    title: string;
-    content: string;
-    postImg: string;
-  };
-  MyPage: undefined;
+  BoardDetail: { boardId: number };
+  AddBoard: undefined;
+  EditBoard: { boardId: number; title: string; content: string; image: string };
   UserPage: { userId: number };
 } & ParamListBase;
 
@@ -63,7 +57,7 @@ export type SettingsStackParams = {
   MyInformation: undefined;
   UserPage: undefined;
   Friends: undefined;
-  MyPost: undefined;
+  MyBoard: undefined;
   Collection: undefined;
   CollectionDetail: {
     name: string;

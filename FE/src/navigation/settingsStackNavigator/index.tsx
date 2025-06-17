@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SettingsStackParams } from "../types";
 import SettingsScreen from "../../screens/settings/settingsScreen";
-import MyPostScreen from "../../screens/settings/myPostScreen";
 import ProhibitedScreen from "../../screens/settings/prohibitedScreen";
 import FishingRuleScreen from "../../screens/settings/fishingRuleScreen";
 import FriendsScreen from "../../screens/settings/friendsScreen";
@@ -13,6 +12,7 @@ import NoticeScreen from "../../screens/settings/noticeScreen";
 import InquiryScreen from "../../screens/settings/inquiryScreen";
 import TutorialScreen from "../../screens/settings/tutorialScreen";
 import MyInformationScreen from "../../screens/settings/myInformationScreen";
+import MyBoardScreen from "../../screens/settings/myBoardScreen";
 
 const Stack = createNativeStackNavigator<SettingsStackParams>();
 
@@ -35,7 +35,7 @@ export function SettingsStackNavigator() {
       <Stack.Screen name="Friends" component={FriendsScreen} />
 
       {/* 내 게시글 */}
-      <Stack.Screen name="MyPost" component={MyPostScreen} />
+      <Stack.Screen name="MyBoard" component={MyBoardScreen} />
 
       {/* 도감 */}
       <Stack.Screen name="Collection" component={CollectionScreen} />

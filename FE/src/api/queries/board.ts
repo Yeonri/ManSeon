@@ -5,12 +5,21 @@ import {
   editBoard,
   getBoardDetail,
   getBoards,
+  getFollowingBoard,
   getMyBoards,
   getOtherBoards,
   likeBoard,
   unlikeBoard,
 } from "../board";
 import { useApiMutation } from "../../hooks/useApiMutation";
+
+// 팔로잉 게시글 조회
+export async function useGetFollowingBoard() {
+  return useQuery({
+    queryKey: ["followingBoard"],
+    queryFn: getFollowingBoard,
+  });
+}
 
 // 게시글 전체 조회
 export function useGetBoards() {

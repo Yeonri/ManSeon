@@ -27,7 +27,7 @@ export function useAddComment() {
 }
 
 // 댓글 변경
-export function useEditComments() {
+export function useEditComment() {
   return useApiMutation({
     mutationFn: ({
       boardId,
@@ -45,7 +45,7 @@ export function useEditComments() {
 }
 
 // 댓글 삭제
-export function useDeleteComments() {
+export function useDeleteComment() {
   return useApiMutation({
     mutationFn: ({
       boardId,

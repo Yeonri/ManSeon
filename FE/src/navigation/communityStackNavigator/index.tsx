@@ -1,11 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { CommunityStackParams } from "../types";
 import CommunityScreen from "../../screens/community/communityScreen";
-import PostDetailScreen from "../../screens/community/postDetailScreen";
-import AddPostScreen from "../../screens/community/addPostScreen";
-import EditPostScreen from "../../screens/community/editPostScreen";
-import MypageScreen from "../../screens/settings/mypageScreen";
 import UserPageScreen from "../../screens/settings/userPageScreen";
+import BoardDetailScreen from "../../screens/community/boardDetailScreen";
+import AddBoardScreen from "../../screens/community/addBoardcreen";
+import EditBoardScreen from "../../screens/community/editBoardScreen";
 
 const Stack = createNativeStackNavigator<CommunityStackParams>();
 
@@ -16,16 +15,13 @@ export function CommunityStackNavigator() {
       <Stack.Screen name="Community" component={CommunityScreen} />
 
       {/* 게시글 상세 */}
-      <Stack.Screen name="PostDetail" component={PostDetailScreen} />
+      <Stack.Screen name="BoardDetail" component={BoardDetailScreen} />
 
       {/* 게시글 추가 */}
-      <Stack.Screen name="AddPost" component={AddPostScreen} />
+      <Stack.Screen name="AddBoard" component={AddBoardScreen} />
 
       {/* 게시글 수정 */}
-      <Stack.Screen name="EditPost" component={EditPostScreen} />
-
-      {/* 마이페이지 */}
-      <Stack.Screen name="Mypage" component={MypageScreen} />
+      <Stack.Screen name="EditBoard" component={EditBoardScreen} />
 
       {/* 다른 유저페이지 */}
       <Stack.Screen name="UserPage" component={UserPageScreen} />
