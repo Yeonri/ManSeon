@@ -55,9 +55,12 @@ export type SettingsStackParams = {
   Settings: undefined;
   Mypage: undefined;
   MyInformation: undefined;
+  BoardDetail: { boardId: number };
   UserPage: undefined;
   Friends: undefined;
   MyBoard: undefined;
+  Record: undefined;
+  RecordDetail: { title: string; fishId: number };
   Collection: undefined;
   CollectionDetail: {
     name: string;

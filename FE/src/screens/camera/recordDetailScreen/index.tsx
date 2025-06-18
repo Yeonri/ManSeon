@@ -10,7 +10,7 @@ import SelectButton from "../../../components/common/selectButton";
 interface RecordDetailScreenProps
   extends NativeStackScreenProps<RecordStackParams, "RecordDetail"> {}
 
-export function RecordDetailScreen({ route }: RecordDetailScreenProps) {
+export default function RecordDetailScreen({ route }: RecordDetailScreenProps) {
   const { title, fishId } = route.params;
   const { data: response, refetch } = useGetFishingRecordDetail();
   console.log("응답 전체 :", response);

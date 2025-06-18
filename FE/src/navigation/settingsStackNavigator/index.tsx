@@ -13,6 +13,9 @@ import InquiryScreen from "../../screens/settings/inquiryScreen";
 import TutorialScreen from "../../screens/settings/tutorialScreen";
 import MyInformationScreen from "../../screens/settings/myInformationScreen";
 import MyBoardScreen from "../../screens/settings/myBoardScreen";
+import RecordScreen from "../../screens/camera/recordScreen";
+import RecordDetailScreen from "../../screens/camera/recordDetailScreen";
+import BoardDetailScreen from "../../screens/community/boardDetailScreen";
 
 const Stack = createNativeStackNavigator<SettingsStackParams>();
 
@@ -28,6 +31,9 @@ export function SettingsStackNavigator() {
       {/* 내 정보 */}
       <Stack.Screen name="MyInformation" component={MyInformationScreen} />
 
+      {/* 게시글 상세 */}
+      <Stack.Screen name="BoardDetail" component={BoardDetailScreen} />
+
       {/* 다른 유저페이지 */}
       <Stack.Screen name="UserPage" component={UserPageScreen} />
 
@@ -36,6 +42,12 @@ export function SettingsStackNavigator() {
 
       {/* 내 게시글 */}
       <Stack.Screen name="MyBoard" component={MyBoardScreen} />
+
+      {/* 낚시 기록 전체*/}
+      <Stack.Screen name="Record" component={RecordScreen} />
+
+      {/* 낚시 기록 상세 */}
+      <Stack.Screen name="RecordDetail" component={RecordDetailScreen} />
 
       {/* 도감 */}
       <Stack.Screen name="Collection" component={CollectionScreen} />

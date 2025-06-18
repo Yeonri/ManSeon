@@ -51,8 +51,8 @@ export default function FollowingBoards() {
 
   const friendsBoards = data?.data ?? [];
 
-  function handlePostClick(postId: number) {
-    navigation.navigate("PostDetail", { postId });
+  function handleClick(boardId: number) {
+    navigation.navigate("BoardDetail", { boardId });
   }
 
   function handleUserClick(userId: number) {
@@ -75,7 +75,7 @@ export default function FollowingBoards() {
           data={friendsBoards}
           renderItem={({ item }) => (
             <View className="relative mx-1 my-1">
-              <TouchableOpacity onPress={() => handlePostClick(item.boardId)}>
+              <TouchableOpacity onPress={() => handleClick(item.boardId)}>
                 <Image
                   source={{
                     uri: item.boardImg,

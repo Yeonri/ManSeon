@@ -48,7 +48,7 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
     },
   };
 
-  const postDetail = data?.data ?? [];
+  const boardDetail = data?.data ?? [];
 
   const { mutate: deleteBoard } = useDeleteBoard();
 
@@ -62,7 +62,9 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
       <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 32 }}>
         <View className="mx-5 gap-3">
           {/* 제목 */}
-          <Text className="text-neutral-800 font-bold">{postDetail.title}</Text>
+          <Text className="text-neutral-800 font-bold">
+            {boardDetail.title}
+          </Text>
 
           {/* 작성자 정보, 게시글 수정 및 삭제 */}
           <View className="flex-row items-center justify-between">
@@ -70,13 +72,15 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
             <View className="flex-row items-center gap-2">
               <TouchableOpacity
                 onPress={() =>
-                  navigation.navigate("UserPage", { userId: postDetail.userId })
+                  navigation.navigate("UserPage", {
+                    userId: boardDetail.userId,
+                  })
                 }
                 className="flex-row items-center gap-2"
               >
-                {postDetail.profileImg ? (
+                {boardDetail.profileImg ? (
                   <Image
-                    source={{ uri: postDetail.profileImg }}
+                    source={{ uri: boardDetail.profileImg }}
                     className="w-[22px] h-[22px] rounded-full"
                   />
                 ) : (
@@ -90,7 +94,7 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
                   </View>
                 )}
                 <Text className=" text-neutral-600 text-sm font-semibold">
-                  {postDetail.nickname}
+                  {boardDetail.nickname}
                 </Text>
               </TouchableOpacity>
 
@@ -113,9 +117,9 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
                   onPress={() =>
                     navigation.navigate("EditBoard", {
                       boardId: boardId,
-                      title: postDetail.title,
-                      content: postDetail.content,
-                      postImg: postDetail.postImg,
+                      title: boardDetail.title,
+                      content: boardDetail.content,
+                      image: boardDetail.postImg,
                     })
                   }
                 >
@@ -130,21 +134,23 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
 
               {/* 작성 시간 */}
               <Text className="text-neutral-400 text-xs">
-                {formatTime(postDetail.createdAt)}
+                {formatTime(boardDetail.createdAt)}
               </Text>
             </View>
           </View>
 
           {/* 본문 */}
           {/* 게시글 사진 */}
-          {postDetail.postImg ? (
+          {boardDetail.postImg ? (
             <Image
-              source={{ uri: `${postDetail.postImg}` }}
+              source={{ uri: `${boardDetail.postImg}` }}
               className="w-full h-60 rounded-xl"
             />
           ) : null}
           {/* 게시글 내용 */}
-          <Text className="text-neutral-800 text-sm">{postDetail.content}</Text>
+          <Text className="text-neutral-800 text-sm">
+            {boardDetail.content}
+          </Text>
 
           {/* 구분선 */}
           <View className="mt-2 w-full h-px bg-neutral-100" />
@@ -154,7 +160,7 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
             <View className="flex-row gap-1 items-center">
               <MessageSquareMore fill={"#FFFFFF"} color={"#3B82F6"} size={16} />
               <Text className="text-neutral-600 text-sm">
-                {postDetail.commentNum}
+                {boardDetail.commentNum}
               </Text>
             </View>
 
@@ -162,7 +168,7 @@ export default function BoardDetailScreen({ route }: BoardDetailScreenProps) {
             <View className="flex-row gap-1 items-center">
               <ThumbsUp fill={"#FFFFFF"} color={"#3B82F6"} size={16} />
               <Text className="text-neutral-600 text-sm">
-                {postDetail.like}
+                {boardDetail.like}
               </Text>
             </View>
           </View>

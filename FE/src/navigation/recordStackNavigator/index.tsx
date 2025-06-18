@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { RecordStackParams } from "../types";
 import AddRecordScreen from "../../screens/camera/addRecordScreen";
-import RecordDetailScreen from "../../screens/camera/recordDetailScreen";
 import RecordScreen from "../../screens/camera/recordScreen";
+import { RecordDetailScreen } from "../../screens/camera/recordDetailScreen";
 
 const Stack = createNativeStackNavigator<RecordStackParams>();
 

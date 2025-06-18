@@ -14,7 +14,7 @@ import { HomeStackNavigator } from "../homeStackNavigator";
 import { RootStackParams } from "../types";
 import MapScreen from "../../screens/map/mapScreen";
 import CameraScreen from "../../screens/camera/cameraScreen";
-import SettingsScreen from "../../screens/settings/settingsScreen";
+import { SettingsStackNavigator } from "../settingsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -84,7 +84,7 @@ export function BottomTabNavigator() {
       />
       <Tab.Screen
         name="setting"
-        component={SettingsScreen}
+        component={SettingsStackNavigator}
         options={{
           title: "더 보기",
           tabBarIcon: renderTabIcon(CircleEllipsis),

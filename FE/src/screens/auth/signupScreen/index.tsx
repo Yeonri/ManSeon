@@ -14,12 +14,12 @@ import {
   validatePassword,
   validatePhone,
 } from "../../../utils/validateion";
-import FormField from "../../../components/signup/formField";
 import {
   useCheckEmailDuplication,
   useCheckNicknameDuplication,
   useSignup,
 } from "../../../api/queries/auth";
+import FormField from "../../../components/auth/formField";
 
 interface SignupScreenNavigationProps
   extends NativeStackNavigationProp<AuthStackParams, "Signup"> {}
