@@ -7,6 +7,7 @@ import CollectionDetailScreen from "../../screens/settings/collectionDetailScree
 import ChatbotScreen from "../../screens/home/chatbotScreen";
 import MypageScreen from "../../screens/settings/mypageScreen";
 import { CommunityStackNavigator } from "../communityStackNavigator";
+import BoardDetailScreen from "../../screens/community/boardDetailScreen";
 
 const Stack = createNativeStackNavigator<HomeStackParams>();
 
@@ -33,6 +34,9 @@ export function HomeStackNavigator() {
 
       {/* 커뮤니티 */}
       <Stack.Screen name="Community" component={CommunityStackNavigator} />
+
+      {/* 게시글 상세 */}
+      <Stack.Screen name="BoardDetail" component={BoardDetailScreen} />
 
       {/* 챗봇 */}
       <Stack.Screen name="Chatbot" component={ChatbotScreen} />

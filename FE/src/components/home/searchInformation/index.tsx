@@ -12,11 +12,14 @@ export default function SearchInformation({
   setKeyword,
   handleSearch,
 }: SearchInformationProps) {
+  // 임시 데이터
+  const nickname = "만선이";
+
   return (
-    <View className="px-5 pt-3 pb-5 bg-blue-500 rounded-xl gap-5">
+    <View className="px-5 pt-3 pb-5 bg-blue-500 rounded-xl gap-3">
       {/* 안내멘트 */}
       <View className="flex-row items-end">
-        <Text className="text-white font-bold">닉네임</Text>
+        <Text className="text-white font-bold">{nickname}</Text>
         <Text className="text-white text-sm">
           님 오늘의 도착지를 확인해 보세요!
         </Text>
