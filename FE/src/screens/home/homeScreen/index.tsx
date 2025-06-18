@@ -28,6 +28,8 @@ export default function HomeScreen() {
 
   const [keyword, setKeyword] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalCloseRequested, setModalCloseRequested] =
+    useState<boolean>(false);
 
   const hasLocationPermission = usePermission(
     "위치",
@@ -35,6 +37,13 @@ export default function HomeScreen() {
   );
 
   const setLocation = useLocationStore((state) => state.setLocation);
+
+  useEffect(() => {
+    if (modalCloseRequested) {
+      setShowModal(false);
+      setModalCloseRequested(false);
+    }
+  }, [modalCloseRequested]);
 
   // 위치 정보 가져오기
   useEffect(() => {
@@ -101,9 +110,7 @@ export default function HomeScreen() {
         keyword={keyword}
         onChangeText={setKeyword}
         onSearch={() => {}}
-        onClose={() => {
-          setShowModal(false);
-        }}
+        onClose={() => setModalCloseRequested(true)}
       />
     </SafeAreaView>
   );

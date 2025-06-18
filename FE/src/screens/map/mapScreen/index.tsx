@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetFishingPoints } from "../../../api/queries/fishingPoint";
 import MapView, { Region } from "react-native-maps";
 import { Modalize } from "react-native-modalize";
@@ -40,12 +40,14 @@ export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
   const modalRef = useRef<Modalize>(null);
 
-  const [keyword, setKeyword] = useState("");
+  const [keyword, setKeyword] = useState<string>("");
 
   const zoom = Math.round(Math.log(360 / region.longitudeDelta) / Math.LN2);
   const { clusters, supercluster } = useClustering(points, region, zoom);
 
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [modalCloseRequested, setModalCloseRequested] =
+    useState<boolean>(false);
 
   const [selectedPoint, setSelectedPoint] = useState<any>(null);
 
@@ -56,6 +58,13 @@ export default function MapScreen() {
 
     modalRef.current?.open();
   };
+
+  useEffect(() => {
+    if (modalCloseRequested) {
+      setShowModal(false);
+      setModalCloseRequested(false);
+    }
+  }, [modalCloseRequested]);
 
   return (
     <SafeAreaView className="flex-1">
@@ -94,9 +103,7 @@ export default function MapScreen() {
         keyword={keyword}
         onChangeText={setKeyword}
         onSearch={() => {}}
-        onClose={() => {
-          setShowModal(false);
-        }}
+        onClose={() => setModalCloseRequested(true)}
       />
     </SafeAreaView>
   );

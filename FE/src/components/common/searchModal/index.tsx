@@ -1,7 +1,9 @@
-import { X } from "lucide-react-native";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { Modalize } from "react-native-modalize";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Dimensions, Text, View } from "react-native";
 import SearchInput from "../searchInput";
-import SearchResult from "../searchResult";
+import { useGetFishingPointSearch } from "../../../api/queries/fishingPoint";
 
 interface SearchModalProps {
   visible: boolean;
@@ -18,42 +20,64 @@ export default function SearchModal({
   onSearch,
   onClose,
 }: SearchModalProps) {
+  const modalRef = useRef<Modalize>(null);
+  const insets = useSafeAreaInsets();
+  const { height: screenHeight } = Dimensions.get("window");
+
   //   const { data: searchResults = [], isLoading } =
   //     useGetFishingPointSearch(keyword);
+
+  useEffect(() => {
+    if (visible) {
+      modalRef.current?.open();
+    } else {
+      modalRef.current?.close();
+    }
+  }, [visible]);
+
+  function handleClosed() {
+    onClose();
+  }
+
   return (
-    <Modal visible={visible} transparent>
-      <View className="flex-1 bg-black/60 justify-center items-center px-4">
-        <View className="w-full max-w-md bg-white rounded-2xl p-4 shadow-md h-[600px]">
-          <View className="flex mb-7">
-            <TouchableOpacity
-              onPress={onClose}
-              className="right-0 top-0 p-1 flex-row-reverse -mb-4"
-            >
-              <X />
-            </TouchableOpacity>
+    <Modalize
+      ref={modalRef}
+      modalHeight={screenHeight}
+      snapPoint={screenHeight * 0.7}
+      adjustToContentHeight={false}
+      panGestureEnabled
+      withHandle
+      handlePosition="inside"
+      onClosed={handleClosed}
+      modalStyle={{
+        paddingBottom: insets.bottom,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        backgroundColor: "#fff",
+      }}
+      overlayStyle={{
+        backgroundColor: "rgba(0,0,0,0.6)",
+      }}
+    >
+      <View className="m-5 gap-5">
+        <Text className="pt-3 text-neutral-800 text-lg font-semibold text-center">
+          검색 결과
+        </Text>
 
-            <Text className="text-center text-lg font-semibold text-neutral-900">
-              검색 결과
-            </Text>
-          </View>
+        <SearchInput
+          modal={true}
+          value={keyword}
+          onChangeText={onChangeText}
+          onSearchPress={onSearch}
+        />
 
-          <View className="mb-5">
-            <SearchInput
-              modal={true}
-              value={keyword}
-              onChangeText={onChangeText}
-              onSearchPress={onSearch}
-            />
-          </View>
-
-          {/* 검색 결과 */}
-          {/* {isLoading ? (
+        {/* 검색 결과 */}
+        {/* {isLoading ? (
             <Text>검색 중...</Text>
           ) : (
             <SearchResult results={searchResults} />
           )} */}
-        </View>
       </View>
-    </Modal>
+    </Modalize>
   );
 }
