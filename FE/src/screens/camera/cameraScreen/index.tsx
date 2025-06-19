@@ -1,6 +1,6 @@
 import {
   ActivityIndicator,
-  Alert,
+  FlatList,
   Image,
   Text,
   TouchableOpacity,
@@ -16,7 +16,6 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../navigation/types";
 import translateFishName from "../../../utils/translateFishName";
-import classifyFishImage from "../../../utils/nativeClassifier";
 import PermissionCheck from "../../../components/common/permissionCheck";
 import { ChevronRight, X } from "lucide-react-native";
 import CameraView from "../../../components/camera/cameraView";
@@ -45,91 +44,131 @@ export default function CameraScreen() {
   const sheetRef = useRef<Modalize>(null);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
-  const [detectedResults, setDetectedResults] = useState<DetectionResult[]>([]);
+  // const [detectedResults, setDetectedResults] = useState<DetectionResult[]>([]);
   const { width, height } = useWindowDimensions();
-  const imageWidth = width * 0.3;
-  const imageHeight = height * 0.15;
+  const imageWidth = width * 0.25;
+  const imageHeight = height * 0.1;
 
   const openBottomSheet = () => sheetRef.current?.open();
 
-  const handleNext = () => {
+  // 임시 데이터
+  const detectedResults = [
+    {
+      className: "mackerel",
+      score: 0.92,
+      x: 100,
+      y: 200,
+      width: 150,
+      height: 100,
+    },
+    {
+      className: "filefish",
+      score: 0.87,
+      x: 300,
+      y: 100,
+      width: 160,
+      height: 110,
+    },
+    {
+      className: "cod",
+      score: 0.51,
+      x: 300,
+      y: 100,
+      width: 160,
+      height: 110,
+    },
+    {
+      className: "korean_rockfish",
+      score: 0.28,
+      x: 300,
+      y: 100,
+      width: 160,
+      height: 110,
+    },
+  ];
+
+  function handleNext() {
     if (photo?.path && selectedFishName) {
       navigation.navigate("AddRecord", {
         photoUri: photo.path,
         fishName: translateFishName(selectedFishName),
       });
     }
-  };
+  }
 
   // 이미지 경로 처리 개선
   async function handlePhotoTaken(newPhoto: PhotoFile) {
     setPhoto(newPhoto);
-    setTimeout(async () => {
-      try {
-        // 로딩 상태 표시
-        setIsLoading(true);
 
-        // 네이티브 모듈 호출
-        const detectionResults = await classifyFishImage(newPhoto.path);
+    // [임시] 하단의 로직으로 대체 예정
+    openBottomSheet();
 
-        // 로딩 상태 해제
-        setIsLoading(false);
+    // setTimeout(async () => {
+    //   try {
+    //     // 로딩 상태 표시
+    //     setIsLoading(true);
 
-        if (Array.isArray(detectionResults) && detectionResults.length > 0) {
-          // 결과 처리 및 UI 업데이트
-          console.log(`탐지 성공: ${detectionResults.length}개 객체`);
-          console.log(detectionResults);
+    //     // 네이티브 모듈 호출
+    //     const detectionResults = await classifyFishImage(newPhoto.path);
 
-          // 물고기 필터링(동일한 className의 물고기는 가장 신뢰도가 높은 것만 남김)
-          const filteredResults = new Map<string, DetectionResult>();
-          detectionResults.forEach((result) => {
-            const existing = filteredResults.get(result.className);
-            if (!existing || result.score > existing.score) {
-              filteredResults.set(result.className, result);
-            }
-          });
+    //     // 로딩 상태 해제
+    //     setIsLoading(false);
 
-          const uniqueResults = Array.from(filteredResults.values()).sort(
-            (a, b) => b.score - a.score
-          );
+    //     if (Array.isArray(detectionResults) && detectionResults.length > 0) {
+    //       // 결과 처리 및 UI 업데이트
+    //       console.log(`탐지 성공: ${detectionResults.length}개 객체`);
+    //       console.log(detectionResults);
 
-          // 탐지 결과 저장
-          setDetectedResults(uniqueResults);
+    //       // 물고기 필터링(동일한 className의 물고기는 가장 신뢰도가 높은 것만 남김)
+    //       const filteredResults = new Map<string, DetectionResult>();
+    //       detectionResults.forEach((result) => {
+    //         const existing = filteredResults.get(result.className);
+    //         if (!existing || result.score > existing.score) {
+    //           filteredResults.set(result.className, result);
+    //         }
+    //       });
 
-          // 가장 높은 신뢰도의 결과를 기본 선택으로 설정
-          const topResult = detectionResults[0];
-          setDetectedClassName(topResult.className);
-          setDetectedScore(topResult.score);
+    //       const uniqueResults = Array.from(filteredResults.values()).sort(
+    //         (a, b) => b.score - a.score
+    //       );
 
-          // 사용자가 선택할 수 있도록 다음 버튼 활성화
-          setNext(false);
+    //       // 탐지 결과 저장
+    //       setDetectedResults(uniqueResults);
 
-          // 기본 선택된 물고기 이름 설정
-          setSelectedFishName(topResult.className);
+    //       // 가장 높은 신뢰도의 결과를 기본 선택으로 설정
+    //       const topResult = detectionResults[0];
+    //       setDetectedClassName(topResult.className);
+    //       setDetectedScore(topResult.score);
 
-          // 결과가 있을 경우 바텀시트 열기
-          openBottomSheet();
-        } else {
-          console.log("탐지된 객체 없음");
-          // 사용자에게 알림 표시
-          Alert.alert(
-            "객체 감지 실패",
-            "이미지에서 인식 가능한 물고기를 찾지 못했습니다. 다른 각도나 조명에서 다시 시도해보세요.",
-            [{ text: "확인", onPress: () => setPhoto(null) }]
-          );
-        }
-      } catch (e: unknown) {
-        setIsLoading(false);
-        console.error("사진 처리 중 오류 발생", e);
+    //       // 사용자가 선택할 수 있도록 다음 버튼 활성화
+    //       setNext(false);
 
-        // 오류 메시지 표시
-        Alert.alert(
-          "처리 오류",
-          "이미지 처리 중 오류가 발생했습니다. 다시 시도해주세요.",
-          [{ text: "확인", onPress: () => setPhoto(null) }]
-        );
-      }
-    });
+    //       // 기본 선택된 물고기 이름 설정
+    //       setSelectedFishName(topResult.className);
+
+    //       // 결과가 있을 경우 바텀시트 열기
+    //       openBottomSheet();
+    //     } else {
+    //       console.log("탐지된 객체 없음");
+    //       // 사용자에게 알림 표시
+    //       Alert.alert(
+    //         "객체 감지 실패",
+    //         "이미지에서 인식 가능한 물고기를 찾지 못했습니다. 다른 각도나 조명에서 다시 시도해보세요.",
+    //         [{ text: "확인", onPress: () => setPhoto(null) }]
+    //       );
+    //     }
+    //   } catch (error: unknown) {
+    //     setIsLoading(false);
+    //     console.error("사진 처리 중 오류 발생", error);
+
+    //     // 오류 메시지 표시
+    //     Alert.alert(
+    //       "처리 오류",
+    //       "이미지 처리 중 오류가 발생했습니다. 다시 시도해주세요.",
+    //       [{ text: "확인", onPress: () => setPhoto(null) }]
+    //     );
+    //   }
+    // });
   }
 
   if (hasCameraPermission === null) {
@@ -143,20 +182,20 @@ export default function CameraScreen() {
           <TouchableOpacity
             onPress={() => {
               setPhoto(null);
-              setDetectedResults([]);
+              // setDetectedResults([]);
               setSelectedFishName(null);
               setNext(true);
             }}
-            className="absolute top-5 left-5 z-10"
+            className="absolute top-8 left-5 z-10"
           >
-            <X color="white" size={50} />
+            <X color="white" size={35} />
           </TouchableOpacity>
 
           <TouchableOpacity
             onPress={openBottomSheet}
-            className="absolute top-5 right-5 z-10"
+            className="absolute top-8 right-5 z-10"
           >
-            <ChevronRight color="white" size={50} />
+            <ChevronRight color="white" size={35} />
           </TouchableOpacity>
 
           <Image
@@ -175,33 +214,37 @@ export default function CameraScreen() {
         <CameraView onPhotoTaken={handlePhotoTaken} />
       )}
 
-      <Modalize ref={sheetRef} snapPoint={height * 0.7}>
+      <Modalize ref={sheetRef} modalHeight={height * 0.4}>
         <ScrollView>
-          <View className="p-10">
-            {isLoading ? (
+          <View className="m-5">
+            {/* {isLoading ? (
               <View className="items-center justify-center py-10">
                 <ActivityIndicator size="large" color="#3B82F6" />
                 <Text className="text-center mt-2">이미지 분석 중...</Text>
               </View>
-            ) : detectedResults.length > 0 ? (
-              <>
-                <Text className="text-lg font-semibold mb-2 text-neutral-400">
-                  탐지 결과
-                </Text>
-                {detectedResults.map((item, index) => (
+            ) : detectedResults.length > 0 ? ( */}
+            <View className="gap-3">
+              <Text className="mb-3 text-neutral-800 text-lg font-semibold text-center">
+                검색 결과
+              </Text>
+
+              <FlatList
+                data={detectedResults}
+                keyExtractor={(item, index) => `${item.className}_${index}`}
+                horizontal
+                renderItem={({ item, index }) => (
                   <TouchableOpacity
-                    key={`${item.className}_${index}`}
                     onPress={() => {
                       setSelectedFishName(item.className);
                       setNext(false);
                     }}
-                    className={`p-4 rounded-xl mb-5 ${
+                    className={`px-6 py-5 rounded-2xl items-center ${
                       selectedFishName === item.className
-                        ? "bg-blue-100 border-4 border-blue-500"
-                        : "bg-blue-100"
-                    }`}
+                        ? "bg-blue-100"
+                        : "bg-neutral-100"
+                    } ${index !== detectedResults.length - 1 ? "mr-3" : ""}`}
                   >
-                    <View className="flex-row px-5 justify-between items-center">
+                    <View className="flex-row items-center gap-5">
                       <Image
                         source={getFishImage(item.className)}
                         style={{
@@ -210,25 +253,32 @@ export default function CameraScreen() {
                           resizeMode: "contain",
                         }}
                       />
-                      <View className="justify-center items-center gap-1">
-                        <Text className="text-4xl font-bold text-neutral-800">
+                      <View>
+                        <Text className="text-neutral-800 text-2xl font-extrabold">
                           {translateFishName(item.className)}
                         </Text>
-                        <Text className="text-2xl text-neutral-600">
+                        <Text
+                          className={`text-2xl font-extrabold ${
+                            selectedFishName === item.className
+                              ? "text-blue-500"
+                              : "text-neutral-400"
+                          }`}
+                        >
                           {(item.score * 100).toFixed(1)}%
                         </Text>
                       </View>
                     </View>
                   </TouchableOpacity>
-                ))}
-              </>
-            ) : (
-              <Text className="text-neutral-500 text-center py-4">
-                탐지 결과가 없습니다. 다른 사진을 시도해보세요.
-              </Text>
-            )}
+                )}
+              />
+            </View>
+            {/* ) : (
+               <Text className="text-neutral-500 text-center py-4">
+                 탐지 결과가 없습니다. 다른 사진을 시도해보세요.
+               </Text>
+             )} */}
 
-            <View className="flex-1 p-5" />
+            <View className="flex-1 p-3" />
             <CustomButton
               title="다음"
               fill={true}

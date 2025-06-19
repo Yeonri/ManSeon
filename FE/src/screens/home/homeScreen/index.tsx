@@ -110,7 +110,6 @@ export default function HomeScreen() {
         keyword={keyword}
         onChangeText={setKeyword}
         onSearch={() => {}}
-        onClose={() => setModalCloseRequested(true)}
       />
     </SafeAreaView>
   );

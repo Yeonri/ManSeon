@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Camera, useCameraDevice, PhotoFile } from "react-native-vision-camera";
 import Loading from "../../common/loading";
 
@@ -33,9 +33,7 @@ export default function CameraView({ onPhotoTaken }: CameraViewProps) {
       <TouchableOpacity
         onPress={takePhoto}
         className="absolute bottom-14 self-center bg-white px-8 py-8 rounded-full"
-      >
-        <Text className="text-xl">📸</Text>
-      </TouchableOpacity>
+      />
     </View>
   );
 }

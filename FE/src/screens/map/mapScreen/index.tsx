@@ -103,7 +103,6 @@ export default function MapScreen() {
         keyword={keyword}
         onChangeText={setKeyword}
         onSearch={() => {}}
-        onClose={() => setModalCloseRequested(true)}
       />
     </SafeAreaView>
   );

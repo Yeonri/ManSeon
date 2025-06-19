@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Modalize } from "react-native-modalize";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Dimensions, Text, View } from "react-native";
+import { Text, useWindowDimensions, View } from "react-native";
 import SearchInput from "../searchInput";
 import { useGetFishingPointSearch } from "../../../api/queries/fishingPoint";
 
@@ -10,7 +9,6 @@ interface SearchModalProps {
   keyword: string;
   onChangeText: (text: string) => void;
   onSearch: () => void;
-  onClose: () => void;
 }
 
 export default function SearchModal({
@@ -18,47 +16,23 @@ export default function SearchModal({
   keyword,
   onChangeText,
   onSearch,
-  onClose,
 }: SearchModalProps) {
-  const modalRef = useRef<Modalize>(null);
-  const insets = useSafeAreaInsets();
-  const { height: screenHeight } = Dimensions.get("window");
+  const sheetRef = useRef<Modalize>(null);
+  const { height } = useWindowDimensions();
 
   //   const { data: searchResults = [], isLoading } =
   //     useGetFishingPointSearch(keyword);
 
   useEffect(() => {
     if (visible) {
-      modalRef.current?.open();
+      sheetRef.current?.open();
     } else {
-      modalRef.current?.close();
+      sheetRef.current?.close();
     }
   }, [visible]);
 
-  function handleClosed() {
-    onClose();
-  }
-
   return (
-    <Modalize
-      ref={modalRef}
-      modalHeight={screenHeight}
-      snapPoint={screenHeight * 0.7}
-      adjustToContentHeight={false}
-      panGestureEnabled
-      withHandle
-      handlePosition="inside"
-      onClosed={handleClosed}
-      modalStyle={{
-        paddingBottom: insets.bottom,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        backgroundColor: "#fff",
-      }}
-      overlayStyle={{
-        backgroundColor: "rgba(0,0,0,0.6)",
-      }}
-    >
+    <Modalize ref={sheetRef} snapPoint={height * 0.7}>
       <View className="m-5 gap-5">
         <Text className="pt-3 text-neutral-800 text-lg font-semibold text-center">
           검색 결과

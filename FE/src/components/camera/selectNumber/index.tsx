@@ -43,9 +43,9 @@ export default function SelectNumber({
   };
 
   return (
-    <View className="flex-row items-center bg-blue-50 rounded-3xl p-2">
+    <View className="px-2 flex-row items-center bg-blue-50 rounded-xl gap-2">
       <TextInput
-        className="mx-4 text-3xl text-blue-500 font-bold text-center w-12"
+        className="text-xl text-blue-500 font-bold"
         keyboardType="numeric"
         value={input}
         onChangeText={setInput}
@@ -56,12 +56,12 @@ export default function SelectNumber({
       <View>
         <Pressable onPress={() => handleChange("up")}>
           <View>
-            <ChevronUp size={28} color="#2B7FFF" strokeWidth={3} />
+            <ChevronUp size={18} color="#2B7FFF" strokeWidth={3} />
           </View>
         </Pressable>
         <Pressable onPress={() => handleChange("down")}>
           <View>
-            <ChevronDown size={30} color="#2B7FFF" strokeWidth={3} />
+            <ChevronDown size={18} color="#2B7FFF" strokeWidth={3} />
           </View>
         </Pressable>
       </View>

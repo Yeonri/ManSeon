@@ -12,8 +12,9 @@ import Geolocation from "react-native-geolocation-service";
 import Header from "../../../components/common/header";
 import CustomButton from "../../../components/common/customButton";
 import SelectButton from "../../../components/common/selectButton";
-// import SelectNumber from "../../../components/camera/selectNumber";
+import SelectNumber from "../../../components/camera/selectNumber";
 
+type Status = "공개" | "비공개";
 type Bait = "지렁이" | "새우" | "게" | "루어";
 type Method = "낚싯대" | "맨손" | "뜰채";
 
@@ -21,38 +22,35 @@ export default function AddRecordScreen() {
   const route = useRoute<RouteProp<RootStackParams, "AddRecord">>();
   const navigation = useNavigation<NavigationProp<RootStackParams>>();
   const { photoUri, fishName } = route.params;
-  const [selectedValue, setSelectedValue] = useState(10);
-  // const [visibility, setVisibility] = useState<"공개" | "비공개">("공개");
-  const [selectedBait, setSelectedBait] = useState<Bait | null>(null);
-  const [selectedMethod, setSelectedMethod] = useState<Method | null>(null);
+
   const [location, setLocation] = useState<{
     latitude: number;
     longitude: number;
-  } | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  // const { mutate: addRecord } = useAddRecord();
+  } | null>(null); // 위도, 경도
+  const [status, setStatus] = useState<Status>("공개"); // 장소 공개 여부
+  const [selectedValue, setSelectedValue] = useState<number>(10); // 크기
+  const [selectedBait, setSelectedBait] = useState<Bait>("지렁이"); // 미끼 정보
+  const [selectedMethod, setSelectedMethod] = useState<Method>("낚싯대"); // 낚시 방법
 
+  const [error, setError] = useState<string | null>(null);
+
+  // 저장
   function handleSave() {
     if (!location) {
-      Alert.alert("위치 정보 없음", "위치 정보를 불러올 수 없습니다.");
+      Alert.alert("위치 정보 오류", "위치 정보를 불러올 수 없습니다.");
       return;
     }
-    if (!selectedBait || !selectedMethod) {
-      Alert.alert("입력 누락", "미끼와 낚시 방법을 모두 선택해주세요.");
-      return;
-    }
+
+    // [임시] useAddFishingRecord으로 대체 예정
     Alert.alert(
       "작성 완료",
-      "낚시 기록이 저장되었습니다!",
+      "낚시 기록이 저장되었습니다.",
       [
         {
           text: "확인",
           onPress: () => {
             navigation.navigate("BottomTab", {
               screen: "home",
-              params: {
-                screen: "Fishing",
-              },
             });
           },
         },
@@ -61,40 +59,8 @@ export default function AddRecordScreen() {
     );
   }
 
-  // const baitMap = { 지렁이: 0, 새우: 1, 게: 2, 루어: 3 } as const;
-  // const methodMap = { 낚싯대: 0, 맨손: 1, 뜰채: 2 } as const;
-
-  // const bait = baitMap[selectedBait] as 0 | 1 | 2 | 3;
-  // const method = methodMap[selectedMethod] as 0 | 1 | 2;
-
-  // const payload = {
-  //   fishName: fishName,
-  //   lat: location.latitude,
-  //   lng: location.longitude,
-  //   size: selectedValue,
-  //   bait: selectedBait,
-  //   equipment: selectedMethod,
-  //   fishImg: photoUri,
-  // };
-
-  // addRecord(payload, {
-  //   onSuccess: () => {
-  //     console.log("낚시 기록 추가 성공");
-  //     navigation.navigate("BottomTabs", {
-  //       screen: "home",
-  //       params: {
-  //         screen: "Fishing",
-  //       },
-  //     });
-  //   },
-  // onError: () => {
-  // console.log("낚시 기록 추가 실패");
-  // Alert.alert("낚시 기록 추가 실패", "잠시 후 다시 시도해주세요.");
-  // },
-  // });
-  // }
-
-  const requestLocation = async () => {
+  // 사용자 현 위치 (위도, 경도)
+  async function requestLocation() {
     const hasPermission = await PermissionsAndroid.check(
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
     );
@@ -124,7 +90,7 @@ export default function AddRecordScreen() {
         showLocationDialog: true,
       }
     );
-  };
+  }
 
   useEffect(() => {
     requestLocation();
@@ -132,69 +98,73 @@ export default function AddRecordScreen() {
 
   return (
     <ScrollView className="flex-1">
+      {/* 헤더 */}
       <Header logo={true} before={true} />
-      <View className="gap-7 mx-5">
-        <View className="items-center">
-          <Image
-            source={{ uri: "file://" + photoUri }}
-            className="w-full h-[250px] rounded-xl"
-          />
-        </View>
-        <View className="gap-2">
-          <Text className="font-semibold text-lg text-neutral-600">
-            자동 입력 정보
-          </Text>
-          <View className="bg-neutral-100 rounded-lg p-5 gap-1">
-            <Text className="text-xl font-semibold text-neutral-500">
-              {fishName}
-            </Text>
+
+      <View className="mx-5 gap-5">
+        {/* 촬영한 사진 */}
+        <Image
+          source={{ uri: "file://" + photoUri }}
+          className="w-full h-[250px] rounded-xl"
+        />
+        {/* 자동 입력 정보 */}
+        <View className="gap-3">
+          <Text className="text-neutral-800 font-semibold">자동 입력 정보</Text>
+          <View className="p-5 bg-neutral-100 rounded-xl gap-3">
+            <Text className="text-neutral-600 font-extrabold">{fishName}</Text>
             {location ? (
-              <>
-                <View className="flex-row gap-2">
-                  <Text className="text-neutral-600">위도</Text>
-                  <Text className="text-neutral-400">
-                    {location.latitude.toFixed(4)}
-                  </Text>
-                </View>
-                <View className="flex-row gap-2">
-                  <Text className="text-neutral-600">경도</Text>
-                  <Text className="text-neutral-400">
-                    {location.longitude.toFixed(4)}
-                  </Text>
-                </View>
-              </>
+              <View className="gap-1">
+                <Text className="text-neutral-400 text-sm">
+                  위도{"  "}
+                  {location.latitude.toFixed(4)}
+                </Text>
+                <Text className="text-neutral-400 text-sm">
+                  경도{"  "}
+                  {location.longitude.toFixed(4)}
+                </Text>
+              </View>
             ) : (
-              <Text className="text-neutral-400">
+              <Text className="text-neutral-400 text-sm">
                 {error || "위치 정보를 불러오는 중..."}
               </Text>
             )}
           </View>
         </View>
-        {/* <View className="flex-row items-center justify-between">
-          <Text className="font-semibold text-lg text-neutral-600">
-            장소 공개 여부
-          </Text>
-          <Toggle selected={visibility} onSelect={setVisibility} />
-        </View> */}
-        <View className="flex-row items-start justify-between">
-          <Text className="font-semibold text-lg text-neutral-600">
-            크기 선택
-          </Text>
-          <View className="flex-row items-end">
-            {/* <SelectNumber
-              initial={selectedValue}
-              onChange={(val) => setSelectedValue(val)}
-            /> */}
-            <Text className="text-xl font-semibold p-2">cm</Text>
+
+        {/* 장소 공개 여부 */}
+        <View className="flex-row items-center justify-between">
+          <Text className="text-neutral-800 font-semibold">장소 공개 여부</Text>
+          <View className="flex-row gap-1">
+            {(["공개", "비공개"] as const).map((now) => (
+              <SelectButton
+                name={now}
+                fill={status === now}
+                onPress={() => setStatus(now)}
+              />
+            ))}
           </View>
         </View>
-        <View className="gap-2">
-          <Text className="font-semibold text-lg text-neutral-600">
-            낚시 정보
-          </Text>
-          <View className="bg-blue-50 rounded-lg p-5 gap-5">
-            <View className="gap-2">
-              <Text className="font-semibold text-neutral-500">
+
+        {/* 크기 선택 */}
+        <View className="flex-row items-start justify-between">
+          <Text className="text-neutral-800 font-semibold">크기 선택</Text>
+          <View className="flex-row items-end gap-2">
+            <SelectNumber
+              initial={selectedValue}
+              onChange={(val) => setSelectedValue(val)}
+            />
+            <Text className="text-neutral-400 py-3 text-lg font-semibold">
+              cm
+            </Text>
+          </View>
+        </View>
+
+        {/* 낚시 정보 */}
+        <View className="gap-3">
+          <Text className="text-neutral-800 font-semibold">낚시 정보</Text>
+          <View className="p-5 bg-blue-50 rounded-xl gap-5">
+            <View className="gap-3">
+              <Text className="text-neutral-600 text-xs font-semibold">
                 미끼 정보를 선택해주세요
               </Text>
               <View className="flex-row gap-2">
@@ -202,13 +172,13 @@ export default function AddRecordScreen() {
                   <SelectButton
                     name={bait}
                     fill={selectedBait === bait}
-                    onPress={() => setSelectedBait}
+                    onPress={() => setSelectedBait(bait)}
                   />
                 ))}
               </View>
             </View>
-            <View className="gap-2">
-              <Text className="font-semibold text-neutral-500">
+            <View className="gap-3">
+              <Text className="text-neutral-600 text-xs font-semibold">
                 낚시 방법을 선택해주세요
               </Text>
               <View className="flex-row gap-2">
@@ -216,13 +186,15 @@ export default function AddRecordScreen() {
                   <SelectButton
                     name={method}
                     fill={selectedMethod === method}
-                    onPress={() => setSelectedMethod}
+                    onPress={() => setSelectedMethod(method)}
                   />
                 ))}
               </View>
             </View>
           </View>
         </View>
+
+        {/* 취소 / 저장 버튼 */}
         <View className="flex-row justify-center gap-5 mt-5">
           <CustomButton
             fill={false}
@@ -237,7 +209,6 @@ export default function AddRecordScreen() {
             onPress={handleSave}
           />
         </View>
-        {/* 이전/저장 버튼*/}
       </View>
       <View className="p-10" />
     </ScrollView>
