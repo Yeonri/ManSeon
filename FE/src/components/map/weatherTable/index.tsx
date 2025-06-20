@@ -6,7 +6,7 @@ import {
 } from "../../../utils/getImages";
 
 interface WeatherForecast {
-  date: string;
+  datetime: string;
   sky: number;
   temperature: number;
   precipitation_prob: number;
@@ -31,7 +31,7 @@ export default function WeatherTable({ data }: WeatherTableProps) {
           <Text className="w-16 font-medium text-center">시각</Text>
           {data.map((item, idx) => (
             <Text key={idx} className="w-16 text-center text-base font-bold">
-              {new Date(item.date).getHours()}시
+              {new Date(item.datetime).getHours()}시
             </Text>
           ))}
         </View>

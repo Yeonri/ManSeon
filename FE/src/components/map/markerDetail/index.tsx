@@ -36,7 +36,7 @@ const MarkerDetail = forwardRef<Modalize, MarkerDetailProps>(
           <View className="flex-row justify-between mb-2">
             <View className="flex-row gap-2 items-center">
               <Text className="text-xl font-bold text-neutral-800">
-                {point.point_name}
+                {point.name}
               </Text>
             </View>
             <TouchableOpacity

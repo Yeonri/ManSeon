@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import MapView, { Region } from "react-native-maps";
 import { Modalize } from "react-native-modalize";
 import { useClustering } from "../../../hooks/useClustering";
-import { getFishingPointDetail } from "../../../api/fishingPoint";
+// import { getFishingPointDetail } from "../../../api/fishingPoint";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View } from "react-native";
 import SearchInput from "../../../components/common/searchInput";
@@ -40,9 +40,10 @@ export default function MapScreen() {
   const [selectedPoint, setSelectedPoint] = useState<any>(null);
 
   const handleMarkerPress = async (point: any) => {
-    const pointDetail = await getFishingPointDetail(point.point_id);
+    // const pointDetail = await getFishingPointDetail(point.point_id);
+    // setSelectedPoint({ ...point, ...pointDetail });
 
-    setSelectedPoint({ ...point, ...pointDetail });
+    setSelectedPoint(point);
 
     modalRef.current?.open();
   };
