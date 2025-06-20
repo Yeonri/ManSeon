@@ -2,7 +2,9 @@ import { useEffect, useRef } from "react";
 import { Modalize } from "react-native-modalize";
 import { Text, useWindowDimensions, View } from "react-native";
 import SearchInput from "../searchInput";
-import { useGetFishingPointSearch } from "../../../api/queries/fishingPoint";
+import { searchData } from "../../../data/searchData";
+import SearchResult from "../searchResult";
+// import { useGetFishingPointSearch } from "../../../api/queries/fishingPoint";
 
 interface SearchModalProps {
   visible: boolean;
@@ -22,6 +24,12 @@ export default function SearchModal({
 
   //   const { data: searchResults = [], isLoading } =
   //     useGetFishingPointSearch(keyword);
+
+  const fishingPointList = searchData;
+
+  const filteredResults = fishingPointList.filter((item) =>
+    item.name.includes(keyword)
+  );
 
   useEffect(() => {
     if (visible) {
@@ -46,11 +54,8 @@ export default function SearchModal({
         />
 
         {/* 검색 결과 */}
-        {/* {isLoading ? (
-            <Text>검색 중...</Text>
-          ) : (
-            <SearchResult results={searchResults} />
-          )} */}
+
+        <SearchResult results={filteredResults} />
       </View>
     </Modalize>
   );

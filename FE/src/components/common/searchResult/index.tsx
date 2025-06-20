@@ -3,9 +3,9 @@ import { FlatList, Text, View } from "react-native";
 
 interface SearchResultItem {
   pointId: number;
-  pointName: string;
-  lat: number;
-  lng: number;
+  name: string;
+  latitude: number;
+  longitude: number;
 }
 
 interface SearchResultProps {
@@ -25,12 +25,12 @@ export default function SearchResult({ results }: SearchResultProps) {
             <MapPin />
           </View>
           <Text className="font-semibold text-xl text-neutral-600">
-            {item.pointName}
+            {item.name}
           </Text>
         </View>
 
         <Text className="ml-10 mt-2">
-          N {item.lat} / E {item.lng}
+          N {item.latitude} / E {item.longitude}
         </Text>
       </View>
     );
