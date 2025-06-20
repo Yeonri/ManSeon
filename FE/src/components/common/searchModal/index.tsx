@@ -3,7 +3,7 @@ import { Modalize } from "react-native-modalize";
 import { Text, useWindowDimensions, View } from "react-native";
 import SearchInput from "../searchInput";
 import { searchData } from "../../../data/searchData";
-import SearchResult from "../searchResult";
+import { MapPin } from "lucide-react-native";
 // import { useGetFishingPointSearch } from "../../../api/queries/fishingPoint";
 
 interface SearchModalProps {
@@ -39,24 +39,48 @@ export default function SearchModal({
     }
   }, [visible]);
 
-  return (
-    <Modalize ref={sheetRef} snapPoint={height * 0.7}>
-      <View className="m-5 gap-5">
-        <Text className="pt-3 text-neutral-800 text-lg font-semibold text-center">
-          검색 결과
+  const renderItem = ({ item }: any) => (
+    <View className="mb-3">
+      <View className="flex-row items-center px-4">
+        <View className="mr-2">
+          <MapPin />
+        </View>
+        <Text className="font-semibold text-xl text-neutral-600">
+          {item.name}
         </Text>
+      </View>
+      <Text className="ml-10 mt-2">
+        N {item.latitude} / E {item.longitude}
+      </Text>
+    </View>
+  );
 
+  const ListHeaderComponent = (
+    <View className="mb-4">
+      <Text className="pt-5 text-neutral-800 text-lg font-semibold text-center">
+        검색 결과
+      </Text>
+      <View className="p-4">
         <SearchInput
           modal={true}
           value={keyword}
           onChangeText={onChangeText}
           onSearchPress={onSearch}
         />
-
-        {/* 검색 결과 */}
-
-        <SearchResult results={filteredResults} />
       </View>
-    </Modalize>
+    </View>
+  );
+
+  return (
+    <Modalize
+      ref={sheetRef}
+      snapPoint={height * 0.7}
+      flatListProps={{
+        data: filteredResults,
+        keyExtractor: (item) => String(item.pointId),
+        renderItem: renderItem,
+        ListHeaderComponent,
+      }}
+    />
   );
 }
