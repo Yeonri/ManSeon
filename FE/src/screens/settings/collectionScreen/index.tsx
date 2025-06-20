@@ -11,6 +11,7 @@ import { SettingsStackParams } from "../../../navigation/types";
 import mergeCollectedFishData from "../../../utils/mergeCollectedFishData";
 import fishBaseData from "../../../data/fish";
 import { fishImageMap } from "../../../utils/imageMaps";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function CollectionScreen() {
   const sortOptions = ["가나다순", "잡은 물고기순", "최신순"];
@@ -21,6 +22,7 @@ export default function CollectionScreen() {
 
   // 내 물고기 데이터 가져오기
   // const { data, isLoading } = useGetMyFishes();
+  const insets = useSafeAreaInsets();
 
   // 임시 데이터
   const data = useMemo(
@@ -120,9 +122,12 @@ export default function CollectionScreen() {
         data={sortedData}
         keyExtractor={(item) => item.id.toString()}
         numColumns={3}
-        className="flex-1 mx-5"
+        className="mx-5"
         contentContainerClassName="gap-y-5 pb-2"
         columnWrapperClassName="justify-between"
+        contentContainerStyle={{
+          paddingBottom: insets.bottom + 60,
+        }}
         renderItem={({ item }) => (
           <CollectionCard
             id={item.id}
