@@ -94,7 +94,6 @@ export default function RecordDetailScreen({ route }: RecordDetailScreenProps) {
   }
 
   const data = getMockRecordById(fishId);
-  console.log("data", data);
 
   const [status, setStatus] = useState<"AM" | "PM">("AM");
 

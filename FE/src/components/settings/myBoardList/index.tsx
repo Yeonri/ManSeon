@@ -49,7 +49,7 @@ export function MyBoardList() {
     <View className="gap-3">
       <TouchableOpacity
         className="flex-row items-center gap-1"
-        onPress={() => navigation.navigate("Collection")}
+        onPress={() => navigation.navigate("MyBoard")}
       >
         <Text className="text-neutral-600 font-bold -translate-y-[2px]">
           내가 쓴 게시글

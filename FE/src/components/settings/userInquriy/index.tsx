@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Alert, FlatList, Text, View } from "react-native";
 import Form from "../../common/form";
-import { useAddInquiry, useGetInquiry } from "../../../api/queries/inquiry";
 import TabMenu from "../../common/tabMenu";
 import UserInquiryCard from "../userInquiryCard";
 import CustomButton from "../../common/customButton";
@@ -11,8 +10,17 @@ export default function UserInquriy() {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
 
-  const { mutate: addInquiry } = useAddInquiry();
-  const { data } = useGetInquiry();
+  // const { mutate: addInquiry } = useAddInquiry();
+  // const { data } = useGetInquiry();
+
+  // 임시 데이터
+  const data = [
+    {
+      inquiryId: 1,
+      title: "앱이 자꾸 꺼져요",
+      status: "답변 완료",
+    },
+  ];
 
   // 문의사항 입력 취소
   function handleCancel() {
@@ -34,7 +42,7 @@ export default function UserInquriy() {
     if (!title || !content)
       return Alert.alert("입력 오류", "제목과 내용을 모두 입력해주세요.");
 
-    addInquiry({ title, content: content });
+    // addInquiry({ title, content: content });
     setTitle("");
     setContent("");
   }

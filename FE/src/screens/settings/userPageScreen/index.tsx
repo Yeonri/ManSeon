@@ -10,7 +10,7 @@ export default function UserPageScreen() {
       <Header logo={true} before={true} />
 
       <ScrollView>
-        <View>
+        <View className="mx-5">
           <Text>타 유저 정보</Text>
         </View>
       </ScrollView>

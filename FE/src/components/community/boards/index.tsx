@@ -1,9 +1,6 @@
-import { IMAGE_API } from "@env";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CommunityStackParams } from "../../../navigation/types";
-import { useGetBoards } from "../../../api/queries/board";
-import { useCallback } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import DefaultImage from "../../../assets/images/image_default.svg";
@@ -22,51 +19,47 @@ export default function Boards() {
     data: [
       {
         boardId: 1,
-        title: "첫 번째 낚시 후기!",
-        profileImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
+        title: "이번 주말 출조 후기!",
         nickname: "낚시왕김춘배",
         createdAt: new Date(Date.now() - 3600 * 1000 * 3).toISOString(),
         commentNum: 5,
         like: 12,
-        boardImg: true,
+        profileImg: "",
         thumbImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
+          "https://cdn.pixabay.com/photo/2017/06/17/04/20/fishing-2411145_1280.jpg",
       },
       {
         boardId: 2,
         title: "이게 바로 대어!",
-        profileImg: null,
         nickname: "강태공",
         createdAt: new Date(Date.now() - 3600 * 1000 * 24).toISOString(),
         commentNum: 3,
         like: 8,
-        boardImg: false,
-        thumbImg: null,
+        profileImg: "",
+        thumbImg:
+          "https://cdn.pixabay.com/photo/2020/02/02/20/48/sunrise-4814118_1280.jpg",
       },
       {
         boardId: 3,
         title: "오늘 날씨 미쳤다",
-        profileImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
         nickname: "물반고기반",
         createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
         commentNum: 0,
         like: 2,
-        boardImg: true,
         thumbImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
+          "https://cdn.pixabay.com/photo/2018/10/19/09/39/lake-3758247_1280.jpg",
+        profileImg: "",
       },
       {
         boardId: 4,
         title: "제목",
-        profileImg: null,
         nickname: "강태공",
         createdAt: new Date(Date.now() - 3600 * 1000 * 24).toISOString(),
         commentNum: 3,
         like: 8,
-        boardImg: false,
-        thumbImg: null,
+        thumbImg:
+          "https://cdn.pixabay.com/photo/2016/08/05/14/48/fishing-1572408_1280.jpg",
+        profileImg: "",
       },
     ],
   };
@@ -149,7 +142,7 @@ export default function Boards() {
               </View>
 
               {/* 게시글 이미지, 이미지가 없는 경우 기본 이미지 */}
-              {item.boardImg ? (
+              {item.thumbImg ? (
                 <Image
                   source={{ uri: `${item.thumbImg}` }}
                   className="w-[75px] h-[75px] rounded-lg"

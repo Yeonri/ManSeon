@@ -6,7 +6,6 @@ import { CommunityStackParams } from "../../../navigation/types";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import Header from "../../../components/common/header";
-import { useGetBoards } from "../../../api/queries/board";
 import Boards from "../../../components/community/boards";
 import FollowingBoards from "../../../components/community/followingBoards";
 
@@ -17,11 +16,11 @@ export default function CommunityScreen() {
   const navigation = useNavigation<CommunityScreenNavigationProps>();
   const [refreshing, setRefreshing] = useState(false);
 
-  const { refetch: refetchBoards } = useGetBoards();
+  // const { refetch: refetchBoards } = useGetBoards();
 
   async function onRefresh() {
     setRefreshing(true);
-    await Promise.all([refetchBoards()]);
+    // await Promise.all([refetchBoards()]);
     setRefreshing(false);
   }
 

@@ -8,11 +8,6 @@ import {
 } from "lucide-react-native";
 import { useState } from "react";
 import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
-import {
-  useDeleteInquiry,
-  useEditInquiry,
-  useGetInquiryDetail,
-} from "../../../api/queries/inquiry";
 
 export default function UserInquiryCard({
   inquiryId,
@@ -30,9 +25,14 @@ export default function UserInquiryCard({
   const [editTitle, setEditTitle] = useState<string>(title);
   const [editContent, setEditContent] = useState<string>("");
 
-  const { data } = useGetInquiryDetail(inquiryId);
-  const { mutate: editInquiry } = useEditInquiry();
-  const { mutate: deleteInquiry } = useDeleteInquiry();
+  // 임시 데이터
+  const data = {
+    questionContent: "앱을 실행하면 바로 종료됩니다. 해결 방법이 있을까요?",
+    questionDate: "2025-06-20T15:32:00",
+    answerContent:
+      "앱 업데이트 후 문제가 해결되었습니다. 최신 버전으로 이용해주세요.",
+    answerDate: "2025-06-21T10:15:00",
+  };
 
   // 수정
   function handleEdit() {
@@ -49,19 +49,19 @@ export default function UserInquiryCard({
     if (editTitle === title || editContent === data?.questionContent)
       setIsEdit(false);
 
-    editInquiry(
-      { inquiryId, title: editTitle, content: editContent },
-      {
-        onSuccess: () => {
-          setEditTitle(title);
-          setEditContent("");
-          setIsEdit(false);
-        },
-        onError: () => {
-          Alert.alert("수정 실패", "잠시 후 다시 시도해주세요.");
-        },
-      }
-    );
+    // editInquiry(
+    //   { inquiryId, title: editTitle, content: editContent },
+    //   {
+    //     onSuccess: () => {
+    //       setEditTitle(title);
+    //       setEditContent("");
+    //       setIsEdit(false);
+    //     },
+    //     onError: () => {
+    //       Alert.alert("수정 실패", "잠시 후 다시 시도해주세요.");
+    //     },
+    //   }
+    // );
   }
 
   // 수정 내용 취소
@@ -88,7 +88,7 @@ export default function UserInquiryCard({
         text: "확인",
         style: "destructive",
         onPress: () => {
-          deleteInquiry(inquiryId);
+          // deleteInquiry(inquiryId);
         },
       },
     ]);

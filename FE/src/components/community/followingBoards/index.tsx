@@ -1,8 +1,6 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CommunityStackParams } from "../../../navigation/types";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { useCallback } from "react";
-import { useGetFollowingBoard } from "../../../api/queries/board";
+import { useNavigation } from "@react-navigation/native";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { Handshake } from "lucide-react-native";
 
@@ -15,36 +13,32 @@ export default function FollowingBoards() {
   const data = {
     data: [
       {
-        boardId: 101,
+        boardId: 1,
         userId: 111211,
-        boardImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
-        profileImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
+        profileImg: "",
+        thumbImg:
+          "https://cdn.pixabay.com/photo/2017/06/17/04/20/fishing-2411145_1280.jpg",
       },
       {
-        boardId: 102,
+        boardId: 2,
         userId: 111212,
-        boardImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
-        profileImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
+        profileImg: "",
+        thumbImg:
+          "https://cdn.pixabay.com/photo/2020/02/02/20/48/sunrise-4814118_1280.jpg",
       },
       {
-        boardId: 103,
+        boardId: 3,
         userId: 111213,
-        boardImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
-        profileImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
+        profileImg: "",
+        thumbImg:
+          "https://cdn.pixabay.com/photo/2018/10/19/09/39/lake-3758247_1280.jpg",
       },
       {
-        boardId: 104,
+        boardId: 4,
         userId: 111214,
-        boardImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
-        profileImg:
-          "https://i.pinimg.com/736x/84/80/7d/84807de97dc5b3faac935c282b80d98b.jpg",
+        thumbImg:
+          "https://cdn.pixabay.com/photo/2016/08/05/14/48/fishing-1572408_1280.jpg",
+        profileImg: "",
       },
     ],
   };
@@ -56,7 +50,7 @@ export default function FollowingBoards() {
   }
 
   function handleUserClick(userId: number) {
-    navigation.navigate("UserPage", { userId });
+    // navigation.navigate("UserPage", { userId });
   }
 
   // useFocusEffect(
@@ -78,7 +72,7 @@ export default function FollowingBoards() {
               <TouchableOpacity onPress={() => handleClick(item.boardId)}>
                 <Image
                   source={{
-                    uri: item.boardImg,
+                    uri: item.thumbImg,
                   }}
                   className="w-24 h-32 rounded-xl"
                 />

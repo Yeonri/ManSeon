@@ -9,11 +9,7 @@ import {
 } from "react-native";
 import { Pencil, Trash2 } from "lucide-react-native";
 import formatTime from "../../../utils/formatTime";
-import {
-  useDeleteComment,
-  useEditComment,
-  useGetComments,
-} from "../../../api/queries/comment";
+import { useDeleteComment, useEditComment } from "../../../api/queries/comment";
 import { useNavigation } from "@react-navigation/native";
 import { CommunityStackParams } from "../../../navigation/types";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -129,8 +125,9 @@ export default function Comments({ boardId }: { boardId: number }) {
             {/* 작성자 정보 */}
             <View className="flex-row items-center gap-2">
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("UserPage", { userId: item.userId })
+                onPress={
+                  () => {}
+                  // navigation.navigate("UserPage", { userId: item.userId })
                 }
                 className="flex-row items-center gap-2"
               >

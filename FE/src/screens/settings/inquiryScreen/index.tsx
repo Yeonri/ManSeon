@@ -3,7 +3,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../../components/common/header";
 import UserInquriy from "../../../components/settings/userInquriy";
-import { AdminInquriy } from "../../../components/settings/adminInquriy";
 
 export default function InquiryScreen() {
   // const { user } = useLoginStore();

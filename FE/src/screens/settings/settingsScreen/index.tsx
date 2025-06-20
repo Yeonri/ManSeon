@@ -195,10 +195,11 @@ export default function SettingsScreen() {
           </View>
 
           {/* 공지사항 */}
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate("Notice")}
             className="p-5 bg-neutral-50 rounded-xl gap-3"
-          >
+          > */}
+          <View className="p-5 bg-neutral-50 rounded-xl gap-3">
             <View className="flex-row justify-between">
               <Text className="text-neutral-800 font-semibold">공지사항</Text>
               <Ellipsis color="#A3A3A3" width={18} />
@@ -224,7 +225,8 @@ export default function SettingsScreen() {
                 </View>
               );
             })}
-          </TouchableOpacity>
+          </View>
+          {/* </TouchableOpacity> */}
 
           <TouchableOpacity
             onPress={() => navigation.navigate("Inquiry")}
