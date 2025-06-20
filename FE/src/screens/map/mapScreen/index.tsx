@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useGetFishingPoints } from "../../../api/queries/fishingPoint";
+// import { useGetFishingPoints } from "../../../api/queries/fishingPoint";
 import MapView, { Region } from "react-native-maps";
 import { Modalize } from "react-native-modalize";
 import { useClustering } from "../../../hooks/useClustering";
@@ -10,25 +10,13 @@ import SearchInput from "../../../components/common/searchInput";
 import SearchModal from "../../../components/common/searchModal";
 import ClusterMarkers from "../../../components/map/clusterMarker";
 import MarkerDetail from "../../../components/map/markerDetail";
+import fishingPoint from "../../../data/fishingPoint";
 
 export default function MapScreen() {
-  // const { data: points = [] } = useGetFishingPoints();
+  // const { data: points = [] } = f
 
   // 임시 데이터
-  const points = [
-    {
-      point_id: 1,
-      name: "서해 낚시터",
-      latitude: 36.2,
-      longitude: 126.7,
-    },
-    {
-      point_id: 2,
-      name: "동해 낚시터",
-      latitude: 37.5,
-      longitude: 129.1,
-    },
-  ];
+  const points = fishingPoint;
 
   const [region, setRegion] = useState<Region>({
     latitude: 36.5,

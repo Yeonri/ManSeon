@@ -60,6 +60,8 @@ export default function CollectionScreen() {
   const sortedData = useMemo(() => {
     const copyData = [...mergedFishList];
 
+    console.log("물고기 정보", copyData);
+
     if (selectedSort === "가나다순") {
       return copyData.sort((a, b) => a.name.localeCompare(b.name));
     }
