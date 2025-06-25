@@ -1,0 +1,32 @@
+[
+  {
+    "name": "제주 협재해수욕장",
+    "pointId": 11,
+    "latitude": 33.3943,
+    "longitude": 126.2396
+  },
+  {
+    "name": "속초 대포항",
+    "pointId": 2,
+    "latitude": 38.1912,
+    "longitude": 128.5903
+  },
+  {
+    "name": "강진 마량항",
+    "pointId": 47,
+    "latitude": 34.5104,
+    "longitude": 126.2705
+  },
+  {
+    "name": "화성 제부도",
+    "pointId": 32,
+    "latitude": 37.2251,
+    "longitude": 126.6227
+  },
+  {
+    "name": "완도 완도항",
+    "pointId": 42,
+    "latitude": 34.3125,
+    "longitude": 126.7582
+  }
+]
